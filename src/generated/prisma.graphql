@@ -1,0 +1,4132 @@
+type AggregateComment {
+  count: Int!
+}
+
+type AggregateCommentLike {
+  count: Int!
+}
+
+type AggregateEducation {
+  count: Int!
+}
+
+type AggregateExperience {
+  count: Int!
+}
+
+type AggregateFilter {
+  count: Int!
+}
+
+type AggregateMeeting {
+  count: Int!
+}
+
+type AggregatePost {
+  count: Int!
+}
+
+type AggregatePostLike {
+  count: Int!
+}
+
+type AggregateSkill {
+  count: Int!
+}
+
+type AggregateUser {
+  count: Int!
+}
+
+type BatchPayload {
+  count: Long!
+}
+
+type Comment {
+  id: ID!
+  createdAt: DateTime!
+  isUpdate: Boolean!
+  owner: User
+  parentPost: Post!
+  parentComment: Comment
+  content: String
+  image: String
+  likes(where: CommentLikeWhereInput, orderBy: CommentLikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CommentLike!]
+  comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
+}
+
+type CommentConnection {
+  pageInfo: PageInfo!
+  edges: [CommentEdge]!
+  aggregate: AggregateComment!
+}
+
+input CommentCreateInput {
+  id: ID
+  isUpdate: Boolean
+  owner: UserCreateOneInput
+  parentPost: PostCreateOneWithoutCommentsInput!
+  parentComment: CommentCreateOneWithoutCommentsInput
+  content: String
+  image: String
+  likes: CommentLikeCreateManyWithoutParentInput
+  comments: CommentCreateManyWithoutParentCommentInput
+}
+
+input CommentCreateManyWithoutParentCommentInput {
+  create: [CommentCreateWithoutParentCommentInput!]
+  connect: [CommentWhereUniqueInput!]
+}
+
+input CommentCreateManyWithoutParentPostInput {
+  create: [CommentCreateWithoutParentPostInput!]
+  connect: [CommentWhereUniqueInput!]
+}
+
+input CommentCreateOneWithoutCommentsInput {
+  create: CommentCreateWithoutCommentsInput
+  connect: CommentWhereUniqueInput
+}
+
+input CommentCreateOneWithoutLikesInput {
+  create: CommentCreateWithoutLikesInput
+  connect: CommentWhereUniqueInput
+}
+
+input CommentCreateWithoutCommentsInput {
+  id: ID
+  isUpdate: Boolean
+  owner: UserCreateOneInput
+  parentPost: PostCreateOneWithoutCommentsInput!
+  parentComment: CommentCreateOneWithoutCommentsInput
+  content: String
+  image: String
+  likes: CommentLikeCreateManyWithoutParentInput
+}
+
+input CommentCreateWithoutLikesInput {
+  id: ID
+  isUpdate: Boolean
+  owner: UserCreateOneInput
+  parentPost: PostCreateOneWithoutCommentsInput!
+  parentComment: CommentCreateOneWithoutCommentsInput
+  content: String
+  image: String
+  comments: CommentCreateManyWithoutParentCommentInput
+}
+
+input CommentCreateWithoutParentCommentInput {
+  id: ID
+  isUpdate: Boolean
+  owner: UserCreateOneInput
+  parentPost: PostCreateOneWithoutCommentsInput!
+  content: String
+  image: String
+  likes: CommentLikeCreateManyWithoutParentInput
+  comments: CommentCreateManyWithoutParentCommentInput
+}
+
+input CommentCreateWithoutParentPostInput {
+  id: ID
+  isUpdate: Boolean
+  owner: UserCreateOneInput
+  parentComment: CommentCreateOneWithoutCommentsInput
+  content: String
+  image: String
+  likes: CommentLikeCreateManyWithoutParentInput
+  comments: CommentCreateManyWithoutParentCommentInput
+}
+
+type CommentEdge {
+  node: Comment!
+  cursor: String!
+}
+
+type CommentLike {
+  id: ID!
+  parent: Comment!
+  owner: User!
+}
+
+type CommentLikeConnection {
+  pageInfo: PageInfo!
+  edges: [CommentLikeEdge]!
+  aggregate: AggregateCommentLike!
+}
+
+input CommentLikeCreateInput {
+  id: ID
+  parent: CommentCreateOneWithoutLikesInput!
+  owner: UserCreateOneInput!
+}
+
+input CommentLikeCreateManyWithoutParentInput {
+  create: [CommentLikeCreateWithoutParentInput!]
+  connect: [CommentLikeWhereUniqueInput!]
+}
+
+input CommentLikeCreateWithoutParentInput {
+  id: ID
+  owner: UserCreateOneInput!
+}
+
+type CommentLikeEdge {
+  node: CommentLike!
+  cursor: String!
+}
+
+enum CommentLikeOrderByInput {
+  id_ASC
+  id_DESC
+}
+
+type CommentLikePreviousValues {
+  id: ID!
+}
+
+input CommentLikeScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  AND: [CommentLikeScalarWhereInput!]
+  OR: [CommentLikeScalarWhereInput!]
+  NOT: [CommentLikeScalarWhereInput!]
+}
+
+type CommentLikeSubscriptionPayload {
+  mutation: MutationType!
+  node: CommentLike
+  updatedFields: [String!]
+  previousValues: CommentLikePreviousValues
+}
+
+input CommentLikeSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: CommentLikeWhereInput
+  AND: [CommentLikeSubscriptionWhereInput!]
+  OR: [CommentLikeSubscriptionWhereInput!]
+  NOT: [CommentLikeSubscriptionWhereInput!]
+}
+
+input CommentLikeUpdateInput {
+  parent: CommentUpdateOneRequiredWithoutLikesInput
+  owner: UserUpdateOneRequiredInput
+}
+
+input CommentLikeUpdateManyWithoutParentInput {
+  create: [CommentLikeCreateWithoutParentInput!]
+  delete: [CommentLikeWhereUniqueInput!]
+  connect: [CommentLikeWhereUniqueInput!]
+  set: [CommentLikeWhereUniqueInput!]
+  disconnect: [CommentLikeWhereUniqueInput!]
+  update: [CommentLikeUpdateWithWhereUniqueWithoutParentInput!]
+  upsert: [CommentLikeUpsertWithWhereUniqueWithoutParentInput!]
+  deleteMany: [CommentLikeScalarWhereInput!]
+}
+
+input CommentLikeUpdateWithoutParentDataInput {
+  owner: UserUpdateOneRequiredInput
+}
+
+input CommentLikeUpdateWithWhereUniqueWithoutParentInput {
+  where: CommentLikeWhereUniqueInput!
+  data: CommentLikeUpdateWithoutParentDataInput!
+}
+
+input CommentLikeUpsertWithWhereUniqueWithoutParentInput {
+  where: CommentLikeWhereUniqueInput!
+  update: CommentLikeUpdateWithoutParentDataInput!
+  create: CommentLikeCreateWithoutParentInput!
+}
+
+input CommentLikeWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  parent: CommentWhereInput
+  owner: UserWhereInput
+  AND: [CommentLikeWhereInput!]
+  OR: [CommentLikeWhereInput!]
+  NOT: [CommentLikeWhereInput!]
+}
+
+input CommentLikeWhereUniqueInput {
+  id: ID
+}
+
+enum CommentOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  isUpdate_ASC
+  isUpdate_DESC
+  content_ASC
+  content_DESC
+  image_ASC
+  image_DESC
+}
+
+type CommentPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  isUpdate: Boolean!
+  content: String
+  image: String
+}
+
+input CommentScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  isUpdate: Boolean
+  isUpdate_not: Boolean
+  content: String
+  content_not: String
+  content_in: [String!]
+  content_not_in: [String!]
+  content_lt: String
+  content_lte: String
+  content_gt: String
+  content_gte: String
+  content_contains: String
+  content_not_contains: String
+  content_starts_with: String
+  content_not_starts_with: String
+  content_ends_with: String
+  content_not_ends_with: String
+  image: String
+  image_not: String
+  image_in: [String!]
+  image_not_in: [String!]
+  image_lt: String
+  image_lte: String
+  image_gt: String
+  image_gte: String
+  image_contains: String
+  image_not_contains: String
+  image_starts_with: String
+  image_not_starts_with: String
+  image_ends_with: String
+  image_not_ends_with: String
+  AND: [CommentScalarWhereInput!]
+  OR: [CommentScalarWhereInput!]
+  NOT: [CommentScalarWhereInput!]
+}
+
+type CommentSubscriptionPayload {
+  mutation: MutationType!
+  node: Comment
+  updatedFields: [String!]
+  previousValues: CommentPreviousValues
+}
+
+input CommentSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: CommentWhereInput
+  AND: [CommentSubscriptionWhereInput!]
+  OR: [CommentSubscriptionWhereInput!]
+  NOT: [CommentSubscriptionWhereInput!]
+}
+
+input CommentUpdateInput {
+  isUpdate: Boolean
+  owner: UserUpdateOneInput
+  parentPost: PostUpdateOneRequiredWithoutCommentsInput
+  parentComment: CommentUpdateOneWithoutCommentsInput
+  content: String
+  image: String
+  likes: CommentLikeUpdateManyWithoutParentInput
+  comments: CommentUpdateManyWithoutParentCommentInput
+}
+
+input CommentUpdateManyDataInput {
+  isUpdate: Boolean
+  content: String
+  image: String
+}
+
+input CommentUpdateManyMutationInput {
+  isUpdate: Boolean
+  content: String
+  image: String
+}
+
+input CommentUpdateManyWithoutParentCommentInput {
+  create: [CommentCreateWithoutParentCommentInput!]
+  delete: [CommentWhereUniqueInput!]
+  connect: [CommentWhereUniqueInput!]
+  set: [CommentWhereUniqueInput!]
+  disconnect: [CommentWhereUniqueInput!]
+  update: [CommentUpdateWithWhereUniqueWithoutParentCommentInput!]
+  upsert: [CommentUpsertWithWhereUniqueWithoutParentCommentInput!]
+  deleteMany: [CommentScalarWhereInput!]
+  updateMany: [CommentUpdateManyWithWhereNestedInput!]
+}
+
+input CommentUpdateManyWithoutParentPostInput {
+  create: [CommentCreateWithoutParentPostInput!]
+  delete: [CommentWhereUniqueInput!]
+  connect: [CommentWhereUniqueInput!]
+  set: [CommentWhereUniqueInput!]
+  disconnect: [CommentWhereUniqueInput!]
+  update: [CommentUpdateWithWhereUniqueWithoutParentPostInput!]
+  upsert: [CommentUpsertWithWhereUniqueWithoutParentPostInput!]
+  deleteMany: [CommentScalarWhereInput!]
+  updateMany: [CommentUpdateManyWithWhereNestedInput!]
+}
+
+input CommentUpdateManyWithWhereNestedInput {
+  where: CommentScalarWhereInput!
+  data: CommentUpdateManyDataInput!
+}
+
+input CommentUpdateOneRequiredWithoutLikesInput {
+  create: CommentCreateWithoutLikesInput
+  update: CommentUpdateWithoutLikesDataInput
+  upsert: CommentUpsertWithoutLikesInput
+  connect: CommentWhereUniqueInput
+}
+
+input CommentUpdateOneWithoutCommentsInput {
+  create: CommentCreateWithoutCommentsInput
+  update: CommentUpdateWithoutCommentsDataInput
+  upsert: CommentUpsertWithoutCommentsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: CommentWhereUniqueInput
+}
+
+input CommentUpdateWithoutCommentsDataInput {
+  isUpdate: Boolean
+  owner: UserUpdateOneInput
+  parentPost: PostUpdateOneRequiredWithoutCommentsInput
+  parentComment: CommentUpdateOneWithoutCommentsInput
+  content: String
+  image: String
+  likes: CommentLikeUpdateManyWithoutParentInput
+}
+
+input CommentUpdateWithoutLikesDataInput {
+  isUpdate: Boolean
+  owner: UserUpdateOneInput
+  parentPost: PostUpdateOneRequiredWithoutCommentsInput
+  parentComment: CommentUpdateOneWithoutCommentsInput
+  content: String
+  image: String
+  comments: CommentUpdateManyWithoutParentCommentInput
+}
+
+input CommentUpdateWithoutParentCommentDataInput {
+  isUpdate: Boolean
+  owner: UserUpdateOneInput
+  parentPost: PostUpdateOneRequiredWithoutCommentsInput
+  content: String
+  image: String
+  likes: CommentLikeUpdateManyWithoutParentInput
+  comments: CommentUpdateManyWithoutParentCommentInput
+}
+
+input CommentUpdateWithoutParentPostDataInput {
+  isUpdate: Boolean
+  owner: UserUpdateOneInput
+  parentComment: CommentUpdateOneWithoutCommentsInput
+  content: String
+  image: String
+  likes: CommentLikeUpdateManyWithoutParentInput
+  comments: CommentUpdateManyWithoutParentCommentInput
+}
+
+input CommentUpdateWithWhereUniqueWithoutParentCommentInput {
+  where: CommentWhereUniqueInput!
+  data: CommentUpdateWithoutParentCommentDataInput!
+}
+
+input CommentUpdateWithWhereUniqueWithoutParentPostInput {
+  where: CommentWhereUniqueInput!
+  data: CommentUpdateWithoutParentPostDataInput!
+}
+
+input CommentUpsertWithoutCommentsInput {
+  update: CommentUpdateWithoutCommentsDataInput!
+  create: CommentCreateWithoutCommentsInput!
+}
+
+input CommentUpsertWithoutLikesInput {
+  update: CommentUpdateWithoutLikesDataInput!
+  create: CommentCreateWithoutLikesInput!
+}
+
+input CommentUpsertWithWhereUniqueWithoutParentCommentInput {
+  where: CommentWhereUniqueInput!
+  update: CommentUpdateWithoutParentCommentDataInput!
+  create: CommentCreateWithoutParentCommentInput!
+}
+
+input CommentUpsertWithWhereUniqueWithoutParentPostInput {
+  where: CommentWhereUniqueInput!
+  update: CommentUpdateWithoutParentPostDataInput!
+  create: CommentCreateWithoutParentPostInput!
+}
+
+input CommentWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  isUpdate: Boolean
+  isUpdate_not: Boolean
+  owner: UserWhereInput
+  parentPost: PostWhereInput
+  parentComment: CommentWhereInput
+  content: String
+  content_not: String
+  content_in: [String!]
+  content_not_in: [String!]
+  content_lt: String
+  content_lte: String
+  content_gt: String
+  content_gte: String
+  content_contains: String
+  content_not_contains: String
+  content_starts_with: String
+  content_not_starts_with: String
+  content_ends_with: String
+  content_not_ends_with: String
+  image: String
+  image_not: String
+  image_in: [String!]
+  image_not_in: [String!]
+  image_lt: String
+  image_lte: String
+  image_gt: String
+  image_gte: String
+  image_contains: String
+  image_not_contains: String
+  image_starts_with: String
+  image_not_starts_with: String
+  image_ends_with: String
+  image_not_ends_with: String
+  likes_every: CommentLikeWhereInput
+  likes_some: CommentLikeWhereInput
+  likes_none: CommentLikeWhereInput
+  comments_every: CommentWhereInput
+  comments_some: CommentWhereInput
+  comments_none: CommentWhereInput
+  AND: [CommentWhereInput!]
+  OR: [CommentWhereInput!]
+  NOT: [CommentWhereInput!]
+}
+
+input CommentWhereUniqueInput {
+  id: ID
+}
+
+scalar DateTime
+
+type Education {
+  id: ID!
+  owner: User!
+  name: String!
+  subText: String!
+  startDateMonth: String!
+  startDateYear: Int!
+  endDateMonth: String
+  endDateYear: Int
+  location: String
+  currentRole: Boolean
+}
+
+type EducationConnection {
+  pageInfo: PageInfo!
+  edges: [EducationEdge]!
+  aggregate: AggregateEducation!
+}
+
+input EducationCreateInput {
+  id: ID
+  owner: UserCreateOneWithoutEducationInput!
+  name: String!
+  subText: String!
+  startDateMonth: String!
+  startDateYear: Int!
+  endDateMonth: String
+  endDateYear: Int
+  location: String
+  currentRole: Boolean
+}
+
+input EducationCreateManyWithoutOwnerInput {
+  create: [EducationCreateWithoutOwnerInput!]
+  connect: [EducationWhereUniqueInput!]
+}
+
+input EducationCreateWithoutOwnerInput {
+  id: ID
+  name: String!
+  subText: String!
+  startDateMonth: String!
+  startDateYear: Int!
+  endDateMonth: String
+  endDateYear: Int
+  location: String
+  currentRole: Boolean
+}
+
+type EducationEdge {
+  node: Education!
+  cursor: String!
+}
+
+enum EducationOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  subText_ASC
+  subText_DESC
+  startDateMonth_ASC
+  startDateMonth_DESC
+  startDateYear_ASC
+  startDateYear_DESC
+  endDateMonth_ASC
+  endDateMonth_DESC
+  endDateYear_ASC
+  endDateYear_DESC
+  location_ASC
+  location_DESC
+  currentRole_ASC
+  currentRole_DESC
+}
+
+type EducationPreviousValues {
+  id: ID!
+  name: String!
+  subText: String!
+  startDateMonth: String!
+  startDateYear: Int!
+  endDateMonth: String
+  endDateYear: Int
+  location: String
+  currentRole: Boolean
+}
+
+input EducationScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  subText: String
+  subText_not: String
+  subText_in: [String!]
+  subText_not_in: [String!]
+  subText_lt: String
+  subText_lte: String
+  subText_gt: String
+  subText_gte: String
+  subText_contains: String
+  subText_not_contains: String
+  subText_starts_with: String
+  subText_not_starts_with: String
+  subText_ends_with: String
+  subText_not_ends_with: String
+  startDateMonth: String
+  startDateMonth_not: String
+  startDateMonth_in: [String!]
+  startDateMonth_not_in: [String!]
+  startDateMonth_lt: String
+  startDateMonth_lte: String
+  startDateMonth_gt: String
+  startDateMonth_gte: String
+  startDateMonth_contains: String
+  startDateMonth_not_contains: String
+  startDateMonth_starts_with: String
+  startDateMonth_not_starts_with: String
+  startDateMonth_ends_with: String
+  startDateMonth_not_ends_with: String
+  startDateYear: Int
+  startDateYear_not: Int
+  startDateYear_in: [Int!]
+  startDateYear_not_in: [Int!]
+  startDateYear_lt: Int
+  startDateYear_lte: Int
+  startDateYear_gt: Int
+  startDateYear_gte: Int
+  endDateMonth: String
+  endDateMonth_not: String
+  endDateMonth_in: [String!]
+  endDateMonth_not_in: [String!]
+  endDateMonth_lt: String
+  endDateMonth_lte: String
+  endDateMonth_gt: String
+  endDateMonth_gte: String
+  endDateMonth_contains: String
+  endDateMonth_not_contains: String
+  endDateMonth_starts_with: String
+  endDateMonth_not_starts_with: String
+  endDateMonth_ends_with: String
+  endDateMonth_not_ends_with: String
+  endDateYear: Int
+  endDateYear_not: Int
+  endDateYear_in: [Int!]
+  endDateYear_not_in: [Int!]
+  endDateYear_lt: Int
+  endDateYear_lte: Int
+  endDateYear_gt: Int
+  endDateYear_gte: Int
+  location: String
+  location_not: String
+  location_in: [String!]
+  location_not_in: [String!]
+  location_lt: String
+  location_lte: String
+  location_gt: String
+  location_gte: String
+  location_contains: String
+  location_not_contains: String
+  location_starts_with: String
+  location_not_starts_with: String
+  location_ends_with: String
+  location_not_ends_with: String
+  currentRole: Boolean
+  currentRole_not: Boolean
+  AND: [EducationScalarWhereInput!]
+  OR: [EducationScalarWhereInput!]
+  NOT: [EducationScalarWhereInput!]
+}
+
+type EducationSubscriptionPayload {
+  mutation: MutationType!
+  node: Education
+  updatedFields: [String!]
+  previousValues: EducationPreviousValues
+}
+
+input EducationSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: EducationWhereInput
+  AND: [EducationSubscriptionWhereInput!]
+  OR: [EducationSubscriptionWhereInput!]
+  NOT: [EducationSubscriptionWhereInput!]
+}
+
+input EducationUpdateInput {
+  owner: UserUpdateOneRequiredWithoutEducationInput
+  name: String
+  subText: String
+  startDateMonth: String
+  startDateYear: Int
+  endDateMonth: String
+  endDateYear: Int
+  location: String
+  currentRole: Boolean
+}
+
+input EducationUpdateManyDataInput {
+  name: String
+  subText: String
+  startDateMonth: String
+  startDateYear: Int
+  endDateMonth: String
+  endDateYear: Int
+  location: String
+  currentRole: Boolean
+}
+
+input EducationUpdateManyMutationInput {
+  name: String
+  subText: String
+  startDateMonth: String
+  startDateYear: Int
+  endDateMonth: String
+  endDateYear: Int
+  location: String
+  currentRole: Boolean
+}
+
+input EducationUpdateManyWithoutOwnerInput {
+  create: [EducationCreateWithoutOwnerInput!]
+  delete: [EducationWhereUniqueInput!]
+  connect: [EducationWhereUniqueInput!]
+  set: [EducationWhereUniqueInput!]
+  disconnect: [EducationWhereUniqueInput!]
+  update: [EducationUpdateWithWhereUniqueWithoutOwnerInput!]
+  upsert: [EducationUpsertWithWhereUniqueWithoutOwnerInput!]
+  deleteMany: [EducationScalarWhereInput!]
+  updateMany: [EducationUpdateManyWithWhereNestedInput!]
+}
+
+input EducationUpdateManyWithWhereNestedInput {
+  where: EducationScalarWhereInput!
+  data: EducationUpdateManyDataInput!
+}
+
+input EducationUpdateWithoutOwnerDataInput {
+  name: String
+  subText: String
+  startDateMonth: String
+  startDateYear: Int
+  endDateMonth: String
+  endDateYear: Int
+  location: String
+  currentRole: Boolean
+}
+
+input EducationUpdateWithWhereUniqueWithoutOwnerInput {
+  where: EducationWhereUniqueInput!
+  data: EducationUpdateWithoutOwnerDataInput!
+}
+
+input EducationUpsertWithWhereUniqueWithoutOwnerInput {
+  where: EducationWhereUniqueInput!
+  update: EducationUpdateWithoutOwnerDataInput!
+  create: EducationCreateWithoutOwnerInput!
+}
+
+input EducationWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  owner: UserWhereInput
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  subText: String
+  subText_not: String
+  subText_in: [String!]
+  subText_not_in: [String!]
+  subText_lt: String
+  subText_lte: String
+  subText_gt: String
+  subText_gte: String
+  subText_contains: String
+  subText_not_contains: String
+  subText_starts_with: String
+  subText_not_starts_with: String
+  subText_ends_with: String
+  subText_not_ends_with: String
+  startDateMonth: String
+  startDateMonth_not: String
+  startDateMonth_in: [String!]
+  startDateMonth_not_in: [String!]
+  startDateMonth_lt: String
+  startDateMonth_lte: String
+  startDateMonth_gt: String
+  startDateMonth_gte: String
+  startDateMonth_contains: String
+  startDateMonth_not_contains: String
+  startDateMonth_starts_with: String
+  startDateMonth_not_starts_with: String
+  startDateMonth_ends_with: String
+  startDateMonth_not_ends_with: String
+  startDateYear: Int
+  startDateYear_not: Int
+  startDateYear_in: [Int!]
+  startDateYear_not_in: [Int!]
+  startDateYear_lt: Int
+  startDateYear_lte: Int
+  startDateYear_gt: Int
+  startDateYear_gte: Int
+  endDateMonth: String
+  endDateMonth_not: String
+  endDateMonth_in: [String!]
+  endDateMonth_not_in: [String!]
+  endDateMonth_lt: String
+  endDateMonth_lte: String
+  endDateMonth_gt: String
+  endDateMonth_gte: String
+  endDateMonth_contains: String
+  endDateMonth_not_contains: String
+  endDateMonth_starts_with: String
+  endDateMonth_not_starts_with: String
+  endDateMonth_ends_with: String
+  endDateMonth_not_ends_with: String
+  endDateYear: Int
+  endDateYear_not: Int
+  endDateYear_in: [Int!]
+  endDateYear_not_in: [Int!]
+  endDateYear_lt: Int
+  endDateYear_lte: Int
+  endDateYear_gt: Int
+  endDateYear_gte: Int
+  location: String
+  location_not: String
+  location_in: [String!]
+  location_not_in: [String!]
+  location_lt: String
+  location_lte: String
+  location_gt: String
+  location_gte: String
+  location_contains: String
+  location_not_contains: String
+  location_starts_with: String
+  location_not_starts_with: String
+  location_ends_with: String
+  location_not_ends_with: String
+  currentRole: Boolean
+  currentRole_not: Boolean
+  AND: [EducationWhereInput!]
+  OR: [EducationWhereInput!]
+  NOT: [EducationWhereInput!]
+}
+
+input EducationWhereUniqueInput {
+  id: ID
+}
+
+type Experience {
+  id: ID!
+  owner: User!
+  name: String!
+  subText: String!
+  startDateMonth: String!
+  startDateYear: Int!
+  endDateMonth: String
+  endDateYear: Int
+  location: String
+  currentRole: Boolean
+}
+
+type ExperienceConnection {
+  pageInfo: PageInfo!
+  edges: [ExperienceEdge]!
+  aggregate: AggregateExperience!
+}
+
+input ExperienceCreateInput {
+  id: ID
+  owner: UserCreateOneWithoutExperienceInput!
+  name: String!
+  subText: String!
+  startDateMonth: String!
+  startDateYear: Int!
+  endDateMonth: String
+  endDateYear: Int
+  location: String
+  currentRole: Boolean
+}
+
+input ExperienceCreateManyWithoutOwnerInput {
+  create: [ExperienceCreateWithoutOwnerInput!]
+  connect: [ExperienceWhereUniqueInput!]
+}
+
+input ExperienceCreateWithoutOwnerInput {
+  id: ID
+  name: String!
+  subText: String!
+  startDateMonth: String!
+  startDateYear: Int!
+  endDateMonth: String
+  endDateYear: Int
+  location: String
+  currentRole: Boolean
+}
+
+type ExperienceEdge {
+  node: Experience!
+  cursor: String!
+}
+
+enum ExperienceOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  subText_ASC
+  subText_DESC
+  startDateMonth_ASC
+  startDateMonth_DESC
+  startDateYear_ASC
+  startDateYear_DESC
+  endDateMonth_ASC
+  endDateMonth_DESC
+  endDateYear_ASC
+  endDateYear_DESC
+  location_ASC
+  location_DESC
+  currentRole_ASC
+  currentRole_DESC
+}
+
+type ExperiencePreviousValues {
+  id: ID!
+  name: String!
+  subText: String!
+  startDateMonth: String!
+  startDateYear: Int!
+  endDateMonth: String
+  endDateYear: Int
+  location: String
+  currentRole: Boolean
+}
+
+input ExperienceScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  subText: String
+  subText_not: String
+  subText_in: [String!]
+  subText_not_in: [String!]
+  subText_lt: String
+  subText_lte: String
+  subText_gt: String
+  subText_gte: String
+  subText_contains: String
+  subText_not_contains: String
+  subText_starts_with: String
+  subText_not_starts_with: String
+  subText_ends_with: String
+  subText_not_ends_with: String
+  startDateMonth: String
+  startDateMonth_not: String
+  startDateMonth_in: [String!]
+  startDateMonth_not_in: [String!]
+  startDateMonth_lt: String
+  startDateMonth_lte: String
+  startDateMonth_gt: String
+  startDateMonth_gte: String
+  startDateMonth_contains: String
+  startDateMonth_not_contains: String
+  startDateMonth_starts_with: String
+  startDateMonth_not_starts_with: String
+  startDateMonth_ends_with: String
+  startDateMonth_not_ends_with: String
+  startDateYear: Int
+  startDateYear_not: Int
+  startDateYear_in: [Int!]
+  startDateYear_not_in: [Int!]
+  startDateYear_lt: Int
+  startDateYear_lte: Int
+  startDateYear_gt: Int
+  startDateYear_gte: Int
+  endDateMonth: String
+  endDateMonth_not: String
+  endDateMonth_in: [String!]
+  endDateMonth_not_in: [String!]
+  endDateMonth_lt: String
+  endDateMonth_lte: String
+  endDateMonth_gt: String
+  endDateMonth_gte: String
+  endDateMonth_contains: String
+  endDateMonth_not_contains: String
+  endDateMonth_starts_with: String
+  endDateMonth_not_starts_with: String
+  endDateMonth_ends_with: String
+  endDateMonth_not_ends_with: String
+  endDateYear: Int
+  endDateYear_not: Int
+  endDateYear_in: [Int!]
+  endDateYear_not_in: [Int!]
+  endDateYear_lt: Int
+  endDateYear_lte: Int
+  endDateYear_gt: Int
+  endDateYear_gte: Int
+  location: String
+  location_not: String
+  location_in: [String!]
+  location_not_in: [String!]
+  location_lt: String
+  location_lte: String
+  location_gt: String
+  location_gte: String
+  location_contains: String
+  location_not_contains: String
+  location_starts_with: String
+  location_not_starts_with: String
+  location_ends_with: String
+  location_not_ends_with: String
+  currentRole: Boolean
+  currentRole_not: Boolean
+  AND: [ExperienceScalarWhereInput!]
+  OR: [ExperienceScalarWhereInput!]
+  NOT: [ExperienceScalarWhereInput!]
+}
+
+type ExperienceSubscriptionPayload {
+  mutation: MutationType!
+  node: Experience
+  updatedFields: [String!]
+  previousValues: ExperiencePreviousValues
+}
+
+input ExperienceSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ExperienceWhereInput
+  AND: [ExperienceSubscriptionWhereInput!]
+  OR: [ExperienceSubscriptionWhereInput!]
+  NOT: [ExperienceSubscriptionWhereInput!]
+}
+
+input ExperienceUpdateInput {
+  owner: UserUpdateOneRequiredWithoutExperienceInput
+  name: String
+  subText: String
+  startDateMonth: String
+  startDateYear: Int
+  endDateMonth: String
+  endDateYear: Int
+  location: String
+  currentRole: Boolean
+}
+
+input ExperienceUpdateManyDataInput {
+  name: String
+  subText: String
+  startDateMonth: String
+  startDateYear: Int
+  endDateMonth: String
+  endDateYear: Int
+  location: String
+  currentRole: Boolean
+}
+
+input ExperienceUpdateManyMutationInput {
+  name: String
+  subText: String
+  startDateMonth: String
+  startDateYear: Int
+  endDateMonth: String
+  endDateYear: Int
+  location: String
+  currentRole: Boolean
+}
+
+input ExperienceUpdateManyWithoutOwnerInput {
+  create: [ExperienceCreateWithoutOwnerInput!]
+  delete: [ExperienceWhereUniqueInput!]
+  connect: [ExperienceWhereUniqueInput!]
+  set: [ExperienceWhereUniqueInput!]
+  disconnect: [ExperienceWhereUniqueInput!]
+  update: [ExperienceUpdateWithWhereUniqueWithoutOwnerInput!]
+  upsert: [ExperienceUpsertWithWhereUniqueWithoutOwnerInput!]
+  deleteMany: [ExperienceScalarWhereInput!]
+  updateMany: [ExperienceUpdateManyWithWhereNestedInput!]
+}
+
+input ExperienceUpdateManyWithWhereNestedInput {
+  where: ExperienceScalarWhereInput!
+  data: ExperienceUpdateManyDataInput!
+}
+
+input ExperienceUpdateWithoutOwnerDataInput {
+  name: String
+  subText: String
+  startDateMonth: String
+  startDateYear: Int
+  endDateMonth: String
+  endDateYear: Int
+  location: String
+  currentRole: Boolean
+}
+
+input ExperienceUpdateWithWhereUniqueWithoutOwnerInput {
+  where: ExperienceWhereUniqueInput!
+  data: ExperienceUpdateWithoutOwnerDataInput!
+}
+
+input ExperienceUpsertWithWhereUniqueWithoutOwnerInput {
+  where: ExperienceWhereUniqueInput!
+  update: ExperienceUpdateWithoutOwnerDataInput!
+  create: ExperienceCreateWithoutOwnerInput!
+}
+
+input ExperienceWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  owner: UserWhereInput
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  subText: String
+  subText_not: String
+  subText_in: [String!]
+  subText_not_in: [String!]
+  subText_lt: String
+  subText_lte: String
+  subText_gt: String
+  subText_gte: String
+  subText_contains: String
+  subText_not_contains: String
+  subText_starts_with: String
+  subText_not_starts_with: String
+  subText_ends_with: String
+  subText_not_ends_with: String
+  startDateMonth: String
+  startDateMonth_not: String
+  startDateMonth_in: [String!]
+  startDateMonth_not_in: [String!]
+  startDateMonth_lt: String
+  startDateMonth_lte: String
+  startDateMonth_gt: String
+  startDateMonth_gte: String
+  startDateMonth_contains: String
+  startDateMonth_not_contains: String
+  startDateMonth_starts_with: String
+  startDateMonth_not_starts_with: String
+  startDateMonth_ends_with: String
+  startDateMonth_not_ends_with: String
+  startDateYear: Int
+  startDateYear_not: Int
+  startDateYear_in: [Int!]
+  startDateYear_not_in: [Int!]
+  startDateYear_lt: Int
+  startDateYear_lte: Int
+  startDateYear_gt: Int
+  startDateYear_gte: Int
+  endDateMonth: String
+  endDateMonth_not: String
+  endDateMonth_in: [String!]
+  endDateMonth_not_in: [String!]
+  endDateMonth_lt: String
+  endDateMonth_lte: String
+  endDateMonth_gt: String
+  endDateMonth_gte: String
+  endDateMonth_contains: String
+  endDateMonth_not_contains: String
+  endDateMonth_starts_with: String
+  endDateMonth_not_starts_with: String
+  endDateMonth_ends_with: String
+  endDateMonth_not_ends_with: String
+  endDateYear: Int
+  endDateYear_not: Int
+  endDateYear_in: [Int!]
+  endDateYear_not_in: [Int!]
+  endDateYear_lt: Int
+  endDateYear_lte: Int
+  endDateYear_gt: Int
+  endDateYear_gte: Int
+  location: String
+  location_not: String
+  location_in: [String!]
+  location_not_in: [String!]
+  location_lt: String
+  location_lte: String
+  location_gt: String
+  location_gte: String
+  location_contains: String
+  location_not_contains: String
+  location_starts_with: String
+  location_not_starts_with: String
+  location_ends_with: String
+  location_not_ends_with: String
+  currentRole: Boolean
+  currentRole_not: Boolean
+  AND: [ExperienceWhereInput!]
+  OR: [ExperienceWhereInput!]
+  NOT: [ExperienceWhereInput!]
+}
+
+input ExperienceWhereUniqueInput {
+  id: ID
+}
+
+type Filter {
+  id: ID!
+  owner: User
+}
+
+type FilterConnection {
+  pageInfo: PageInfo!
+  edges: [FilterEdge]!
+  aggregate: AggregateFilter!
+}
+
+input FilterCreateInput {
+  id: ID
+  owner: UserCreateOneWithoutSavedFiltersInput
+}
+
+input FilterCreateManyWithoutOwnerInput {
+  create: [FilterCreateWithoutOwnerInput!]
+  connect: [FilterWhereUniqueInput!]
+}
+
+input FilterCreateWithoutOwnerInput {
+  id: ID
+}
+
+type FilterEdge {
+  node: Filter!
+  cursor: String!
+}
+
+enum FilterOrderByInput {
+  id_ASC
+  id_DESC
+}
+
+type FilterPreviousValues {
+  id: ID!
+}
+
+input FilterScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  AND: [FilterScalarWhereInput!]
+  OR: [FilterScalarWhereInput!]
+  NOT: [FilterScalarWhereInput!]
+}
+
+type FilterSubscriptionPayload {
+  mutation: MutationType!
+  node: Filter
+  updatedFields: [String!]
+  previousValues: FilterPreviousValues
+}
+
+input FilterSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: FilterWhereInput
+  AND: [FilterSubscriptionWhereInput!]
+  OR: [FilterSubscriptionWhereInput!]
+  NOT: [FilterSubscriptionWhereInput!]
+}
+
+input FilterUpdateInput {
+  owner: UserUpdateOneWithoutSavedFiltersInput
+}
+
+input FilterUpdateManyWithoutOwnerInput {
+  create: [FilterCreateWithoutOwnerInput!]
+  delete: [FilterWhereUniqueInput!]
+  connect: [FilterWhereUniqueInput!]
+  set: [FilterWhereUniqueInput!]
+  disconnect: [FilterWhereUniqueInput!]
+  deleteMany: [FilterScalarWhereInput!]
+}
+
+input FilterWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  owner: UserWhereInput
+  AND: [FilterWhereInput!]
+  OR: [FilterWhereInput!]
+  NOT: [FilterWhereInput!]
+}
+
+input FilterWhereUniqueInput {
+  id: ID
+}
+
+scalar Long
+
+type Meeting {
+  id: ID!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  startTime: DateTime!
+  endTime: DateTime!
+  place: String
+}
+
+type MeetingConnection {
+  pageInfo: PageInfo!
+  edges: [MeetingEdge]!
+  aggregate: AggregateMeeting!
+}
+
+input MeetingCreateInput {
+  id: ID
+  users: UserCreateManyWithoutMeetingsInput
+  startTime: DateTime!
+  endTime: DateTime!
+  place: String
+}
+
+input MeetingCreateManyWithoutUsersInput {
+  create: [MeetingCreateWithoutUsersInput!]
+  connect: [MeetingWhereUniqueInput!]
+}
+
+input MeetingCreateWithoutUsersInput {
+  id: ID
+  startTime: DateTime!
+  endTime: DateTime!
+  place: String
+}
+
+type MeetingEdge {
+  node: Meeting!
+  cursor: String!
+}
+
+enum MeetingOrderByInput {
+  id_ASC
+  id_DESC
+  startTime_ASC
+  startTime_DESC
+  endTime_ASC
+  endTime_DESC
+  place_ASC
+  place_DESC
+}
+
+type MeetingPreviousValues {
+  id: ID!
+  startTime: DateTime!
+  endTime: DateTime!
+  place: String
+}
+
+input MeetingScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  startTime: DateTime
+  startTime_not: DateTime
+  startTime_in: [DateTime!]
+  startTime_not_in: [DateTime!]
+  startTime_lt: DateTime
+  startTime_lte: DateTime
+  startTime_gt: DateTime
+  startTime_gte: DateTime
+  endTime: DateTime
+  endTime_not: DateTime
+  endTime_in: [DateTime!]
+  endTime_not_in: [DateTime!]
+  endTime_lt: DateTime
+  endTime_lte: DateTime
+  endTime_gt: DateTime
+  endTime_gte: DateTime
+  place: String
+  place_not: String
+  place_in: [String!]
+  place_not_in: [String!]
+  place_lt: String
+  place_lte: String
+  place_gt: String
+  place_gte: String
+  place_contains: String
+  place_not_contains: String
+  place_starts_with: String
+  place_not_starts_with: String
+  place_ends_with: String
+  place_not_ends_with: String
+  AND: [MeetingScalarWhereInput!]
+  OR: [MeetingScalarWhereInput!]
+  NOT: [MeetingScalarWhereInput!]
+}
+
+type MeetingSubscriptionPayload {
+  mutation: MutationType!
+  node: Meeting
+  updatedFields: [String!]
+  previousValues: MeetingPreviousValues
+}
+
+input MeetingSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: MeetingWhereInput
+  AND: [MeetingSubscriptionWhereInput!]
+  OR: [MeetingSubscriptionWhereInput!]
+  NOT: [MeetingSubscriptionWhereInput!]
+}
+
+input MeetingUpdateInput {
+  users: UserUpdateManyWithoutMeetingsInput
+  startTime: DateTime
+  endTime: DateTime
+  place: String
+}
+
+input MeetingUpdateManyDataInput {
+  startTime: DateTime
+  endTime: DateTime
+  place: String
+}
+
+input MeetingUpdateManyMutationInput {
+  startTime: DateTime
+  endTime: DateTime
+  place: String
+}
+
+input MeetingUpdateManyWithoutUsersInput {
+  create: [MeetingCreateWithoutUsersInput!]
+  delete: [MeetingWhereUniqueInput!]
+  connect: [MeetingWhereUniqueInput!]
+  set: [MeetingWhereUniqueInput!]
+  disconnect: [MeetingWhereUniqueInput!]
+  update: [MeetingUpdateWithWhereUniqueWithoutUsersInput!]
+  upsert: [MeetingUpsertWithWhereUniqueWithoutUsersInput!]
+  deleteMany: [MeetingScalarWhereInput!]
+  updateMany: [MeetingUpdateManyWithWhereNestedInput!]
+}
+
+input MeetingUpdateManyWithWhereNestedInput {
+  where: MeetingScalarWhereInput!
+  data: MeetingUpdateManyDataInput!
+}
+
+input MeetingUpdateWithoutUsersDataInput {
+  startTime: DateTime
+  endTime: DateTime
+  place: String
+}
+
+input MeetingUpdateWithWhereUniqueWithoutUsersInput {
+  where: MeetingWhereUniqueInput!
+  data: MeetingUpdateWithoutUsersDataInput!
+}
+
+input MeetingUpsertWithWhereUniqueWithoutUsersInput {
+  where: MeetingWhereUniqueInput!
+  update: MeetingUpdateWithoutUsersDataInput!
+  create: MeetingCreateWithoutUsersInput!
+}
+
+input MeetingWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  users_every: UserWhereInput
+  users_some: UserWhereInput
+  users_none: UserWhereInput
+  startTime: DateTime
+  startTime_not: DateTime
+  startTime_in: [DateTime!]
+  startTime_not_in: [DateTime!]
+  startTime_lt: DateTime
+  startTime_lte: DateTime
+  startTime_gt: DateTime
+  startTime_gte: DateTime
+  endTime: DateTime
+  endTime_not: DateTime
+  endTime_in: [DateTime!]
+  endTime_not_in: [DateTime!]
+  endTime_lt: DateTime
+  endTime_lte: DateTime
+  endTime_gt: DateTime
+  endTime_gte: DateTime
+  place: String
+  place_not: String
+  place_in: [String!]
+  place_not_in: [String!]
+  place_lt: String
+  place_lte: String
+  place_gt: String
+  place_gte: String
+  place_contains: String
+  place_not_contains: String
+  place_starts_with: String
+  place_not_starts_with: String
+  place_ends_with: String
+  place_not_ends_with: String
+  AND: [MeetingWhereInput!]
+  OR: [MeetingWhereInput!]
+  NOT: [MeetingWhereInput!]
+}
+
+input MeetingWhereUniqueInput {
+  id: ID
+}
+
+type Mutation {
+  createComment(data: CommentCreateInput!): Comment!
+  updateComment(data: CommentUpdateInput!, where: CommentWhereUniqueInput!): Comment
+  updateManyComments(data: CommentUpdateManyMutationInput!, where: CommentWhereInput): BatchPayload!
+  upsertComment(where: CommentWhereUniqueInput!, create: CommentCreateInput!, update: CommentUpdateInput!): Comment!
+  deleteComment(where: CommentWhereUniqueInput!): Comment
+  deleteManyComments(where: CommentWhereInput): BatchPayload!
+  createCommentLike(data: CommentLikeCreateInput!): CommentLike!
+  updateCommentLike(data: CommentLikeUpdateInput!, where: CommentLikeWhereUniqueInput!): CommentLike
+  upsertCommentLike(where: CommentLikeWhereUniqueInput!, create: CommentLikeCreateInput!, update: CommentLikeUpdateInput!): CommentLike!
+  deleteCommentLike(where: CommentLikeWhereUniqueInput!): CommentLike
+  deleteManyCommentLikes(where: CommentLikeWhereInput): BatchPayload!
+  createEducation(data: EducationCreateInput!): Education!
+  updateEducation(data: EducationUpdateInput!, where: EducationWhereUniqueInput!): Education
+  updateManyEducations(data: EducationUpdateManyMutationInput!, where: EducationWhereInput): BatchPayload!
+  upsertEducation(where: EducationWhereUniqueInput!, create: EducationCreateInput!, update: EducationUpdateInput!): Education!
+  deleteEducation(where: EducationWhereUniqueInput!): Education
+  deleteManyEducations(where: EducationWhereInput): BatchPayload!
+  createExperience(data: ExperienceCreateInput!): Experience!
+  updateExperience(data: ExperienceUpdateInput!, where: ExperienceWhereUniqueInput!): Experience
+  updateManyExperiences(data: ExperienceUpdateManyMutationInput!, where: ExperienceWhereInput): BatchPayload!
+  upsertExperience(where: ExperienceWhereUniqueInput!, create: ExperienceCreateInput!, update: ExperienceUpdateInput!): Experience!
+  deleteExperience(where: ExperienceWhereUniqueInput!): Experience
+  deleteManyExperiences(where: ExperienceWhereInput): BatchPayload!
+  createFilter(data: FilterCreateInput!): Filter!
+  updateFilter(data: FilterUpdateInput!, where: FilterWhereUniqueInput!): Filter
+  upsertFilter(where: FilterWhereUniqueInput!, create: FilterCreateInput!, update: FilterUpdateInput!): Filter!
+  deleteFilter(where: FilterWhereUniqueInput!): Filter
+  deleteManyFilters(where: FilterWhereInput): BatchPayload!
+  createMeeting(data: MeetingCreateInput!): Meeting!
+  updateMeeting(data: MeetingUpdateInput!, where: MeetingWhereUniqueInput!): Meeting
+  updateManyMeetings(data: MeetingUpdateManyMutationInput!, where: MeetingWhereInput): BatchPayload!
+  upsertMeeting(where: MeetingWhereUniqueInput!, create: MeetingCreateInput!, update: MeetingUpdateInput!): Meeting!
+  deleteMeeting(where: MeetingWhereUniqueInput!): Meeting
+  deleteManyMeetings(where: MeetingWhereInput): BatchPayload!
+  createPost(data: PostCreateInput!): Post!
+  updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
+  updateManyPosts(data: PostUpdateManyMutationInput!, where: PostWhereInput): BatchPayload!
+  upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
+  deletePost(where: PostWhereUniqueInput!): Post
+  deleteManyPosts(where: PostWhereInput): BatchPayload!
+  createPostLike(data: PostLikeCreateInput!): PostLike!
+  updatePostLike(data: PostLikeUpdateInput!, where: PostLikeWhereUniqueInput!): PostLike
+  upsertPostLike(where: PostLikeWhereUniqueInput!, create: PostLikeCreateInput!, update: PostLikeUpdateInput!): PostLike!
+  deletePostLike(where: PostLikeWhereUniqueInput!): PostLike
+  deleteManyPostLikes(where: PostLikeWhereInput): BatchPayload!
+  createSkill(data: SkillCreateInput!): Skill!
+  updateSkill(data: SkillUpdateInput!, where: SkillWhereUniqueInput!): Skill
+  updateManySkills(data: SkillUpdateManyMutationInput!, where: SkillWhereInput): BatchPayload!
+  upsertSkill(where: SkillWhereUniqueInput!, create: SkillCreateInput!, update: SkillUpdateInput!): Skill!
+  deleteSkill(where: SkillWhereUniqueInput!): Skill
+  deleteManySkills(where: SkillWhereInput): BatchPayload!
+  createUser(data: UserCreateInput!): User!
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  deleteUser(where: UserWhereUniqueInput!): User
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type Post {
+  id: ID!
+  createdAt: DateTime!
+  owner: User!
+  isGoal: Boolean!
+  goal: String
+  location: String
+  content: String!
+  tags: [String!]!
+  images: [String!]!
+  video: String
+  pitch: String
+  likes(where: PostLikeWhereInput, orderBy: PostLikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PostLike!]
+  comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
+}
+
+type PostConnection {
+  pageInfo: PageInfo!
+  edges: [PostEdge]!
+  aggregate: AggregatePost!
+}
+
+input PostCreateimagesInput {
+  set: [String!]
+}
+
+input PostCreateInput {
+  id: ID
+  owner: UserCreateOneWithoutPostsInput!
+  isGoal: Boolean
+  goal: String
+  location: String
+  content: String!
+  tags: PostCreatetagsInput
+  images: PostCreateimagesInput
+  video: String
+  pitch: String
+  likes: PostLikeCreateManyWithoutParentInput
+  comments: CommentCreateManyWithoutParentPostInput
+}
+
+input PostCreateManyWithoutOwnerInput {
+  create: [PostCreateWithoutOwnerInput!]
+  connect: [PostWhereUniqueInput!]
+}
+
+input PostCreateOneWithoutCommentsInput {
+  create: PostCreateWithoutCommentsInput
+  connect: PostWhereUniqueInput
+}
+
+input PostCreateOneWithoutLikesInput {
+  create: PostCreateWithoutLikesInput
+  connect: PostWhereUniqueInput
+}
+
+input PostCreatetagsInput {
+  set: [String!]
+}
+
+input PostCreateWithoutCommentsInput {
+  id: ID
+  owner: UserCreateOneWithoutPostsInput!
+  isGoal: Boolean
+  goal: String
+  location: String
+  content: String!
+  tags: PostCreatetagsInput
+  images: PostCreateimagesInput
+  video: String
+  pitch: String
+  likes: PostLikeCreateManyWithoutParentInput
+}
+
+input PostCreateWithoutLikesInput {
+  id: ID
+  owner: UserCreateOneWithoutPostsInput!
+  isGoal: Boolean
+  goal: String
+  location: String
+  content: String!
+  tags: PostCreatetagsInput
+  images: PostCreateimagesInput
+  video: String
+  pitch: String
+  comments: CommentCreateManyWithoutParentPostInput
+}
+
+input PostCreateWithoutOwnerInput {
+  id: ID
+  isGoal: Boolean
+  goal: String
+  location: String
+  content: String!
+  tags: PostCreatetagsInput
+  images: PostCreateimagesInput
+  video: String
+  pitch: String
+  likes: PostLikeCreateManyWithoutParentInput
+  comments: CommentCreateManyWithoutParentPostInput
+}
+
+type PostEdge {
+  node: Post!
+  cursor: String!
+}
+
+type PostLike {
+  id: ID!
+  parent: Post!
+  owner: User!
+}
+
+type PostLikeConnection {
+  pageInfo: PageInfo!
+  edges: [PostLikeEdge]!
+  aggregate: AggregatePostLike!
+}
+
+input PostLikeCreateInput {
+  id: ID
+  parent: PostCreateOneWithoutLikesInput!
+  owner: UserCreateOneInput!
+}
+
+input PostLikeCreateManyWithoutParentInput {
+  create: [PostLikeCreateWithoutParentInput!]
+  connect: [PostLikeWhereUniqueInput!]
+}
+
+input PostLikeCreateWithoutParentInput {
+  id: ID
+  owner: UserCreateOneInput!
+}
+
+type PostLikeEdge {
+  node: PostLike!
+  cursor: String!
+}
+
+enum PostLikeOrderByInput {
+  id_ASC
+  id_DESC
+}
+
+type PostLikePreviousValues {
+  id: ID!
+}
+
+input PostLikeScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  AND: [PostLikeScalarWhereInput!]
+  OR: [PostLikeScalarWhereInput!]
+  NOT: [PostLikeScalarWhereInput!]
+}
+
+type PostLikeSubscriptionPayload {
+  mutation: MutationType!
+  node: PostLike
+  updatedFields: [String!]
+  previousValues: PostLikePreviousValues
+}
+
+input PostLikeSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: PostLikeWhereInput
+  AND: [PostLikeSubscriptionWhereInput!]
+  OR: [PostLikeSubscriptionWhereInput!]
+  NOT: [PostLikeSubscriptionWhereInput!]
+}
+
+input PostLikeUpdateInput {
+  parent: PostUpdateOneRequiredWithoutLikesInput
+  owner: UserUpdateOneRequiredInput
+}
+
+input PostLikeUpdateManyWithoutParentInput {
+  create: [PostLikeCreateWithoutParentInput!]
+  delete: [PostLikeWhereUniqueInput!]
+  connect: [PostLikeWhereUniqueInput!]
+  set: [PostLikeWhereUniqueInput!]
+  disconnect: [PostLikeWhereUniqueInput!]
+  update: [PostLikeUpdateWithWhereUniqueWithoutParentInput!]
+  upsert: [PostLikeUpsertWithWhereUniqueWithoutParentInput!]
+  deleteMany: [PostLikeScalarWhereInput!]
+}
+
+input PostLikeUpdateWithoutParentDataInput {
+  owner: UserUpdateOneRequiredInput
+}
+
+input PostLikeUpdateWithWhereUniqueWithoutParentInput {
+  where: PostLikeWhereUniqueInput!
+  data: PostLikeUpdateWithoutParentDataInput!
+}
+
+input PostLikeUpsertWithWhereUniqueWithoutParentInput {
+  where: PostLikeWhereUniqueInput!
+  update: PostLikeUpdateWithoutParentDataInput!
+  create: PostLikeCreateWithoutParentInput!
+}
+
+input PostLikeWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  parent: PostWhereInput
+  owner: UserWhereInput
+  AND: [PostLikeWhereInput!]
+  OR: [PostLikeWhereInput!]
+  NOT: [PostLikeWhereInput!]
+}
+
+input PostLikeWhereUniqueInput {
+  id: ID
+}
+
+enum PostOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  isGoal_ASC
+  isGoal_DESC
+  goal_ASC
+  goal_DESC
+  location_ASC
+  location_DESC
+  content_ASC
+  content_DESC
+  video_ASC
+  video_DESC
+  pitch_ASC
+  pitch_DESC
+}
+
+type PostPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  isGoal: Boolean!
+  goal: String
+  location: String
+  content: String!
+  tags: [String!]!
+  images: [String!]!
+  video: String
+  pitch: String
+}
+
+input PostScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  isGoal: Boolean
+  isGoal_not: Boolean
+  goal: String
+  goal_not: String
+  goal_in: [String!]
+  goal_not_in: [String!]
+  goal_lt: String
+  goal_lte: String
+  goal_gt: String
+  goal_gte: String
+  goal_contains: String
+  goal_not_contains: String
+  goal_starts_with: String
+  goal_not_starts_with: String
+  goal_ends_with: String
+  goal_not_ends_with: String
+  location: String
+  location_not: String
+  location_in: [String!]
+  location_not_in: [String!]
+  location_lt: String
+  location_lte: String
+  location_gt: String
+  location_gte: String
+  location_contains: String
+  location_not_contains: String
+  location_starts_with: String
+  location_not_starts_with: String
+  location_ends_with: String
+  location_not_ends_with: String
+  content: String
+  content_not: String
+  content_in: [String!]
+  content_not_in: [String!]
+  content_lt: String
+  content_lte: String
+  content_gt: String
+  content_gte: String
+  content_contains: String
+  content_not_contains: String
+  content_starts_with: String
+  content_not_starts_with: String
+  content_ends_with: String
+  content_not_ends_with: String
+  video: String
+  video_not: String
+  video_in: [String!]
+  video_not_in: [String!]
+  video_lt: String
+  video_lte: String
+  video_gt: String
+  video_gte: String
+  video_contains: String
+  video_not_contains: String
+  video_starts_with: String
+  video_not_starts_with: String
+  video_ends_with: String
+  video_not_ends_with: String
+  pitch: String
+  pitch_not: String
+  pitch_in: [String!]
+  pitch_not_in: [String!]
+  pitch_lt: String
+  pitch_lte: String
+  pitch_gt: String
+  pitch_gte: String
+  pitch_contains: String
+  pitch_not_contains: String
+  pitch_starts_with: String
+  pitch_not_starts_with: String
+  pitch_ends_with: String
+  pitch_not_ends_with: String
+  AND: [PostScalarWhereInput!]
+  OR: [PostScalarWhereInput!]
+  NOT: [PostScalarWhereInput!]
+}
+
+type PostSubscriptionPayload {
+  mutation: MutationType!
+  node: Post
+  updatedFields: [String!]
+  previousValues: PostPreviousValues
+}
+
+input PostSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: PostWhereInput
+  AND: [PostSubscriptionWhereInput!]
+  OR: [PostSubscriptionWhereInput!]
+  NOT: [PostSubscriptionWhereInput!]
+}
+
+input PostUpdateimagesInput {
+  set: [String!]
+}
+
+input PostUpdateInput {
+  owner: UserUpdateOneRequiredWithoutPostsInput
+  isGoal: Boolean
+  goal: String
+  location: String
+  content: String
+  tags: PostUpdatetagsInput
+  images: PostUpdateimagesInput
+  video: String
+  pitch: String
+  likes: PostLikeUpdateManyWithoutParentInput
+  comments: CommentUpdateManyWithoutParentPostInput
+}
+
+input PostUpdateManyDataInput {
+  isGoal: Boolean
+  goal: String
+  location: String
+  content: String
+  tags: PostUpdatetagsInput
+  images: PostUpdateimagesInput
+  video: String
+  pitch: String
+}
+
+input PostUpdateManyMutationInput {
+  isGoal: Boolean
+  goal: String
+  location: String
+  content: String
+  tags: PostUpdatetagsInput
+  images: PostUpdateimagesInput
+  video: String
+  pitch: String
+}
+
+input PostUpdateManyWithoutOwnerInput {
+  create: [PostCreateWithoutOwnerInput!]
+  delete: [PostWhereUniqueInput!]
+  connect: [PostWhereUniqueInput!]
+  set: [PostWhereUniqueInput!]
+  disconnect: [PostWhereUniqueInput!]
+  update: [PostUpdateWithWhereUniqueWithoutOwnerInput!]
+  upsert: [PostUpsertWithWhereUniqueWithoutOwnerInput!]
+  deleteMany: [PostScalarWhereInput!]
+  updateMany: [PostUpdateManyWithWhereNestedInput!]
+}
+
+input PostUpdateManyWithWhereNestedInput {
+  where: PostScalarWhereInput!
+  data: PostUpdateManyDataInput!
+}
+
+input PostUpdateOneRequiredWithoutCommentsInput {
+  create: PostCreateWithoutCommentsInput
+  update: PostUpdateWithoutCommentsDataInput
+  upsert: PostUpsertWithoutCommentsInput
+  connect: PostWhereUniqueInput
+}
+
+input PostUpdateOneRequiredWithoutLikesInput {
+  create: PostCreateWithoutLikesInput
+  update: PostUpdateWithoutLikesDataInput
+  upsert: PostUpsertWithoutLikesInput
+  connect: PostWhereUniqueInput
+}
+
+input PostUpdatetagsInput {
+  set: [String!]
+}
+
+input PostUpdateWithoutCommentsDataInput {
+  owner: UserUpdateOneRequiredWithoutPostsInput
+  isGoal: Boolean
+  goal: String
+  location: String
+  content: String
+  tags: PostUpdatetagsInput
+  images: PostUpdateimagesInput
+  video: String
+  pitch: String
+  likes: PostLikeUpdateManyWithoutParentInput
+}
+
+input PostUpdateWithoutLikesDataInput {
+  owner: UserUpdateOneRequiredWithoutPostsInput
+  isGoal: Boolean
+  goal: String
+  location: String
+  content: String
+  tags: PostUpdatetagsInput
+  images: PostUpdateimagesInput
+  video: String
+  pitch: String
+  comments: CommentUpdateManyWithoutParentPostInput
+}
+
+input PostUpdateWithoutOwnerDataInput {
+  isGoal: Boolean
+  goal: String
+  location: String
+  content: String
+  tags: PostUpdatetagsInput
+  images: PostUpdateimagesInput
+  video: String
+  pitch: String
+  likes: PostLikeUpdateManyWithoutParentInput
+  comments: CommentUpdateManyWithoutParentPostInput
+}
+
+input PostUpdateWithWhereUniqueWithoutOwnerInput {
+  where: PostWhereUniqueInput!
+  data: PostUpdateWithoutOwnerDataInput!
+}
+
+input PostUpsertWithoutCommentsInput {
+  update: PostUpdateWithoutCommentsDataInput!
+  create: PostCreateWithoutCommentsInput!
+}
+
+input PostUpsertWithoutLikesInput {
+  update: PostUpdateWithoutLikesDataInput!
+  create: PostCreateWithoutLikesInput!
+}
+
+input PostUpsertWithWhereUniqueWithoutOwnerInput {
+  where: PostWhereUniqueInput!
+  update: PostUpdateWithoutOwnerDataInput!
+  create: PostCreateWithoutOwnerInput!
+}
+
+input PostWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  owner: UserWhereInput
+  isGoal: Boolean
+  isGoal_not: Boolean
+  goal: String
+  goal_not: String
+  goal_in: [String!]
+  goal_not_in: [String!]
+  goal_lt: String
+  goal_lte: String
+  goal_gt: String
+  goal_gte: String
+  goal_contains: String
+  goal_not_contains: String
+  goal_starts_with: String
+  goal_not_starts_with: String
+  goal_ends_with: String
+  goal_not_ends_with: String
+  location: String
+  location_not: String
+  location_in: [String!]
+  location_not_in: [String!]
+  location_lt: String
+  location_lte: String
+  location_gt: String
+  location_gte: String
+  location_contains: String
+  location_not_contains: String
+  location_starts_with: String
+  location_not_starts_with: String
+  location_ends_with: String
+  location_not_ends_with: String
+  content: String
+  content_not: String
+  content_in: [String!]
+  content_not_in: [String!]
+  content_lt: String
+  content_lte: String
+  content_gt: String
+  content_gte: String
+  content_contains: String
+  content_not_contains: String
+  content_starts_with: String
+  content_not_starts_with: String
+  content_ends_with: String
+  content_not_ends_with: String
+  video: String
+  video_not: String
+  video_in: [String!]
+  video_not_in: [String!]
+  video_lt: String
+  video_lte: String
+  video_gt: String
+  video_gte: String
+  video_contains: String
+  video_not_contains: String
+  video_starts_with: String
+  video_not_starts_with: String
+  video_ends_with: String
+  video_not_ends_with: String
+  pitch: String
+  pitch_not: String
+  pitch_in: [String!]
+  pitch_not_in: [String!]
+  pitch_lt: String
+  pitch_lte: String
+  pitch_gt: String
+  pitch_gte: String
+  pitch_contains: String
+  pitch_not_contains: String
+  pitch_starts_with: String
+  pitch_not_starts_with: String
+  pitch_ends_with: String
+  pitch_not_ends_with: String
+  likes_every: PostLikeWhereInput
+  likes_some: PostLikeWhereInput
+  likes_none: PostLikeWhereInput
+  comments_every: CommentWhereInput
+  comments_some: CommentWhereInput
+  comments_none: CommentWhereInput
+  AND: [PostWhereInput!]
+  OR: [PostWhereInput!]
+  NOT: [PostWhereInput!]
+}
+
+input PostWhereUniqueInput {
+  id: ID
+}
+
+type Query {
+  comment(where: CommentWhereUniqueInput!): Comment
+  comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
+  commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
+  commentLike(where: CommentLikeWhereUniqueInput!): CommentLike
+  commentLikes(where: CommentLikeWhereInput, orderBy: CommentLikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CommentLike]!
+  commentLikesConnection(where: CommentLikeWhereInput, orderBy: CommentLikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentLikeConnection!
+  education(where: EducationWhereUniqueInput!): Education
+  educations(where: EducationWhereInput, orderBy: EducationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Education]!
+  educationsConnection(where: EducationWhereInput, orderBy: EducationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EducationConnection!
+  experience(where: ExperienceWhereUniqueInput!): Experience
+  experiences(where: ExperienceWhereInput, orderBy: ExperienceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Experience]!
+  experiencesConnection(where: ExperienceWhereInput, orderBy: ExperienceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ExperienceConnection!
+  filter(where: FilterWhereUniqueInput!): Filter
+  filters(where: FilterWhereInput, orderBy: FilterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Filter]!
+  filtersConnection(where: FilterWhereInput, orderBy: FilterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FilterConnection!
+  meeting(where: MeetingWhereUniqueInput!): Meeting
+  meetings(where: MeetingWhereInput, orderBy: MeetingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Meeting]!
+  meetingsConnection(where: MeetingWhereInput, orderBy: MeetingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MeetingConnection!
+  post(where: PostWhereUniqueInput!): Post
+  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
+  postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
+  postLike(where: PostLikeWhereUniqueInput!): PostLike
+  postLikes(where: PostLikeWhereInput, orderBy: PostLikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PostLike]!
+  postLikesConnection(where: PostLikeWhereInput, orderBy: PostLikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostLikeConnection!
+  skill(where: SkillWhereUniqueInput!): Skill
+  skills(where: SkillWhereInput, orderBy: SkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Skill]!
+  skillsConnection(where: SkillWhereInput, orderBy: SkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SkillConnection!
+  user(where: UserWhereUniqueInput!): User
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  node(id: ID!): Node
+}
+
+enum Role {
+  ADMIN
+  PRO
+  USER
+  BUSINESS
+  SUSPENDED
+}
+
+type Skill {
+  id: ID!
+  owner: User!
+  skill: String!
+  isExpert: Boolean!
+}
+
+type SkillConnection {
+  pageInfo: PageInfo!
+  edges: [SkillEdge]!
+  aggregate: AggregateSkill!
+}
+
+input SkillCreateInput {
+  id: ID
+  owner: UserCreateOneWithoutSkillsInput!
+  skill: String!
+  isExpert: Boolean
+}
+
+input SkillCreateManyWithoutOwnerInput {
+  create: [SkillCreateWithoutOwnerInput!]
+  connect: [SkillWhereUniqueInput!]
+}
+
+input SkillCreateWithoutOwnerInput {
+  id: ID
+  skill: String!
+  isExpert: Boolean
+}
+
+type SkillEdge {
+  node: Skill!
+  cursor: String!
+}
+
+enum SkillOrderByInput {
+  id_ASC
+  id_DESC
+  skill_ASC
+  skill_DESC
+  isExpert_ASC
+  isExpert_DESC
+}
+
+type SkillPreviousValues {
+  id: ID!
+  skill: String!
+  isExpert: Boolean!
+}
+
+input SkillScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  skill: String
+  skill_not: String
+  skill_in: [String!]
+  skill_not_in: [String!]
+  skill_lt: String
+  skill_lte: String
+  skill_gt: String
+  skill_gte: String
+  skill_contains: String
+  skill_not_contains: String
+  skill_starts_with: String
+  skill_not_starts_with: String
+  skill_ends_with: String
+  skill_not_ends_with: String
+  isExpert: Boolean
+  isExpert_not: Boolean
+  AND: [SkillScalarWhereInput!]
+  OR: [SkillScalarWhereInput!]
+  NOT: [SkillScalarWhereInput!]
+}
+
+type SkillSubscriptionPayload {
+  mutation: MutationType!
+  node: Skill
+  updatedFields: [String!]
+  previousValues: SkillPreviousValues
+}
+
+input SkillSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: SkillWhereInput
+  AND: [SkillSubscriptionWhereInput!]
+  OR: [SkillSubscriptionWhereInput!]
+  NOT: [SkillSubscriptionWhereInput!]
+}
+
+input SkillUpdateInput {
+  owner: UserUpdateOneRequiredWithoutSkillsInput
+  skill: String
+  isExpert: Boolean
+}
+
+input SkillUpdateManyDataInput {
+  skill: String
+  isExpert: Boolean
+}
+
+input SkillUpdateManyMutationInput {
+  skill: String
+  isExpert: Boolean
+}
+
+input SkillUpdateManyWithoutOwnerInput {
+  create: [SkillCreateWithoutOwnerInput!]
+  delete: [SkillWhereUniqueInput!]
+  connect: [SkillWhereUniqueInput!]
+  set: [SkillWhereUniqueInput!]
+  disconnect: [SkillWhereUniqueInput!]
+  update: [SkillUpdateWithWhereUniqueWithoutOwnerInput!]
+  upsert: [SkillUpsertWithWhereUniqueWithoutOwnerInput!]
+  deleteMany: [SkillScalarWhereInput!]
+  updateMany: [SkillUpdateManyWithWhereNestedInput!]
+}
+
+input SkillUpdateManyWithWhereNestedInput {
+  where: SkillScalarWhereInput!
+  data: SkillUpdateManyDataInput!
+}
+
+input SkillUpdateWithoutOwnerDataInput {
+  skill: String
+  isExpert: Boolean
+}
+
+input SkillUpdateWithWhereUniqueWithoutOwnerInput {
+  where: SkillWhereUniqueInput!
+  data: SkillUpdateWithoutOwnerDataInput!
+}
+
+input SkillUpsertWithWhereUniqueWithoutOwnerInput {
+  where: SkillWhereUniqueInput!
+  update: SkillUpdateWithoutOwnerDataInput!
+  create: SkillCreateWithoutOwnerInput!
+}
+
+input SkillWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  owner: UserWhereInput
+  skill: String
+  skill_not: String
+  skill_in: [String!]
+  skill_not_in: [String!]
+  skill_lt: String
+  skill_lte: String
+  skill_gt: String
+  skill_gte: String
+  skill_contains: String
+  skill_not_contains: String
+  skill_starts_with: String
+  skill_not_starts_with: String
+  skill_ends_with: String
+  skill_not_ends_with: String
+  isExpert: Boolean
+  isExpert_not: Boolean
+  AND: [SkillWhereInput!]
+  OR: [SkillWhereInput!]
+  NOT: [SkillWhereInput!]
+}
+
+input SkillWhereUniqueInput {
+  id: ID
+}
+
+type Subscription {
+  comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
+  commentLike(where: CommentLikeSubscriptionWhereInput): CommentLikeSubscriptionPayload
+  education(where: EducationSubscriptionWhereInput): EducationSubscriptionPayload
+  experience(where: ExperienceSubscriptionWhereInput): ExperienceSubscriptionPayload
+  filter(where: FilterSubscriptionWhereInput): FilterSubscriptionPayload
+  meeting(where: MeetingSubscriptionWhereInput): MeetingSubscriptionPayload
+  post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
+  postLike(where: PostLikeSubscriptionWhereInput): PostLikeSubscriptionPayload
+  skill(where: SkillSubscriptionWhereInput): SkillSubscriptionPayload
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+}
+
+type User {
+  id: ID!
+  createdAt: DateTime!
+  name: String!
+  email: String!
+  password: String!
+  profilePic: String
+  bannerPic: String
+  location: String
+  jobTitle: String
+  profession: String
+  industry: String
+  website: String
+  bio: String
+  skills(where: SkillWhereInput, orderBy: SkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Skill!]
+  interests: [String!]!
+  experience(where: ExperienceWhereInput, orderBy: ExperienceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Experience!]
+  education(where: EducationWhereInput, orderBy: EducationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Education!]
+  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
+  connections(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  following(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  followers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  intro: String
+  projects: [String!]!
+  meetings(where: MeetingWhereInput, orderBy: MeetingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Meeting!]
+  savedFilters(where: FilterWhereInput, orderBy: FilterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Filter!]
+  rank: Int!
+  roles: [Role!]!
+}
+
+type UserConnection {
+  pageInfo: PageInfo!
+  edges: [UserEdge]!
+  aggregate: AggregateUser!
+}
+
+input UserCreateInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  profilePic: String
+  bannerPic: String
+  location: String
+  jobTitle: String
+  profession: String
+  industry: String
+  website: String
+  bio: String
+  skills: SkillCreateManyWithoutOwnerInput
+  interests: UserCreateinterestsInput
+  experience: ExperienceCreateManyWithoutOwnerInput
+  education: EducationCreateManyWithoutOwnerInput
+  posts: PostCreateManyWithoutOwnerInput
+  connections: UserCreateManyWithoutConnectionsInput
+  following: UserCreateManyWithoutFollowingInput
+  followers: UserCreateManyWithoutFollowersInput
+  intro: String
+  projects: UserCreateprojectsInput
+  meetings: MeetingCreateManyWithoutUsersInput
+  savedFilters: FilterCreateManyWithoutOwnerInput
+  rank: Int
+  roles: UserCreaterolesInput
+}
+
+input UserCreateinterestsInput {
+  set: [String!]
+}
+
+input UserCreateManyWithoutConnectionsInput {
+  create: [UserCreateWithoutConnectionsInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateManyWithoutFollowersInput {
+  create: [UserCreateWithoutFollowersInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateManyWithoutFollowingInput {
+  create: [UserCreateWithoutFollowingInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateManyWithoutMeetingsInput {
+  create: [UserCreateWithoutMeetingsInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutEducationInput {
+  create: UserCreateWithoutEducationInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutExperienceInput {
+  create: UserCreateWithoutExperienceInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutPostsInput {
+  create: UserCreateWithoutPostsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutSavedFiltersInput {
+  create: UserCreateWithoutSavedFiltersInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutSkillsInput {
+  create: UserCreateWithoutSkillsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateprojectsInput {
+  set: [String!]
+}
+
+input UserCreaterolesInput {
+  set: [Role!]
+}
+
+input UserCreateWithoutConnectionsInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  profilePic: String
+  bannerPic: String
+  location: String
+  jobTitle: String
+  profession: String
+  industry: String
+  website: String
+  bio: String
+  skills: SkillCreateManyWithoutOwnerInput
+  interests: UserCreateinterestsInput
+  experience: ExperienceCreateManyWithoutOwnerInput
+  education: EducationCreateManyWithoutOwnerInput
+  posts: PostCreateManyWithoutOwnerInput
+  following: UserCreateManyWithoutFollowingInput
+  followers: UserCreateManyWithoutFollowersInput
+  intro: String
+  projects: UserCreateprojectsInput
+  meetings: MeetingCreateManyWithoutUsersInput
+  savedFilters: FilterCreateManyWithoutOwnerInput
+  rank: Int
+  roles: UserCreaterolesInput
+}
+
+input UserCreateWithoutEducationInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  profilePic: String
+  bannerPic: String
+  location: String
+  jobTitle: String
+  profession: String
+  industry: String
+  website: String
+  bio: String
+  skills: SkillCreateManyWithoutOwnerInput
+  interests: UserCreateinterestsInput
+  experience: ExperienceCreateManyWithoutOwnerInput
+  posts: PostCreateManyWithoutOwnerInput
+  connections: UserCreateManyWithoutConnectionsInput
+  following: UserCreateManyWithoutFollowingInput
+  followers: UserCreateManyWithoutFollowersInput
+  intro: String
+  projects: UserCreateprojectsInput
+  meetings: MeetingCreateManyWithoutUsersInput
+  savedFilters: FilterCreateManyWithoutOwnerInput
+  rank: Int
+  roles: UserCreaterolesInput
+}
+
+input UserCreateWithoutExperienceInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  profilePic: String
+  bannerPic: String
+  location: String
+  jobTitle: String
+  profession: String
+  industry: String
+  website: String
+  bio: String
+  skills: SkillCreateManyWithoutOwnerInput
+  interests: UserCreateinterestsInput
+  education: EducationCreateManyWithoutOwnerInput
+  posts: PostCreateManyWithoutOwnerInput
+  connections: UserCreateManyWithoutConnectionsInput
+  following: UserCreateManyWithoutFollowingInput
+  followers: UserCreateManyWithoutFollowersInput
+  intro: String
+  projects: UserCreateprojectsInput
+  meetings: MeetingCreateManyWithoutUsersInput
+  savedFilters: FilterCreateManyWithoutOwnerInput
+  rank: Int
+  roles: UserCreaterolesInput
+}
+
+input UserCreateWithoutFollowersInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  profilePic: String
+  bannerPic: String
+  location: String
+  jobTitle: String
+  profession: String
+  industry: String
+  website: String
+  bio: String
+  skills: SkillCreateManyWithoutOwnerInput
+  interests: UserCreateinterestsInput
+  experience: ExperienceCreateManyWithoutOwnerInput
+  education: EducationCreateManyWithoutOwnerInput
+  posts: PostCreateManyWithoutOwnerInput
+  connections: UserCreateManyWithoutConnectionsInput
+  following: UserCreateManyWithoutFollowingInput
+  intro: String
+  projects: UserCreateprojectsInput
+  meetings: MeetingCreateManyWithoutUsersInput
+  savedFilters: FilterCreateManyWithoutOwnerInput
+  rank: Int
+  roles: UserCreaterolesInput
+}
+
+input UserCreateWithoutFollowingInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  profilePic: String
+  bannerPic: String
+  location: String
+  jobTitle: String
+  profession: String
+  industry: String
+  website: String
+  bio: String
+  skills: SkillCreateManyWithoutOwnerInput
+  interests: UserCreateinterestsInput
+  experience: ExperienceCreateManyWithoutOwnerInput
+  education: EducationCreateManyWithoutOwnerInput
+  posts: PostCreateManyWithoutOwnerInput
+  connections: UserCreateManyWithoutConnectionsInput
+  followers: UserCreateManyWithoutFollowersInput
+  intro: String
+  projects: UserCreateprojectsInput
+  meetings: MeetingCreateManyWithoutUsersInput
+  savedFilters: FilterCreateManyWithoutOwnerInput
+  rank: Int
+  roles: UserCreaterolesInput
+}
+
+input UserCreateWithoutMeetingsInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  profilePic: String
+  bannerPic: String
+  location: String
+  jobTitle: String
+  profession: String
+  industry: String
+  website: String
+  bio: String
+  skills: SkillCreateManyWithoutOwnerInput
+  interests: UserCreateinterestsInput
+  experience: ExperienceCreateManyWithoutOwnerInput
+  education: EducationCreateManyWithoutOwnerInput
+  posts: PostCreateManyWithoutOwnerInput
+  connections: UserCreateManyWithoutConnectionsInput
+  following: UserCreateManyWithoutFollowingInput
+  followers: UserCreateManyWithoutFollowersInput
+  intro: String
+  projects: UserCreateprojectsInput
+  savedFilters: FilterCreateManyWithoutOwnerInput
+  rank: Int
+  roles: UserCreaterolesInput
+}
+
+input UserCreateWithoutPostsInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  profilePic: String
+  bannerPic: String
+  location: String
+  jobTitle: String
+  profession: String
+  industry: String
+  website: String
+  bio: String
+  skills: SkillCreateManyWithoutOwnerInput
+  interests: UserCreateinterestsInput
+  experience: ExperienceCreateManyWithoutOwnerInput
+  education: EducationCreateManyWithoutOwnerInput
+  connections: UserCreateManyWithoutConnectionsInput
+  following: UserCreateManyWithoutFollowingInput
+  followers: UserCreateManyWithoutFollowersInput
+  intro: String
+  projects: UserCreateprojectsInput
+  meetings: MeetingCreateManyWithoutUsersInput
+  savedFilters: FilterCreateManyWithoutOwnerInput
+  rank: Int
+  roles: UserCreaterolesInput
+}
+
+input UserCreateWithoutSavedFiltersInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  profilePic: String
+  bannerPic: String
+  location: String
+  jobTitle: String
+  profession: String
+  industry: String
+  website: String
+  bio: String
+  skills: SkillCreateManyWithoutOwnerInput
+  interests: UserCreateinterestsInput
+  experience: ExperienceCreateManyWithoutOwnerInput
+  education: EducationCreateManyWithoutOwnerInput
+  posts: PostCreateManyWithoutOwnerInput
+  connections: UserCreateManyWithoutConnectionsInput
+  following: UserCreateManyWithoutFollowingInput
+  followers: UserCreateManyWithoutFollowersInput
+  intro: String
+  projects: UserCreateprojectsInput
+  meetings: MeetingCreateManyWithoutUsersInput
+  rank: Int
+  roles: UserCreaterolesInput
+}
+
+input UserCreateWithoutSkillsInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  profilePic: String
+  bannerPic: String
+  location: String
+  jobTitle: String
+  profession: String
+  industry: String
+  website: String
+  bio: String
+  interests: UserCreateinterestsInput
+  experience: ExperienceCreateManyWithoutOwnerInput
+  education: EducationCreateManyWithoutOwnerInput
+  posts: PostCreateManyWithoutOwnerInput
+  connections: UserCreateManyWithoutConnectionsInput
+  following: UserCreateManyWithoutFollowingInput
+  followers: UserCreateManyWithoutFollowersInput
+  intro: String
+  projects: UserCreateprojectsInput
+  meetings: MeetingCreateManyWithoutUsersInput
+  savedFilters: FilterCreateManyWithoutOwnerInput
+  rank: Int
+  roles: UserCreaterolesInput
+}
+
+type UserEdge {
+  node: User!
+  cursor: String!
+}
+
+enum UserOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  name_ASC
+  name_DESC
+  email_ASC
+  email_DESC
+  password_ASC
+  password_DESC
+  profilePic_ASC
+  profilePic_DESC
+  bannerPic_ASC
+  bannerPic_DESC
+  location_ASC
+  location_DESC
+  jobTitle_ASC
+  jobTitle_DESC
+  profession_ASC
+  profession_DESC
+  industry_ASC
+  industry_DESC
+  website_ASC
+  website_DESC
+  bio_ASC
+  bio_DESC
+  intro_ASC
+  intro_DESC
+  rank_ASC
+  rank_DESC
+}
+
+type UserPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  name: String!
+  email: String!
+  password: String!
+  profilePic: String
+  bannerPic: String
+  location: String
+  jobTitle: String
+  profession: String
+  industry: String
+  website: String
+  bio: String
+  interests: [String!]!
+  intro: String
+  projects: [String!]!
+  rank: Int!
+  roles: [Role!]!
+}
+
+input UserScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  password: String
+  password_not: String
+  password_in: [String!]
+  password_not_in: [String!]
+  password_lt: String
+  password_lte: String
+  password_gt: String
+  password_gte: String
+  password_contains: String
+  password_not_contains: String
+  password_starts_with: String
+  password_not_starts_with: String
+  password_ends_with: String
+  password_not_ends_with: String
+  profilePic: String
+  profilePic_not: String
+  profilePic_in: [String!]
+  profilePic_not_in: [String!]
+  profilePic_lt: String
+  profilePic_lte: String
+  profilePic_gt: String
+  profilePic_gte: String
+  profilePic_contains: String
+  profilePic_not_contains: String
+  profilePic_starts_with: String
+  profilePic_not_starts_with: String
+  profilePic_ends_with: String
+  profilePic_not_ends_with: String
+  bannerPic: String
+  bannerPic_not: String
+  bannerPic_in: [String!]
+  bannerPic_not_in: [String!]
+  bannerPic_lt: String
+  bannerPic_lte: String
+  bannerPic_gt: String
+  bannerPic_gte: String
+  bannerPic_contains: String
+  bannerPic_not_contains: String
+  bannerPic_starts_with: String
+  bannerPic_not_starts_with: String
+  bannerPic_ends_with: String
+  bannerPic_not_ends_with: String
+  location: String
+  location_not: String
+  location_in: [String!]
+  location_not_in: [String!]
+  location_lt: String
+  location_lte: String
+  location_gt: String
+  location_gte: String
+  location_contains: String
+  location_not_contains: String
+  location_starts_with: String
+  location_not_starts_with: String
+  location_ends_with: String
+  location_not_ends_with: String
+  jobTitle: String
+  jobTitle_not: String
+  jobTitle_in: [String!]
+  jobTitle_not_in: [String!]
+  jobTitle_lt: String
+  jobTitle_lte: String
+  jobTitle_gt: String
+  jobTitle_gte: String
+  jobTitle_contains: String
+  jobTitle_not_contains: String
+  jobTitle_starts_with: String
+  jobTitle_not_starts_with: String
+  jobTitle_ends_with: String
+  jobTitle_not_ends_with: String
+  profession: String
+  profession_not: String
+  profession_in: [String!]
+  profession_not_in: [String!]
+  profession_lt: String
+  profession_lte: String
+  profession_gt: String
+  profession_gte: String
+  profession_contains: String
+  profession_not_contains: String
+  profession_starts_with: String
+  profession_not_starts_with: String
+  profession_ends_with: String
+  profession_not_ends_with: String
+  industry: String
+  industry_not: String
+  industry_in: [String!]
+  industry_not_in: [String!]
+  industry_lt: String
+  industry_lte: String
+  industry_gt: String
+  industry_gte: String
+  industry_contains: String
+  industry_not_contains: String
+  industry_starts_with: String
+  industry_not_starts_with: String
+  industry_ends_with: String
+  industry_not_ends_with: String
+  website: String
+  website_not: String
+  website_in: [String!]
+  website_not_in: [String!]
+  website_lt: String
+  website_lte: String
+  website_gt: String
+  website_gte: String
+  website_contains: String
+  website_not_contains: String
+  website_starts_with: String
+  website_not_starts_with: String
+  website_ends_with: String
+  website_not_ends_with: String
+  bio: String
+  bio_not: String
+  bio_in: [String!]
+  bio_not_in: [String!]
+  bio_lt: String
+  bio_lte: String
+  bio_gt: String
+  bio_gte: String
+  bio_contains: String
+  bio_not_contains: String
+  bio_starts_with: String
+  bio_not_starts_with: String
+  bio_ends_with: String
+  bio_not_ends_with: String
+  intro: String
+  intro_not: String
+  intro_in: [String!]
+  intro_not_in: [String!]
+  intro_lt: String
+  intro_lte: String
+  intro_gt: String
+  intro_gte: String
+  intro_contains: String
+  intro_not_contains: String
+  intro_starts_with: String
+  intro_not_starts_with: String
+  intro_ends_with: String
+  intro_not_ends_with: String
+  rank: Int
+  rank_not: Int
+  rank_in: [Int!]
+  rank_not_in: [Int!]
+  rank_lt: Int
+  rank_lte: Int
+  rank_gt: Int
+  rank_gte: Int
+  AND: [UserScalarWhereInput!]
+  OR: [UserScalarWhereInput!]
+  NOT: [UserScalarWhereInput!]
+}
+
+type UserSubscriptionPayload {
+  mutation: MutationType!
+  node: User
+  updatedFields: [String!]
+  previousValues: UserPreviousValues
+}
+
+input UserSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: UserWhereInput
+  AND: [UserSubscriptionWhereInput!]
+  OR: [UserSubscriptionWhereInput!]
+  NOT: [UserSubscriptionWhereInput!]
+}
+
+input UserUpdateDataInput {
+  name: String
+  email: String
+  password: String
+  profilePic: String
+  bannerPic: String
+  location: String
+  jobTitle: String
+  profession: String
+  industry: String
+  website: String
+  bio: String
+  skills: SkillUpdateManyWithoutOwnerInput
+  interests: UserUpdateinterestsInput
+  experience: ExperienceUpdateManyWithoutOwnerInput
+  education: EducationUpdateManyWithoutOwnerInput
+  posts: PostUpdateManyWithoutOwnerInput
+  connections: UserUpdateManyWithoutConnectionsInput
+  following: UserUpdateManyWithoutFollowingInput
+  followers: UserUpdateManyWithoutFollowersInput
+  intro: String
+  projects: UserUpdateprojectsInput
+  meetings: MeetingUpdateManyWithoutUsersInput
+  savedFilters: FilterUpdateManyWithoutOwnerInput
+  rank: Int
+  roles: UserUpdaterolesInput
+}
+
+input UserUpdateInput {
+  name: String
+  email: String
+  password: String
+  profilePic: String
+  bannerPic: String
+  location: String
+  jobTitle: String
+  profession: String
+  industry: String
+  website: String
+  bio: String
+  skills: SkillUpdateManyWithoutOwnerInput
+  interests: UserUpdateinterestsInput
+  experience: ExperienceUpdateManyWithoutOwnerInput
+  education: EducationUpdateManyWithoutOwnerInput
+  posts: PostUpdateManyWithoutOwnerInput
+  connections: UserUpdateManyWithoutConnectionsInput
+  following: UserUpdateManyWithoutFollowingInput
+  followers: UserUpdateManyWithoutFollowersInput
+  intro: String
+  projects: UserUpdateprojectsInput
+  meetings: MeetingUpdateManyWithoutUsersInput
+  savedFilters: FilterUpdateManyWithoutOwnerInput
+  rank: Int
+  roles: UserUpdaterolesInput
+}
+
+input UserUpdateinterestsInput {
+  set: [String!]
+}
+
+input UserUpdateManyDataInput {
+  name: String
+  email: String
+  password: String
+  profilePic: String
+  bannerPic: String
+  location: String
+  jobTitle: String
+  profession: String
+  industry: String
+  website: String
+  bio: String
+  interests: UserUpdateinterestsInput
+  intro: String
+  projects: UserUpdateprojectsInput
+  rank: Int
+  roles: UserUpdaterolesInput
+}
+
+input UserUpdateManyMutationInput {
+  name: String
+  email: String
+  password: String
+  profilePic: String
+  bannerPic: String
+  location: String
+  jobTitle: String
+  profession: String
+  industry: String
+  website: String
+  bio: String
+  interests: UserUpdateinterestsInput
+  intro: String
+  projects: UserUpdateprojectsInput
+  rank: Int
+  roles: UserUpdaterolesInput
+}
+
+input UserUpdateManyWithoutConnectionsInput {
+  create: [UserCreateWithoutConnectionsInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutConnectionsInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutConnectionsInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+}
+
+input UserUpdateManyWithoutFollowersInput {
+  create: [UserCreateWithoutFollowersInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutFollowersInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutFollowersInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+}
+
+input UserUpdateManyWithoutFollowingInput {
+  create: [UserCreateWithoutFollowingInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutFollowingInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutFollowingInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+}
+
+input UserUpdateManyWithoutMeetingsInput {
+  create: [UserCreateWithoutMeetingsInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutMeetingsInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutMeetingsInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+}
+
+input UserUpdateManyWithWhereNestedInput {
+  where: UserScalarWhereInput!
+  data: UserUpdateManyDataInput!
+}
+
+input UserUpdateOneInput {
+  create: UserCreateInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneRequiredInput {
+  create: UserCreateInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneRequiredWithoutEducationInput {
+  create: UserCreateWithoutEducationInput
+  update: UserUpdateWithoutEducationDataInput
+  upsert: UserUpsertWithoutEducationInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneRequiredWithoutExperienceInput {
+  create: UserCreateWithoutExperienceInput
+  update: UserUpdateWithoutExperienceDataInput
+  upsert: UserUpsertWithoutExperienceInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneRequiredWithoutPostsInput {
+  create: UserCreateWithoutPostsInput
+  update: UserUpdateWithoutPostsDataInput
+  upsert: UserUpsertWithoutPostsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneRequiredWithoutSkillsInput {
+  create: UserCreateWithoutSkillsInput
+  update: UserUpdateWithoutSkillsDataInput
+  upsert: UserUpsertWithoutSkillsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneWithoutSavedFiltersInput {
+  create: UserCreateWithoutSavedFiltersInput
+  update: UserUpdateWithoutSavedFiltersDataInput
+  upsert: UserUpsertWithoutSavedFiltersInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateprojectsInput {
+  set: [String!]
+}
+
+input UserUpdaterolesInput {
+  set: [Role!]
+}
+
+input UserUpdateWithoutConnectionsDataInput {
+  name: String
+  email: String
+  password: String
+  profilePic: String
+  bannerPic: String
+  location: String
+  jobTitle: String
+  profession: String
+  industry: String
+  website: String
+  bio: String
+  skills: SkillUpdateManyWithoutOwnerInput
+  interests: UserUpdateinterestsInput
+  experience: ExperienceUpdateManyWithoutOwnerInput
+  education: EducationUpdateManyWithoutOwnerInput
+  posts: PostUpdateManyWithoutOwnerInput
+  following: UserUpdateManyWithoutFollowingInput
+  followers: UserUpdateManyWithoutFollowersInput
+  intro: String
+  projects: UserUpdateprojectsInput
+  meetings: MeetingUpdateManyWithoutUsersInput
+  savedFilters: FilterUpdateManyWithoutOwnerInput
+  rank: Int
+  roles: UserUpdaterolesInput
+}
+
+input UserUpdateWithoutEducationDataInput {
+  name: String
+  email: String
+  password: String
+  profilePic: String
+  bannerPic: String
+  location: String
+  jobTitle: String
+  profession: String
+  industry: String
+  website: String
+  bio: String
+  skills: SkillUpdateManyWithoutOwnerInput
+  interests: UserUpdateinterestsInput
+  experience: ExperienceUpdateManyWithoutOwnerInput
+  posts: PostUpdateManyWithoutOwnerInput
+  connections: UserUpdateManyWithoutConnectionsInput
+  following: UserUpdateManyWithoutFollowingInput
+  followers: UserUpdateManyWithoutFollowersInput
+  intro: String
+  projects: UserUpdateprojectsInput
+  meetings: MeetingUpdateManyWithoutUsersInput
+  savedFilters: FilterUpdateManyWithoutOwnerInput
+  rank: Int
+  roles: UserUpdaterolesInput
+}
+
+input UserUpdateWithoutExperienceDataInput {
+  name: String
+  email: String
+  password: String
+  profilePic: String
+  bannerPic: String
+  location: String
+  jobTitle: String
+  profession: String
+  industry: String
+  website: String
+  bio: String
+  skills: SkillUpdateManyWithoutOwnerInput
+  interests: UserUpdateinterestsInput
+  education: EducationUpdateManyWithoutOwnerInput
+  posts: PostUpdateManyWithoutOwnerInput
+  connections: UserUpdateManyWithoutConnectionsInput
+  following: UserUpdateManyWithoutFollowingInput
+  followers: UserUpdateManyWithoutFollowersInput
+  intro: String
+  projects: UserUpdateprojectsInput
+  meetings: MeetingUpdateManyWithoutUsersInput
+  savedFilters: FilterUpdateManyWithoutOwnerInput
+  rank: Int
+  roles: UserUpdaterolesInput
+}
+
+input UserUpdateWithoutFollowersDataInput {
+  name: String
+  email: String
+  password: String
+  profilePic: String
+  bannerPic: String
+  location: String
+  jobTitle: String
+  profession: String
+  industry: String
+  website: String
+  bio: String
+  skills: SkillUpdateManyWithoutOwnerInput
+  interests: UserUpdateinterestsInput
+  experience: ExperienceUpdateManyWithoutOwnerInput
+  education: EducationUpdateManyWithoutOwnerInput
+  posts: PostUpdateManyWithoutOwnerInput
+  connections: UserUpdateManyWithoutConnectionsInput
+  following: UserUpdateManyWithoutFollowingInput
+  intro: String
+  projects: UserUpdateprojectsInput
+  meetings: MeetingUpdateManyWithoutUsersInput
+  savedFilters: FilterUpdateManyWithoutOwnerInput
+  rank: Int
+  roles: UserUpdaterolesInput
+}
+
+input UserUpdateWithoutFollowingDataInput {
+  name: String
+  email: String
+  password: String
+  profilePic: String
+  bannerPic: String
+  location: String
+  jobTitle: String
+  profession: String
+  industry: String
+  website: String
+  bio: String
+  skills: SkillUpdateManyWithoutOwnerInput
+  interests: UserUpdateinterestsInput
+  experience: ExperienceUpdateManyWithoutOwnerInput
+  education: EducationUpdateManyWithoutOwnerInput
+  posts: PostUpdateManyWithoutOwnerInput
+  connections: UserUpdateManyWithoutConnectionsInput
+  followers: UserUpdateManyWithoutFollowersInput
+  intro: String
+  projects: UserUpdateprojectsInput
+  meetings: MeetingUpdateManyWithoutUsersInput
+  savedFilters: FilterUpdateManyWithoutOwnerInput
+  rank: Int
+  roles: UserUpdaterolesInput
+}
+
+input UserUpdateWithoutMeetingsDataInput {
+  name: String
+  email: String
+  password: String
+  profilePic: String
+  bannerPic: String
+  location: String
+  jobTitle: String
+  profession: String
+  industry: String
+  website: String
+  bio: String
+  skills: SkillUpdateManyWithoutOwnerInput
+  interests: UserUpdateinterestsInput
+  experience: ExperienceUpdateManyWithoutOwnerInput
+  education: EducationUpdateManyWithoutOwnerInput
+  posts: PostUpdateManyWithoutOwnerInput
+  connections: UserUpdateManyWithoutConnectionsInput
+  following: UserUpdateManyWithoutFollowingInput
+  followers: UserUpdateManyWithoutFollowersInput
+  intro: String
+  projects: UserUpdateprojectsInput
+  savedFilters: FilterUpdateManyWithoutOwnerInput
+  rank: Int
+  roles: UserUpdaterolesInput
+}
+
+input UserUpdateWithoutPostsDataInput {
+  name: String
+  email: String
+  password: String
+  profilePic: String
+  bannerPic: String
+  location: String
+  jobTitle: String
+  profession: String
+  industry: String
+  website: String
+  bio: String
+  skills: SkillUpdateManyWithoutOwnerInput
+  interests: UserUpdateinterestsInput
+  experience: ExperienceUpdateManyWithoutOwnerInput
+  education: EducationUpdateManyWithoutOwnerInput
+  connections: UserUpdateManyWithoutConnectionsInput
+  following: UserUpdateManyWithoutFollowingInput
+  followers: UserUpdateManyWithoutFollowersInput
+  intro: String
+  projects: UserUpdateprojectsInput
+  meetings: MeetingUpdateManyWithoutUsersInput
+  savedFilters: FilterUpdateManyWithoutOwnerInput
+  rank: Int
+  roles: UserUpdaterolesInput
+}
+
+input UserUpdateWithoutSavedFiltersDataInput {
+  name: String
+  email: String
+  password: String
+  profilePic: String
+  bannerPic: String
+  location: String
+  jobTitle: String
+  profession: String
+  industry: String
+  website: String
+  bio: String
+  skills: SkillUpdateManyWithoutOwnerInput
+  interests: UserUpdateinterestsInput
+  experience: ExperienceUpdateManyWithoutOwnerInput
+  education: EducationUpdateManyWithoutOwnerInput
+  posts: PostUpdateManyWithoutOwnerInput
+  connections: UserUpdateManyWithoutConnectionsInput
+  following: UserUpdateManyWithoutFollowingInput
+  followers: UserUpdateManyWithoutFollowersInput
+  intro: String
+  projects: UserUpdateprojectsInput
+  meetings: MeetingUpdateManyWithoutUsersInput
+  rank: Int
+  roles: UserUpdaterolesInput
+}
+
+input UserUpdateWithoutSkillsDataInput {
+  name: String
+  email: String
+  password: String
+  profilePic: String
+  bannerPic: String
+  location: String
+  jobTitle: String
+  profession: String
+  industry: String
+  website: String
+  bio: String
+  interests: UserUpdateinterestsInput
+  experience: ExperienceUpdateManyWithoutOwnerInput
+  education: EducationUpdateManyWithoutOwnerInput
+  posts: PostUpdateManyWithoutOwnerInput
+  connections: UserUpdateManyWithoutConnectionsInput
+  following: UserUpdateManyWithoutFollowingInput
+  followers: UserUpdateManyWithoutFollowersInput
+  intro: String
+  projects: UserUpdateprojectsInput
+  meetings: MeetingUpdateManyWithoutUsersInput
+  savedFilters: FilterUpdateManyWithoutOwnerInput
+  rank: Int
+  roles: UserUpdaterolesInput
+}
+
+input UserUpdateWithWhereUniqueWithoutConnectionsInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutConnectionsDataInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutFollowersInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutFollowersDataInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutFollowingInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutFollowingDataInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutMeetingsInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutMeetingsDataInput!
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
+}
+
+input UserUpsertWithoutEducationInput {
+  update: UserUpdateWithoutEducationDataInput!
+  create: UserCreateWithoutEducationInput!
+}
+
+input UserUpsertWithoutExperienceInput {
+  update: UserUpdateWithoutExperienceDataInput!
+  create: UserCreateWithoutExperienceInput!
+}
+
+input UserUpsertWithoutPostsInput {
+  update: UserUpdateWithoutPostsDataInput!
+  create: UserCreateWithoutPostsInput!
+}
+
+input UserUpsertWithoutSavedFiltersInput {
+  update: UserUpdateWithoutSavedFiltersDataInput!
+  create: UserCreateWithoutSavedFiltersInput!
+}
+
+input UserUpsertWithoutSkillsInput {
+  update: UserUpdateWithoutSkillsDataInput!
+  create: UserCreateWithoutSkillsInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutConnectionsInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutConnectionsDataInput!
+  create: UserCreateWithoutConnectionsInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutFollowersInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutFollowersDataInput!
+  create: UserCreateWithoutFollowersInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutFollowingInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutFollowingDataInput!
+  create: UserCreateWithoutFollowingInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutMeetingsInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutMeetingsDataInput!
+  create: UserCreateWithoutMeetingsInput!
+}
+
+input UserWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  password: String
+  password_not: String
+  password_in: [String!]
+  password_not_in: [String!]
+  password_lt: String
+  password_lte: String
+  password_gt: String
+  password_gte: String
+  password_contains: String
+  password_not_contains: String
+  password_starts_with: String
+  password_not_starts_with: String
+  password_ends_with: String
+  password_not_ends_with: String
+  profilePic: String
+  profilePic_not: String
+  profilePic_in: [String!]
+  profilePic_not_in: [String!]
+  profilePic_lt: String
+  profilePic_lte: String
+  profilePic_gt: String
+  profilePic_gte: String
+  profilePic_contains: String
+  profilePic_not_contains: String
+  profilePic_starts_with: String
+  profilePic_not_starts_with: String
+  profilePic_ends_with: String
+  profilePic_not_ends_with: String
+  bannerPic: String
+  bannerPic_not: String
+  bannerPic_in: [String!]
+  bannerPic_not_in: [String!]
+  bannerPic_lt: String
+  bannerPic_lte: String
+  bannerPic_gt: String
+  bannerPic_gte: String
+  bannerPic_contains: String
+  bannerPic_not_contains: String
+  bannerPic_starts_with: String
+  bannerPic_not_starts_with: String
+  bannerPic_ends_with: String
+  bannerPic_not_ends_with: String
+  location: String
+  location_not: String
+  location_in: [String!]
+  location_not_in: [String!]
+  location_lt: String
+  location_lte: String
+  location_gt: String
+  location_gte: String
+  location_contains: String
+  location_not_contains: String
+  location_starts_with: String
+  location_not_starts_with: String
+  location_ends_with: String
+  location_not_ends_with: String
+  jobTitle: String
+  jobTitle_not: String
+  jobTitle_in: [String!]
+  jobTitle_not_in: [String!]
+  jobTitle_lt: String
+  jobTitle_lte: String
+  jobTitle_gt: String
+  jobTitle_gte: String
+  jobTitle_contains: String
+  jobTitle_not_contains: String
+  jobTitle_starts_with: String
+  jobTitle_not_starts_with: String
+  jobTitle_ends_with: String
+  jobTitle_not_ends_with: String
+  profession: String
+  profession_not: String
+  profession_in: [String!]
+  profession_not_in: [String!]
+  profession_lt: String
+  profession_lte: String
+  profession_gt: String
+  profession_gte: String
+  profession_contains: String
+  profession_not_contains: String
+  profession_starts_with: String
+  profession_not_starts_with: String
+  profession_ends_with: String
+  profession_not_ends_with: String
+  industry: String
+  industry_not: String
+  industry_in: [String!]
+  industry_not_in: [String!]
+  industry_lt: String
+  industry_lte: String
+  industry_gt: String
+  industry_gte: String
+  industry_contains: String
+  industry_not_contains: String
+  industry_starts_with: String
+  industry_not_starts_with: String
+  industry_ends_with: String
+  industry_not_ends_with: String
+  website: String
+  website_not: String
+  website_in: [String!]
+  website_not_in: [String!]
+  website_lt: String
+  website_lte: String
+  website_gt: String
+  website_gte: String
+  website_contains: String
+  website_not_contains: String
+  website_starts_with: String
+  website_not_starts_with: String
+  website_ends_with: String
+  website_not_ends_with: String
+  bio: String
+  bio_not: String
+  bio_in: [String!]
+  bio_not_in: [String!]
+  bio_lt: String
+  bio_lte: String
+  bio_gt: String
+  bio_gte: String
+  bio_contains: String
+  bio_not_contains: String
+  bio_starts_with: String
+  bio_not_starts_with: String
+  bio_ends_with: String
+  bio_not_ends_with: String
+  skills_every: SkillWhereInput
+  skills_some: SkillWhereInput
+  skills_none: SkillWhereInput
+  experience_every: ExperienceWhereInput
+  experience_some: ExperienceWhereInput
+  experience_none: ExperienceWhereInput
+  education_every: EducationWhereInput
+  education_some: EducationWhereInput
+  education_none: EducationWhereInput
+  posts_every: PostWhereInput
+  posts_some: PostWhereInput
+  posts_none: PostWhereInput
+  connections_every: UserWhereInput
+  connections_some: UserWhereInput
+  connections_none: UserWhereInput
+  following_every: UserWhereInput
+  following_some: UserWhereInput
+  following_none: UserWhereInput
+  followers_every: UserWhereInput
+  followers_some: UserWhereInput
+  followers_none: UserWhereInput
+  intro: String
+  intro_not: String
+  intro_in: [String!]
+  intro_not_in: [String!]
+  intro_lt: String
+  intro_lte: String
+  intro_gt: String
+  intro_gte: String
+  intro_contains: String
+  intro_not_contains: String
+  intro_starts_with: String
+  intro_not_starts_with: String
+  intro_ends_with: String
+  intro_not_ends_with: String
+  meetings_every: MeetingWhereInput
+  meetings_some: MeetingWhereInput
+  meetings_none: MeetingWhereInput
+  savedFilters_every: FilterWhereInput
+  savedFilters_some: FilterWhereInput
+  savedFilters_none: FilterWhereInput
+  rank: Int
+  rank_not: Int
+  rank_in: [Int!]
+  rank_not_in: [Int!]
+  rank_lt: Int
+  rank_lte: Int
+  rank_gt: Int
+  rank_gte: Int
+  AND: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  NOT: [UserWhereInput!]
+}
+
+input UserWhereUniqueInput {
+  id: ID
+  email: String
+}

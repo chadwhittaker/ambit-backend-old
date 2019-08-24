@@ -1,0 +1,124 @@
+enum Role {
+  ADMIN
+  PRO
+  USER
+  BUSINESS
+  SUSPENDED
+}
+
+type User {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  name: String!
+  email: String! @unique
+  password: String!
+  profilePic: String
+  bannerPic: String
+  location: String
+  jobTitle: String
+  profession: String
+  industry: String
+  website: String
+  bio: String
+  skills: [Skill]
+  interests: [String] @scalarList(strategy: RELATION)
+  experience: [Experience] 
+  education: [Education]
+  posts: [Post]
+  connections: [User] @relation(name: "MyConnections")
+  following: [User] @relation(name: "ImFollowing")
+  followers: [User] @relation(name: "MyFollowers")
+  intro: String
+  projects: [String] @scalarList(strategy: RELATION)
+  meetings: [Meeting]
+  savedFilters: [Filter]
+  rank: Int! @default(value: 0)
+  roles: [Role] @scalarList(strategy: RELATION)
+}
+
+type Skill {
+  id: ID! @id
+  owner: User!
+  skill: String!
+  isExpert: Boolean! @default(value: false)
+}
+
+type Experience {
+  id: ID! @id
+  owner: User!
+  name: String!
+  subText: String!
+  startDateMonth: String!
+  startDateYear: Int!
+  endDateMonth: String
+  endDateYear: Int
+  location: String
+  currentRole: Boolean @default(value: false)
+}
+
+type Education {
+  id: ID! @id
+  owner: User!
+  name: String!
+  subText: String!
+  startDateMonth: String!
+  startDateYear: Int!
+  endDateMonth: String
+  endDateYear: Int
+  location: String
+  currentRole: Boolean @default(value: false)
+}
+
+type Post {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  owner: User!
+  isGoal: Boolean! @default(value: false)
+  goal: String
+  location: String
+  content: String!
+  tags: [String] @scalarList(strategy: RELATION)
+  images: [String] @scalarList(strategy: RELATION)
+  video: String
+  pitch: String
+  likes: [PostLike]
+  comments: [Comment] @relation(name: "CommentToPostRelation")
+}
+
+type PostLike {
+  id: ID! @id
+  parent: Post!
+  owner: User!
+}
+
+type Comment {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  isUpdate: Boolean! @default(value: false)
+  owner: User
+  parentPost: Post! @relation(name: "CommentToPostRelation")
+  parentComment: Comment @relation(name: "CommentToCommentRelation")
+  content: String
+  image: String
+  likes: [CommentLike]
+  comments: [Comment] @relation(name: "CommentToCommentRelation")
+}
+
+type CommentLike {
+  id: ID! @id
+  parent: Comment!
+  owner: User!
+}
+
+type Meeting {
+  id: ID! @id
+  users: [User]!
+  startTime: DateTime!
+  endTime: DateTime!
+  place: String
+}
+
+type Filter {
+  id: ID! @id
+  owner: User
+}
