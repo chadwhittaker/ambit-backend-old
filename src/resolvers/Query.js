@@ -1,3 +1,6 @@
+// import { PostOrderByInput } from "../generated/prisma-client/prisma-schema.js";
+// const { PostOrderByInput } = require('../generated/prisma-client/prisma-schema.js')
+
 const Query = {
   async userLoggedIn(parent, args, context) {
     // 1. check if there is a user on the request
@@ -23,6 +26,15 @@ const Query = {
     return users;
   },
 
+  async postsGlobal(parent, args, context) {
+    const posts = await context.prisma.posts(
+      {
+        orderBy: 'lastUpdated_DESC'
+      }
+    );
+
+    return posts
+  }
 };
 
 module.exports = {

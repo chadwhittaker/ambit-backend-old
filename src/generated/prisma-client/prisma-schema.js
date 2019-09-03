@@ -1824,6 +1824,7 @@ type PageInfo {
 type Post {
   id: ID!
   createdAt: DateTime!
+  lastUpdated: DateTime!
   owner: User!
   isGoal: Boolean!
   goal: String
@@ -1833,6 +1834,7 @@ type Post {
   images: [String!]!
   video: String
   pitch: String
+  isPrivate: Boolean!
   likes(where: PostLikeWhereInput, orderBy: PostLikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PostLike!]
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
 }
@@ -1849,6 +1851,7 @@ input PostCreateimagesInput {
 
 input PostCreateInput {
   id: ID
+  lastUpdated: DateTime!
   owner: UserCreateOneWithoutPostsInput!
   isGoal: Boolean
   goal: String
@@ -1858,6 +1861,7 @@ input PostCreateInput {
   images: PostCreateimagesInput
   video: String
   pitch: String
+  isPrivate: Boolean
   likes: PostLikeCreateManyWithoutParentInput
   comments: CommentCreateManyWithoutParentPostInput
 }
@@ -1883,6 +1887,7 @@ input PostCreatetagsInput {
 
 input PostCreateWithoutCommentsInput {
   id: ID
+  lastUpdated: DateTime!
   owner: UserCreateOneWithoutPostsInput!
   isGoal: Boolean
   goal: String
@@ -1892,11 +1897,13 @@ input PostCreateWithoutCommentsInput {
   images: PostCreateimagesInput
   video: String
   pitch: String
+  isPrivate: Boolean
   likes: PostLikeCreateManyWithoutParentInput
 }
 
 input PostCreateWithoutLikesInput {
   id: ID
+  lastUpdated: DateTime!
   owner: UserCreateOneWithoutPostsInput!
   isGoal: Boolean
   goal: String
@@ -1906,11 +1913,13 @@ input PostCreateWithoutLikesInput {
   images: PostCreateimagesInput
   video: String
   pitch: String
+  isPrivate: Boolean
   comments: CommentCreateManyWithoutParentPostInput
 }
 
 input PostCreateWithoutOwnerInput {
   id: ID
+  lastUpdated: DateTime!
   isGoal: Boolean
   goal: String
   location: String
@@ -1919,6 +1928,7 @@ input PostCreateWithoutOwnerInput {
   images: PostCreateimagesInput
   video: String
   pitch: String
+  isPrivate: Boolean
   likes: PostLikeCreateManyWithoutParentInput
   comments: CommentCreateManyWithoutParentPostInput
 }
@@ -2070,6 +2080,8 @@ enum PostOrderByInput {
   id_DESC
   createdAt_ASC
   createdAt_DESC
+  lastUpdated_ASC
+  lastUpdated_DESC
   isGoal_ASC
   isGoal_DESC
   goal_ASC
@@ -2082,11 +2094,14 @@ enum PostOrderByInput {
   video_DESC
   pitch_ASC
   pitch_DESC
+  isPrivate_ASC
+  isPrivate_DESC
 }
 
 type PostPreviousValues {
   id: ID!
   createdAt: DateTime!
+  lastUpdated: DateTime!
   isGoal: Boolean!
   goal: String
   location: String
@@ -2095,6 +2110,7 @@ type PostPreviousValues {
   images: [String!]!
   video: String
   pitch: String
+  isPrivate: Boolean!
 }
 
 input PostScalarWhereInput {
@@ -2120,6 +2136,14 @@ input PostScalarWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
+  lastUpdated: DateTime
+  lastUpdated_not: DateTime
+  lastUpdated_in: [DateTime!]
+  lastUpdated_not_in: [DateTime!]
+  lastUpdated_lt: DateTime
+  lastUpdated_lte: DateTime
+  lastUpdated_gt: DateTime
+  lastUpdated_gte: DateTime
   isGoal: Boolean
   isGoal_not: Boolean
   goal: String
@@ -2192,6 +2216,8 @@ input PostScalarWhereInput {
   pitch_not_starts_with: String
   pitch_ends_with: String
   pitch_not_ends_with: String
+  isPrivate: Boolean
+  isPrivate_not: Boolean
   AND: [PostScalarWhereInput!]
   OR: [PostScalarWhereInput!]
   NOT: [PostScalarWhereInput!]
@@ -2220,6 +2246,7 @@ input PostUpdateimagesInput {
 }
 
 input PostUpdateInput {
+  lastUpdated: DateTime
   owner: UserUpdateOneRequiredWithoutPostsInput
   isGoal: Boolean
   goal: String
@@ -2229,11 +2256,13 @@ input PostUpdateInput {
   images: PostUpdateimagesInput
   video: String
   pitch: String
+  isPrivate: Boolean
   likes: PostLikeUpdateManyWithoutParentInput
   comments: CommentUpdateManyWithoutParentPostInput
 }
 
 input PostUpdateManyDataInput {
+  lastUpdated: DateTime
   isGoal: Boolean
   goal: String
   location: String
@@ -2242,9 +2271,11 @@ input PostUpdateManyDataInput {
   images: PostUpdateimagesInput
   video: String
   pitch: String
+  isPrivate: Boolean
 }
 
 input PostUpdateManyMutationInput {
+  lastUpdated: DateTime
   isGoal: Boolean
   goal: String
   location: String
@@ -2253,6 +2284,7 @@ input PostUpdateManyMutationInput {
   images: PostUpdateimagesInput
   video: String
   pitch: String
+  isPrivate: Boolean
 }
 
 input PostUpdateManyWithoutOwnerInput {
@@ -2291,6 +2323,7 @@ input PostUpdatetagsInput {
 }
 
 input PostUpdateWithoutCommentsDataInput {
+  lastUpdated: DateTime
   owner: UserUpdateOneRequiredWithoutPostsInput
   isGoal: Boolean
   goal: String
@@ -2300,10 +2333,12 @@ input PostUpdateWithoutCommentsDataInput {
   images: PostUpdateimagesInput
   video: String
   pitch: String
+  isPrivate: Boolean
   likes: PostLikeUpdateManyWithoutParentInput
 }
 
 input PostUpdateWithoutLikesDataInput {
+  lastUpdated: DateTime
   owner: UserUpdateOneRequiredWithoutPostsInput
   isGoal: Boolean
   goal: String
@@ -2313,10 +2348,12 @@ input PostUpdateWithoutLikesDataInput {
   images: PostUpdateimagesInput
   video: String
   pitch: String
+  isPrivate: Boolean
   comments: CommentUpdateManyWithoutParentPostInput
 }
 
 input PostUpdateWithoutOwnerDataInput {
+  lastUpdated: DateTime
   isGoal: Boolean
   goal: String
   location: String
@@ -2325,6 +2362,7 @@ input PostUpdateWithoutOwnerDataInput {
   images: PostUpdateimagesInput
   video: String
   pitch: String
+  isPrivate: Boolean
   likes: PostLikeUpdateManyWithoutParentInput
   comments: CommentUpdateManyWithoutParentPostInput
 }
@@ -2373,6 +2411,14 @@ input PostWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
+  lastUpdated: DateTime
+  lastUpdated_not: DateTime
+  lastUpdated_in: [DateTime!]
+  lastUpdated_not_in: [DateTime!]
+  lastUpdated_lt: DateTime
+  lastUpdated_lte: DateTime
+  lastUpdated_gt: DateTime
+  lastUpdated_gte: DateTime
   owner: UserWhereInput
   isGoal: Boolean
   isGoal_not: Boolean
@@ -2446,6 +2492,8 @@ input PostWhereInput {
   pitch_not_starts_with: String
   pitch_ends_with: String
   pitch_not_ends_with: String
+  isPrivate: Boolean
+  isPrivate_not: Boolean
   likes_every: PostLikeWhereInput
   likes_some: PostLikeWhereInput
   likes_none: PostLikeWhereInput

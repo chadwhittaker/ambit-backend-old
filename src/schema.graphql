@@ -6,6 +6,7 @@ type Query {
   userLoggedIn: User
   user(id: ID!): User
   users: [User]!
+  postsGlobal: [Post]!
 }
 
 type Mutation {
@@ -13,12 +14,16 @@ type Mutation {
   login(email: String!, password: String!): AuthPayload
   editBio(id: ID!, name: String, jobTitle: String, profession: String, industry: String, location: String, website: String, bio: String, profilePic: String, bannerPic: String): User
   editSkills(id: ID!, skills: [SkillCreateWithoutOwnerInput!]): User
+
   createExperience(owner: ID!, experience: ExperienceCreateWithoutOwnerInput!): Experience
   editExperience(owner: ID!, id: ID!, experience: ExperienceUpdateInput!): Experience
   deleteExperience(owner: ID!, id: ID!): Experience
+
   createEducation(owner: ID!, education: EducationCreateWithoutOwnerInput!): Education
   editEducation(owner: ID!, id: ID!, education: EducationUpdateInput!): Education
   deleteEducation(owner: ID!, id: ID!): Education
+
+  createPost(owner: ID!, post: PostCreateInput!): Post
 }
 
 type AuthPayload {

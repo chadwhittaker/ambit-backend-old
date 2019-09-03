@@ -254,6 +254,30 @@ const Mutation = {
     return education
   },
 
+  async createPost(parent, args, context) {
+    const id = args.owner
+
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      throw new Error(`You must be logged in to do that`)
+    }
+
+    // 2. check if user on the request owns the profile
+    if (context.request.userId !== id) {
+      throw new Error(`You cannot edit a profile that is not your own`)
+    }
+
+    // 3. create education & connect to owner
+    const post = await context.prisma.createPost(
+      { 
+        ...args.post,
+        lastUpdated: new Date(),
+      }
+    )
+
+    return post
+  },
+
 }
 
 module.exports = {

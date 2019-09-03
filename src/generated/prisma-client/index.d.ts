@@ -543,6 +543,8 @@ export type PostOrderByInput =
   | "id_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
+  | "lastUpdated_ASC"
+  | "lastUpdated_DESC"
   | "isGoal_ASC"
   | "isGoal_DESC"
   | "goal_ASC"
@@ -554,7 +556,9 @@ export type PostOrderByInput =
   | "video_ASC"
   | "video_DESC"
   | "pitch_ASC"
-  | "pitch_DESC";
+  | "pitch_DESC"
+  | "isPrivate_ASC"
+  | "isPrivate_DESC";
 
 export type PostLikeOrderByInput = "id_ASC" | "id_DESC";
 
@@ -754,6 +758,7 @@ export interface PostLikeWhereInput {
 }
 
 export interface PostUpdateWithoutCommentsDataInput {
+  lastUpdated?: Maybe<DateTimeInput>;
   owner?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
@@ -763,6 +768,7 @@ export interface PostUpdateWithoutCommentsDataInput {
   images?: Maybe<PostUpdateimagesInput>;
   video?: Maybe<String>;
   pitch?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
   likes?: Maybe<PostLikeUpdateManyWithoutParentInput>;
 }
 
@@ -789,6 +795,14 @@ export interface PostWhereInput {
   createdAt_lte?: Maybe<DateTimeInput>;
   createdAt_gt?: Maybe<DateTimeInput>;
   createdAt_gte?: Maybe<DateTimeInput>;
+  lastUpdated?: Maybe<DateTimeInput>;
+  lastUpdated_not?: Maybe<DateTimeInput>;
+  lastUpdated_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  lastUpdated_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  lastUpdated_lt?: Maybe<DateTimeInput>;
+  lastUpdated_lte?: Maybe<DateTimeInput>;
+  lastUpdated_gt?: Maybe<DateTimeInput>;
+  lastUpdated_gte?: Maybe<DateTimeInput>;
   owner?: Maybe<UserWhereInput>;
   isGoal?: Maybe<Boolean>;
   isGoal_not?: Maybe<Boolean>;
@@ -862,6 +876,8 @@ export interface PostWhereInput {
   pitch_not_starts_with?: Maybe<String>;
   pitch_ends_with?: Maybe<String>;
   pitch_not_ends_with?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
+  isPrivate_not?: Maybe<Boolean>;
   likes_every?: Maybe<PostLikeWhereInput>;
   likes_some?: Maybe<PostLikeWhereInput>;
   likes_none?: Maybe<PostLikeWhereInput>;
@@ -1525,6 +1541,7 @@ export interface SkillCreateInput {
 }
 
 export interface PostUpdateWithoutOwnerDataInput {
+  lastUpdated?: Maybe<DateTimeInput>;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
   location?: Maybe<String>;
@@ -1533,6 +1550,7 @@ export interface PostUpdateWithoutOwnerDataInput {
   images?: Maybe<PostUpdateimagesInput>;
   video?: Maybe<String>;
   pitch?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
   likes?: Maybe<PostLikeUpdateManyWithoutParentInput>;
   comments?: Maybe<CommentUpdateManyWithoutParentPostInput>;
 }
@@ -1598,6 +1616,7 @@ export interface PostLikeUpdateWithoutParentDataInput {
 }
 
 export interface PostUpdateInput {
+  lastUpdated?: Maybe<DateTimeInput>;
   owner?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
@@ -1607,6 +1626,7 @@ export interface PostUpdateInput {
   images?: Maybe<PostUpdateimagesInput>;
   video?: Maybe<String>;
   pitch?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
   likes?: Maybe<PostLikeUpdateManyWithoutParentInput>;
   comments?: Maybe<CommentUpdateManyWithoutParentPostInput>;
 }
@@ -1856,6 +1876,7 @@ export interface FilterUpdateInput {
 
 export interface PostCreateWithoutOwnerInput {
   id?: Maybe<ID_Input>;
+  lastUpdated: DateTimeInput;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
   location?: Maybe<String>;
@@ -1864,6 +1885,7 @@ export interface PostCreateWithoutOwnerInput {
   images?: Maybe<PostCreateimagesInput>;
   video?: Maybe<String>;
   pitch?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
   likes?: Maybe<PostLikeCreateManyWithoutParentInput>;
   comments?: Maybe<CommentCreateManyWithoutParentPostInput>;
 }
@@ -2005,6 +2027,7 @@ export interface UserUpdateManyWithoutFollowingInput {
 
 export interface PostCreateWithoutCommentsInput {
   id?: Maybe<ID_Input>;
+  lastUpdated: DateTimeInput;
   owner: UserCreateOneWithoutPostsInput;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
@@ -2014,6 +2037,7 @@ export interface PostCreateWithoutCommentsInput {
   images?: Maybe<PostCreateimagesInput>;
   video?: Maybe<String>;
   pitch?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
   likes?: Maybe<PostLikeCreateManyWithoutParentInput>;
 }
 
@@ -3126,6 +3150,7 @@ export interface CommentLikeUpdateManyWithoutParentInput {
 
 export interface PostCreateInput {
   id?: Maybe<ID_Input>;
+  lastUpdated: DateTimeInput;
   owner: UserCreateOneWithoutPostsInput;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
@@ -3135,6 +3160,7 @@ export interface PostCreateInput {
   images?: Maybe<PostCreateimagesInput>;
   video?: Maybe<String>;
   pitch?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
   likes?: Maybe<PostLikeCreateManyWithoutParentInput>;
   comments?: Maybe<CommentCreateManyWithoutParentPostInput>;
 }
@@ -3479,6 +3505,14 @@ export interface PostScalarWhereInput {
   createdAt_lte?: Maybe<DateTimeInput>;
   createdAt_gt?: Maybe<DateTimeInput>;
   createdAt_gte?: Maybe<DateTimeInput>;
+  lastUpdated?: Maybe<DateTimeInput>;
+  lastUpdated_not?: Maybe<DateTimeInput>;
+  lastUpdated_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  lastUpdated_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  lastUpdated_lt?: Maybe<DateTimeInput>;
+  lastUpdated_lte?: Maybe<DateTimeInput>;
+  lastUpdated_gt?: Maybe<DateTimeInput>;
+  lastUpdated_gte?: Maybe<DateTimeInput>;
   isGoal?: Maybe<Boolean>;
   isGoal_not?: Maybe<Boolean>;
   goal?: Maybe<String>;
@@ -3551,6 +3585,8 @@ export interface PostScalarWhereInput {
   pitch_not_starts_with?: Maybe<String>;
   pitch_ends_with?: Maybe<String>;
   pitch_not_ends_with?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
+  isPrivate_not?: Maybe<Boolean>;
   AND?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
   OR?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
   NOT?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
@@ -3572,6 +3608,7 @@ export interface UserUpdateinterestsInput {
 }
 
 export interface PostUpdateManyDataInput {
+  lastUpdated?: Maybe<DateTimeInput>;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
   location?: Maybe<String>;
@@ -3580,6 +3617,7 @@ export interface PostUpdateManyDataInput {
   images?: Maybe<PostUpdateimagesInput>;
   video?: Maybe<String>;
   pitch?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
 }
 
 export interface SkillSubscriptionWhereInput {
@@ -3628,6 +3666,7 @@ export interface FilterCreateInput {
 }
 
 export interface PostUpdateWithoutLikesDataInput {
+  lastUpdated?: Maybe<DateTimeInput>;
   owner?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
@@ -3637,6 +3676,7 @@ export interface PostUpdateWithoutLikesDataInput {
   images?: Maybe<PostUpdateimagesInput>;
   video?: Maybe<String>;
   pitch?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
   comments?: Maybe<CommentUpdateManyWithoutParentPostInput>;
 }
 
@@ -3647,6 +3687,7 @@ export interface CommentLikeCreateInput {
 }
 
 export interface PostUpdateManyMutationInput {
+  lastUpdated?: Maybe<DateTimeInput>;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
   location?: Maybe<String>;
@@ -3655,6 +3696,7 @@ export interface PostUpdateManyMutationInput {
   images?: Maybe<PostUpdateimagesInput>;
   video?: Maybe<String>;
   pitch?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
 }
 
 export interface CommentCreateOneWithoutLikesInput {
@@ -4038,6 +4080,7 @@ export interface UserCreateOneWithoutExperienceInput {
 
 export interface PostCreateWithoutLikesInput {
   id?: Maybe<ID_Input>;
+  lastUpdated: DateTimeInput;
   owner: UserCreateOneWithoutPostsInput;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
@@ -4047,6 +4090,7 @@ export interface PostCreateWithoutLikesInput {
   images?: Maybe<PostCreateimagesInput>;
   video?: Maybe<String>;
   pitch?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
   comments?: Maybe<CommentCreateManyWithoutParentPostInput>;
 }
 
@@ -5065,6 +5109,7 @@ export interface ExperienceSubscriptionPayloadSubscription
 export interface Post {
   id: ID_Output;
   createdAt: DateTimeOutput;
+  lastUpdated: DateTimeOutput;
   isGoal: Boolean;
   goal?: String;
   location?: String;
@@ -5073,11 +5118,13 @@ export interface Post {
   images: String[];
   video?: String;
   pitch?: String;
+  isPrivate: Boolean;
 }
 
 export interface PostPromise extends Promise<Post>, Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
+  lastUpdated: () => Promise<DateTimeOutput>;
   owner: <T = UserPromise>() => T;
   isGoal: () => Promise<Boolean>;
   goal: () => Promise<String>;
@@ -5087,6 +5134,7 @@ export interface PostPromise extends Promise<Post>, Fragmentable {
   images: () => Promise<String[]>;
   video: () => Promise<String>;
   pitch: () => Promise<String>;
+  isPrivate: () => Promise<Boolean>;
   likes: <T = FragmentableArray<PostLike>>(args?: {
     where?: PostLikeWhereInput;
     orderBy?: PostLikeOrderByInput;
@@ -5112,6 +5160,7 @@ export interface PostSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  lastUpdated: () => Promise<AsyncIterator<DateTimeOutput>>;
   owner: <T = UserSubscription>() => T;
   isGoal: () => Promise<AsyncIterator<Boolean>>;
   goal: () => Promise<AsyncIterator<String>>;
@@ -5121,6 +5170,7 @@ export interface PostSubscription
   images: () => Promise<AsyncIterator<String[]>>;
   video: () => Promise<AsyncIterator<String>>;
   pitch: () => Promise<AsyncIterator<String>>;
+  isPrivate: () => Promise<AsyncIterator<Boolean>>;
   likes: <T = Promise<AsyncIterator<PostLikeSubscription>>>(args?: {
     where?: PostLikeWhereInput;
     orderBy?: PostLikeOrderByInput;
@@ -5146,6 +5196,7 @@ export interface PostNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
+  lastUpdated: () => Promise<DateTimeOutput>;
   owner: <T = UserPromise>() => T;
   isGoal: () => Promise<Boolean>;
   goal: () => Promise<String>;
@@ -5155,6 +5206,7 @@ export interface PostNullablePromise
   images: () => Promise<String[]>;
   video: () => Promise<String>;
   pitch: () => Promise<String>;
+  isPrivate: () => Promise<Boolean>;
   likes: <T = FragmentableArray<PostLike>>(args?: {
     where?: PostLikeWhereInput;
     orderBy?: PostLikeOrderByInput;
@@ -6001,6 +6053,7 @@ export interface MeetingNullablePromise
 export interface PostPreviousValues {
   id: ID_Output;
   createdAt: DateTimeOutput;
+  lastUpdated: DateTimeOutput;
   isGoal: Boolean;
   goal?: String;
   location?: String;
@@ -6009,6 +6062,7 @@ export interface PostPreviousValues {
   images: String[];
   video?: String;
   pitch?: String;
+  isPrivate: Boolean;
 }
 
 export interface PostPreviousValuesPromise
@@ -6016,6 +6070,7 @@ export interface PostPreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
+  lastUpdated: () => Promise<DateTimeOutput>;
   isGoal: () => Promise<Boolean>;
   goal: () => Promise<String>;
   location: () => Promise<String>;
@@ -6024,6 +6079,7 @@ export interface PostPreviousValuesPromise
   images: () => Promise<String[]>;
   video: () => Promise<String>;
   pitch: () => Promise<String>;
+  isPrivate: () => Promise<Boolean>;
 }
 
 export interface PostPreviousValuesSubscription
@@ -6031,6 +6087,7 @@ export interface PostPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  lastUpdated: () => Promise<AsyncIterator<DateTimeOutput>>;
   isGoal: () => Promise<AsyncIterator<Boolean>>;
   goal: () => Promise<AsyncIterator<String>>;
   location: () => Promise<AsyncIterator<String>>;
@@ -6039,6 +6096,7 @@ export interface PostPreviousValuesSubscription
   images: () => Promise<AsyncIterator<String[]>>;
   video: () => Promise<AsyncIterator<String>>;
   pitch: () => Promise<AsyncIterator<String>>;
+  isPrivate: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface AggregateEducation {

@@ -72,6 +72,7 @@ type Education {
 type Post {
   id: ID! @id
   createdAt: DateTime! @createdAt
+  lastUpdated: DateTime!
   owner: User!
   isGoal: Boolean! @default(value: false)
   goal: String
@@ -81,6 +82,7 @@ type Post {
   images: [String] @scalarList(strategy: RELATION)
   video: String
   pitch: String
+  isPrivate: Boolean! @default(value: false)
   likes: [PostLike]
   comments: [Comment] @relation(name: "CommentToPostRelation")
 }
