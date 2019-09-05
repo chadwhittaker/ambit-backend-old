@@ -29,6 +29,7 @@ const Query = {
   async postsGlobal(parent, args, context) {
     const posts = await context.prisma.posts(
       {
+        where: { isPrivate: false },
         orderBy: 'lastUpdated_DESC'
       }
     );
