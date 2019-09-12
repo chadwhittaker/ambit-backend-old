@@ -20,6 +20,16 @@ function getUserId(req) {
   return null
 }
 
+function rad2Deg(radians) {
+  return radians * 57.2958
+}
+
+function deg2Rad(degrees) {
+  return degrees / 57.2958
+}
+
 module.exports = {
   getUserId,
+  rad2Deg,
+  deg2Rad,
 };

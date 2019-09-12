@@ -1,5 +1,6 @@
 // import { PostOrderByInput } from "../generated/prisma-client/prisma-schema.js";
 // const { PostOrderByInput } = require('../generated/prisma-client/prisma-schema.js')
+const { rad2Deg, deg2Rad } = require('../utils')
 
 const Query = {
   async userLoggedIn(parent, args, context) {
@@ -30,6 +31,42 @@ const Query = {
     const posts = await context.prisma.posts(
       {
         where: { isPrivate: false },
+        orderBy: 'lastUpdated_DESC'
+      }
+    );
+
+    return posts
+  },
+
+  async postsLocal(parent, { lat, lon, radius }, context) {
+
+    console.log(lat, lon,)
+
+    const EARTH_RADIUS_MI = 3959;
+
+    const distance = radius || 10;
+
+    const maxLat = lat + rad2Deg(distance / EARTH_RADIUS_MI);
+    const minLat = lat - rad2Deg(distance / EARTH_RADIUS_MI);
+
+    const maxLon = lon + rad2Deg(distance / EARTH_RADIUS_MI / Math.cos(deg2Rad(lat)));
+    const minLon = lon - rad2Deg(distance / EARTH_RADIUS_MI / Math.cos(deg2Rad(lat)));
+
+    console.log(minLat, maxLat)
+    console.log(minLon, maxLon)
+
+
+    const posts = await context.prisma.posts(
+      {
+        where: {
+          AND: [
+            { isPrivate: false },
+            { locationLat_gte: minLat },
+            { locationLat_lte: maxLat },
+            { locationLon_gte: minLon },
+            { locationLon_lte: maxLon },
+          ],
+        },
         orderBy: 'lastUpdated_DESC'
       }
     );

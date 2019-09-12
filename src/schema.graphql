@@ -7,12 +7,14 @@ type Query {
   user(id: ID!): User
   users: [User]!
   postsGlobal: [Post]!
+  postsLocal(lat: Float, lon: Float, radius: Int): [Post]!
 }
 
 type Mutation {
   signup(name: String!, email: String!, password: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
-  editBio(id: ID!, name: String, jobTitle: String, profession: String, industry: String, location: String, website: String, bio: String, profilePic: String, bannerPic: String): User
+  # editBio(id: ID!, name: String, jobTitle: String, profession: String, industry: String, location: String, locationCord: [Float], website: String, bio: String, profilePic: String, bannerPic: String): User
+  editBio(id: ID!, data: UserUpdateInput!): User
   editSkills(id: ID!, skills: [SkillCreateWithoutOwnerInput!]): User
 
   createExperience(owner: ID!, experience: ExperienceCreateWithoutOwnerInput!): Experience

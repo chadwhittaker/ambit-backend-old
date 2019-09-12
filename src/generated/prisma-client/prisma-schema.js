@@ -1828,7 +1828,9 @@ type Post {
   owner: User!
   isGoal: Boolean!
   goal: String
-  location: String
+  location: String!
+  locationLat: Float!
+  locationLon: Float!
   content: String!
   tags: [String!]!
   images: [String!]!
@@ -1855,7 +1857,9 @@ input PostCreateInput {
   owner: UserCreateOneWithoutPostsInput!
   isGoal: Boolean
   goal: String
-  location: String
+  location: String!
+  locationLat: Float!
+  locationLon: Float!
   content: String!
   tags: PostCreatetagsInput
   images: PostCreateimagesInput
@@ -1891,7 +1895,9 @@ input PostCreateWithoutCommentsInput {
   owner: UserCreateOneWithoutPostsInput!
   isGoal: Boolean
   goal: String
-  location: String
+  location: String!
+  locationLat: Float!
+  locationLon: Float!
   content: String!
   tags: PostCreatetagsInput
   images: PostCreateimagesInput
@@ -1907,7 +1913,9 @@ input PostCreateWithoutLikesInput {
   owner: UserCreateOneWithoutPostsInput!
   isGoal: Boolean
   goal: String
-  location: String
+  location: String!
+  locationLat: Float!
+  locationLon: Float!
   content: String!
   tags: PostCreatetagsInput
   images: PostCreateimagesInput
@@ -1922,7 +1930,9 @@ input PostCreateWithoutOwnerInput {
   lastUpdated: DateTime!
   isGoal: Boolean
   goal: String
-  location: String
+  location: String!
+  locationLat: Float!
+  locationLon: Float!
   content: String!
   tags: PostCreatetagsInput
   images: PostCreateimagesInput
@@ -2088,6 +2098,10 @@ enum PostOrderByInput {
   goal_DESC
   location_ASC
   location_DESC
+  locationLat_ASC
+  locationLat_DESC
+  locationLon_ASC
+  locationLon_DESC
   content_ASC
   content_DESC
   video_ASC
@@ -2104,7 +2118,9 @@ type PostPreviousValues {
   lastUpdated: DateTime!
   isGoal: Boolean!
   goal: String
-  location: String
+  location: String!
+  locationLat: Float!
+  locationLon: Float!
   content: String!
   tags: [String!]!
   images: [String!]!
@@ -2174,6 +2190,22 @@ input PostScalarWhereInput {
   location_not_starts_with: String
   location_ends_with: String
   location_not_ends_with: String
+  locationLat: Float
+  locationLat_not: Float
+  locationLat_in: [Float!]
+  locationLat_not_in: [Float!]
+  locationLat_lt: Float
+  locationLat_lte: Float
+  locationLat_gt: Float
+  locationLat_gte: Float
+  locationLon: Float
+  locationLon_not: Float
+  locationLon_in: [Float!]
+  locationLon_not_in: [Float!]
+  locationLon_lt: Float
+  locationLon_lte: Float
+  locationLon_gt: Float
+  locationLon_gte: Float
   content: String
   content_not: String
   content_in: [String!]
@@ -2251,6 +2283,8 @@ input PostUpdateInput {
   isGoal: Boolean
   goal: String
   location: String
+  locationLat: Float
+  locationLon: Float
   content: String
   tags: PostUpdatetagsInput
   images: PostUpdateimagesInput
@@ -2266,6 +2300,8 @@ input PostUpdateManyDataInput {
   isGoal: Boolean
   goal: String
   location: String
+  locationLat: Float
+  locationLon: Float
   content: String
   tags: PostUpdatetagsInput
   images: PostUpdateimagesInput
@@ -2279,6 +2315,8 @@ input PostUpdateManyMutationInput {
   isGoal: Boolean
   goal: String
   location: String
+  locationLat: Float
+  locationLon: Float
   content: String
   tags: PostUpdatetagsInput
   images: PostUpdateimagesInput
@@ -2328,6 +2366,8 @@ input PostUpdateWithoutCommentsDataInput {
   isGoal: Boolean
   goal: String
   location: String
+  locationLat: Float
+  locationLon: Float
   content: String
   tags: PostUpdatetagsInput
   images: PostUpdateimagesInput
@@ -2343,6 +2383,8 @@ input PostUpdateWithoutLikesDataInput {
   isGoal: Boolean
   goal: String
   location: String
+  locationLat: Float
+  locationLon: Float
   content: String
   tags: PostUpdatetagsInput
   images: PostUpdateimagesInput
@@ -2357,6 +2399,8 @@ input PostUpdateWithoutOwnerDataInput {
   isGoal: Boolean
   goal: String
   location: String
+  locationLat: Float
+  locationLon: Float
   content: String
   tags: PostUpdatetagsInput
   images: PostUpdateimagesInput
@@ -2450,6 +2494,22 @@ input PostWhereInput {
   location_not_starts_with: String
   location_ends_with: String
   location_not_ends_with: String
+  locationLat: Float
+  locationLat_not: Float
+  locationLat_in: [Float!]
+  locationLat_not_in: [Float!]
+  locationLat_lt: Float
+  locationLat_lte: Float
+  locationLat_gt: Float
+  locationLat_gte: Float
+  locationLon: Float
+  locationLon_not: Float
+  locationLon_in: [Float!]
+  locationLon_not_in: [Float!]
+  locationLon_lt: Float
+  locationLon_lte: Float
+  locationLon_gt: Float
+  locationLon_gte: Float
   content: String
   content_not: String
   content_in: [String!]
@@ -2768,6 +2828,8 @@ type User {
   profilePic: String
   bannerPic: String
   location: String
+  locationLat: Float
+  locationLon: Float
   jobTitle: String
   profession: String
   industry: String
@@ -2803,6 +2865,8 @@ input UserCreateInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationLat: Float
+  locationLon: Float
   jobTitle: String
   profession: String
   industry: String
@@ -2894,6 +2958,8 @@ input UserCreateWithoutConnectionsInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationLat: Float
+  locationLon: Float
   jobTitle: String
   profession: String
   industry: String
@@ -2922,6 +2988,8 @@ input UserCreateWithoutEducationInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationLat: Float
+  locationLon: Float
   jobTitle: String
   profession: String
   industry: String
@@ -2950,6 +3018,8 @@ input UserCreateWithoutExperienceInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationLat: Float
+  locationLon: Float
   jobTitle: String
   profession: String
   industry: String
@@ -2978,6 +3048,8 @@ input UserCreateWithoutFollowersInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationLat: Float
+  locationLon: Float
   jobTitle: String
   profession: String
   industry: String
@@ -3006,6 +3078,8 @@ input UserCreateWithoutFollowingInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationLat: Float
+  locationLon: Float
   jobTitle: String
   profession: String
   industry: String
@@ -3034,6 +3108,8 @@ input UserCreateWithoutMeetingsInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationLat: Float
+  locationLon: Float
   jobTitle: String
   profession: String
   industry: String
@@ -3062,6 +3138,8 @@ input UserCreateWithoutPostsInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationLat: Float
+  locationLon: Float
   jobTitle: String
   profession: String
   industry: String
@@ -3090,6 +3168,8 @@ input UserCreateWithoutSavedFiltersInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationLat: Float
+  locationLon: Float
   jobTitle: String
   profession: String
   industry: String
@@ -3118,6 +3198,8 @@ input UserCreateWithoutSkillsInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationLat: Float
+  locationLon: Float
   jobTitle: String
   profession: String
   industry: String
@@ -3160,6 +3242,10 @@ enum UserOrderByInput {
   bannerPic_DESC
   location_ASC
   location_DESC
+  locationLat_ASC
+  locationLat_DESC
+  locationLon_ASC
+  locationLon_DESC
   jobTitle_ASC
   jobTitle_DESC
   profession_ASC
@@ -3185,6 +3271,8 @@ type UserPreviousValues {
   profilePic: String
   bannerPic: String
   location: String
+  locationLat: Float
+  locationLon: Float
   jobTitle: String
   profession: String
   industry: String
@@ -3304,6 +3392,22 @@ input UserScalarWhereInput {
   location_not_starts_with: String
   location_ends_with: String
   location_not_ends_with: String
+  locationLat: Float
+  locationLat_not: Float
+  locationLat_in: [Float!]
+  locationLat_not_in: [Float!]
+  locationLat_lt: Float
+  locationLat_lte: Float
+  locationLat_gt: Float
+  locationLat_gte: Float
+  locationLon: Float
+  locationLon_not: Float
+  locationLon_in: [Float!]
+  locationLon_not_in: [Float!]
+  locationLon_lt: Float
+  locationLon_lte: Float
+  locationLon_gt: Float
+  locationLon_gte: Float
   jobTitle: String
   jobTitle_not: String
   jobTitle_in: [String!]
@@ -3426,6 +3530,8 @@ input UserUpdateDataInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationLat: Float
+  locationLon: Float
   jobTitle: String
   profession: String
   industry: String
@@ -3454,6 +3560,8 @@ input UserUpdateInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationLat: Float
+  locationLon: Float
   jobTitle: String
   profession: String
   industry: String
@@ -3486,6 +3594,8 @@ input UserUpdateManyDataInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationLat: Float
+  locationLon: Float
   jobTitle: String
   profession: String
   industry: String
@@ -3505,6 +3615,8 @@ input UserUpdateManyMutationInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationLat: Float
+  locationLon: Float
   jobTitle: String
   profession: String
   industry: String
@@ -3638,6 +3750,8 @@ input UserUpdateWithoutConnectionsDataInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationLat: Float
+  locationLon: Float
   jobTitle: String
   profession: String
   industry: String
@@ -3665,6 +3779,8 @@ input UserUpdateWithoutEducationDataInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationLat: Float
+  locationLon: Float
   jobTitle: String
   profession: String
   industry: String
@@ -3692,6 +3808,8 @@ input UserUpdateWithoutExperienceDataInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationLat: Float
+  locationLon: Float
   jobTitle: String
   profession: String
   industry: String
@@ -3719,6 +3837,8 @@ input UserUpdateWithoutFollowersDataInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationLat: Float
+  locationLon: Float
   jobTitle: String
   profession: String
   industry: String
@@ -3746,6 +3866,8 @@ input UserUpdateWithoutFollowingDataInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationLat: Float
+  locationLon: Float
   jobTitle: String
   profession: String
   industry: String
@@ -3773,6 +3895,8 @@ input UserUpdateWithoutMeetingsDataInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationLat: Float
+  locationLon: Float
   jobTitle: String
   profession: String
   industry: String
@@ -3800,6 +3924,8 @@ input UserUpdateWithoutPostsDataInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationLat: Float
+  locationLon: Float
   jobTitle: String
   profession: String
   industry: String
@@ -3827,6 +3953,8 @@ input UserUpdateWithoutSavedFiltersDataInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationLat: Float
+  locationLon: Float
   jobTitle: String
   profession: String
   industry: String
@@ -3854,6 +3982,8 @@ input UserUpdateWithoutSkillsDataInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationLat: Float
+  locationLon: Float
   jobTitle: String
   profession: String
   industry: String
@@ -4055,6 +4185,22 @@ input UserWhereInput {
   location_not_starts_with: String
   location_ends_with: String
   location_not_ends_with: String
+  locationLat: Float
+  locationLat_not: Float
+  locationLat_in: [Float!]
+  locationLat_not_in: [Float!]
+  locationLat_lt: Float
+  locationLat_lte: Float
+  locationLat_gt: Float
+  locationLat_gte: Float
+  locationLon: Float
+  locationLon_not: Float
+  locationLon_in: [Float!]
+  locationLon_not_in: [Float!]
+  locationLon_lt: Float
+  locationLon_lte: Float
+  locationLon_gt: Float
+  locationLon_gte: Float
   jobTitle: String
   jobTitle_not: String
   jobTitle_in: [String!]

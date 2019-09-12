@@ -67,7 +67,7 @@ const Mutation = {
       { 
         where: { id },
         data: {
-          ...args
+          ...args.data
         }
       },
     )

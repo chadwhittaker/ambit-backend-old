@@ -15,6 +15,8 @@ type User {
   profilePic: String
   bannerPic: String
   location: String
+  locationLat: Float
+  locationLon: Float
   jobTitle: String
   profession: String
   industry: String
@@ -76,7 +78,9 @@ type Post {
   owner: User!
   isGoal: Boolean! @default(value: false)
   goal: String
-  location: String
+  location: String!
+  locationLat: Float!
+  locationLon: Float!
   content: String!
   tags: [String] @scalarList(strategy: RELATION)
   images: [String] @scalarList(strategy: RELATION)
