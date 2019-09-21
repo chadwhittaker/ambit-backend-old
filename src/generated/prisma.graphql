@@ -2,10 +2,6 @@ type AggregateComment {
   count: Int!
 }
 
-type AggregateCommentLike {
-  count: Int!
-}
-
 type AggregateEducation {
   count: Int!
 }
@@ -26,11 +22,11 @@ type AggregatePost {
   count: Int!
 }
 
-type AggregatePostLike {
+type AggregateSkill {
   count: Int!
 }
 
-type AggregateSkill {
+type AggregateUpdate {
   count: Int!
 }
 
@@ -45,14 +41,17 @@ type BatchPayload {
 type Comment {
   id: ID!
   createdAt: DateTime!
-  isUpdate: Boolean!
   owner: User
   parentPost: Post!
   parentComment: Comment
+  parentUpdate: Update
   content: String
   image: String
-  likes(where: CommentLikeWhereInput, orderBy: CommentLikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CommentLike!]
+  likes: [String!]!
+  likesCount: Int!
+  likedByMe: Boolean!
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
+  commentsCount: Int
 }
 
 type CommentConnection {
@@ -63,14 +62,21 @@ type CommentConnection {
 
 input CommentCreateInput {
   id: ID
-  isUpdate: Boolean
   owner: UserCreateOneInput
   parentPost: PostCreateOneWithoutCommentsInput!
   parentComment: CommentCreateOneWithoutCommentsInput
+  parentUpdate: UpdateCreateOneWithoutCommentsInput
   content: String
   image: String
-  likes: CommentLikeCreateManyWithoutParentInput
+  likes: CommentCreatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
   comments: CommentCreateManyWithoutParentCommentInput
+  commentsCount: Int
+}
+
+input CommentCreatelikesInput {
+  set: [String!]
 }
 
 input CommentCreateManyWithoutParentCommentInput {
@@ -83,58 +89,70 @@ input CommentCreateManyWithoutParentPostInput {
   connect: [CommentWhereUniqueInput!]
 }
 
+input CommentCreateManyWithoutParentUpdateInput {
+  create: [CommentCreateWithoutParentUpdateInput!]
+  connect: [CommentWhereUniqueInput!]
+}
+
 input CommentCreateOneWithoutCommentsInput {
   create: CommentCreateWithoutCommentsInput
   connect: CommentWhereUniqueInput
 }
 
-input CommentCreateOneWithoutLikesInput {
-  create: CommentCreateWithoutLikesInput
-  connect: CommentWhereUniqueInput
-}
-
 input CommentCreateWithoutCommentsInput {
   id: ID
-  isUpdate: Boolean
   owner: UserCreateOneInput
   parentPost: PostCreateOneWithoutCommentsInput!
   parentComment: CommentCreateOneWithoutCommentsInput
+  parentUpdate: UpdateCreateOneWithoutCommentsInput
   content: String
   image: String
-  likes: CommentLikeCreateManyWithoutParentInput
-}
-
-input CommentCreateWithoutLikesInput {
-  id: ID
-  isUpdate: Boolean
-  owner: UserCreateOneInput
-  parentPost: PostCreateOneWithoutCommentsInput!
-  parentComment: CommentCreateOneWithoutCommentsInput
-  content: String
-  image: String
-  comments: CommentCreateManyWithoutParentCommentInput
+  likes: CommentCreatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+  commentsCount: Int
 }
 
 input CommentCreateWithoutParentCommentInput {
   id: ID
-  isUpdate: Boolean
   owner: UserCreateOneInput
   parentPost: PostCreateOneWithoutCommentsInput!
+  parentUpdate: UpdateCreateOneWithoutCommentsInput
   content: String
   image: String
-  likes: CommentLikeCreateManyWithoutParentInput
+  likes: CommentCreatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
   comments: CommentCreateManyWithoutParentCommentInput
+  commentsCount: Int
 }
 
 input CommentCreateWithoutParentPostInput {
   id: ID
-  isUpdate: Boolean
   owner: UserCreateOneInput
+  parentComment: CommentCreateOneWithoutCommentsInput
+  parentUpdate: UpdateCreateOneWithoutCommentsInput
+  content: String
+  image: String
+  likes: CommentCreatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+  comments: CommentCreateManyWithoutParentCommentInput
+  commentsCount: Int
+}
+
+input CommentCreateWithoutParentUpdateInput {
+  id: ID
+  owner: UserCreateOneInput
+  parentPost: PostCreateOneWithoutCommentsInput!
   parentComment: CommentCreateOneWithoutCommentsInput
   content: String
   image: String
-  likes: CommentLikeCreateManyWithoutParentInput
+  likes: CommentCreatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
   comments: CommentCreateManyWithoutParentCommentInput
+  commentsCount: Int
 }
 
 type CommentEdge {
@@ -142,162 +160,32 @@ type CommentEdge {
   cursor: String!
 }
 
-type CommentLike {
-  id: ID!
-  parent: Comment!
-  owner: User!
-}
-
-type CommentLikeConnection {
-  pageInfo: PageInfo!
-  edges: [CommentLikeEdge]!
-  aggregate: AggregateCommentLike!
-}
-
-input CommentLikeCreateInput {
-  id: ID
-  parent: CommentCreateOneWithoutLikesInput!
-  owner: UserCreateOneInput!
-}
-
-input CommentLikeCreateManyWithoutParentInput {
-  create: [CommentLikeCreateWithoutParentInput!]
-  connect: [CommentLikeWhereUniqueInput!]
-}
-
-input CommentLikeCreateWithoutParentInput {
-  id: ID
-  owner: UserCreateOneInput!
-}
-
-type CommentLikeEdge {
-  node: CommentLike!
-  cursor: String!
-}
-
-enum CommentLikeOrderByInput {
-  id_ASC
-  id_DESC
-}
-
-type CommentLikePreviousValues {
-  id: ID!
-}
-
-input CommentLikeScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  AND: [CommentLikeScalarWhereInput!]
-  OR: [CommentLikeScalarWhereInput!]
-  NOT: [CommentLikeScalarWhereInput!]
-}
-
-type CommentLikeSubscriptionPayload {
-  mutation: MutationType!
-  node: CommentLike
-  updatedFields: [String!]
-  previousValues: CommentLikePreviousValues
-}
-
-input CommentLikeSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: CommentLikeWhereInput
-  AND: [CommentLikeSubscriptionWhereInput!]
-  OR: [CommentLikeSubscriptionWhereInput!]
-  NOT: [CommentLikeSubscriptionWhereInput!]
-}
-
-input CommentLikeUpdateInput {
-  parent: CommentUpdateOneRequiredWithoutLikesInput
-  owner: UserUpdateOneRequiredInput
-}
-
-input CommentLikeUpdateManyWithoutParentInput {
-  create: [CommentLikeCreateWithoutParentInput!]
-  delete: [CommentLikeWhereUniqueInput!]
-  connect: [CommentLikeWhereUniqueInput!]
-  set: [CommentLikeWhereUniqueInput!]
-  disconnect: [CommentLikeWhereUniqueInput!]
-  update: [CommentLikeUpdateWithWhereUniqueWithoutParentInput!]
-  upsert: [CommentLikeUpsertWithWhereUniqueWithoutParentInput!]
-  deleteMany: [CommentLikeScalarWhereInput!]
-}
-
-input CommentLikeUpdateWithoutParentDataInput {
-  owner: UserUpdateOneRequiredInput
-}
-
-input CommentLikeUpdateWithWhereUniqueWithoutParentInput {
-  where: CommentLikeWhereUniqueInput!
-  data: CommentLikeUpdateWithoutParentDataInput!
-}
-
-input CommentLikeUpsertWithWhereUniqueWithoutParentInput {
-  where: CommentLikeWhereUniqueInput!
-  update: CommentLikeUpdateWithoutParentDataInput!
-  create: CommentLikeCreateWithoutParentInput!
-}
-
-input CommentLikeWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  parent: CommentWhereInput
-  owner: UserWhereInput
-  AND: [CommentLikeWhereInput!]
-  OR: [CommentLikeWhereInput!]
-  NOT: [CommentLikeWhereInput!]
-}
-
-input CommentLikeWhereUniqueInput {
-  id: ID
-}
-
 enum CommentOrderByInput {
   id_ASC
   id_DESC
   createdAt_ASC
   createdAt_DESC
-  isUpdate_ASC
-  isUpdate_DESC
   content_ASC
   content_DESC
   image_ASC
   image_DESC
+  likesCount_ASC
+  likesCount_DESC
+  likedByMe_ASC
+  likedByMe_DESC
+  commentsCount_ASC
+  commentsCount_DESC
 }
 
 type CommentPreviousValues {
   id: ID!
   createdAt: DateTime!
-  isUpdate: Boolean!
   content: String
   image: String
+  likes: [String!]!
+  likesCount: Int!
+  likedByMe: Boolean!
+  commentsCount: Int
 }
 
 input CommentScalarWhereInput {
@@ -323,8 +211,6 @@ input CommentScalarWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
-  isUpdate: Boolean
-  isUpdate_not: Boolean
   content: String
   content_not: String
   content_in: [String!]
@@ -353,6 +239,24 @@ input CommentScalarWhereInput {
   image_not_starts_with: String
   image_ends_with: String
   image_not_ends_with: String
+  likesCount: Int
+  likesCount_not: Int
+  likesCount_in: [Int!]
+  likesCount_not_in: [Int!]
+  likesCount_lt: Int
+  likesCount_lte: Int
+  likesCount_gt: Int
+  likesCount_gte: Int
+  likedByMe: Boolean
+  likedByMe_not: Boolean
+  commentsCount: Int
+  commentsCount_not: Int
+  commentsCount_in: [Int!]
+  commentsCount_not_in: [Int!]
+  commentsCount_lt: Int
+  commentsCount_lte: Int
+  commentsCount_gt: Int
+  commentsCount_gte: Int
   AND: [CommentScalarWhereInput!]
   OR: [CommentScalarWhereInput!]
   NOT: [CommentScalarWhereInput!]
@@ -377,26 +281,39 @@ input CommentSubscriptionWhereInput {
 }
 
 input CommentUpdateInput {
-  isUpdate: Boolean
   owner: UserUpdateOneInput
   parentPost: PostUpdateOneRequiredWithoutCommentsInput
   parentComment: CommentUpdateOneWithoutCommentsInput
+  parentUpdate: UpdateUpdateOneWithoutCommentsInput
   content: String
   image: String
-  likes: CommentLikeUpdateManyWithoutParentInput
+  likes: CommentUpdatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
   comments: CommentUpdateManyWithoutParentCommentInput
+  commentsCount: Int
+}
+
+input CommentUpdatelikesInput {
+  set: [String!]
 }
 
 input CommentUpdateManyDataInput {
-  isUpdate: Boolean
   content: String
   image: String
+  likes: CommentUpdatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+  commentsCount: Int
 }
 
 input CommentUpdateManyMutationInput {
-  isUpdate: Boolean
   content: String
   image: String
+  likes: CommentUpdatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+  commentsCount: Int
 }
 
 input CommentUpdateManyWithoutParentCommentInput {
@@ -423,16 +340,21 @@ input CommentUpdateManyWithoutParentPostInput {
   updateMany: [CommentUpdateManyWithWhereNestedInput!]
 }
 
+input CommentUpdateManyWithoutParentUpdateInput {
+  create: [CommentCreateWithoutParentUpdateInput!]
+  delete: [CommentWhereUniqueInput!]
+  connect: [CommentWhereUniqueInput!]
+  set: [CommentWhereUniqueInput!]
+  disconnect: [CommentWhereUniqueInput!]
+  update: [CommentUpdateWithWhereUniqueWithoutParentUpdateInput!]
+  upsert: [CommentUpsertWithWhereUniqueWithoutParentUpdateInput!]
+  deleteMany: [CommentScalarWhereInput!]
+  updateMany: [CommentUpdateManyWithWhereNestedInput!]
+}
+
 input CommentUpdateManyWithWhereNestedInput {
   where: CommentScalarWhereInput!
   data: CommentUpdateManyDataInput!
-}
-
-input CommentUpdateOneRequiredWithoutLikesInput {
-  create: CommentCreateWithoutLikesInput
-  update: CommentUpdateWithoutLikesDataInput
-  upsert: CommentUpsertWithoutLikesInput
-  connect: CommentWhereUniqueInput
 }
 
 input CommentUpdateOneWithoutCommentsInput {
@@ -445,43 +367,55 @@ input CommentUpdateOneWithoutCommentsInput {
 }
 
 input CommentUpdateWithoutCommentsDataInput {
-  isUpdate: Boolean
   owner: UserUpdateOneInput
   parentPost: PostUpdateOneRequiredWithoutCommentsInput
   parentComment: CommentUpdateOneWithoutCommentsInput
+  parentUpdate: UpdateUpdateOneWithoutCommentsInput
   content: String
   image: String
-  likes: CommentLikeUpdateManyWithoutParentInput
-}
-
-input CommentUpdateWithoutLikesDataInput {
-  isUpdate: Boolean
-  owner: UserUpdateOneInput
-  parentPost: PostUpdateOneRequiredWithoutCommentsInput
-  parentComment: CommentUpdateOneWithoutCommentsInput
-  content: String
-  image: String
-  comments: CommentUpdateManyWithoutParentCommentInput
+  likes: CommentUpdatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+  commentsCount: Int
 }
 
 input CommentUpdateWithoutParentCommentDataInput {
-  isUpdate: Boolean
   owner: UserUpdateOneInput
   parentPost: PostUpdateOneRequiredWithoutCommentsInput
+  parentUpdate: UpdateUpdateOneWithoutCommentsInput
   content: String
   image: String
-  likes: CommentLikeUpdateManyWithoutParentInput
+  likes: CommentUpdatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
   comments: CommentUpdateManyWithoutParentCommentInput
+  commentsCount: Int
 }
 
 input CommentUpdateWithoutParentPostDataInput {
-  isUpdate: Boolean
   owner: UserUpdateOneInput
+  parentComment: CommentUpdateOneWithoutCommentsInput
+  parentUpdate: UpdateUpdateOneWithoutCommentsInput
+  content: String
+  image: String
+  likes: CommentUpdatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+  comments: CommentUpdateManyWithoutParentCommentInput
+  commentsCount: Int
+}
+
+input CommentUpdateWithoutParentUpdateDataInput {
+  owner: UserUpdateOneInput
+  parentPost: PostUpdateOneRequiredWithoutCommentsInput
   parentComment: CommentUpdateOneWithoutCommentsInput
   content: String
   image: String
-  likes: CommentLikeUpdateManyWithoutParentInput
+  likes: CommentUpdatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
   comments: CommentUpdateManyWithoutParentCommentInput
+  commentsCount: Int
 }
 
 input CommentUpdateWithWhereUniqueWithoutParentCommentInput {
@@ -494,14 +428,14 @@ input CommentUpdateWithWhereUniqueWithoutParentPostInput {
   data: CommentUpdateWithoutParentPostDataInput!
 }
 
+input CommentUpdateWithWhereUniqueWithoutParentUpdateInput {
+  where: CommentWhereUniqueInput!
+  data: CommentUpdateWithoutParentUpdateDataInput!
+}
+
 input CommentUpsertWithoutCommentsInput {
   update: CommentUpdateWithoutCommentsDataInput!
   create: CommentCreateWithoutCommentsInput!
-}
-
-input CommentUpsertWithoutLikesInput {
-  update: CommentUpdateWithoutLikesDataInput!
-  create: CommentCreateWithoutLikesInput!
 }
 
 input CommentUpsertWithWhereUniqueWithoutParentCommentInput {
@@ -514,6 +448,12 @@ input CommentUpsertWithWhereUniqueWithoutParentPostInput {
   where: CommentWhereUniqueInput!
   update: CommentUpdateWithoutParentPostDataInput!
   create: CommentCreateWithoutParentPostInput!
+}
+
+input CommentUpsertWithWhereUniqueWithoutParentUpdateInput {
+  where: CommentWhereUniqueInput!
+  update: CommentUpdateWithoutParentUpdateDataInput!
+  create: CommentCreateWithoutParentUpdateInput!
 }
 
 input CommentWhereInput {
@@ -539,11 +479,10 @@ input CommentWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
-  isUpdate: Boolean
-  isUpdate_not: Boolean
   owner: UserWhereInput
   parentPost: PostWhereInput
   parentComment: CommentWhereInput
+  parentUpdate: UpdateWhereInput
   content: String
   content_not: String
   content_in: [String!]
@@ -572,12 +511,27 @@ input CommentWhereInput {
   image_not_starts_with: String
   image_ends_with: String
   image_not_ends_with: String
-  likes_every: CommentLikeWhereInput
-  likes_some: CommentLikeWhereInput
-  likes_none: CommentLikeWhereInput
+  likesCount: Int
+  likesCount_not: Int
+  likesCount_in: [Int!]
+  likesCount_not_in: [Int!]
+  likesCount_lt: Int
+  likesCount_lte: Int
+  likesCount_gt: Int
+  likesCount_gte: Int
+  likedByMe: Boolean
+  likedByMe_not: Boolean
   comments_every: CommentWhereInput
   comments_some: CommentWhereInput
   comments_none: CommentWhereInput
+  commentsCount: Int
+  commentsCount_not: Int
+  commentsCount_in: [Int!]
+  commentsCount_not_in: [Int!]
+  commentsCount_lt: Int
+  commentsCount_lte: Int
+  commentsCount_gt: Int
+  commentsCount_gte: Int
   AND: [CommentWhereInput!]
   OR: [CommentWhereInput!]
   NOT: [CommentWhereInput!]
@@ -594,7 +548,7 @@ type Education {
   owner: User!
   name: String!
   subText: String!
-  startDateMonth: String!
+  startDateMonth: String
   startDateYear: Int!
   endDateMonth: String
   endDateYear: Int
@@ -613,7 +567,7 @@ input EducationCreateInput {
   owner: UserCreateOneWithoutEducationInput!
   name: String!
   subText: String!
-  startDateMonth: String!
+  startDateMonth: String
   startDateYear: Int!
   endDateMonth: String
   endDateYear: Int
@@ -630,7 +584,7 @@ input EducationCreateWithoutOwnerInput {
   id: ID
   name: String!
   subText: String!
-  startDateMonth: String!
+  startDateMonth: String
   startDateYear: Int!
   endDateMonth: String
   endDateYear: Int
@@ -668,7 +622,7 @@ type EducationPreviousValues {
   id: ID!
   name: String!
   subText: String!
-  startDateMonth: String!
+  startDateMonth: String
   startDateYear: Int!
   endDateMonth: String
   endDateYear: Int
@@ -1506,6 +1460,7 @@ scalar Long
 
 type Meeting {
   id: ID!
+  createdAt: DateTime!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   startTime: DateTime!
   endTime: DateTime!
@@ -1546,6 +1501,8 @@ type MeetingEdge {
 enum MeetingOrderByInput {
   id_ASC
   id_DESC
+  createdAt_ASC
+  createdAt_DESC
   startTime_ASC
   startTime_DESC
   endTime_ASC
@@ -1556,6 +1513,7 @@ enum MeetingOrderByInput {
 
 type MeetingPreviousValues {
   id: ID!
+  createdAt: DateTime!
   startTime: DateTime!
   endTime: DateTime!
   place: String
@@ -1576,6 +1534,14 @@ input MeetingScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
   startTime: DateTime
   startTime_not: DateTime
   startTime_in: [DateTime!]
@@ -1697,6 +1663,14 @@ input MeetingWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
   users_every: UserWhereInput
   users_some: UserWhereInput
   users_none: UserWhereInput
@@ -1746,11 +1720,6 @@ type Mutation {
   upsertComment(where: CommentWhereUniqueInput!, create: CommentCreateInput!, update: CommentUpdateInput!): Comment!
   deleteComment(where: CommentWhereUniqueInput!): Comment
   deleteManyComments(where: CommentWhereInput): BatchPayload!
-  createCommentLike(data: CommentLikeCreateInput!): CommentLike!
-  updateCommentLike(data: CommentLikeUpdateInput!, where: CommentLikeWhereUniqueInput!): CommentLike
-  upsertCommentLike(where: CommentLikeWhereUniqueInput!, create: CommentLikeCreateInput!, update: CommentLikeUpdateInput!): CommentLike!
-  deleteCommentLike(where: CommentLikeWhereUniqueInput!): CommentLike
-  deleteManyCommentLikes(where: CommentLikeWhereInput): BatchPayload!
   createEducation(data: EducationCreateInput!): Education!
   updateEducation(data: EducationUpdateInput!, where: EducationWhereUniqueInput!): Education
   updateManyEducations(data: EducationUpdateManyMutationInput!, where: EducationWhereInput): BatchPayload!
@@ -1780,17 +1749,18 @@ type Mutation {
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
   deletePost(where: PostWhereUniqueInput!): Post
   deleteManyPosts(where: PostWhereInput): BatchPayload!
-  createPostLike(data: PostLikeCreateInput!): PostLike!
-  updatePostLike(data: PostLikeUpdateInput!, where: PostLikeWhereUniqueInput!): PostLike
-  upsertPostLike(where: PostLikeWhereUniqueInput!, create: PostLikeCreateInput!, update: PostLikeUpdateInput!): PostLike!
-  deletePostLike(where: PostLikeWhereUniqueInput!): PostLike
-  deleteManyPostLikes(where: PostLikeWhereInput): BatchPayload!
   createSkill(data: SkillCreateInput!): Skill!
   updateSkill(data: SkillUpdateInput!, where: SkillWhereUniqueInput!): Skill
   updateManySkills(data: SkillUpdateManyMutationInput!, where: SkillWhereInput): BatchPayload!
   upsertSkill(where: SkillWhereUniqueInput!, create: SkillCreateInput!, update: SkillUpdateInput!): Skill!
   deleteSkill(where: SkillWhereUniqueInput!): Skill
   deleteManySkills(where: SkillWhereInput): BatchPayload!
+  createUpdate(data: UpdateCreateInput!): Update!
+  updateUpdate(data: UpdateUpdateInput!, where: UpdateWhereUniqueInput!): Update
+  updateManyUpdates(data: UpdateUpdateManyMutationInput!, where: UpdateWhereInput): BatchPayload!
+  upsertUpdate(where: UpdateWhereUniqueInput!, create: UpdateCreateInput!, update: UpdateUpdateInput!): Update!
+  deleteUpdate(where: UpdateWhereUniqueInput!): Update
+  deleteManyUpdates(where: UpdateWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -1832,8 +1802,13 @@ type Post {
   video: String
   pitch: String
   isPrivate: Boolean!
-  likes(where: PostLikeWhereInput, orderBy: PostLikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PostLike!]
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
+  updates(where: UpdateWhereInput, orderBy: UpdateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Update!]
+  likes: [String!]!
+  likesCount: Int!
+  likedByMe: Boolean!
+  commentsCount: Int
+  sharesCount: Int
 }
 
 type PostConnection {
@@ -1861,8 +1836,17 @@ input PostCreateInput {
   video: String
   pitch: String
   isPrivate: Boolean
-  likes: PostLikeCreateManyWithoutParentInput
   comments: CommentCreateManyWithoutParentPostInput
+  updates: UpdateCreateManyWithoutParentPostInput
+  likes: PostCreatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+  commentsCount: Int
+  sharesCount: Int
+}
+
+input PostCreatelikesInput {
+  set: [String!]
 }
 
 input PostCreateManyWithoutOwnerInput {
@@ -1875,8 +1859,8 @@ input PostCreateOneWithoutCommentsInput {
   connect: PostWhereUniqueInput
 }
 
-input PostCreateOneWithoutLikesInput {
-  create: PostCreateWithoutLikesInput
+input PostCreateOneWithoutUpdatesInput {
+  create: PostCreateWithoutUpdatesInput
   connect: PostWhereUniqueInput
 }
 
@@ -1899,25 +1883,12 @@ input PostCreateWithoutCommentsInput {
   video: String
   pitch: String
   isPrivate: Boolean
-  likes: PostLikeCreateManyWithoutParentInput
-}
-
-input PostCreateWithoutLikesInput {
-  id: ID
-  lastUpdated: DateTime!
-  owner: UserCreateOneWithoutPostsInput!
-  isGoal: Boolean
-  goal: String
-  location: String!
-  locationLat: Float!
-  locationLon: Float!
-  content: String!
-  tags: PostCreatetagsInput
-  images: PostCreateimagesInput
-  video: String
-  pitch: String
-  isPrivate: Boolean
-  comments: CommentCreateManyWithoutParentPostInput
+  updates: UpdateCreateManyWithoutParentPostInput
+  likes: PostCreatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+  commentsCount: Int
+  sharesCount: Int
 }
 
 input PostCreateWithoutOwnerInput {
@@ -1934,150 +1905,41 @@ input PostCreateWithoutOwnerInput {
   video: String
   pitch: String
   isPrivate: Boolean
-  likes: PostLikeCreateManyWithoutParentInput
   comments: CommentCreateManyWithoutParentPostInput
+  updates: UpdateCreateManyWithoutParentPostInput
+  likes: PostCreatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+  commentsCount: Int
+  sharesCount: Int
+}
+
+input PostCreateWithoutUpdatesInput {
+  id: ID
+  lastUpdated: DateTime!
+  owner: UserCreateOneWithoutPostsInput!
+  isGoal: Boolean
+  goal: String
+  location: String!
+  locationLat: Float!
+  locationLon: Float!
+  content: String!
+  tags: PostCreatetagsInput
+  images: PostCreateimagesInput
+  video: String
+  pitch: String
+  isPrivate: Boolean
+  comments: CommentCreateManyWithoutParentPostInput
+  likes: PostCreatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+  commentsCount: Int
+  sharesCount: Int
 }
 
 type PostEdge {
   node: Post!
   cursor: String!
-}
-
-type PostLike {
-  id: ID!
-  parent: Post!
-  owner: User!
-}
-
-type PostLikeConnection {
-  pageInfo: PageInfo!
-  edges: [PostLikeEdge]!
-  aggregate: AggregatePostLike!
-}
-
-input PostLikeCreateInput {
-  id: ID
-  parent: PostCreateOneWithoutLikesInput!
-  owner: UserCreateOneInput!
-}
-
-input PostLikeCreateManyWithoutParentInput {
-  create: [PostLikeCreateWithoutParentInput!]
-  connect: [PostLikeWhereUniqueInput!]
-}
-
-input PostLikeCreateWithoutParentInput {
-  id: ID
-  owner: UserCreateOneInput!
-}
-
-type PostLikeEdge {
-  node: PostLike!
-  cursor: String!
-}
-
-enum PostLikeOrderByInput {
-  id_ASC
-  id_DESC
-}
-
-type PostLikePreviousValues {
-  id: ID!
-}
-
-input PostLikeScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  AND: [PostLikeScalarWhereInput!]
-  OR: [PostLikeScalarWhereInput!]
-  NOT: [PostLikeScalarWhereInput!]
-}
-
-type PostLikeSubscriptionPayload {
-  mutation: MutationType!
-  node: PostLike
-  updatedFields: [String!]
-  previousValues: PostLikePreviousValues
-}
-
-input PostLikeSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: PostLikeWhereInput
-  AND: [PostLikeSubscriptionWhereInput!]
-  OR: [PostLikeSubscriptionWhereInput!]
-  NOT: [PostLikeSubscriptionWhereInput!]
-}
-
-input PostLikeUpdateInput {
-  parent: PostUpdateOneRequiredWithoutLikesInput
-  owner: UserUpdateOneRequiredInput
-}
-
-input PostLikeUpdateManyWithoutParentInput {
-  create: [PostLikeCreateWithoutParentInput!]
-  delete: [PostLikeWhereUniqueInput!]
-  connect: [PostLikeWhereUniqueInput!]
-  set: [PostLikeWhereUniqueInput!]
-  disconnect: [PostLikeWhereUniqueInput!]
-  update: [PostLikeUpdateWithWhereUniqueWithoutParentInput!]
-  upsert: [PostLikeUpsertWithWhereUniqueWithoutParentInput!]
-  deleteMany: [PostLikeScalarWhereInput!]
-}
-
-input PostLikeUpdateWithoutParentDataInput {
-  owner: UserUpdateOneRequiredInput
-}
-
-input PostLikeUpdateWithWhereUniqueWithoutParentInput {
-  where: PostLikeWhereUniqueInput!
-  data: PostLikeUpdateWithoutParentDataInput!
-}
-
-input PostLikeUpsertWithWhereUniqueWithoutParentInput {
-  where: PostLikeWhereUniqueInput!
-  update: PostLikeUpdateWithoutParentDataInput!
-  create: PostLikeCreateWithoutParentInput!
-}
-
-input PostLikeWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  parent: PostWhereInput
-  owner: UserWhereInput
-  AND: [PostLikeWhereInput!]
-  OR: [PostLikeWhereInput!]
-  NOT: [PostLikeWhereInput!]
-}
-
-input PostLikeWhereUniqueInput {
-  id: ID
 }
 
 enum PostOrderByInput {
@@ -2105,6 +1967,14 @@ enum PostOrderByInput {
   pitch_DESC
   isPrivate_ASC
   isPrivate_DESC
+  likesCount_ASC
+  likesCount_DESC
+  likedByMe_ASC
+  likedByMe_DESC
+  commentsCount_ASC
+  commentsCount_DESC
+  sharesCount_ASC
+  sharesCount_DESC
 }
 
 type PostPreviousValues {
@@ -2122,6 +1992,11 @@ type PostPreviousValues {
   video: String
   pitch: String
   isPrivate: Boolean!
+  likes: [String!]!
+  likesCount: Int!
+  likedByMe: Boolean!
+  commentsCount: Int
+  sharesCount: Int
 }
 
 input PostScalarWhereInput {
@@ -2245,6 +2120,32 @@ input PostScalarWhereInput {
   pitch_not_ends_with: String
   isPrivate: Boolean
   isPrivate_not: Boolean
+  likesCount: Int
+  likesCount_not: Int
+  likesCount_in: [Int!]
+  likesCount_not_in: [Int!]
+  likesCount_lt: Int
+  likesCount_lte: Int
+  likesCount_gt: Int
+  likesCount_gte: Int
+  likedByMe: Boolean
+  likedByMe_not: Boolean
+  commentsCount: Int
+  commentsCount_not: Int
+  commentsCount_in: [Int!]
+  commentsCount_not_in: [Int!]
+  commentsCount_lt: Int
+  commentsCount_lte: Int
+  commentsCount_gt: Int
+  commentsCount_gte: Int
+  sharesCount: Int
+  sharesCount_not: Int
+  sharesCount_in: [Int!]
+  sharesCount_not_in: [Int!]
+  sharesCount_lt: Int
+  sharesCount_lte: Int
+  sharesCount_gt: Int
+  sharesCount_gte: Int
   AND: [PostScalarWhereInput!]
   OR: [PostScalarWhereInput!]
   NOT: [PostScalarWhereInput!]
@@ -2286,8 +2187,17 @@ input PostUpdateInput {
   video: String
   pitch: String
   isPrivate: Boolean
-  likes: PostLikeUpdateManyWithoutParentInput
   comments: CommentUpdateManyWithoutParentPostInput
+  updates: UpdateUpdateManyWithoutParentPostInput
+  likes: PostUpdatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+  commentsCount: Int
+  sharesCount: Int
+}
+
+input PostUpdatelikesInput {
+  set: [String!]
 }
 
 input PostUpdateManyDataInput {
@@ -2303,6 +2213,11 @@ input PostUpdateManyDataInput {
   video: String
   pitch: String
   isPrivate: Boolean
+  likes: PostUpdatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+  commentsCount: Int
+  sharesCount: Int
 }
 
 input PostUpdateManyMutationInput {
@@ -2318,6 +2233,11 @@ input PostUpdateManyMutationInput {
   video: String
   pitch: String
   isPrivate: Boolean
+  likes: PostUpdatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+  commentsCount: Int
+  sharesCount: Int
 }
 
 input PostUpdateManyWithoutOwnerInput {
@@ -2344,10 +2264,10 @@ input PostUpdateOneRequiredWithoutCommentsInput {
   connect: PostWhereUniqueInput
 }
 
-input PostUpdateOneRequiredWithoutLikesInput {
-  create: PostCreateWithoutLikesInput
-  update: PostUpdateWithoutLikesDataInput
-  upsert: PostUpsertWithoutLikesInput
+input PostUpdateOneRequiredWithoutUpdatesInput {
+  create: PostCreateWithoutUpdatesInput
+  update: PostUpdateWithoutUpdatesDataInput
+  upsert: PostUpsertWithoutUpdatesInput
   connect: PostWhereUniqueInput
 }
 
@@ -2369,24 +2289,12 @@ input PostUpdateWithoutCommentsDataInput {
   video: String
   pitch: String
   isPrivate: Boolean
-  likes: PostLikeUpdateManyWithoutParentInput
-}
-
-input PostUpdateWithoutLikesDataInput {
-  lastUpdated: DateTime
-  owner: UserUpdateOneRequiredWithoutPostsInput
-  isGoal: Boolean
-  goal: String
-  location: String
-  locationLat: Float
-  locationLon: Float
-  content: String
-  tags: PostUpdatetagsInput
-  images: PostUpdateimagesInput
-  video: String
-  pitch: String
-  isPrivate: Boolean
-  comments: CommentUpdateManyWithoutParentPostInput
+  updates: UpdateUpdateManyWithoutParentPostInput
+  likes: PostUpdatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+  commentsCount: Int
+  sharesCount: Int
 }
 
 input PostUpdateWithoutOwnerDataInput {
@@ -2402,8 +2310,35 @@ input PostUpdateWithoutOwnerDataInput {
   video: String
   pitch: String
   isPrivate: Boolean
-  likes: PostLikeUpdateManyWithoutParentInput
   comments: CommentUpdateManyWithoutParentPostInput
+  updates: UpdateUpdateManyWithoutParentPostInput
+  likes: PostUpdatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+  commentsCount: Int
+  sharesCount: Int
+}
+
+input PostUpdateWithoutUpdatesDataInput {
+  lastUpdated: DateTime
+  owner: UserUpdateOneRequiredWithoutPostsInput
+  isGoal: Boolean
+  goal: String
+  location: String
+  locationLat: Float
+  locationLon: Float
+  content: String
+  tags: PostUpdatetagsInput
+  images: PostUpdateimagesInput
+  video: String
+  pitch: String
+  isPrivate: Boolean
+  comments: CommentUpdateManyWithoutParentPostInput
+  likes: PostUpdatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+  commentsCount: Int
+  sharesCount: Int
 }
 
 input PostUpdateWithWhereUniqueWithoutOwnerInput {
@@ -2416,9 +2351,9 @@ input PostUpsertWithoutCommentsInput {
   create: PostCreateWithoutCommentsInput!
 }
 
-input PostUpsertWithoutLikesInput {
-  update: PostUpdateWithoutLikesDataInput!
-  create: PostCreateWithoutLikesInput!
+input PostUpsertWithoutUpdatesInput {
+  update: PostUpdateWithoutUpdatesDataInput!
+  create: PostCreateWithoutUpdatesInput!
 }
 
 input PostUpsertWithWhereUniqueWithoutOwnerInput {
@@ -2549,12 +2484,38 @@ input PostWhereInput {
   pitch_not_ends_with: String
   isPrivate: Boolean
   isPrivate_not: Boolean
-  likes_every: PostLikeWhereInput
-  likes_some: PostLikeWhereInput
-  likes_none: PostLikeWhereInput
   comments_every: CommentWhereInput
   comments_some: CommentWhereInput
   comments_none: CommentWhereInput
+  updates_every: UpdateWhereInput
+  updates_some: UpdateWhereInput
+  updates_none: UpdateWhereInput
+  likesCount: Int
+  likesCount_not: Int
+  likesCount_in: [Int!]
+  likesCount_not_in: [Int!]
+  likesCount_lt: Int
+  likesCount_lte: Int
+  likesCount_gt: Int
+  likesCount_gte: Int
+  likedByMe: Boolean
+  likedByMe_not: Boolean
+  commentsCount: Int
+  commentsCount_not: Int
+  commentsCount_in: [Int!]
+  commentsCount_not_in: [Int!]
+  commentsCount_lt: Int
+  commentsCount_lte: Int
+  commentsCount_gt: Int
+  commentsCount_gte: Int
+  sharesCount: Int
+  sharesCount_not: Int
+  sharesCount_in: [Int!]
+  sharesCount_not_in: [Int!]
+  sharesCount_lt: Int
+  sharesCount_lte: Int
+  sharesCount_gt: Int
+  sharesCount_gte: Int
   AND: [PostWhereInput!]
   OR: [PostWhereInput!]
   NOT: [PostWhereInput!]
@@ -2568,9 +2529,6 @@ type Query {
   comment(where: CommentWhereUniqueInput!): Comment
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
   commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
-  commentLike(where: CommentLikeWhereUniqueInput!): CommentLike
-  commentLikes(where: CommentLikeWhereInput, orderBy: CommentLikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CommentLike]!
-  commentLikesConnection(where: CommentLikeWhereInput, orderBy: CommentLikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentLikeConnection!
   education(where: EducationWhereUniqueInput!): Education
   educations(where: EducationWhereInput, orderBy: EducationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Education]!
   educationsConnection(where: EducationWhereInput, orderBy: EducationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EducationConnection!
@@ -2586,12 +2544,12 @@ type Query {
   post(where: PostWhereUniqueInput!): Post
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
-  postLike(where: PostLikeWhereUniqueInput!): PostLike
-  postLikes(where: PostLikeWhereInput, orderBy: PostLikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PostLike]!
-  postLikesConnection(where: PostLikeWhereInput, orderBy: PostLikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostLikeConnection!
   skill(where: SkillWhereUniqueInput!): Skill
   skills(where: SkillWhereInput, orderBy: SkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Skill]!
   skillsConnection(where: SkillWhereInput, orderBy: SkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SkillConnection!
+  update(where: UpdateWhereUniqueInput!): Update
+  updates(where: UpdateWhereInput, orderBy: UpdateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Update]!
+  updatesConnection(where: UpdateWhereInput, orderBy: UpdateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UpdateConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -2803,21 +2761,419 @@ input SkillWhereUniqueInput {
 
 type Subscription {
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
-  commentLike(where: CommentLikeSubscriptionWhereInput): CommentLikeSubscriptionPayload
   education(where: EducationSubscriptionWhereInput): EducationSubscriptionPayload
   experience(where: ExperienceSubscriptionWhereInput): ExperienceSubscriptionPayload
   filter(where: FilterSubscriptionWhereInput): FilterSubscriptionPayload
   meeting(where: MeetingSubscriptionWhereInput): MeetingSubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
-  postLike(where: PostLikeSubscriptionWhereInput): PostLikeSubscriptionPayload
   skill(where: SkillSubscriptionWhereInput): SkillSubscriptionPayload
+  update(where: UpdateSubscriptionWhereInput): UpdateSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+}
+
+type Update {
+  id: ID!
+  createdAt: DateTime!
+  parentPost: Post!
+  content: String!
+  image: String
+  likes: [String!]!
+  likesCount: Int!
+  likedByMe: Boolean!
+  comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
+  commentsCount: Int
+  sharesCount: Int
+}
+
+type UpdateConnection {
+  pageInfo: PageInfo!
+  edges: [UpdateEdge]!
+  aggregate: AggregateUpdate!
+}
+
+input UpdateCreateInput {
+  id: ID
+  parentPost: PostCreateOneWithoutUpdatesInput!
+  content: String!
+  image: String
+  likes: UpdateCreatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+  comments: CommentCreateManyWithoutParentUpdateInput
+  commentsCount: Int
+  sharesCount: Int
+}
+
+input UpdateCreatelikesInput {
+  set: [String!]
+}
+
+input UpdateCreateManyWithoutParentPostInput {
+  create: [UpdateCreateWithoutParentPostInput!]
+  connect: [UpdateWhereUniqueInput!]
+}
+
+input UpdateCreateOneWithoutCommentsInput {
+  create: UpdateCreateWithoutCommentsInput
+  connect: UpdateWhereUniqueInput
+}
+
+input UpdateCreateWithoutCommentsInput {
+  id: ID
+  parentPost: PostCreateOneWithoutUpdatesInput!
+  content: String!
+  image: String
+  likes: UpdateCreatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+  commentsCount: Int
+  sharesCount: Int
+}
+
+input UpdateCreateWithoutParentPostInput {
+  id: ID
+  content: String!
+  image: String
+  likes: UpdateCreatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+  comments: CommentCreateManyWithoutParentUpdateInput
+  commentsCount: Int
+  sharesCount: Int
+}
+
+type UpdateEdge {
+  node: Update!
+  cursor: String!
+}
+
+enum UpdateOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  content_ASC
+  content_DESC
+  image_ASC
+  image_DESC
+  likesCount_ASC
+  likesCount_DESC
+  likedByMe_ASC
+  likedByMe_DESC
+  commentsCount_ASC
+  commentsCount_DESC
+  sharesCount_ASC
+  sharesCount_DESC
+}
+
+type UpdatePreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  content: String!
+  image: String
+  likes: [String!]!
+  likesCount: Int!
+  likedByMe: Boolean!
+  commentsCount: Int
+  sharesCount: Int
+}
+
+input UpdateScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  content: String
+  content_not: String
+  content_in: [String!]
+  content_not_in: [String!]
+  content_lt: String
+  content_lte: String
+  content_gt: String
+  content_gte: String
+  content_contains: String
+  content_not_contains: String
+  content_starts_with: String
+  content_not_starts_with: String
+  content_ends_with: String
+  content_not_ends_with: String
+  image: String
+  image_not: String
+  image_in: [String!]
+  image_not_in: [String!]
+  image_lt: String
+  image_lte: String
+  image_gt: String
+  image_gte: String
+  image_contains: String
+  image_not_contains: String
+  image_starts_with: String
+  image_not_starts_with: String
+  image_ends_with: String
+  image_not_ends_with: String
+  likesCount: Int
+  likesCount_not: Int
+  likesCount_in: [Int!]
+  likesCount_not_in: [Int!]
+  likesCount_lt: Int
+  likesCount_lte: Int
+  likesCount_gt: Int
+  likesCount_gte: Int
+  likedByMe: Boolean
+  likedByMe_not: Boolean
+  commentsCount: Int
+  commentsCount_not: Int
+  commentsCount_in: [Int!]
+  commentsCount_not_in: [Int!]
+  commentsCount_lt: Int
+  commentsCount_lte: Int
+  commentsCount_gt: Int
+  commentsCount_gte: Int
+  sharesCount: Int
+  sharesCount_not: Int
+  sharesCount_in: [Int!]
+  sharesCount_not_in: [Int!]
+  sharesCount_lt: Int
+  sharesCount_lte: Int
+  sharesCount_gt: Int
+  sharesCount_gte: Int
+  AND: [UpdateScalarWhereInput!]
+  OR: [UpdateScalarWhereInput!]
+  NOT: [UpdateScalarWhereInput!]
+}
+
+type UpdateSubscriptionPayload {
+  mutation: MutationType!
+  node: Update
+  updatedFields: [String!]
+  previousValues: UpdatePreviousValues
+}
+
+input UpdateSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: UpdateWhereInput
+  AND: [UpdateSubscriptionWhereInput!]
+  OR: [UpdateSubscriptionWhereInput!]
+  NOT: [UpdateSubscriptionWhereInput!]
+}
+
+input UpdateUpdateInput {
+  parentPost: PostUpdateOneRequiredWithoutUpdatesInput
+  content: String
+  image: String
+  likes: UpdateUpdatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+  comments: CommentUpdateManyWithoutParentUpdateInput
+  commentsCount: Int
+  sharesCount: Int
+}
+
+input UpdateUpdatelikesInput {
+  set: [String!]
+}
+
+input UpdateUpdateManyDataInput {
+  content: String
+  image: String
+  likes: UpdateUpdatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+  commentsCount: Int
+  sharesCount: Int
+}
+
+input UpdateUpdateManyMutationInput {
+  content: String
+  image: String
+  likes: UpdateUpdatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+  commentsCount: Int
+  sharesCount: Int
+}
+
+input UpdateUpdateManyWithoutParentPostInput {
+  create: [UpdateCreateWithoutParentPostInput!]
+  delete: [UpdateWhereUniqueInput!]
+  connect: [UpdateWhereUniqueInput!]
+  set: [UpdateWhereUniqueInput!]
+  disconnect: [UpdateWhereUniqueInput!]
+  update: [UpdateUpdateWithWhereUniqueWithoutParentPostInput!]
+  upsert: [UpdateUpsertWithWhereUniqueWithoutParentPostInput!]
+  deleteMany: [UpdateScalarWhereInput!]
+  updateMany: [UpdateUpdateManyWithWhereNestedInput!]
+}
+
+input UpdateUpdateManyWithWhereNestedInput {
+  where: UpdateScalarWhereInput!
+  data: UpdateUpdateManyDataInput!
+}
+
+input UpdateUpdateOneWithoutCommentsInput {
+  create: UpdateCreateWithoutCommentsInput
+  update: UpdateUpdateWithoutCommentsDataInput
+  upsert: UpdateUpsertWithoutCommentsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UpdateWhereUniqueInput
+}
+
+input UpdateUpdateWithoutCommentsDataInput {
+  parentPost: PostUpdateOneRequiredWithoutUpdatesInput
+  content: String
+  image: String
+  likes: UpdateUpdatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+  commentsCount: Int
+  sharesCount: Int
+}
+
+input UpdateUpdateWithoutParentPostDataInput {
+  content: String
+  image: String
+  likes: UpdateUpdatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+  comments: CommentUpdateManyWithoutParentUpdateInput
+  commentsCount: Int
+  sharesCount: Int
+}
+
+input UpdateUpdateWithWhereUniqueWithoutParentPostInput {
+  where: UpdateWhereUniqueInput!
+  data: UpdateUpdateWithoutParentPostDataInput!
+}
+
+input UpdateUpsertWithoutCommentsInput {
+  update: UpdateUpdateWithoutCommentsDataInput!
+  create: UpdateCreateWithoutCommentsInput!
+}
+
+input UpdateUpsertWithWhereUniqueWithoutParentPostInput {
+  where: UpdateWhereUniqueInput!
+  update: UpdateUpdateWithoutParentPostDataInput!
+  create: UpdateCreateWithoutParentPostInput!
+}
+
+input UpdateWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  parentPost: PostWhereInput
+  content: String
+  content_not: String
+  content_in: [String!]
+  content_not_in: [String!]
+  content_lt: String
+  content_lte: String
+  content_gt: String
+  content_gte: String
+  content_contains: String
+  content_not_contains: String
+  content_starts_with: String
+  content_not_starts_with: String
+  content_ends_with: String
+  content_not_ends_with: String
+  image: String
+  image_not: String
+  image_in: [String!]
+  image_not_in: [String!]
+  image_lt: String
+  image_lte: String
+  image_gt: String
+  image_gte: String
+  image_contains: String
+  image_not_contains: String
+  image_starts_with: String
+  image_not_starts_with: String
+  image_ends_with: String
+  image_not_ends_with: String
+  likesCount: Int
+  likesCount_not: Int
+  likesCount_in: [Int!]
+  likesCount_not_in: [Int!]
+  likesCount_lt: Int
+  likesCount_lte: Int
+  likesCount_gt: Int
+  likesCount_gte: Int
+  likedByMe: Boolean
+  likedByMe_not: Boolean
+  comments_every: CommentWhereInput
+  comments_some: CommentWhereInput
+  comments_none: CommentWhereInput
+  commentsCount: Int
+  commentsCount_not: Int
+  commentsCount_in: [Int!]
+  commentsCount_not_in: [Int!]
+  commentsCount_lt: Int
+  commentsCount_lte: Int
+  commentsCount_gt: Int
+  commentsCount_gte: Int
+  sharesCount: Int
+  sharesCount_not: Int
+  sharesCount_in: [Int!]
+  sharesCount_not_in: [Int!]
+  sharesCount_lt: Int
+  sharesCount_lte: Int
+  sharesCount_gt: Int
+  sharesCount_gte: Int
+  AND: [UpdateWhereInput!]
+  OR: [UpdateWhereInput!]
+  NOT: [UpdateWhereInput!]
+}
+
+input UpdateWhereUniqueInput {
+  id: ID
 }
 
 type User {
   id: ID!
   createdAt: DateTime!
   name: String!
+  firstName: String!
+  lastName: String!
   email: String!
   password: String!
   profilePic: String
@@ -2855,6 +3211,8 @@ type UserConnection {
 input UserCreateInput {
   id: ID
   name: String!
+  firstName: String!
+  lastName: String!
   email: String!
   password: String!
   profilePic: String
@@ -2948,6 +3306,8 @@ input UserCreaterolesInput {
 input UserCreateWithoutConnectionsInput {
   id: ID
   name: String!
+  firstName: String!
+  lastName: String!
   email: String!
   password: String!
   profilePic: String
@@ -2978,6 +3338,8 @@ input UserCreateWithoutConnectionsInput {
 input UserCreateWithoutEducationInput {
   id: ID
   name: String!
+  firstName: String!
+  lastName: String!
   email: String!
   password: String!
   profilePic: String
@@ -3008,6 +3370,8 @@ input UserCreateWithoutEducationInput {
 input UserCreateWithoutExperienceInput {
   id: ID
   name: String!
+  firstName: String!
+  lastName: String!
   email: String!
   password: String!
   profilePic: String
@@ -3038,6 +3402,8 @@ input UserCreateWithoutExperienceInput {
 input UserCreateWithoutFollowersInput {
   id: ID
   name: String!
+  firstName: String!
+  lastName: String!
   email: String!
   password: String!
   profilePic: String
@@ -3068,6 +3434,8 @@ input UserCreateWithoutFollowersInput {
 input UserCreateWithoutFollowingInput {
   id: ID
   name: String!
+  firstName: String!
+  lastName: String!
   email: String!
   password: String!
   profilePic: String
@@ -3098,6 +3466,8 @@ input UserCreateWithoutFollowingInput {
 input UserCreateWithoutMeetingsInput {
   id: ID
   name: String!
+  firstName: String!
+  lastName: String!
   email: String!
   password: String!
   profilePic: String
@@ -3128,6 +3498,8 @@ input UserCreateWithoutMeetingsInput {
 input UserCreateWithoutPostsInput {
   id: ID
   name: String!
+  firstName: String!
+  lastName: String!
   email: String!
   password: String!
   profilePic: String
@@ -3158,6 +3530,8 @@ input UserCreateWithoutPostsInput {
 input UserCreateWithoutSavedFiltersInput {
   id: ID
   name: String!
+  firstName: String!
+  lastName: String!
   email: String!
   password: String!
   profilePic: String
@@ -3188,6 +3562,8 @@ input UserCreateWithoutSavedFiltersInput {
 input UserCreateWithoutSkillsInput {
   id: ID
   name: String!
+  firstName: String!
+  lastName: String!
   email: String!
   password: String!
   profilePic: String
@@ -3227,6 +3603,10 @@ enum UserOrderByInput {
   createdAt_DESC
   name_ASC
   name_DESC
+  firstName_ASC
+  firstName_DESC
+  lastName_ASC
+  lastName_DESC
   email_ASC
   email_DESC
   password_ASC
@@ -3261,6 +3641,8 @@ type UserPreviousValues {
   id: ID!
   createdAt: DateTime!
   name: String!
+  firstName: String!
+  lastName: String!
   email: String!
   password: String!
   profilePic: String
@@ -3317,6 +3699,34 @@ input UserScalarWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  firstName: String
+  firstName_not: String
+  firstName_in: [String!]
+  firstName_not_in: [String!]
+  firstName_lt: String
+  firstName_lte: String
+  firstName_gt: String
+  firstName_gte: String
+  firstName_contains: String
+  firstName_not_contains: String
+  firstName_starts_with: String
+  firstName_not_starts_with: String
+  firstName_ends_with: String
+  firstName_not_ends_with: String
+  lastName: String
+  lastName_not: String
+  lastName_in: [String!]
+  lastName_not_in: [String!]
+  lastName_lt: String
+  lastName_lte: String
+  lastName_gt: String
+  lastName_gte: String
+  lastName_contains: String
+  lastName_not_contains: String
+  lastName_starts_with: String
+  lastName_not_starts_with: String
+  lastName_ends_with: String
+  lastName_not_ends_with: String
   email: String
   email_not: String
   email_in: [String!]
@@ -3520,6 +3930,8 @@ input UserSubscriptionWhereInput {
 
 input UserUpdateDataInput {
   name: String
+  firstName: String
+  lastName: String
   email: String
   password: String
   profilePic: String
@@ -3550,6 +3962,8 @@ input UserUpdateDataInput {
 
 input UserUpdateInput {
   name: String
+  firstName: String
+  lastName: String
   email: String
   password: String
   profilePic: String
@@ -3584,6 +3998,8 @@ input UserUpdateinterestsInput {
 
 input UserUpdateManyDataInput {
   name: String
+  firstName: String
+  lastName: String
   email: String
   password: String
   profilePic: String
@@ -3605,6 +4021,8 @@ input UserUpdateManyDataInput {
 
 input UserUpdateManyMutationInput {
   name: String
+  firstName: String
+  lastName: String
   email: String
   password: String
   profilePic: String
@@ -3686,13 +4104,6 @@ input UserUpdateOneInput {
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateOneRequiredInput {
-  create: UserCreateInput
-  update: UserUpdateDataInput
-  upsert: UserUpsertNestedInput
-  connect: UserWhereUniqueInput
-}
-
 input UserUpdateOneRequiredWithoutEducationInput {
   create: UserCreateWithoutEducationInput
   update: UserUpdateWithoutEducationDataInput
@@ -3740,6 +4151,8 @@ input UserUpdaterolesInput {
 
 input UserUpdateWithoutConnectionsDataInput {
   name: String
+  firstName: String
+  lastName: String
   email: String
   password: String
   profilePic: String
@@ -3769,6 +4182,8 @@ input UserUpdateWithoutConnectionsDataInput {
 
 input UserUpdateWithoutEducationDataInput {
   name: String
+  firstName: String
+  lastName: String
   email: String
   password: String
   profilePic: String
@@ -3798,6 +4213,8 @@ input UserUpdateWithoutEducationDataInput {
 
 input UserUpdateWithoutExperienceDataInput {
   name: String
+  firstName: String
+  lastName: String
   email: String
   password: String
   profilePic: String
@@ -3827,6 +4244,8 @@ input UserUpdateWithoutExperienceDataInput {
 
 input UserUpdateWithoutFollowersDataInput {
   name: String
+  firstName: String
+  lastName: String
   email: String
   password: String
   profilePic: String
@@ -3856,6 +4275,8 @@ input UserUpdateWithoutFollowersDataInput {
 
 input UserUpdateWithoutFollowingDataInput {
   name: String
+  firstName: String
+  lastName: String
   email: String
   password: String
   profilePic: String
@@ -3885,6 +4306,8 @@ input UserUpdateWithoutFollowingDataInput {
 
 input UserUpdateWithoutMeetingsDataInput {
   name: String
+  firstName: String
+  lastName: String
   email: String
   password: String
   profilePic: String
@@ -3914,6 +4337,8 @@ input UserUpdateWithoutMeetingsDataInput {
 
 input UserUpdateWithoutPostsDataInput {
   name: String
+  firstName: String
+  lastName: String
   email: String
   password: String
   profilePic: String
@@ -3943,6 +4368,8 @@ input UserUpdateWithoutPostsDataInput {
 
 input UserUpdateWithoutSavedFiltersDataInput {
   name: String
+  firstName: String
+  lastName: String
   email: String
   password: String
   profilePic: String
@@ -3972,6 +4399,8 @@ input UserUpdateWithoutSavedFiltersDataInput {
 
 input UserUpdateWithoutSkillsDataInput {
   name: String
+  firstName: String
+  lastName: String
   email: String
   password: String
   profilePic: String
@@ -4110,6 +4539,34 @@ input UserWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  firstName: String
+  firstName_not: String
+  firstName_in: [String!]
+  firstName_not_in: [String!]
+  firstName_lt: String
+  firstName_lte: String
+  firstName_gt: String
+  firstName_gte: String
+  firstName_contains: String
+  firstName_not_contains: String
+  firstName_starts_with: String
+  firstName_not_starts_with: String
+  firstName_ends_with: String
+  firstName_not_ends_with: String
+  lastName: String
+  lastName_not: String
+  lastName_in: [String!]
+  lastName_not_in: [String!]
+  lastName_lt: String
+  lastName_lte: String
+  lastName_gt: String
+  lastName_gte: String
+  lastName_contains: String
+  lastName_not_contains: String
+  lastName_starts_with: String
+  lastName_not_starts_with: String
+  lastName_ends_with: String
+  lastName_not_ends_with: String
   email: String
   email_not: String
   email_in: [String!]

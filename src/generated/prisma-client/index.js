@@ -29,15 +29,11 @@ var models = [
     embedded: false
   },
   {
-    name: "PostLike",
+    name: "Update",
     embedded: false
   },
   {
     name: "Comment",
-    embedded: false
-  },
-  {
-    name: "CommentLike",
     embedded: false
   },
   {
@@ -52,6 +48,6 @@ var models = [
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
   typeDefs,
   models,
-  endpoint: `https://eu1.prisma.sh/ambit-workspace/ambit-prisma/dev`
+  endpoint: `https://us1.prisma.sh/ambit-workspace-2/ambit-prisma3/dev`
 });
 exports.prisma = new exports.Prisma();

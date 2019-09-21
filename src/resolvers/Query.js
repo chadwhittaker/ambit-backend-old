@@ -40,7 +40,7 @@ const Query = {
 
   async postsLocal(parent, { lat, lon, radius }, context) {
 
-    console.log(lat, lon,)
+    // console.log(lat, lon,)
 
     const EARTH_RADIUS_MI = 3959;
 
@@ -52,8 +52,8 @@ const Query = {
     const maxLon = lon + rad2Deg(distance / EARTH_RADIUS_MI / Math.cos(deg2Rad(lat)));
     const minLon = lon - rad2Deg(distance / EARTH_RADIUS_MI / Math.cos(deg2Rad(lat)));
 
-    console.log(minLat, maxLat)
-    console.log(minLon, maxLon)
+    // console.log(minLat, maxLat)
+    // console.log(minLon, maxLon)
 
 
     const posts = await context.prisma.posts(
@@ -72,7 +72,79 @@ const Query = {
     );
 
     return posts
-  }
+  },
+
+  async postsUser(parent, args, context) {
+    // modify so isPrivate only applies if not connected
+    // first check if user requesting is connected to args.id
+
+    if (!context.request.userId) {
+      // don't throw an error, just return nothing. It is ok to not be logged in.
+      return null;
+    }
+
+    let posts = []
+
+    if (context.request.userId === args.id) {
+      // if they are MY posts
+      posts = await context.prisma.posts(
+        {
+          where: { owner: { id: args.id } },
+          orderBy: 'lastUpdated_DESC'
+        }
+      );
+    } else {
+      // if they are not my posts
+      posts = await context.prisma.posts(
+        {
+          where: {
+            AND: [
+              { isPrivate: false },
+              {
+                owner: { id: args.id }
+              }
+            ],
+          },
+          orderBy: 'lastUpdated_DESC'
+        }
+      );
+    }
+
+    return posts
+  },
+
+  async allComments(parent, { postId, isUpdate = false }, context) {
+
+    if (!context.request.userId) {
+      // don't throw an error, just return nothing. It is ok to not be logged in.
+      return null;
+    }
+
+    const whereInput = isUpdate ? { parentUpdate: { id: postId } } : { parentPost: { id: postId } }
+
+    const comments = await context.prisma.comments(
+      {
+        where: whereInput,
+        orderBy: 'createdAt_DESC'
+      }
+    );
+
+    return comments
+  },
+
+  // async singlePost(parent, { id }, context) {
+  //   // modify so isPrivate only applies if not connected
+  //   // first check if user requesting is connected to args.id
+
+  //   if (!context.request.userId) {
+  //     // don't throw an error, just return nothing. It is ok to not be logged in.
+  //     return null;
+  //   }
+
+  //   const post = await context.prisma.post({ id });
+
+  //   return post
+  // },
 };
 
 module.exports = {

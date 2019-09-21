@@ -1,5 +1,4 @@
-# The HTTP endpoint for your Prisma API
-endpoint: https://eu1.prisma.sh/ambit-workspace/ambit-prisma/dev
+endpoint: https://us1.prisma.sh/ambit-workspace-2/ambit-prisma3/dev
 
 # Points to the file that contains your datamodel
 datamodel: datamodel.prisma

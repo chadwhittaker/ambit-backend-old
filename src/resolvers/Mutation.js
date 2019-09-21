@@ -3,7 +3,7 @@ const { sign } = require('jsonwebtoken')
 const { getUserId } = require('../utils')
 
 const Mutation = {
-  async signup(parent, { name, email, password }, context) {
+  async signup(parent, { firstName, lastName, email, password }, context) {
     // 1. lowercase the email
     const emailLower = email.toLowerCase();
     // 2. hash their password
@@ -11,7 +11,9 @@ const Mutation = {
     // 3. create the user in database
     const user = await context.prisma.createUser(
       {
-        name,
+        firstName,
+        lastName,
+        name: `${firstName} ${lastName}`,
         email: emailLower,
         password: hashedPassword,
       }
@@ -31,11 +33,11 @@ const Mutation = {
     const emailLower = email.toLowerCase();
     const user = await context.prisma.user({ email: emailLower });
 
-    if(!user) throw new Error(`No user found for email: ${emailLower}`)
+    if (!user) throw new Error(`No user found for email: ${emailLower}`)
 
     // 2. check if the password is correct
     const passwordValid = await compare(password, user.password)
-    if(!passwordValid) throw new Error(`Invalid password`)
+    if (!passwordValid) throw new Error(`Invalid password`)
 
     // 3. generate JWT token
     const token = sign({ userId: user.id }, process.env.APP_SECRET)
@@ -64,7 +66,7 @@ const Mutation = {
 
     // 3. make mutation
     const user = await context.prisma.updateUser(
-      { 
+      {
         where: { id },
         data: {
           ...args.data
@@ -92,7 +94,7 @@ const Mutation = {
     // 3. gather the list of old skills
     const oldSkills = await context.prisma.skills({ where: { owner: { id } } });
     const oldSkillsIdOnly = oldSkills.reduce((newArray, currentValue) => {
-      return [ ...newArray, { id: currentValue.id }]
+      return [...newArray, { id: currentValue.id }]
     }, [])
 
     // 4. add new skills & delete old skills
@@ -126,7 +128,7 @@ const Mutation = {
 
     // 3. create experience & connect to owner
     const experience = await context.prisma.createExperience(
-      { 
+      {
         ...args.experience,
         owner: {
           connect: { id }
@@ -134,7 +136,10 @@ const Mutation = {
       },
     )
 
-    return experience
+    // 4. return the updated user
+    const user = await context.prisma.user({ id: args.owner });
+
+    return user
   },
 
   async editExperience(parent, args, context) {
@@ -160,7 +165,10 @@ const Mutation = {
       },
     )
 
-    return experience
+    // 4. return the updated user
+    const user = await context.prisma.user({ id: args.owner });
+
+    return user
   },
 
   async deleteExperience(parent, args, context) {
@@ -179,7 +187,10 @@ const Mutation = {
     // 3. create experience & connect to owner
     const experience = await context.prisma.deleteExperience({ id: args.id })
 
-    return experience
+    // 4. return the updated user
+    const user = await context.prisma.user({ id: args.owner });
+
+    return user
   },
 
 
@@ -198,7 +209,7 @@ const Mutation = {
 
     // 3. create education & connect to owner
     const education = await context.prisma.createEducation(
-      { 
+      {
         ...args.education,
         owner: {
           connect: { id }
@@ -206,7 +217,10 @@ const Mutation = {
       },
     )
 
-    return education
+    // 4. return the updated user
+    const user = await context.prisma.user({ id: args.owner });
+
+    return user
   },
 
   async editEducation(parent, args, context) {
@@ -232,7 +246,10 @@ const Mutation = {
       },
     )
 
-    return education
+    // 4. return the updated user
+    const user = await context.prisma.user({ id: args.owner });
+
+    return user
   },
 
   async deleteEducation(parent, args, context) {
@@ -251,7 +268,10 @@ const Mutation = {
     // 3. create education & connect to owner
     const education = await context.prisma.deleteEducation({ id: args.id })
 
-    return education
+    // 4. return the updated user
+    const user = await context.prisma.user({ id: args.owner });
+
+    return user
   },
 
   async createPost(parent, args, context) {
@@ -269,9 +289,93 @@ const Mutation = {
 
     // 3. create education & connect to owner
     const post = await context.prisma.createPost(
-      { 
+      {
         ...args.post,
         lastUpdated: new Date(),
+      }
+    )
+
+    return post
+  },
+
+  async deletePost(parent, args, context) {
+    const id = args.owner
+
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      throw new Error(`You must be logged in to do that`)
+    }
+
+    // 2. check if user on the request owns the post
+    if (context.request.userId !== id) {
+      throw new Error(`You cannot edit a post that is not your own`)
+    }
+
+    // 3. create experience & connect to owner
+    const post = await context.prisma.deletePost({ id: args.id })
+
+    return post
+  },
+
+  async createUpdate(parent, { postId, update }, context) {
+
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      throw new Error(`You must be logged in to do that`)
+    }
+
+    // 2. query for the post
+    const owner = await context.prisma.post({ id: postId }).owner()
+    if (!owner) throw new Error(`No post found`)
+
+    // 3. check if user on the request owns the profile
+    if (context.request.userId !== owner.id) {
+      throw new Error(`You cannot update a post that is not your own`)
+    }
+
+    // 4. create education & connect to owner
+    const post = await context.prisma.updatePost(
+      {
+        where: { id: postId },
+        data: {
+          lastUpdated: new Date(),
+          updates: {
+            create: {
+              ...update
+            }
+          }
+        }
+
+      }
+    )
+
+    return post
+  },
+
+  async likePost(parent, { postId }, context) {
+
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      throw new Error(`You must be logged in to do that`)
+    }
+
+    // 2. query for the post
+    const postToEdit = await context.prisma.post({ id: postId })
+    if (!postToEdit) throw new Error(`No post found`)
+
+    const liked = postToEdit.likedByMe
+
+    // 3. update the post
+    const post = await context.prisma.updatePost(
+      {
+        where: { id: postId },
+        data: {
+          likedByMe: !liked,
+          likesCount: liked ? --postToEdit.likesCount : ++postToEdit.likesCount,
+          likes: {
+            set: liked ? [...postToEdit.likes.filter(like => like !== context.request.userId)] : [...postToEdit.likes, context.request.userId]
+          },
+        }
       }
     )
 

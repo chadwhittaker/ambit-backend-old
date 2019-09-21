@@ -6,10 +6,14 @@ enum Role {
   SUSPENDED
 }
 
+scalar DateTime
+
 type User {
   id: ID! @id
   createdAt: DateTime! @createdAt
   name: String!
+  firstName: String!
+  lastName: String!
   email: String! @unique
   password: String!
   profilePic: String
@@ -22,11 +26,11 @@ type User {
   industry: String
   website: String
   bio: String
-  skills: [Skill]
+  skills: [Skill] @relation(name: "SkillsByUser" onDelete: CASCADE)
   interests: [String] @scalarList(strategy: RELATION)
-  experience: [Experience] 
-  education: [Education]
-  posts: [Post]
+  experience: [Experience] @relation(name: "ExperiencesByUser" onDelete: CASCADE)
+  education: [Education] @relation(name: "EducationByUser" onDelete: CASCADE)
+  posts: [Post] @relation(name: "PostsByUser" onDelete: CASCADE)
   connections: [User] @relation(name: "MyConnections")
   following: [User] @relation(name: "ImFollowing")
   followers: [User] @relation(name: "MyFollowers")
@@ -40,14 +44,14 @@ type User {
 
 type Skill {
   id: ID! @id
-  owner: User!
+  owner: User! @relation(name: "SkillsByUser")
   skill: String!
   isExpert: Boolean! @default(value: false)
 }
 
 type Experience {
   id: ID! @id
-  owner: User!
+  owner: User! @relation(name: "ExperiencesByUser")
   name: String!
   subText: String!
   startDateMonth: String!
@@ -60,10 +64,10 @@ type Experience {
 
 type Education {
   id: ID! @id
-  owner: User!
+  owner: User! @relation(name: "EducationByUser")
   name: String!
   subText: String!
-  startDateMonth: String!
+  startDateMonth: String
   startDateYear: Int!
   endDateMonth: String
   endDateYear: Int
@@ -75,50 +79,61 @@ type Post {
   id: ID! @id
   createdAt: DateTime! @createdAt
   lastUpdated: DateTime!
-  owner: User!
+  owner: User! @relation(name: "PostsByUser")
   isGoal: Boolean! @default(value: false)
   goal: String
   location: String!
   locationLat: Float!
   locationLon: Float!
   content: String!
-  tags: [String] @scalarList(strategy: RELATION)
-  images: [String] @scalarList(strategy: RELATION)
+  tags: [String]! @scalarList(strategy: RELATION)
+  images: [String]! @scalarList(strategy: RELATION)
   video: String
   pitch: String
   isPrivate: Boolean! @default(value: false)
-  likes: [PostLike]
-  comments: [Comment] @relation(name: "CommentToPostRelation")
+  comments: [Comment!]! @relation(name: "CommentToPostRelation" onDelete: CASCADE)
+  updates: [Update!]! @relation(name: "UpdateToPostRelation" onDelete: CASCADE)
+  likes: [String]! @scalarList(strategy: RELATION)
+  likesCount: Int! @default(value: 0)
+  likedByMe: Boolean! @default(value: false)
+  commentsCount: Int
+  sharesCount: Int
 }
 
-type PostLike {
+type Update {
   id: ID! @id
-  parent: Post!
-  owner: User!
+  createdAt: DateTime! @createdAt
+  parentPost: Post! @relation(name: "UpdateToPostRelation")
+  content: String!
+  image: String
+  likes: [String]! @scalarList(strategy: RELATION)
+  likesCount: Int! @default(value: 0)
+  likedByMe: Boolean! @default(value: false)
+  comments: [Comment!]! @relation(name: "CommentToUpdateRelation" onDelete: CASCADE)
+  commentsCount: Int
+  sharesCount: Int
 }
 
 type Comment {
   id: ID! @id
   createdAt: DateTime! @createdAt
-  isUpdate: Boolean! @default(value: false)
   owner: User
   parentPost: Post! @relation(name: "CommentToPostRelation")
   parentComment: Comment @relation(name: "CommentToCommentRelation")
+  parentUpdate: Update @relation(name: "CommentToUpdateRelation")
   content: String
   image: String
-  likes: [CommentLike]
-  comments: [Comment] @relation(name: "CommentToCommentRelation")
-}
-
-type CommentLike {
-  id: ID! @id
-  parent: Comment!
-  owner: User!
+  likes: [String]! @scalarList(strategy: RELATION)
+  likesCount: Int! @default(value: 0)
+  likedByMe: Boolean! @default(value: false)
+  comments: [Comment!]! @relation(name: "CommentToCommentRelation" onDelete: CASCADE)
+  commentsCount: Int
 }
 
 type Meeting {
   id: ID! @id
-  users: [User]!
+  createdAt: DateTime! @createdAt
+  users: [User!]!
   startTime: DateTime!
   endTime: DateTime!
   place: String

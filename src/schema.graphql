@@ -8,24 +8,34 @@ type Query {
   users: [User]!
   postsGlobal: [Post]!
   postsLocal(lat: Float, lon: Float, radius: Int): [Post]!
+  postsUser(id: ID!): [Post]!
+
+  allComments(postId: ID!, isUpdate: Boolean): [Comment!]!
+
+  # singlePost(id: ID!): Post!
+  # singleUpdate(id: ID!): Update!
 }
 
 type Mutation {
-  signup(name: String!, email: String!, password: String!): AuthPayload
+  signup(firstName: String!, lastName: String!, email: String!, password: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
-  # editBio(id: ID!, name: String, jobTitle: String, profession: String, industry: String, location: String, locationCord: [Float], website: String, bio: String, profilePic: String, bannerPic: String): User
-  editBio(id: ID!, data: UserUpdateInput!): User
-  editSkills(id: ID!, skills: [SkillCreateWithoutOwnerInput!]): User
+  editBio(id: ID!, data: UserUpdateInput!): User!
+  editSkills(id: ID!, skills: [SkillCreateWithoutOwnerInput!]): User!
 
-  createExperience(owner: ID!, experience: ExperienceCreateWithoutOwnerInput!): Experience
-  editExperience(owner: ID!, id: ID!, experience: ExperienceUpdateInput!): Experience
-  deleteExperience(owner: ID!, id: ID!): Experience
+  createExperience(owner: ID!, experience: ExperienceCreateWithoutOwnerInput!): User!
+  editExperience(owner: ID!, id: ID!, experience: ExperienceUpdateInput!): User!
+  deleteExperience(owner: ID!, id: ID!): User!
 
-  createEducation(owner: ID!, education: EducationCreateWithoutOwnerInput!): Education
-  editEducation(owner: ID!, id: ID!, education: EducationUpdateInput!): Education
-  deleteEducation(owner: ID!, id: ID!): Education
+  createEducation(owner: ID!, education: EducationCreateWithoutOwnerInput!): User!
+  editEducation(owner: ID!, id: ID!, education: EducationUpdateInput!): User!
+  deleteEducation(owner: ID!, id: ID!): User!
 
   createPost(owner: ID!, post: PostCreateInput!): Post
+  deletePost(owner: ID!, id: ID!): Education
+
+  createUpdate(postId: ID!, update: UpdateCreateWithoutParentPostInput!): Post
+
+  likePost(postId: ID!): Post!
 }
 
 type AuthPayload {
