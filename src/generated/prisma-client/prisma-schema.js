@@ -3199,7 +3199,7 @@ type User {
   connections(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   following(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   followers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  intro: String
+  intro: [String!]!
   projects: [String!]!
   meetings(where: MeetingWhereInput, orderBy: MeetingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Meeting!]
   savedFilters(where: FilterWhereInput, orderBy: FilterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Filter!]
@@ -3238,7 +3238,7 @@ input UserCreateInput {
   connections: UserCreateManyWithoutConnectionsInput
   following: UserCreateManyWithoutFollowingInput
   followers: UserCreateManyWithoutFollowersInput
-  intro: String
+  intro: UserCreateintroInput
   projects: UserCreateprojectsInput
   meetings: MeetingCreateManyWithoutUsersInput
   savedFilters: FilterCreateManyWithoutOwnerInput
@@ -3247,6 +3247,10 @@ input UserCreateInput {
 }
 
 input UserCreateinterestsInput {
+  set: [String!]
+}
+
+input UserCreateintroInput {
   set: [String!]
 }
 
@@ -3332,7 +3336,7 @@ input UserCreateWithoutConnectionsInput {
   posts: PostCreateManyWithoutOwnerInput
   following: UserCreateManyWithoutFollowingInput
   followers: UserCreateManyWithoutFollowersInput
-  intro: String
+  intro: UserCreateintroInput
   projects: UserCreateprojectsInput
   meetings: MeetingCreateManyWithoutUsersInput
   savedFilters: FilterCreateManyWithoutOwnerInput
@@ -3364,7 +3368,7 @@ input UserCreateWithoutEducationInput {
   connections: UserCreateManyWithoutConnectionsInput
   following: UserCreateManyWithoutFollowingInput
   followers: UserCreateManyWithoutFollowersInput
-  intro: String
+  intro: UserCreateintroInput
   projects: UserCreateprojectsInput
   meetings: MeetingCreateManyWithoutUsersInput
   savedFilters: FilterCreateManyWithoutOwnerInput
@@ -3396,7 +3400,7 @@ input UserCreateWithoutExperienceInput {
   connections: UserCreateManyWithoutConnectionsInput
   following: UserCreateManyWithoutFollowingInput
   followers: UserCreateManyWithoutFollowersInput
-  intro: String
+  intro: UserCreateintroInput
   projects: UserCreateprojectsInput
   meetings: MeetingCreateManyWithoutUsersInput
   savedFilters: FilterCreateManyWithoutOwnerInput
@@ -3428,7 +3432,7 @@ input UserCreateWithoutFollowersInput {
   posts: PostCreateManyWithoutOwnerInput
   connections: UserCreateManyWithoutConnectionsInput
   following: UserCreateManyWithoutFollowingInput
-  intro: String
+  intro: UserCreateintroInput
   projects: UserCreateprojectsInput
   meetings: MeetingCreateManyWithoutUsersInput
   savedFilters: FilterCreateManyWithoutOwnerInput
@@ -3460,7 +3464,7 @@ input UserCreateWithoutFollowingInput {
   posts: PostCreateManyWithoutOwnerInput
   connections: UserCreateManyWithoutConnectionsInput
   followers: UserCreateManyWithoutFollowersInput
-  intro: String
+  intro: UserCreateintroInput
   projects: UserCreateprojectsInput
   meetings: MeetingCreateManyWithoutUsersInput
   savedFilters: FilterCreateManyWithoutOwnerInput
@@ -3493,7 +3497,7 @@ input UserCreateWithoutMeetingsInput {
   connections: UserCreateManyWithoutConnectionsInput
   following: UserCreateManyWithoutFollowingInput
   followers: UserCreateManyWithoutFollowersInput
-  intro: String
+  intro: UserCreateintroInput
   projects: UserCreateprojectsInput
   savedFilters: FilterCreateManyWithoutOwnerInput
   rank: Int
@@ -3524,7 +3528,7 @@ input UserCreateWithoutPostsInput {
   connections: UserCreateManyWithoutConnectionsInput
   following: UserCreateManyWithoutFollowingInput
   followers: UserCreateManyWithoutFollowersInput
-  intro: String
+  intro: UserCreateintroInput
   projects: UserCreateprojectsInput
   meetings: MeetingCreateManyWithoutUsersInput
   savedFilters: FilterCreateManyWithoutOwnerInput
@@ -3557,7 +3561,7 @@ input UserCreateWithoutSavedFiltersInput {
   connections: UserCreateManyWithoutConnectionsInput
   following: UserCreateManyWithoutFollowingInput
   followers: UserCreateManyWithoutFollowersInput
-  intro: String
+  intro: UserCreateintroInput
   projects: UserCreateprojectsInput
   meetings: MeetingCreateManyWithoutUsersInput
   rank: Int
@@ -3588,7 +3592,7 @@ input UserCreateWithoutSkillsInput {
   connections: UserCreateManyWithoutConnectionsInput
   following: UserCreateManyWithoutFollowingInput
   followers: UserCreateManyWithoutFollowersInput
-  intro: String
+  intro: UserCreateintroInput
   projects: UserCreateprojectsInput
   meetings: MeetingCreateManyWithoutUsersInput
   savedFilters: FilterCreateManyWithoutOwnerInput
@@ -3636,8 +3640,6 @@ enum UserOrderByInput {
   website_DESC
   bio_ASC
   bio_DESC
-  intro_ASC
-  intro_DESC
   rank_ASC
   rank_DESC
 }
@@ -3661,7 +3663,7 @@ type UserPreviousValues {
   website: String
   bio: String
   interests: [String!]!
-  intro: String
+  intro: [String!]!
   projects: [String!]!
   rank: Int!
   roles: [Role!]!
@@ -3888,20 +3890,6 @@ input UserScalarWhereInput {
   bio_not_starts_with: String
   bio_ends_with: String
   bio_not_ends_with: String
-  intro: String
-  intro_not: String
-  intro_in: [String!]
-  intro_not_in: [String!]
-  intro_lt: String
-  intro_lte: String
-  intro_gt: String
-  intro_gte: String
-  intro_contains: String
-  intro_not_contains: String
-  intro_starts_with: String
-  intro_not_starts_with: String
-  intro_ends_with: String
-  intro_not_ends_with: String
   rank: Int
   rank_not: Int
   rank_in: [Int!]
@@ -3957,7 +3945,7 @@ input UserUpdateDataInput {
   connections: UserUpdateManyWithoutConnectionsInput
   following: UserUpdateManyWithoutFollowingInput
   followers: UserUpdateManyWithoutFollowersInput
-  intro: String
+  intro: UserUpdateintroInput
   projects: UserUpdateprojectsInput
   meetings: MeetingUpdateManyWithoutUsersInput
   savedFilters: FilterUpdateManyWithoutOwnerInput
@@ -3989,7 +3977,7 @@ input UserUpdateInput {
   connections: UserUpdateManyWithoutConnectionsInput
   following: UserUpdateManyWithoutFollowingInput
   followers: UserUpdateManyWithoutFollowersInput
-  intro: String
+  intro: UserUpdateintroInput
   projects: UserUpdateprojectsInput
   meetings: MeetingUpdateManyWithoutUsersInput
   savedFilters: FilterUpdateManyWithoutOwnerInput
@@ -3998,6 +3986,10 @@ input UserUpdateInput {
 }
 
 input UserUpdateinterestsInput {
+  set: [String!]
+}
+
+input UserUpdateintroInput {
   set: [String!]
 }
 
@@ -4018,7 +4010,7 @@ input UserUpdateManyDataInput {
   website: String
   bio: String
   interests: UserUpdateinterestsInput
-  intro: String
+  intro: UserUpdateintroInput
   projects: UserUpdateprojectsInput
   rank: Int
   roles: UserUpdaterolesInput
@@ -4041,7 +4033,7 @@ input UserUpdateManyMutationInput {
   website: String
   bio: String
   interests: UserUpdateinterestsInput
-  intro: String
+  intro: UserUpdateintroInput
   projects: UserUpdateprojectsInput
   rank: Int
   roles: UserUpdaterolesInput
@@ -4177,7 +4169,7 @@ input UserUpdateWithoutConnectionsDataInput {
   posts: PostUpdateManyWithoutOwnerInput
   following: UserUpdateManyWithoutFollowingInput
   followers: UserUpdateManyWithoutFollowersInput
-  intro: String
+  intro: UserUpdateintroInput
   projects: UserUpdateprojectsInput
   meetings: MeetingUpdateManyWithoutUsersInput
   savedFilters: FilterUpdateManyWithoutOwnerInput
@@ -4208,7 +4200,7 @@ input UserUpdateWithoutEducationDataInput {
   connections: UserUpdateManyWithoutConnectionsInput
   following: UserUpdateManyWithoutFollowingInput
   followers: UserUpdateManyWithoutFollowersInput
-  intro: String
+  intro: UserUpdateintroInput
   projects: UserUpdateprojectsInput
   meetings: MeetingUpdateManyWithoutUsersInput
   savedFilters: FilterUpdateManyWithoutOwnerInput
@@ -4239,7 +4231,7 @@ input UserUpdateWithoutExperienceDataInput {
   connections: UserUpdateManyWithoutConnectionsInput
   following: UserUpdateManyWithoutFollowingInput
   followers: UserUpdateManyWithoutFollowersInput
-  intro: String
+  intro: UserUpdateintroInput
   projects: UserUpdateprojectsInput
   meetings: MeetingUpdateManyWithoutUsersInput
   savedFilters: FilterUpdateManyWithoutOwnerInput
@@ -4270,7 +4262,7 @@ input UserUpdateWithoutFollowersDataInput {
   posts: PostUpdateManyWithoutOwnerInput
   connections: UserUpdateManyWithoutConnectionsInput
   following: UserUpdateManyWithoutFollowingInput
-  intro: String
+  intro: UserUpdateintroInput
   projects: UserUpdateprojectsInput
   meetings: MeetingUpdateManyWithoutUsersInput
   savedFilters: FilterUpdateManyWithoutOwnerInput
@@ -4301,7 +4293,7 @@ input UserUpdateWithoutFollowingDataInput {
   posts: PostUpdateManyWithoutOwnerInput
   connections: UserUpdateManyWithoutConnectionsInput
   followers: UserUpdateManyWithoutFollowersInput
-  intro: String
+  intro: UserUpdateintroInput
   projects: UserUpdateprojectsInput
   meetings: MeetingUpdateManyWithoutUsersInput
   savedFilters: FilterUpdateManyWithoutOwnerInput
@@ -4333,7 +4325,7 @@ input UserUpdateWithoutMeetingsDataInput {
   connections: UserUpdateManyWithoutConnectionsInput
   following: UserUpdateManyWithoutFollowingInput
   followers: UserUpdateManyWithoutFollowersInput
-  intro: String
+  intro: UserUpdateintroInput
   projects: UserUpdateprojectsInput
   savedFilters: FilterUpdateManyWithoutOwnerInput
   rank: Int
@@ -4363,7 +4355,7 @@ input UserUpdateWithoutPostsDataInput {
   connections: UserUpdateManyWithoutConnectionsInput
   following: UserUpdateManyWithoutFollowingInput
   followers: UserUpdateManyWithoutFollowersInput
-  intro: String
+  intro: UserUpdateintroInput
   projects: UserUpdateprojectsInput
   meetings: MeetingUpdateManyWithoutUsersInput
   savedFilters: FilterUpdateManyWithoutOwnerInput
@@ -4395,7 +4387,7 @@ input UserUpdateWithoutSavedFiltersDataInput {
   connections: UserUpdateManyWithoutConnectionsInput
   following: UserUpdateManyWithoutFollowingInput
   followers: UserUpdateManyWithoutFollowersInput
-  intro: String
+  intro: UserUpdateintroInput
   projects: UserUpdateprojectsInput
   meetings: MeetingUpdateManyWithoutUsersInput
   rank: Int
@@ -4425,7 +4417,7 @@ input UserUpdateWithoutSkillsDataInput {
   connections: UserUpdateManyWithoutConnectionsInput
   following: UserUpdateManyWithoutFollowingInput
   followers: UserUpdateManyWithoutFollowersInput
-  intro: String
+  intro: UserUpdateintroInput
   projects: UserUpdateprojectsInput
   meetings: MeetingUpdateManyWithoutUsersInput
   savedFilters: FilterUpdateManyWithoutOwnerInput
@@ -4749,20 +4741,6 @@ input UserWhereInput {
   followers_every: UserWhereInput
   followers_some: UserWhereInput
   followers_none: UserWhereInput
-  intro: String
-  intro_not: String
-  intro_in: [String!]
-  intro_not_in: [String!]
-  intro_lt: String
-  intro_lte: String
-  intro_gt: String
-  intro_gte: String
-  intro_contains: String
-  intro_not_contains: String
-  intro_starts_with: String
-  intro_not_starts_with: String
-  intro_ends_with: String
-  intro_not_ends_with: String
   meetings_every: MeetingWhereInput
   meetings_some: MeetingWhereInput
   meetings_none: MeetingWhereInput

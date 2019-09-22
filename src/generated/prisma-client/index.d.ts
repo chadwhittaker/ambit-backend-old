@@ -562,8 +562,6 @@ export type UserOrderByInput =
   | "website_DESC"
   | "bio_ASC"
   | "bio_DESC"
-  | "intro_ASC"
-  | "intro_DESC"
   | "rank_ASC"
   | "rank_DESC";
 
@@ -799,7 +797,7 @@ export interface UserUpdateWithoutPostsDataInput {
   connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
   following?: Maybe<UserUpdateManyWithoutFollowingInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
-  intro?: Maybe<String>;
+  intro?: Maybe<UserUpdateintroInput>;
   projects?: Maybe<UserUpdateprojectsInput>;
   meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
   savedFilters?: Maybe<FilterUpdateManyWithoutOwnerInput>;
@@ -964,7 +962,7 @@ export interface UserUpdateWithoutExperienceDataInput {
   connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
   following?: Maybe<UserUpdateManyWithoutFollowingInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
-  intro?: Maybe<String>;
+  intro?: Maybe<UserUpdateintroInput>;
   projects?: Maybe<UserUpdateprojectsInput>;
   meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
   savedFilters?: Maybe<FilterUpdateManyWithoutOwnerInput>;
@@ -1382,20 +1380,6 @@ export interface UserWhereInput {
   followers_every?: Maybe<UserWhereInput>;
   followers_some?: Maybe<UserWhereInput>;
   followers_none?: Maybe<UserWhereInput>;
-  intro?: Maybe<String>;
-  intro_not?: Maybe<String>;
-  intro_in?: Maybe<String[] | String>;
-  intro_not_in?: Maybe<String[] | String>;
-  intro_lt?: Maybe<String>;
-  intro_lte?: Maybe<String>;
-  intro_gt?: Maybe<String>;
-  intro_gte?: Maybe<String>;
-  intro_contains?: Maybe<String>;
-  intro_not_contains?: Maybe<String>;
-  intro_starts_with?: Maybe<String>;
-  intro_not_starts_with?: Maybe<String>;
-  intro_ends_with?: Maybe<String>;
-  intro_not_ends_with?: Maybe<String>;
   meetings_every?: Maybe<MeetingWhereInput>;
   meetings_some?: Maybe<MeetingWhereInput>;
   meetings_none?: Maybe<MeetingWhereInput>;
@@ -1608,7 +1592,7 @@ export interface UserUpdateInput {
   connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
   following?: Maybe<UserUpdateManyWithoutFollowingInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
-  intro?: Maybe<String>;
+  intro?: Maybe<UserUpdateintroInput>;
   projects?: Maybe<UserUpdateprojectsInput>;
   meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
   savedFilters?: Maybe<FilterUpdateManyWithoutOwnerInput>;
@@ -1960,7 +1944,7 @@ export interface UserUpdateWithoutMeetingsDataInput {
   connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
   following?: Maybe<UserUpdateManyWithoutFollowingInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
-  intro?: Maybe<String>;
+  intro?: Maybe<UserUpdateintroInput>;
   projects?: Maybe<UserUpdateprojectsInput>;
   savedFilters?: Maybe<FilterUpdateManyWithoutOwnerInput>;
   rank?: Maybe<Int>;
@@ -2071,7 +2055,7 @@ export interface UserUpdateWithoutSavedFiltersDataInput {
   connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
   following?: Maybe<UserUpdateManyWithoutFollowingInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
-  intro?: Maybe<String>;
+  intro?: Maybe<UserUpdateintroInput>;
   projects?: Maybe<UserUpdateprojectsInput>;
   meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
   rank?: Maybe<Int>;
@@ -2132,7 +2116,7 @@ export interface UserCreateWithoutSavedFiltersInput {
   connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
   following?: Maybe<UserCreateManyWithoutFollowingInput>;
   followers?: Maybe<UserCreateManyWithoutFollowersInput>;
-  intro?: Maybe<String>;
+  intro?: Maybe<UserCreateintroInput>;
   projects?: Maybe<UserCreateprojectsInput>;
   meetings?: Maybe<MeetingCreateManyWithoutUsersInput>;
   rank?: Maybe<Int>;
@@ -2282,7 +2266,7 @@ export interface UserCreateInput {
   connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
   following?: Maybe<UserCreateManyWithoutFollowingInput>;
   followers?: Maybe<UserCreateManyWithoutFollowersInput>;
-  intro?: Maybe<String>;
+  intro?: Maybe<UserCreateintroInput>;
   projects?: Maybe<UserCreateprojectsInput>;
   meetings?: Maybe<MeetingCreateManyWithoutUsersInput>;
   savedFilters?: Maybe<FilterCreateManyWithoutOwnerInput>;
@@ -2508,7 +2492,7 @@ export interface UserUpdateWithoutConnectionsDataInput {
   posts?: Maybe<PostUpdateManyWithoutOwnerInput>;
   following?: Maybe<UserUpdateManyWithoutFollowingInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
-  intro?: Maybe<String>;
+  intro?: Maybe<UserUpdateintroInput>;
   projects?: Maybe<UserUpdateprojectsInput>;
   meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
   savedFilters?: Maybe<FilterUpdateManyWithoutOwnerInput>;
@@ -2582,7 +2566,7 @@ export interface UserUpdateWithoutFollowingDataInput {
   posts?: Maybe<PostUpdateManyWithoutOwnerInput>;
   connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
-  intro?: Maybe<String>;
+  intro?: Maybe<UserUpdateintroInput>;
   projects?: Maybe<UserUpdateprojectsInput>;
   meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
   savedFilters?: Maybe<FilterUpdateManyWithoutOwnerInput>;
@@ -2655,7 +2639,7 @@ export interface UserUpdateWithoutFollowersDataInput {
   posts?: Maybe<PostUpdateManyWithoutOwnerInput>;
   connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
   following?: Maybe<UserUpdateManyWithoutFollowingInput>;
-  intro?: Maybe<String>;
+  intro?: Maybe<UserUpdateintroInput>;
   projects?: Maybe<UserUpdateprojectsInput>;
   meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
   savedFilters?: Maybe<FilterUpdateManyWithoutOwnerInput>;
@@ -2670,13 +2654,24 @@ export interface UserCreateManyWithoutConnectionsInput {
   connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
 }
 
-export interface UserUpdateprojectsInput {
+export interface UserUpdateintroInput {
   set?: Maybe<String[] | String>;
 }
 
 export interface UserCreateManyWithoutFollowingInput {
   create?: Maybe<
     UserCreateWithoutFollowingInput[] | UserCreateWithoutFollowingInput
+  >;
+  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+}
+
+export interface UserUpdateprojectsInput {
+  set?: Maybe<String[] | String>;
+}
+
+export interface UserCreateManyWithoutFollowersInput {
+  create?: Maybe<
+    UserCreateWithoutFollowersInput[] | UserCreateWithoutFollowersInput
   >;
   connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
 }
@@ -2704,11 +2699,8 @@ export interface MeetingUpdateManyWithoutUsersInput {
   >;
 }
 
-export interface UserCreateManyWithoutFollowersInput {
-  create?: Maybe<
-    UserCreateWithoutFollowersInput[] | UserCreateWithoutFollowersInput
-  >;
-  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+export interface UserCreateintroInput {
+  set?: Maybe<String[] | String>;
 }
 
 export interface MeetingUpdateWithWhereUniqueWithoutUsersInput {
@@ -2716,8 +2708,11 @@ export interface MeetingUpdateWithWhereUniqueWithoutUsersInput {
   data: MeetingUpdateWithoutUsersDataInput;
 }
 
-export interface UserCreateprojectsInput {
-  set?: Maybe<String[] | String>;
+export interface MeetingCreateManyWithoutUsersInput {
+  create?: Maybe<
+    MeetingCreateWithoutUsersInput[] | MeetingCreateWithoutUsersInput
+  >;
+  connect?: Maybe<MeetingWhereUniqueInput[] | MeetingWhereUniqueInput>;
 }
 
 export interface MeetingUpdateWithoutUsersDataInput {
@@ -2726,11 +2721,11 @@ export interface MeetingUpdateWithoutUsersDataInput {
   place?: Maybe<String>;
 }
 
-export interface MeetingCreateWithoutUsersInput {
-  id?: Maybe<ID_Input>;
-  startTime: DateTimeInput;
-  endTime: DateTimeInput;
-  place?: Maybe<String>;
+export interface FilterCreateManyWithoutOwnerInput {
+  create?: Maybe<
+    FilterCreateWithoutOwnerInput[] | FilterCreateWithoutOwnerInput
+  >;
+  connect?: Maybe<FilterWhereUniqueInput[] | FilterWhereUniqueInput>;
 }
 
 export interface MeetingUpsertWithWhereUniqueWithoutUsersInput {
@@ -2739,8 +2734,8 @@ export interface MeetingUpsertWithWhereUniqueWithoutUsersInput {
   create: MeetingCreateWithoutUsersInput;
 }
 
-export interface FilterCreateWithoutOwnerInput {
-  id?: Maybe<ID_Input>;
+export interface UserCreaterolesInput {
+  set?: Maybe<Role[] | Role>;
 }
 
 export interface MeetingScalarWhereInput {
@@ -2801,11 +2796,16 @@ export interface MeetingScalarWhereInput {
   NOT?: Maybe<MeetingScalarWhereInput[] | MeetingScalarWhereInput>;
 }
 
-export interface UpdateCreateManyWithoutParentPostInput {
-  create?: Maybe<
-    UpdateCreateWithoutParentPostInput[] | UpdateCreateWithoutParentPostInput
-  >;
-  connect?: Maybe<UpdateWhereUniqueInput[] | UpdateWhereUniqueInput>;
+export interface UpdateCreateWithoutParentPostInput {
+  id?: Maybe<ID_Input>;
+  content: String;
+  image?: Maybe<String>;
+  likes?: Maybe<UpdateCreatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  comments?: Maybe<CommentCreateManyWithoutParentUpdateInput>;
+  commentsCount?: Maybe<Int>;
+  sharesCount?: Maybe<Int>;
 }
 
 export interface MeetingUpdateManyWithWhereNestedInput {
@@ -2813,8 +2813,12 @@ export interface MeetingUpdateManyWithWhereNestedInput {
   data: MeetingUpdateManyDataInput;
 }
 
-export interface UpdateCreatelikesInput {
-  set?: Maybe<String[] | String>;
+export interface CommentCreateManyWithoutParentUpdateInput {
+  create?: Maybe<
+    | CommentCreateWithoutParentUpdateInput[]
+    | CommentCreateWithoutParentUpdateInput
+  >;
+  connect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
 }
 
 export interface MeetingUpdateManyDataInput {
@@ -2823,18 +2827,8 @@ export interface MeetingUpdateManyDataInput {
   place?: Maybe<String>;
 }
 
-export interface CommentCreateWithoutParentUpdateInput {
-  id?: Maybe<ID_Input>;
-  owner?: Maybe<UserCreateOneInput>;
-  parentPost: PostCreateOneWithoutCommentsInput;
-  parentComment?: Maybe<CommentCreateOneWithoutCommentsInput>;
-  content?: Maybe<String>;
-  image?: Maybe<String>;
-  likes?: Maybe<CommentCreatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  comments?: Maybe<CommentCreateManyWithoutParentCommentInput>;
-  commentsCount?: Maybe<Int>;
+export interface CommentCreatelikesInput {
+  set?: Maybe<String[] | String>;
 }
 
 export interface FilterUpdateManyWithoutOwnerInput {
@@ -2848,12 +2842,18 @@ export interface FilterUpdateManyWithoutOwnerInput {
   deleteMany?: Maybe<FilterScalarWhereInput[] | FilterScalarWhereInput>;
 }
 
-export interface CommentCreateManyWithoutParentCommentInput {
-  create?: Maybe<
-    | CommentCreateWithoutParentCommentInput[]
-    | CommentCreateWithoutParentCommentInput
-  >;
-  connect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
+export interface CommentCreateWithoutParentCommentInput {
+  id?: Maybe<ID_Input>;
+  owner?: Maybe<UserCreateOneInput>;
+  parentPost: PostCreateOneWithoutCommentsInput;
+  parentUpdate?: Maybe<UpdateCreateOneWithoutCommentsInput>;
+  content?: Maybe<String>;
+  image?: Maybe<String>;
+  likes?: Maybe<CommentCreatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  comments?: Maybe<CommentCreateManyWithoutParentCommentInput>;
+  commentsCount?: Maybe<Int>;
 }
 
 export interface FilterScalarWhereInput {
@@ -2876,18 +2876,43 @@ export interface FilterScalarWhereInput {
   NOT?: Maybe<FilterScalarWhereInput[] | FilterScalarWhereInput>;
 }
 
-export interface UpdateCreateOneWithoutCommentsInput {
-  create?: Maybe<UpdateCreateWithoutCommentsInput>;
-  connect?: Maybe<UpdateWhereUniqueInput>;
+export interface UpdateCreateWithoutCommentsInput {
+  id?: Maybe<ID_Input>;
+  parentPost: PostCreateOneWithoutUpdatesInput;
+  content: String;
+  image?: Maybe<String>;
+  likes?: Maybe<UpdateCreatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  commentsCount?: Maybe<Int>;
+  sharesCount?: Maybe<Int>;
 }
 
 export interface UserUpdaterolesInput {
   set?: Maybe<Role[] | Role>;
 }
 
-export interface PostCreateOneWithoutUpdatesInput {
-  create?: Maybe<PostCreateWithoutUpdatesInput>;
-  connect?: Maybe<PostWhereUniqueInput>;
+export interface PostCreateWithoutUpdatesInput {
+  id?: Maybe<ID_Input>;
+  lastUpdated: DateTimeInput;
+  owner: UserCreateOneWithoutPostsInput;
+  isGoal?: Maybe<Boolean>;
+  goal?: Maybe<String>;
+  location: String;
+  locationLat: Float;
+  locationLon: Float;
+  content: String;
+  tags?: Maybe<PostCreatetagsInput>;
+  images?: Maybe<PostCreateimagesInput>;
+  video?: Maybe<String>;
+  pitch?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
+  comments?: Maybe<CommentCreateManyWithoutParentPostInput>;
+  likes?: Maybe<PostCreatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  commentsCount?: Maybe<Int>;
+  sharesCount?: Maybe<Int>;
 }
 
 export interface UserUpsertWithWhereUniqueWithoutFollowersInput {
@@ -2896,8 +2921,18 @@ export interface UserUpsertWithWhereUniqueWithoutFollowersInput {
   create: UserCreateWithoutFollowersInput;
 }
 
-export interface PostCreatelikesInput {
-  set?: Maybe<String[] | String>;
+export interface CommentUpdateInput {
+  owner?: Maybe<UserUpdateOneInput>;
+  parentPost?: Maybe<PostUpdateOneRequiredWithoutCommentsInput>;
+  parentComment?: Maybe<CommentUpdateOneWithoutCommentsInput>;
+  parentUpdate?: Maybe<UpdateUpdateOneWithoutCommentsInput>;
+  content?: Maybe<String>;
+  image?: Maybe<String>;
+  likes?: Maybe<CommentUpdatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  comments?: Maybe<CommentUpdateManyWithoutParentCommentInput>;
+  commentsCount?: Maybe<Int>;
 }
 
 export interface UserScalarWhereInput {
@@ -3121,20 +3156,6 @@ export interface UserScalarWhereInput {
   bio_not_starts_with?: Maybe<String>;
   bio_ends_with?: Maybe<String>;
   bio_not_ends_with?: Maybe<String>;
-  intro?: Maybe<String>;
-  intro_not?: Maybe<String>;
-  intro_in?: Maybe<String[] | String>;
-  intro_not_in?: Maybe<String[] | String>;
-  intro_lt?: Maybe<String>;
-  intro_lte?: Maybe<String>;
-  intro_gt?: Maybe<String>;
-  intro_gte?: Maybe<String>;
-  intro_contains?: Maybe<String>;
-  intro_not_contains?: Maybe<String>;
-  intro_starts_with?: Maybe<String>;
-  intro_not_starts_with?: Maybe<String>;
-  intro_ends_with?: Maybe<String>;
-  intro_not_ends_with?: Maybe<String>;
   rank?: Maybe<Int>;
   rank_not?: Maybe<Int>;
   rank_in?: Maybe<Int[] | Int>;
@@ -3148,13 +3169,36 @@ export interface UserScalarWhereInput {
   NOT?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
 }
 
-export interface UserUpdateOneInput {
-  create?: Maybe<UserCreateInput>;
-  update?: Maybe<UserUpdateDataInput>;
-  upsert?: Maybe<UserUpsertNestedInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<UserWhereUniqueInput>;
+export interface UserUpdateDataInput {
+  name?: Maybe<String>;
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  profilePic?: Maybe<String>;
+  bannerPic?: Maybe<String>;
+  location?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  jobTitle?: Maybe<String>;
+  profession?: Maybe<String>;
+  industry?: Maybe<String>;
+  website?: Maybe<String>;
+  bio?: Maybe<String>;
+  skills?: Maybe<SkillUpdateManyWithoutOwnerInput>;
+  interests?: Maybe<UserUpdateinterestsInput>;
+  experience?: Maybe<ExperienceUpdateManyWithoutOwnerInput>;
+  education?: Maybe<EducationUpdateManyWithoutOwnerInput>;
+  posts?: Maybe<PostUpdateManyWithoutOwnerInput>;
+  connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
+  following?: Maybe<UserUpdateManyWithoutFollowingInput>;
+  followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
+  intro?: Maybe<UserUpdateintroInput>;
+  projects?: Maybe<UserUpdateprojectsInput>;
+  meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
+  savedFilters?: Maybe<FilterUpdateManyWithoutOwnerInput>;
+  rank?: Maybe<Int>;
+  roles?: Maybe<UserUpdaterolesInput>;
 }
 
 export interface UserUpdateManyWithWhereNestedInput {
@@ -3162,24 +3206,9 @@ export interface UserUpdateManyWithWhereNestedInput {
   data: UserUpdateManyDataInput;
 }
 
-export interface SkillUpdateManyWithoutOwnerInput {
-  create?: Maybe<SkillCreateWithoutOwnerInput[] | SkillCreateWithoutOwnerInput>;
-  delete?: Maybe<SkillWhereUniqueInput[] | SkillWhereUniqueInput>;
-  connect?: Maybe<SkillWhereUniqueInput[] | SkillWhereUniqueInput>;
-  set?: Maybe<SkillWhereUniqueInput[] | SkillWhereUniqueInput>;
-  disconnect?: Maybe<SkillWhereUniqueInput[] | SkillWhereUniqueInput>;
-  update?: Maybe<
-    | SkillUpdateWithWhereUniqueWithoutOwnerInput[]
-    | SkillUpdateWithWhereUniqueWithoutOwnerInput
-  >;
-  upsert?: Maybe<
-    | SkillUpsertWithWhereUniqueWithoutOwnerInput[]
-    | SkillUpsertWithWhereUniqueWithoutOwnerInput
-  >;
-  deleteMany?: Maybe<SkillScalarWhereInput[] | SkillScalarWhereInput>;
-  updateMany?: Maybe<
-    SkillUpdateManyWithWhereNestedInput[] | SkillUpdateManyWithWhereNestedInput
-  >;
+export interface SkillUpdateWithWhereUniqueWithoutOwnerInput {
+  where: SkillWhereUniqueInput;
+  data: SkillUpdateWithoutOwnerDataInput;
 }
 
 export interface UserUpdateManyDataInput {
@@ -3199,15 +3228,16 @@ export interface UserUpdateManyDataInput {
   website?: Maybe<String>;
   bio?: Maybe<String>;
   interests?: Maybe<UserUpdateinterestsInput>;
-  intro?: Maybe<String>;
+  intro?: Maybe<UserUpdateintroInput>;
   projects?: Maybe<UserUpdateprojectsInput>;
   rank?: Maybe<Int>;
   roles?: Maybe<UserUpdaterolesInput>;
 }
 
-export interface SkillUpdateWithoutOwnerDataInput {
-  skill?: Maybe<String>;
-  isExpert?: Maybe<Boolean>;
+export interface SkillUpsertWithWhereUniqueWithoutOwnerInput {
+  where: SkillWhereUniqueInput;
+  update: SkillUpdateWithoutOwnerDataInput;
+  create: SkillCreateWithoutOwnerInput;
 }
 
 export interface UserUpsertWithWhereUniqueWithoutFollowingInput {
@@ -3216,7 +3246,34 @@ export interface UserUpsertWithWhereUniqueWithoutFollowingInput {
   create: UserCreateWithoutFollowingInput;
 }
 
-export interface SkillScalarWhereInput {
+export interface SkillUpdateManyWithWhereNestedInput {
+  where: SkillScalarWhereInput;
+  data: SkillUpdateManyDataInput;
+}
+
+export interface UserUpsertWithWhereUniqueWithoutConnectionsInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateWithoutConnectionsDataInput;
+  create: UserCreateWithoutConnectionsInput;
+}
+
+export interface SkillSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<SkillWhereInput>;
+  AND?: Maybe<SkillSubscriptionWhereInput[] | SkillSubscriptionWhereInput>;
+  OR?: Maybe<SkillSubscriptionWhereInput[] | SkillSubscriptionWhereInput>;
+  NOT?: Maybe<SkillSubscriptionWhereInput[] | SkillSubscriptionWhereInput>;
+}
+
+export interface UserUpsertWithoutPostsInput {
+  update: UserUpdateWithoutPostsDataInput;
+  create: UserCreateWithoutPostsInput;
+}
+
+export interface SkillWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -3231,6 +3288,7 @@ export interface SkillScalarWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  owner?: Maybe<UserWhereInput>;
   skill?: Maybe<String>;
   skill_not?: Maybe<String>;
   skill_in?: Maybe<String[] | String>;
@@ -3247,42 +3305,9 @@ export interface SkillScalarWhereInput {
   skill_not_ends_with?: Maybe<String>;
   isExpert?: Maybe<Boolean>;
   isExpert_not?: Maybe<Boolean>;
-  AND?: Maybe<SkillScalarWhereInput[] | SkillScalarWhereInput>;
-  OR?: Maybe<SkillScalarWhereInput[] | SkillScalarWhereInput>;
-  NOT?: Maybe<SkillScalarWhereInput[] | SkillScalarWhereInput>;
-}
-
-export interface UserUpsertWithWhereUniqueWithoutConnectionsInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateWithoutConnectionsDataInput;
-  create: UserCreateWithoutConnectionsInput;
-}
-
-export interface UserSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UserWhereInput>;
-  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-}
-
-export interface UserUpsertWithoutPostsInput {
-  update: UserUpdateWithoutPostsDataInput;
-  create: UserCreateWithoutPostsInput;
-}
-
-export interface PostSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<PostWhereInput>;
-  AND?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
-  OR?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
-  NOT?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
+  AND?: Maybe<SkillWhereInput[] | SkillWhereInput>;
+  OR?: Maybe<SkillWhereInput[] | SkillWhereInput>;
+  NOT?: Maybe<SkillWhereInput[] | SkillWhereInput>;
 }
 
 export interface UpdateUpdateManyWithoutParentPostInput {
@@ -3308,15 +3333,21 @@ export interface UpdateUpdateManyWithoutParentPostInput {
   >;
 }
 
-export interface FilterSubscriptionWhereInput {
+export interface EducationSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
   updatedFields_contains_every?: Maybe<String[] | String>;
   updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<FilterWhereInput>;
-  AND?: Maybe<FilterSubscriptionWhereInput[] | FilterSubscriptionWhereInput>;
-  OR?: Maybe<FilterSubscriptionWhereInput[] | FilterSubscriptionWhereInput>;
-  NOT?: Maybe<FilterSubscriptionWhereInput[] | FilterSubscriptionWhereInput>;
+  node?: Maybe<EducationWhereInput>;
+  AND?: Maybe<
+    EducationSubscriptionWhereInput[] | EducationSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    EducationSubscriptionWhereInput[] | EducationSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    EducationSubscriptionWhereInput[] | EducationSubscriptionWhereInput
+  >;
 }
 
 export interface UpdateUpdateWithWhereUniqueWithoutParentPostInput {
@@ -3324,27 +3355,14 @@ export interface UpdateUpdateWithWhereUniqueWithoutParentPostInput {
   data: UpdateUpdateWithoutParentPostDataInput;
 }
 
-export interface UserUpdateManyMutationInput {
-  name?: Maybe<String>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  profilePic?: Maybe<String>;
-  bannerPic?: Maybe<String>;
-  location?: Maybe<String>;
-  locationLat?: Maybe<Float>;
-  locationLon?: Maybe<Float>;
-  jobTitle?: Maybe<String>;
-  profession?: Maybe<String>;
-  industry?: Maybe<String>;
-  website?: Maybe<String>;
-  bio?: Maybe<String>;
-  interests?: Maybe<UserUpdateinterestsInput>;
-  intro?: Maybe<String>;
-  projects?: Maybe<UserUpdateprojectsInput>;
-  rank?: Maybe<Int>;
-  roles?: Maybe<UserUpdaterolesInput>;
+export interface UpdateUpdateManyMutationInput {
+  content?: Maybe<String>;
+  image?: Maybe<String>;
+  likes?: Maybe<UpdateUpdatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  commentsCount?: Maybe<Int>;
+  sharesCount?: Maybe<Int>;
 }
 
 export interface UpdateUpdateWithoutParentPostDataInput {
@@ -3358,53 +3376,17 @@ export interface UpdateUpdateWithoutParentPostDataInput {
   sharesCount?: Maybe<Int>;
 }
 
-export interface UpdateCreateInput {
-  id?: Maybe<ID_Input>;
-  parentPost: PostCreateOneWithoutUpdatesInput;
-  content: String;
-  image?: Maybe<String>;
-  likes?: Maybe<UpdateCreatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  comments?: Maybe<CommentCreateManyWithoutParentUpdateInput>;
-  commentsCount?: Maybe<Int>;
-  sharesCount?: Maybe<Int>;
-}
+export type EducationWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
 
 export interface UpdateUpdatelikesInput {
   set?: Maybe<String[] | String>;
 }
 
-export interface UserUpdateWithoutSkillsDataInput {
-  name?: Maybe<String>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  profilePic?: Maybe<String>;
-  bannerPic?: Maybe<String>;
-  location?: Maybe<String>;
-  locationLat?: Maybe<Float>;
-  locationLon?: Maybe<Float>;
-  jobTitle?: Maybe<String>;
-  profession?: Maybe<String>;
-  industry?: Maybe<String>;
-  website?: Maybe<String>;
-  bio?: Maybe<String>;
-  interests?: Maybe<UserUpdateinterestsInput>;
-  experience?: Maybe<ExperienceUpdateManyWithoutOwnerInput>;
-  education?: Maybe<EducationUpdateManyWithoutOwnerInput>;
-  posts?: Maybe<PostUpdateManyWithoutOwnerInput>;
-  connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
-  following?: Maybe<UserUpdateManyWithoutFollowingInput>;
-  followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
-  intro?: Maybe<String>;
-  projects?: Maybe<UserUpdateprojectsInput>;
-  meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
-  savedFilters?: Maybe<FilterUpdateManyWithoutOwnerInput>;
-  rank?: Maybe<Int>;
-  roles?: Maybe<UserUpdaterolesInput>;
-}
+export type ExperienceWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
 
 export interface CommentUpdateManyWithoutParentUpdateInput {
   create?: Maybe<
@@ -3430,62 +3412,18 @@ export interface CommentUpdateManyWithoutParentUpdateInput {
   >;
 }
 
-export interface UserCreateWithoutSkillsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  firstName: String;
-  lastName: String;
-  email: String;
-  password: String;
-  profilePic?: Maybe<String>;
-  bannerPic?: Maybe<String>;
-  location?: Maybe<String>;
-  locationLat?: Maybe<Float>;
-  locationLon?: Maybe<Float>;
-  jobTitle?: Maybe<String>;
-  profession?: Maybe<String>;
-  industry?: Maybe<String>;
-  website?: Maybe<String>;
-  bio?: Maybe<String>;
-  interests?: Maybe<UserCreateinterestsInput>;
-  experience?: Maybe<ExperienceCreateManyWithoutOwnerInput>;
-  education?: Maybe<EducationCreateManyWithoutOwnerInput>;
-  posts?: Maybe<PostCreateManyWithoutOwnerInput>;
-  connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
-  following?: Maybe<UserCreateManyWithoutFollowingInput>;
-  followers?: Maybe<UserCreateManyWithoutFollowersInput>;
-  intro?: Maybe<String>;
-  projects?: Maybe<UserCreateprojectsInput>;
-  meetings?: Maybe<MeetingCreateManyWithoutUsersInput>;
-  savedFilters?: Maybe<FilterCreateManyWithoutOwnerInput>;
-  rank?: Maybe<Int>;
-  roles?: Maybe<UserCreaterolesInput>;
-}
+export type FilterWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
 
 export interface CommentUpdateWithWhereUniqueWithoutParentUpdateInput {
   where: CommentWhereUniqueInput;
   data: CommentUpdateWithoutParentUpdateDataInput;
 }
 
-export interface PostUpdateManyMutationInput {
-  lastUpdated?: Maybe<DateTimeInput>;
-  isGoal?: Maybe<Boolean>;
-  goal?: Maybe<String>;
-  location?: Maybe<String>;
-  locationLat?: Maybe<Float>;
-  locationLon?: Maybe<Float>;
-  content?: Maybe<String>;
-  tags?: Maybe<PostUpdatetagsInput>;
-  images?: Maybe<PostUpdateimagesInput>;
-  video?: Maybe<String>;
-  pitch?: Maybe<String>;
-  isPrivate?: Maybe<Boolean>;
-  likes?: Maybe<PostUpdatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  commentsCount?: Maybe<Int>;
-  sharesCount?: Maybe<Int>;
-}
+export type MeetingWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
 
 export interface CommentUpdateWithoutParentUpdateDataInput {
   owner?: Maybe<UserUpdateOneInput>;
@@ -3500,20 +3438,17 @@ export interface CommentUpdateWithoutParentUpdateDataInput {
   commentsCount?: Maybe<Int>;
 }
 
-export interface MeetingUpdateManyMutationInput {
-  startTime?: Maybe<DateTimeInput>;
-  endTime?: Maybe<DateTimeInput>;
-  place?: Maybe<String>;
-}
+export type PostWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
 
 export interface CommentUpdatelikesInput {
   set?: Maybe<String[] | String>;
 }
 
-export interface UserUpdateWithWhereUniqueWithoutMeetingsInput {
-  where: UserWhereUniqueInput;
-  data: UserUpdateWithoutMeetingsDataInput;
-}
+export type SkillWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
 
 export interface CommentUpdateManyWithoutParentCommentInput {
   create?: Maybe<
@@ -3539,47 +3474,19 @@ export interface CommentUpdateManyWithoutParentCommentInput {
   >;
 }
 
-export interface UserCreateWithoutMeetingsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  firstName: String;
-  lastName: String;
-  email: String;
-  password: String;
-  profilePic?: Maybe<String>;
-  bannerPic?: Maybe<String>;
-  location?: Maybe<String>;
-  locationLat?: Maybe<Float>;
-  locationLon?: Maybe<Float>;
-  jobTitle?: Maybe<String>;
-  profession?: Maybe<String>;
-  industry?: Maybe<String>;
-  website?: Maybe<String>;
-  bio?: Maybe<String>;
-  skills?: Maybe<SkillCreateManyWithoutOwnerInput>;
-  interests?: Maybe<UserCreateinterestsInput>;
-  experience?: Maybe<ExperienceCreateManyWithoutOwnerInput>;
-  education?: Maybe<EducationCreateManyWithoutOwnerInput>;
-  posts?: Maybe<PostCreateManyWithoutOwnerInput>;
-  connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
-  following?: Maybe<UserCreateManyWithoutFollowingInput>;
-  followers?: Maybe<UserCreateManyWithoutFollowersInput>;
-  intro?: Maybe<String>;
-  projects?: Maybe<UserCreateprojectsInput>;
-  savedFilters?: Maybe<FilterCreateManyWithoutOwnerInput>;
-  rank?: Maybe<Int>;
-  roles?: Maybe<UserCreaterolesInput>;
-}
+export type UpdateWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
 
 export interface CommentUpdateWithWhereUniqueWithoutParentCommentInput {
   where: CommentWhereUniqueInput;
   data: CommentUpdateWithoutParentCommentDataInput;
 }
 
-export interface UserUpsertWithoutSavedFiltersInput {
-  update: UserUpdateWithoutSavedFiltersDataInput;
-  create: UserCreateWithoutSavedFiltersInput;
-}
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  email?: Maybe<String>;
+}>;
 
 export interface CommentUpdateWithoutParentCommentDataInput {
   owner?: Maybe<UserUpdateOneInput>;
@@ -3594,8 +3501,9 @@ export interface CommentUpdateWithoutParentCommentDataInput {
   commentsCount?: Maybe<Int>;
 }
 
-export interface FilterUpdateInput {
-  owner?: Maybe<UserUpdateOneWithoutSavedFiltersInput>;
+export interface SkillCreateManyWithoutOwnerInput {
+  create?: Maybe<SkillCreateWithoutOwnerInput[] | SkillCreateWithoutOwnerInput>;
+  connect?: Maybe<SkillWhereUniqueInput[] | SkillWhereUniqueInput>;
 }
 
 export interface UpdateUpdateOneWithoutCommentsInput {
@@ -3607,9 +3515,16 @@ export interface UpdateUpdateOneWithoutCommentsInput {
   connect?: Maybe<UpdateWhereUniqueInput>;
 }
 
-export interface UserCreateOneInput {
-  create?: Maybe<UserCreateInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
+export interface ExperienceCreateWithoutOwnerInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  subText: String;
+  startDateMonth: String;
+  startDateYear: Int;
+  endDateMonth?: Maybe<String>;
+  endDateYear?: Maybe<Int>;
+  location?: Maybe<String>;
+  currentRole?: Maybe<Boolean>;
 }
 
 export interface UpdateUpdateWithoutCommentsDataInput {
@@ -3623,8 +3538,27 @@ export interface UpdateUpdateWithoutCommentsDataInput {
   sharesCount?: Maybe<Int>;
 }
 
-export interface UserCreateinterestsInput {
-  set?: Maybe<String[] | String>;
+export interface PostCreateWithoutOwnerInput {
+  id?: Maybe<ID_Input>;
+  lastUpdated: DateTimeInput;
+  isGoal?: Maybe<Boolean>;
+  goal?: Maybe<String>;
+  location: String;
+  locationLat: Float;
+  locationLon: Float;
+  content: String;
+  tags?: Maybe<PostCreatetagsInput>;
+  images?: Maybe<PostCreateimagesInput>;
+  video?: Maybe<String>;
+  pitch?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
+  comments?: Maybe<CommentCreateManyWithoutParentPostInput>;
+  updates?: Maybe<UpdateCreateManyWithoutParentPostInput>;
+  likes?: Maybe<PostCreatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  commentsCount?: Maybe<Int>;
+  sharesCount?: Maybe<Int>;
 }
 
 export interface PostUpdateOneRequiredWithoutUpdatesInput {
@@ -3634,16 +3568,18 @@ export interface PostUpdateOneRequiredWithoutUpdatesInput {
   connect?: Maybe<PostWhereUniqueInput>;
 }
 
-export interface EducationCreateWithoutOwnerInput {
+export interface CommentCreateWithoutParentPostInput {
   id?: Maybe<ID_Input>;
-  name: String;
-  subText: String;
-  startDateMonth?: Maybe<String>;
-  startDateYear: Int;
-  endDateMonth?: Maybe<String>;
-  endDateYear?: Maybe<Int>;
-  location?: Maybe<String>;
-  currentRole?: Maybe<Boolean>;
+  owner?: Maybe<UserCreateOneInput>;
+  parentComment?: Maybe<CommentCreateOneWithoutCommentsInput>;
+  parentUpdate?: Maybe<UpdateCreateOneWithoutCommentsInput>;
+  content?: Maybe<String>;
+  image?: Maybe<String>;
+  likes?: Maybe<CommentCreatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  comments?: Maybe<CommentCreateManyWithoutParentCommentInput>;
+  commentsCount?: Maybe<Int>;
 }
 
 export interface PostUpdateWithoutUpdatesDataInput {
@@ -3668,34 +3604,34 @@ export interface PostUpdateWithoutUpdatesDataInput {
   sharesCount?: Maybe<Int>;
 }
 
-export interface PostCreateimagesInput {
-  set?: Maybe<String[] | String>;
+export interface PostCreateWithoutCommentsInput {
+  id?: Maybe<ID_Input>;
+  lastUpdated: DateTimeInput;
+  owner: UserCreateOneWithoutPostsInput;
+  isGoal?: Maybe<Boolean>;
+  goal?: Maybe<String>;
+  location: String;
+  locationLat: Float;
+  locationLon: Float;
+  content: String;
+  tags?: Maybe<PostCreatetagsInput>;
+  images?: Maybe<PostCreateimagesInput>;
+  video?: Maybe<String>;
+  pitch?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
+  updates?: Maybe<UpdateCreateManyWithoutParentPostInput>;
+  likes?: Maybe<PostCreatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  commentsCount?: Maybe<Int>;
+  sharesCount?: Maybe<Int>;
 }
 
 export interface PostUpdatelikesInput {
   set?: Maybe<String[] | String>;
 }
 
-export interface CommentCreateWithoutCommentsInput {
-  id?: Maybe<ID_Input>;
-  owner?: Maybe<UserCreateOneInput>;
-  parentPost: PostCreateOneWithoutCommentsInput;
-  parentComment?: Maybe<CommentCreateOneWithoutCommentsInput>;
-  parentUpdate?: Maybe<UpdateCreateOneWithoutCommentsInput>;
-  content?: Maybe<String>;
-  image?: Maybe<String>;
-  likes?: Maybe<CommentCreatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  commentsCount?: Maybe<Int>;
-}
-
-export interface PostUpsertWithoutUpdatesInput {
-  update: PostUpdateWithoutUpdatesDataInput;
-  create: PostCreateWithoutUpdatesInput;
-}
-
-export interface UserCreateWithoutPostsInput {
+export interface UserCreateWithoutConnectionsInput {
   id?: Maybe<ID_Input>;
   name: String;
   firstName: String;
@@ -3716,10 +3652,10 @@ export interface UserCreateWithoutPostsInput {
   interests?: Maybe<UserCreateinterestsInput>;
   experience?: Maybe<ExperienceCreateManyWithoutOwnerInput>;
   education?: Maybe<EducationCreateManyWithoutOwnerInput>;
-  connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
+  posts?: Maybe<PostCreateManyWithoutOwnerInput>;
   following?: Maybe<UserCreateManyWithoutFollowingInput>;
   followers?: Maybe<UserCreateManyWithoutFollowersInput>;
-  intro?: Maybe<String>;
+  intro?: Maybe<UserCreateintroInput>;
   projects?: Maybe<UserCreateprojectsInput>;
   meetings?: Maybe<MeetingCreateManyWithoutUsersInput>;
   savedFilters?: Maybe<FilterCreateManyWithoutOwnerInput>;
@@ -3727,12 +3663,12 @@ export interface UserCreateWithoutPostsInput {
   roles?: Maybe<UserCreaterolesInput>;
 }
 
-export interface UpdateUpsertWithoutCommentsInput {
-  update: UpdateUpdateWithoutCommentsDataInput;
-  create: UpdateCreateWithoutCommentsInput;
+export interface PostUpsertWithoutUpdatesInput {
+  update: PostUpdateWithoutUpdatesDataInput;
+  create: PostCreateWithoutUpdatesInput;
 }
 
-export interface UserCreateWithoutFollowingInput {
+export interface UserCreateWithoutFollowersInput {
   id?: Maybe<ID_Input>;
   name: String;
   firstName: String;
@@ -3755,13 +3691,25 @@ export interface UserCreateWithoutFollowingInput {
   education?: Maybe<EducationCreateManyWithoutOwnerInput>;
   posts?: Maybe<PostCreateManyWithoutOwnerInput>;
   connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
-  followers?: Maybe<UserCreateManyWithoutFollowersInput>;
-  intro?: Maybe<String>;
+  following?: Maybe<UserCreateManyWithoutFollowingInput>;
+  intro?: Maybe<UserCreateintroInput>;
   projects?: Maybe<UserCreateprojectsInput>;
   meetings?: Maybe<MeetingCreateManyWithoutUsersInput>;
   savedFilters?: Maybe<FilterCreateManyWithoutOwnerInput>;
   rank?: Maybe<Int>;
   roles?: Maybe<UserCreaterolesInput>;
+}
+
+export interface UpdateUpsertWithoutCommentsInput {
+  update: UpdateUpdateWithoutCommentsDataInput;
+  create: UpdateCreateWithoutCommentsInput;
+}
+
+export interface MeetingCreateWithoutUsersInput {
+  id?: Maybe<ID_Input>;
+  startTime: DateTimeInput;
+  endTime: DateTimeInput;
+  place?: Maybe<String>;
 }
 
 export interface CommentUpsertWithWhereUniqueWithoutParentCommentInput {
@@ -3770,11 +3718,11 @@ export interface CommentUpsertWithWhereUniqueWithoutParentCommentInput {
   create: CommentCreateWithoutParentCommentInput;
 }
 
-export interface MeetingCreateManyWithoutUsersInput {
+export interface UpdateCreateManyWithoutParentPostInput {
   create?: Maybe<
-    MeetingCreateWithoutUsersInput[] | MeetingCreateWithoutUsersInput
+    UpdateCreateWithoutParentPostInput[] | UpdateCreateWithoutParentPostInput
   >;
-  connect?: Maybe<MeetingWhereUniqueInput[] | MeetingWhereUniqueInput>;
+  connect?: Maybe<UpdateWhereUniqueInput[] | UpdateWhereUniqueInput>;
 }
 
 export interface CommentScalarWhereInput {
@@ -3851,8 +3799,18 @@ export interface CommentScalarWhereInput {
   NOT?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
 }
 
-export interface UserCreaterolesInput {
-  set?: Maybe<Role[] | Role>;
+export interface CommentCreateWithoutParentUpdateInput {
+  id?: Maybe<ID_Input>;
+  owner?: Maybe<UserCreateOneInput>;
+  parentPost: PostCreateOneWithoutCommentsInput;
+  parentComment?: Maybe<CommentCreateOneWithoutCommentsInput>;
+  content?: Maybe<String>;
+  image?: Maybe<String>;
+  likes?: Maybe<CommentCreatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  comments?: Maybe<CommentCreateManyWithoutParentCommentInput>;
+  commentsCount?: Maybe<Int>;
 }
 
 export interface CommentUpdateManyWithWhereNestedInput {
@@ -3860,12 +3818,9 @@ export interface CommentUpdateManyWithWhereNestedInput {
   data: CommentUpdateManyDataInput;
 }
 
-export interface CommentCreateManyWithoutParentUpdateInput {
-  create?: Maybe<
-    | CommentCreateWithoutParentUpdateInput[]
-    | CommentCreateWithoutParentUpdateInput
-  >;
-  connect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
+export interface UpdateCreateOneWithoutCommentsInput {
+  create?: Maybe<UpdateCreateWithoutCommentsInput>;
+  connect?: Maybe<UpdateWhereUniqueInput>;
 }
 
 export interface CommentUpdateManyDataInput {
@@ -3877,18 +3832,8 @@ export interface CommentUpdateManyDataInput {
   commentsCount?: Maybe<Int>;
 }
 
-export interface CommentCreateWithoutParentCommentInput {
-  id?: Maybe<ID_Input>;
-  owner?: Maybe<UserCreateOneInput>;
-  parentPost: PostCreateOneWithoutCommentsInput;
-  parentUpdate?: Maybe<UpdateCreateOneWithoutCommentsInput>;
-  content?: Maybe<String>;
-  image?: Maybe<String>;
-  likes?: Maybe<CommentCreatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  comments?: Maybe<CommentCreateManyWithoutParentCommentInput>;
-  commentsCount?: Maybe<Int>;
+export interface PostCreatelikesInput {
+  set?: Maybe<String[] | String>;
 }
 
 export interface CommentUpsertWithWhereUniqueWithoutParentUpdateInput {
@@ -3897,27 +3842,24 @@ export interface CommentUpsertWithWhereUniqueWithoutParentUpdateInput {
   create: CommentCreateWithoutParentUpdateInput;
 }
 
-export interface PostCreateWithoutUpdatesInput {
-  id?: Maybe<ID_Input>;
-  lastUpdated: DateTimeInput;
-  owner: UserCreateOneWithoutPostsInput;
-  isGoal?: Maybe<Boolean>;
-  goal?: Maybe<String>;
-  location: String;
-  locationLat: Float;
-  locationLon: Float;
-  content: String;
-  tags?: Maybe<PostCreatetagsInput>;
-  images?: Maybe<PostCreateimagesInput>;
-  video?: Maybe<String>;
-  pitch?: Maybe<String>;
-  isPrivate?: Maybe<Boolean>;
-  comments?: Maybe<CommentCreateManyWithoutParentPostInput>;
-  likes?: Maybe<PostCreatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  commentsCount?: Maybe<Int>;
-  sharesCount?: Maybe<Int>;
+export interface SkillUpdateManyWithoutOwnerInput {
+  create?: Maybe<SkillCreateWithoutOwnerInput[] | SkillCreateWithoutOwnerInput>;
+  delete?: Maybe<SkillWhereUniqueInput[] | SkillWhereUniqueInput>;
+  connect?: Maybe<SkillWhereUniqueInput[] | SkillWhereUniqueInput>;
+  set?: Maybe<SkillWhereUniqueInput[] | SkillWhereUniqueInput>;
+  disconnect?: Maybe<SkillWhereUniqueInput[] | SkillWhereUniqueInput>;
+  update?: Maybe<
+    | SkillUpdateWithWhereUniqueWithoutOwnerInput[]
+    | SkillUpdateWithWhereUniqueWithoutOwnerInput
+  >;
+  upsert?: Maybe<
+    | SkillUpsertWithWhereUniqueWithoutOwnerInput[]
+    | SkillUpsertWithWhereUniqueWithoutOwnerInput
+  >;
+  deleteMany?: Maybe<SkillScalarWhereInput[] | SkillScalarWhereInput>;
+  updateMany?: Maybe<
+    SkillUpdateManyWithWhereNestedInput[] | SkillUpdateManyWithWhereNestedInput
+  >;
 }
 
 export interface UpdateUpsertWithWhereUniqueWithoutParentPostInput {
@@ -3926,36 +3868,40 @@ export interface UpdateUpsertWithWhereUniqueWithoutParentPostInput {
   create: UpdateCreateWithoutParentPostInput;
 }
 
-export interface UserUpdateDataInput {
-  name?: Maybe<String>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  profilePic?: Maybe<String>;
-  bannerPic?: Maybe<String>;
-  location?: Maybe<String>;
-  locationLat?: Maybe<Float>;
-  locationLon?: Maybe<Float>;
-  jobTitle?: Maybe<String>;
-  profession?: Maybe<String>;
-  industry?: Maybe<String>;
-  website?: Maybe<String>;
-  bio?: Maybe<String>;
-  skills?: Maybe<SkillUpdateManyWithoutOwnerInput>;
-  interests?: Maybe<UserUpdateinterestsInput>;
-  experience?: Maybe<ExperienceUpdateManyWithoutOwnerInput>;
-  education?: Maybe<EducationUpdateManyWithoutOwnerInput>;
-  posts?: Maybe<PostUpdateManyWithoutOwnerInput>;
-  connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
-  following?: Maybe<UserUpdateManyWithoutFollowingInput>;
-  followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
-  intro?: Maybe<String>;
-  projects?: Maybe<UserUpdateprojectsInput>;
-  meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
-  savedFilters?: Maybe<FilterUpdateManyWithoutOwnerInput>;
-  rank?: Maybe<Int>;
-  roles?: Maybe<UserUpdaterolesInput>;
+export interface SkillScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  skill?: Maybe<String>;
+  skill_not?: Maybe<String>;
+  skill_in?: Maybe<String[] | String>;
+  skill_not_in?: Maybe<String[] | String>;
+  skill_lt?: Maybe<String>;
+  skill_lte?: Maybe<String>;
+  skill_gt?: Maybe<String>;
+  skill_gte?: Maybe<String>;
+  skill_contains?: Maybe<String>;
+  skill_not_contains?: Maybe<String>;
+  skill_starts_with?: Maybe<String>;
+  skill_not_starts_with?: Maybe<String>;
+  skill_ends_with?: Maybe<String>;
+  skill_not_ends_with?: Maybe<String>;
+  isExpert?: Maybe<Boolean>;
+  isExpert_not?: Maybe<Boolean>;
+  AND?: Maybe<SkillScalarWhereInput[] | SkillScalarWhereInput>;
+  OR?: Maybe<SkillScalarWhereInput[] | SkillScalarWhereInput>;
+  NOT?: Maybe<SkillScalarWhereInput[] | SkillScalarWhereInput>;
 }
 
 export interface UpdateScalarWhereInput {
@@ -4040,10 +3986,15 @@ export interface UpdateScalarWhereInput {
   NOT?: Maybe<UpdateScalarWhereInput[] | UpdateScalarWhereInput>;
 }
 
-export interface SkillUpsertWithWhereUniqueWithoutOwnerInput {
-  where: SkillWhereUniqueInput;
-  update: SkillUpdateWithoutOwnerDataInput;
-  create: SkillCreateWithoutOwnerInput;
+export interface PostSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<PostWhereInput>;
+  AND?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
+  OR?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
+  NOT?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
 }
 
 export interface UpdateUpdateManyWithWhereNestedInput {
@@ -4051,15 +4002,27 @@ export interface UpdateUpdateManyWithWhereNestedInput {
   data: UpdateUpdateManyDataInput;
 }
 
-export interface SkillSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<SkillWhereInput>;
-  AND?: Maybe<SkillSubscriptionWhereInput[] | SkillSubscriptionWhereInput>;
-  OR?: Maybe<SkillSubscriptionWhereInput[] | SkillSubscriptionWhereInput>;
-  NOT?: Maybe<SkillSubscriptionWhereInput[] | SkillSubscriptionWhereInput>;
+export interface UserUpdateManyMutationInput {
+  name?: Maybe<String>;
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  profilePic?: Maybe<String>;
+  bannerPic?: Maybe<String>;
+  location?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  jobTitle?: Maybe<String>;
+  profession?: Maybe<String>;
+  industry?: Maybe<String>;
+  website?: Maybe<String>;
+  bio?: Maybe<String>;
+  interests?: Maybe<UserUpdateinterestsInput>;
+  intro?: Maybe<UserUpdateintroInput>;
+  projects?: Maybe<UserUpdateprojectsInput>;
+  rank?: Maybe<Int>;
+  roles?: Maybe<UserUpdaterolesInput>;
 }
 
 export interface UpdateUpdateManyDataInput {
@@ -4072,21 +4035,35 @@ export interface UpdateUpdateManyDataInput {
   sharesCount?: Maybe<Int>;
 }
 
-export interface EducationSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<EducationWhereInput>;
-  AND?: Maybe<
-    EducationSubscriptionWhereInput[] | EducationSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    EducationSubscriptionWhereInput[] | EducationSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    EducationSubscriptionWhereInput[] | EducationSubscriptionWhereInput
-  >;
+export interface UserUpdateWithoutSkillsDataInput {
+  name?: Maybe<String>;
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  profilePic?: Maybe<String>;
+  bannerPic?: Maybe<String>;
+  location?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  jobTitle?: Maybe<String>;
+  profession?: Maybe<String>;
+  industry?: Maybe<String>;
+  website?: Maybe<String>;
+  bio?: Maybe<String>;
+  interests?: Maybe<UserUpdateinterestsInput>;
+  experience?: Maybe<ExperienceUpdateManyWithoutOwnerInput>;
+  education?: Maybe<EducationUpdateManyWithoutOwnerInput>;
+  posts?: Maybe<PostUpdateManyWithoutOwnerInput>;
+  connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
+  following?: Maybe<UserUpdateManyWithoutFollowingInput>;
+  followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
+  intro?: Maybe<UserUpdateintroInput>;
+  projects?: Maybe<UserUpdateprojectsInput>;
+  meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
+  savedFilters?: Maybe<FilterUpdateManyWithoutOwnerInput>;
+  rank?: Maybe<Int>;
+  roles?: Maybe<UserUpdaterolesInput>;
 }
 
 export interface PostUpsertWithoutCommentsInput {
@@ -4094,18 +4071,35 @@ export interface PostUpsertWithoutCommentsInput {
   create: PostCreateWithoutCommentsInput;
 }
 
-export type EducationWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
+export interface PostUpdateManyMutationInput {
+  lastUpdated?: Maybe<DateTimeInput>;
+  isGoal?: Maybe<Boolean>;
+  goal?: Maybe<String>;
+  location?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  content?: Maybe<String>;
+  tags?: Maybe<PostUpdatetagsInput>;
+  images?: Maybe<PostUpdateimagesInput>;
+  video?: Maybe<String>;
+  pitch?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
+  likes?: Maybe<PostUpdatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  commentsCount?: Maybe<Int>;
+  sharesCount?: Maybe<Int>;
+}
 
 export interface CommentUpsertWithoutCommentsInput {
   update: CommentUpdateWithoutCommentsDataInput;
   create: CommentCreateWithoutCommentsInput;
 }
 
-export type FilterWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
+export interface UserUpdateWithWhereUniqueWithoutMeetingsInput {
+  where: UserWhereUniqueInput;
+  data: UserUpdateWithoutMeetingsDataInput;
+}
 
 export interface CommentUpsertWithWhereUniqueWithoutParentPostInput {
   where: CommentWhereUniqueInput;
@@ -4113,9 +4107,10 @@ export interface CommentUpsertWithWhereUniqueWithoutParentPostInput {
   create: CommentCreateWithoutParentPostInput;
 }
 
-export type PostWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
+export interface UserUpsertWithoutSavedFiltersInput {
+  update: UserUpdateWithoutSavedFiltersDataInput;
+  create: UserCreateWithoutSavedFiltersInput;
+}
 
 export interface PostUpsertWithWhereUniqueWithoutOwnerInput {
   where: PostWhereUniqueInput;
@@ -4123,9 +4118,10 @@ export interface PostUpsertWithWhereUniqueWithoutOwnerInput {
   create: PostCreateWithoutOwnerInput;
 }
 
-export type UpdateWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
+export interface UserCreateOneInput {
+  create?: Maybe<UserCreateInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
 
 export interface PostScalarWhereInput {
   id?: Maybe<ID_Input>;
@@ -4279,11 +4275,11 @@ export interface PostScalarWhereInput {
   NOT?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
 }
 
-export interface ExperienceCreateWithoutOwnerInput {
+export interface EducationCreateWithoutOwnerInput {
   id?: Maybe<ID_Input>;
   name: String;
   subText: String;
-  startDateMonth: String;
+  startDateMonth?: Maybe<String>;
   startDateYear: Int;
   endDateMonth?: Maybe<String>;
   endDateYear?: Maybe<Int>;
@@ -4296,9 +4292,10 @@ export interface PostUpdateManyWithWhereNestedInput {
   data: PostUpdateManyDataInput;
 }
 
-export interface CommentCreateWithoutParentPostInput {
+export interface CommentCreateWithoutCommentsInput {
   id?: Maybe<ID_Input>;
   owner?: Maybe<UserCreateOneInput>;
+  parentPost: PostCreateOneWithoutCommentsInput;
   parentComment?: Maybe<CommentCreateOneWithoutCommentsInput>;
   parentUpdate?: Maybe<UpdateCreateOneWithoutCommentsInput>;
   content?: Maybe<String>;
@@ -4306,7 +4303,6 @@ export interface CommentCreateWithoutParentPostInput {
   likes?: Maybe<CommentCreatelikesInput>;
   likesCount?: Maybe<Int>;
   likedByMe?: Maybe<Boolean>;
-  comments?: Maybe<CommentCreateManyWithoutParentCommentInput>;
   commentsCount?: Maybe<Int>;
 }
 
@@ -4330,7 +4326,7 @@ export interface PostUpdateManyDataInput {
   sharesCount?: Maybe<Int>;
 }
 
-export interface UserCreateWithoutConnectionsInput {
+export interface UserCreateWithoutFollowingInput {
   id?: Maybe<ID_Input>;
   name: String;
   firstName: String;
@@ -4352,9 +4348,9 @@ export interface UserCreateWithoutConnectionsInput {
   experience?: Maybe<ExperienceCreateManyWithoutOwnerInput>;
   education?: Maybe<EducationCreateManyWithoutOwnerInput>;
   posts?: Maybe<PostCreateManyWithoutOwnerInput>;
-  following?: Maybe<UserCreateManyWithoutFollowingInput>;
+  connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
   followers?: Maybe<UserCreateManyWithoutFollowersInput>;
-  intro?: Maybe<String>;
+  intro?: Maybe<UserCreateintroInput>;
   projects?: Maybe<UserCreateprojectsInput>;
   meetings?: Maybe<MeetingCreateManyWithoutUsersInput>;
   savedFilters?: Maybe<FilterCreateManyWithoutOwnerInput>;
@@ -4367,11 +4363,8 @@ export interface UserUpsertNestedInput {
   create: UserCreateInput;
 }
 
-export interface FilterCreateManyWithoutOwnerInput {
-  create?: Maybe<
-    FilterCreateWithoutOwnerInput[] | FilterCreateWithoutOwnerInput
-  >;
-  connect?: Maybe<FilterWhereUniqueInput[] | FilterWhereUniqueInput>;
+export interface FilterCreateWithoutOwnerInput {
+  id?: Maybe<ID_Input>;
 }
 
 export interface CommentUpdateManyMutationInput {
@@ -4383,8 +4376,12 @@ export interface CommentUpdateManyMutationInput {
   commentsCount?: Maybe<Int>;
 }
 
-export interface CommentCreatelikesInput {
-  set?: Maybe<String[] | String>;
+export interface CommentCreateManyWithoutParentCommentInput {
+  create?: Maybe<
+    | CommentCreateWithoutParentCommentInput[]
+    | CommentCreateWithoutParentCommentInput
+  >;
+  connect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
 }
 
 export interface ExperienceUpdateManyMutationInput {
@@ -4398,18 +4395,13 @@ export interface ExperienceUpdateManyMutationInput {
   currentRole?: Maybe<Boolean>;
 }
 
-export interface CommentUpdateInput {
-  owner?: Maybe<UserUpdateOneInput>;
-  parentPost?: Maybe<PostUpdateOneRequiredWithoutCommentsInput>;
-  parentComment?: Maybe<CommentUpdateOneWithoutCommentsInput>;
-  parentUpdate?: Maybe<UpdateUpdateOneWithoutCommentsInput>;
-  content?: Maybe<String>;
-  image?: Maybe<String>;
-  likes?: Maybe<CommentUpdatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  comments?: Maybe<CommentUpdateManyWithoutParentCommentInput>;
-  commentsCount?: Maybe<Int>;
+export interface UserUpdateOneInput {
+  create?: Maybe<UserCreateInput>;
+  update?: Maybe<UserUpdateDataInput>;
+  upsert?: Maybe<UserUpsertNestedInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<UserWhereUniqueInput>;
 }
 
 export interface UserUpsertWithoutExperienceInput {
@@ -4417,9 +4409,15 @@ export interface UserUpsertWithoutExperienceInput {
   create: UserCreateWithoutExperienceInput;
 }
 
-export interface SkillUpdateManyWithWhereNestedInput {
-  where: SkillScalarWhereInput;
-  data: SkillUpdateManyDataInput;
+export interface UserSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<UserWhereInput>;
+  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
 }
 
 export interface EducationCreateInput {
@@ -4435,12 +4433,15 @@ export interface EducationCreateInput {
   currentRole?: Maybe<Boolean>;
 }
 
-export interface UpdateUpdateManyMutationInput {
-  content?: Maybe<String>;
+export interface UpdateCreateInput {
+  id?: Maybe<ID_Input>;
+  parentPost: PostCreateOneWithoutUpdatesInput;
+  content: String;
   image?: Maybe<String>;
-  likes?: Maybe<UpdateUpdatelikesInput>;
+  likes?: Maybe<UpdateCreatelikesInput>;
   likesCount?: Maybe<Int>;
   likedByMe?: Maybe<Boolean>;
+  comments?: Maybe<CommentCreateManyWithoutParentUpdateInput>;
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
 }
@@ -4450,9 +4451,11 @@ export interface UserCreateOneWithoutEducationInput {
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export type MeetingWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
+export interface MeetingUpdateManyMutationInput {
+  startTime?: Maybe<DateTimeInput>;
+  endTime?: Maybe<DateTimeInput>;
+  place?: Maybe<String>;
+}
 
 export interface UserCreateWithoutEducationInput {
   id?: Maybe<ID_Input>;
@@ -4478,7 +4481,7 @@ export interface UserCreateWithoutEducationInput {
   connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
   following?: Maybe<UserCreateManyWithoutFollowingInput>;
   followers?: Maybe<UserCreateManyWithoutFollowersInput>;
-  intro?: Maybe<String>;
+  intro?: Maybe<UserCreateintroInput>;
   projects?: Maybe<UserCreateprojectsInput>;
   meetings?: Maybe<MeetingCreateManyWithoutUsersInput>;
   savedFilters?: Maybe<FilterCreateManyWithoutOwnerInput>;
@@ -4486,10 +4489,9 @@ export interface UserCreateWithoutEducationInput {
   roles?: Maybe<UserCreaterolesInput>;
 }
 
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  email?: Maybe<String>;
-}>;
+export interface FilterUpdateInput {
+  owner?: Maybe<UserUpdateOneWithoutSavedFiltersInput>;
+}
 
 export interface EducationUpdateInput {
   owner?: Maybe<UserUpdateOneRequiredWithoutEducationInput>;
@@ -4503,27 +4505,8 @@ export interface EducationUpdateInput {
   currentRole?: Maybe<Boolean>;
 }
 
-export interface PostCreateWithoutOwnerInput {
-  id?: Maybe<ID_Input>;
-  lastUpdated: DateTimeInput;
-  isGoal?: Maybe<Boolean>;
-  goal?: Maybe<String>;
-  location: String;
-  locationLat: Float;
-  locationLon: Float;
-  content: String;
-  tags?: Maybe<PostCreatetagsInput>;
-  images?: Maybe<PostCreateimagesInput>;
-  video?: Maybe<String>;
-  pitch?: Maybe<String>;
-  isPrivate?: Maybe<Boolean>;
-  comments?: Maybe<CommentCreateManyWithoutParentPostInput>;
-  updates?: Maybe<UpdateCreateManyWithoutParentPostInput>;
-  likes?: Maybe<PostCreatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  commentsCount?: Maybe<Int>;
-  sharesCount?: Maybe<Int>;
+export interface PostCreateimagesInput {
+  set?: Maybe<String[] | String>;
 }
 
 export interface UserUpdateOneRequiredWithoutEducationInput {
@@ -4533,36 +4516,8 @@ export interface UserUpdateOneRequiredWithoutEducationInput {
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserCreateWithoutFollowersInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  firstName: String;
-  lastName: String;
-  email: String;
-  password: String;
-  profilePic?: Maybe<String>;
-  bannerPic?: Maybe<String>;
-  location?: Maybe<String>;
-  locationLat?: Maybe<Float>;
-  locationLon?: Maybe<Float>;
-  jobTitle?: Maybe<String>;
-  profession?: Maybe<String>;
-  industry?: Maybe<String>;
-  website?: Maybe<String>;
-  bio?: Maybe<String>;
-  skills?: Maybe<SkillCreateManyWithoutOwnerInput>;
-  interests?: Maybe<UserCreateinterestsInput>;
-  experience?: Maybe<ExperienceCreateManyWithoutOwnerInput>;
-  education?: Maybe<EducationCreateManyWithoutOwnerInput>;
-  posts?: Maybe<PostCreateManyWithoutOwnerInput>;
-  connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
-  following?: Maybe<UserCreateManyWithoutFollowingInput>;
-  intro?: Maybe<String>;
-  projects?: Maybe<UserCreateprojectsInput>;
-  meetings?: Maybe<MeetingCreateManyWithoutUsersInput>;
-  savedFilters?: Maybe<FilterCreateManyWithoutOwnerInput>;
-  rank?: Maybe<Int>;
-  roles?: Maybe<UserCreaterolesInput>;
+export interface UserCreateprojectsInput {
+  set?: Maybe<String[] | String>;
 }
 
 export interface UserUpdateWithoutEducationDataInput {
@@ -4588,7 +4543,7 @@ export interface UserUpdateWithoutEducationDataInput {
   connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
   following?: Maybe<UserUpdateManyWithoutFollowingInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
-  intro?: Maybe<String>;
+  intro?: Maybe<UserUpdateintroInput>;
   projects?: Maybe<UserUpdateprojectsInput>;
   meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
   savedFilters?: Maybe<FilterUpdateManyWithoutOwnerInput>;
@@ -4596,16 +4551,9 @@ export interface UserUpdateWithoutEducationDataInput {
   roles?: Maybe<UserUpdaterolesInput>;
 }
 
-export interface UpdateCreateWithoutCommentsInput {
-  id?: Maybe<ID_Input>;
-  parentPost: PostCreateOneWithoutUpdatesInput;
-  content: String;
-  image?: Maybe<String>;
-  likes?: Maybe<UpdateCreatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  commentsCount?: Maybe<Int>;
-  sharesCount?: Maybe<Int>;
+export interface PostCreateOneWithoutUpdatesInput {
+  create?: Maybe<PostCreateWithoutUpdatesInput>;
+  connect?: Maybe<PostWhereUniqueInput>;
 }
 
 export interface UserUpsertWithoutEducationInput {
@@ -4613,41 +4561,15 @@ export interface UserUpsertWithoutEducationInput {
   create: UserCreateWithoutEducationInput;
 }
 
-export interface SkillWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  owner?: Maybe<UserWhereInput>;
-  skill?: Maybe<String>;
-  skill_not?: Maybe<String>;
-  skill_in?: Maybe<String[] | String>;
-  skill_not_in?: Maybe<String[] | String>;
-  skill_lt?: Maybe<String>;
-  skill_lte?: Maybe<String>;
-  skill_gt?: Maybe<String>;
-  skill_gte?: Maybe<String>;
-  skill_contains?: Maybe<String>;
-  skill_not_contains?: Maybe<String>;
-  skill_starts_with?: Maybe<String>;
-  skill_not_starts_with?: Maybe<String>;
-  skill_ends_with?: Maybe<String>;
-  skill_not_ends_with?: Maybe<String>;
-  isExpert?: Maybe<Boolean>;
-  isExpert_not?: Maybe<Boolean>;
-  AND?: Maybe<SkillWhereInput[] | SkillWhereInput>;
-  OR?: Maybe<SkillWhereInput[] | SkillWhereInput>;
-  NOT?: Maybe<SkillWhereInput[] | SkillWhereInput>;
+export interface FilterSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<FilterWhereInput>;
+  AND?: Maybe<FilterSubscriptionWhereInput[] | FilterSubscriptionWhereInput>;
+  OR?: Maybe<FilterSubscriptionWhereInput[] | FilterSubscriptionWhereInput>;
+  NOT?: Maybe<FilterSubscriptionWhereInput[] | FilterSubscriptionWhereInput>;
 }
 
 export interface EducationUpdateManyMutationInput {
@@ -4661,9 +4583,37 @@ export interface EducationUpdateManyMutationInput {
   currentRole?: Maybe<Boolean>;
 }
 
-export type SkillWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
+export interface UserCreateWithoutMeetingsInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  firstName: String;
+  lastName: String;
+  email: String;
+  password: String;
+  profilePic?: Maybe<String>;
+  bannerPic?: Maybe<String>;
+  location?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  jobTitle?: Maybe<String>;
+  profession?: Maybe<String>;
+  industry?: Maybe<String>;
+  website?: Maybe<String>;
+  bio?: Maybe<String>;
+  skills?: Maybe<SkillCreateManyWithoutOwnerInput>;
+  interests?: Maybe<UserCreateinterestsInput>;
+  experience?: Maybe<ExperienceCreateManyWithoutOwnerInput>;
+  education?: Maybe<EducationCreateManyWithoutOwnerInput>;
+  posts?: Maybe<PostCreateManyWithoutOwnerInput>;
+  connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
+  following?: Maybe<UserCreateManyWithoutFollowingInput>;
+  followers?: Maybe<UserCreateManyWithoutFollowersInput>;
+  intro?: Maybe<UserCreateintroInput>;
+  projects?: Maybe<UserCreateprojectsInput>;
+  savedFilters?: Maybe<FilterCreateManyWithoutOwnerInput>;
+  rank?: Maybe<Int>;
+  roles?: Maybe<UserCreaterolesInput>;
+}
 
 export interface ExperienceCreateInput {
   id?: Maybe<ID_Input>;
@@ -4678,27 +4628,36 @@ export interface ExperienceCreateInput {
   currentRole?: Maybe<Boolean>;
 }
 
-export interface PostCreateWithoutCommentsInput {
+export interface UserCreateWithoutPostsInput {
   id?: Maybe<ID_Input>;
-  lastUpdated: DateTimeInput;
-  owner: UserCreateOneWithoutPostsInput;
-  isGoal?: Maybe<Boolean>;
-  goal?: Maybe<String>;
-  location: String;
-  locationLat: Float;
-  locationLon: Float;
-  content: String;
-  tags?: Maybe<PostCreatetagsInput>;
-  images?: Maybe<PostCreateimagesInput>;
-  video?: Maybe<String>;
-  pitch?: Maybe<String>;
-  isPrivate?: Maybe<Boolean>;
-  updates?: Maybe<UpdateCreateManyWithoutParentPostInput>;
-  likes?: Maybe<PostCreatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  commentsCount?: Maybe<Int>;
-  sharesCount?: Maybe<Int>;
+  name: String;
+  firstName: String;
+  lastName: String;
+  email: String;
+  password: String;
+  profilePic?: Maybe<String>;
+  bannerPic?: Maybe<String>;
+  location?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  jobTitle?: Maybe<String>;
+  profession?: Maybe<String>;
+  industry?: Maybe<String>;
+  website?: Maybe<String>;
+  bio?: Maybe<String>;
+  skills?: Maybe<SkillCreateManyWithoutOwnerInput>;
+  interests?: Maybe<UserCreateinterestsInput>;
+  experience?: Maybe<ExperienceCreateManyWithoutOwnerInput>;
+  education?: Maybe<EducationCreateManyWithoutOwnerInput>;
+  connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
+  following?: Maybe<UserCreateManyWithoutFollowingInput>;
+  followers?: Maybe<UserCreateManyWithoutFollowersInput>;
+  intro?: Maybe<UserCreateintroInput>;
+  projects?: Maybe<UserCreateprojectsInput>;
+  meetings?: Maybe<MeetingCreateManyWithoutUsersInput>;
+  savedFilters?: Maybe<FilterCreateManyWithoutOwnerInput>;
+  rank?: Maybe<Int>;
+  roles?: Maybe<UserCreaterolesInput>;
 }
 
 export interface UserUpdateOneRequiredWithoutExperienceInput {
@@ -4744,7 +4703,7 @@ export interface UserCreateWithoutExperienceInput {
   connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
   following?: Maybe<UserCreateManyWithoutFollowingInput>;
   followers?: Maybe<UserCreateManyWithoutFollowersInput>;
-  intro?: Maybe<String>;
+  intro?: Maybe<UserCreateintroInput>;
   projects?: Maybe<UserCreateprojectsInput>;
   meetings?: Maybe<MeetingCreateManyWithoutUsersInput>;
   savedFilters?: Maybe<FilterCreateManyWithoutOwnerInput>;
@@ -4757,30 +4716,49 @@ export interface UserCreateOneWithoutExperienceInput {
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UpdateCreateWithoutParentPostInput {
+export interface UpdateCreatelikesInput {
+  set?: Maybe<String[] | String>;
+}
+
+export interface UserCreateinterestsInput {
+  set?: Maybe<String[] | String>;
+}
+
+export interface UserCreateWithoutSkillsInput {
   id?: Maybe<ID_Input>;
-  content: String;
-  image?: Maybe<String>;
-  likes?: Maybe<UpdateCreatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  comments?: Maybe<CommentCreateManyWithoutParentUpdateInput>;
-  commentsCount?: Maybe<Int>;
-  sharesCount?: Maybe<Int>;
+  name: String;
+  firstName: String;
+  lastName: String;
+  email: String;
+  password: String;
+  profilePic?: Maybe<String>;
+  bannerPic?: Maybe<String>;
+  location?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  jobTitle?: Maybe<String>;
+  profession?: Maybe<String>;
+  industry?: Maybe<String>;
+  website?: Maybe<String>;
+  bio?: Maybe<String>;
+  interests?: Maybe<UserCreateinterestsInput>;
+  experience?: Maybe<ExperienceCreateManyWithoutOwnerInput>;
+  education?: Maybe<EducationCreateManyWithoutOwnerInput>;
+  posts?: Maybe<PostCreateManyWithoutOwnerInput>;
+  connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
+  following?: Maybe<UserCreateManyWithoutFollowingInput>;
+  followers?: Maybe<UserCreateManyWithoutFollowersInput>;
+  intro?: Maybe<UserCreateintroInput>;
+  projects?: Maybe<UserCreateprojectsInput>;
+  meetings?: Maybe<MeetingCreateManyWithoutUsersInput>;
+  savedFilters?: Maybe<FilterCreateManyWithoutOwnerInput>;
+  rank?: Maybe<Int>;
+  roles?: Maybe<UserCreaterolesInput>;
 }
 
-export interface SkillCreateManyWithoutOwnerInput {
-  create?: Maybe<SkillCreateWithoutOwnerInput[] | SkillCreateWithoutOwnerInput>;
-  connect?: Maybe<SkillWhereUniqueInput[] | SkillWhereUniqueInput>;
-}
-
-export type ExperienceWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface SkillUpdateWithWhereUniqueWithoutOwnerInput {
-  where: SkillWhereUniqueInput;
-  data: SkillUpdateWithoutOwnerDataInput;
+export interface SkillUpdateWithoutOwnerDataInput {
+  skill?: Maybe<String>;
+  isExpert?: Maybe<Boolean>;
 }
 
 export interface NodeNode {
@@ -4806,7 +4784,7 @@ export interface UserPreviousValues {
   website?: String;
   bio?: String;
   interests: String[];
-  intro?: String;
+  intro: String[];
   projects: String[];
   rank: Int;
   roles: Role[];
@@ -4833,7 +4811,7 @@ export interface UserPreviousValuesPromise
   website: () => Promise<String>;
   bio: () => Promise<String>;
   interests: () => Promise<String[]>;
-  intro: () => Promise<String>;
+  intro: () => Promise<String[]>;
   projects: () => Promise<String[]>;
   rank: () => Promise<Int>;
   roles: () => Promise<Role[]>;
@@ -4860,7 +4838,7 @@ export interface UserPreviousValuesSubscription
   website: () => Promise<AsyncIterator<String>>;
   bio: () => Promise<AsyncIterator<String>>;
   interests: () => Promise<AsyncIterator<String[]>>;
-  intro: () => Promise<AsyncIterator<String>>;
+  intro: () => Promise<AsyncIterator<String[]>>;
   projects: () => Promise<AsyncIterator<String[]>>;
   rank: () => Promise<AsyncIterator<Int>>;
   roles: () => Promise<AsyncIterator<Role[]>>;
@@ -5103,7 +5081,7 @@ export interface User {
   website?: String;
   bio?: String;
   interests: String[];
-  intro?: String;
+  intro: String[];
   projects: String[];
   rank: Int;
   roles: Role[];
@@ -5191,7 +5169,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
-  intro: () => Promise<String>;
+  intro: () => Promise<String[]>;
   projects: () => Promise<String[]>;
   meetings: <T = FragmentableArray<Meeting>>(args?: {
     where?: MeetingWhereInput;
@@ -5299,7 +5277,7 @@ export interface UserSubscription
     first?: Int;
     last?: Int;
   }) => T;
-  intro: () => Promise<AsyncIterator<String>>;
+  intro: () => Promise<AsyncIterator<String[]>>;
   projects: () => Promise<AsyncIterator<String[]>>;
   meetings: <T = Promise<AsyncIterator<MeetingSubscription>>>(args?: {
     where?: MeetingWhereInput;
@@ -5407,7 +5385,7 @@ export interface UserNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
-  intro: () => Promise<String>;
+  intro: () => Promise<String[]>;
   projects: () => Promise<String[]>;
   meetings: <T = FragmentableArray<Meeting>>(args?: {
     where?: MeetingWhereInput;

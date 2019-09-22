@@ -34,7 +34,7 @@ type User {
   connections: [User] @relation(name: "MyConnections")
   following: [User] @relation(name: "ImFollowing")
   followers: [User] @relation(name: "MyFollowers")
-  intro: String
+  intro: [String!] @scalarList(strategy: RELATION)
   projects: [String] @scalarList(strategy: RELATION)
   meetings: [Meeting]
   savedFilters: [Filter]
