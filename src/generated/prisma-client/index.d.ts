@@ -2002,7 +2002,7 @@ export interface UserCreateManyWithoutMeetingsInput {
 }
 
 export interface CommentUpdateWithoutParentPostDataInput {
-  owner?: Maybe<UserUpdateOneInput>;
+  owner?: Maybe<UserUpdateOneRequiredInput>;
   parentComment?: Maybe<CommentUpdateOneWithoutCommentsInput>;
   parentUpdate?: Maybe<UpdateUpdateOneWithoutCommentsInput>;
   content?: Maybe<String>;
@@ -2063,8 +2063,8 @@ export interface UserUpdateWithoutSavedFiltersDataInput {
 }
 
 export interface CommentUpdateWithoutCommentsDataInput {
-  owner?: Maybe<UserUpdateOneInput>;
-  parentPost?: Maybe<PostUpdateOneRequiredWithoutCommentsInput>;
+  owner?: Maybe<UserUpdateOneRequiredInput>;
+  parentPost?: Maybe<PostUpdateOneWithoutCommentsInput>;
   parentComment?: Maybe<CommentUpdateOneWithoutCommentsInput>;
   parentUpdate?: Maybe<UpdateUpdateOneWithoutCommentsInput>;
   content?: Maybe<String>;
@@ -2084,10 +2084,12 @@ export interface UserUpdateOneWithoutSavedFiltersInput {
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface PostUpdateOneRequiredWithoutCommentsInput {
+export interface PostUpdateOneWithoutCommentsInput {
   create?: Maybe<PostCreateWithoutCommentsInput>;
   update?: Maybe<PostUpdateWithoutCommentsDataInput>;
   upsert?: Maybe<PostUpsertWithoutCommentsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
   connect?: Maybe<PostWhereUniqueInput>;
 }
 
@@ -2147,8 +2149,8 @@ export interface PostUpdateWithoutCommentsDataInput {
 
 export interface CommentCreateInput {
   id?: Maybe<ID_Input>;
-  owner?: Maybe<UserCreateOneInput>;
-  parentPost: PostCreateOneWithoutCommentsInput;
+  owner: UserCreateOneInput;
+  parentPost?: Maybe<PostCreateOneWithoutCommentsInput>;
   parentComment?: Maybe<CommentCreateOneWithoutCommentsInput>;
   parentUpdate?: Maybe<UpdateCreateOneWithoutCommentsInput>;
   content?: Maybe<String>;
@@ -2844,8 +2846,8 @@ export interface FilterUpdateManyWithoutOwnerInput {
 
 export interface CommentCreateWithoutParentCommentInput {
   id?: Maybe<ID_Input>;
-  owner?: Maybe<UserCreateOneInput>;
-  parentPost: PostCreateOneWithoutCommentsInput;
+  owner: UserCreateOneInput;
+  parentPost?: Maybe<PostCreateOneWithoutCommentsInput>;
   parentUpdate?: Maybe<UpdateCreateOneWithoutCommentsInput>;
   content?: Maybe<String>;
   image?: Maybe<String>;
@@ -2922,8 +2924,8 @@ export interface UserUpsertWithWhereUniqueWithoutFollowersInput {
 }
 
 export interface CommentUpdateInput {
-  owner?: Maybe<UserUpdateOneInput>;
-  parentPost?: Maybe<PostUpdateOneRequiredWithoutCommentsInput>;
+  owner?: Maybe<UserUpdateOneRequiredInput>;
+  parentPost?: Maybe<PostUpdateOneWithoutCommentsInput>;
   parentComment?: Maybe<CommentUpdateOneWithoutCommentsInput>;
   parentUpdate?: Maybe<UpdateUpdateOneWithoutCommentsInput>;
   content?: Maybe<String>;
@@ -3426,8 +3428,8 @@ export type MeetingWhereUniqueInput = AtLeastOne<{
 }>;
 
 export interface CommentUpdateWithoutParentUpdateDataInput {
-  owner?: Maybe<UserUpdateOneInput>;
-  parentPost?: Maybe<PostUpdateOneRequiredWithoutCommentsInput>;
+  owner?: Maybe<UserUpdateOneRequiredInput>;
+  parentPost?: Maybe<PostUpdateOneWithoutCommentsInput>;
   parentComment?: Maybe<CommentUpdateOneWithoutCommentsInput>;
   content?: Maybe<String>;
   image?: Maybe<String>;
@@ -3489,8 +3491,8 @@ export type UserWhereUniqueInput = AtLeastOne<{
 }>;
 
 export interface CommentUpdateWithoutParentCommentDataInput {
-  owner?: Maybe<UserUpdateOneInput>;
-  parentPost?: Maybe<PostUpdateOneRequiredWithoutCommentsInput>;
+  owner?: Maybe<UserUpdateOneRequiredInput>;
+  parentPost?: Maybe<PostUpdateOneWithoutCommentsInput>;
   parentUpdate?: Maybe<UpdateUpdateOneWithoutCommentsInput>;
   content?: Maybe<String>;
   image?: Maybe<String>;
@@ -3570,7 +3572,7 @@ export interface PostUpdateOneRequiredWithoutUpdatesInput {
 
 export interface CommentCreateWithoutParentPostInput {
   id?: Maybe<ID_Input>;
-  owner?: Maybe<UserCreateOneInput>;
+  owner: UserCreateOneInput;
   parentComment?: Maybe<CommentCreateOneWithoutCommentsInput>;
   parentUpdate?: Maybe<UpdateCreateOneWithoutCommentsInput>;
   content?: Maybe<String>;
@@ -3801,8 +3803,8 @@ export interface CommentScalarWhereInput {
 
 export interface CommentCreateWithoutParentUpdateInput {
   id?: Maybe<ID_Input>;
-  owner?: Maybe<UserCreateOneInput>;
-  parentPost: PostCreateOneWithoutCommentsInput;
+  owner: UserCreateOneInput;
+  parentPost?: Maybe<PostCreateOneWithoutCommentsInput>;
   parentComment?: Maybe<CommentCreateOneWithoutCommentsInput>;
   content?: Maybe<String>;
   image?: Maybe<String>;
@@ -4294,8 +4296,8 @@ export interface PostUpdateManyWithWhereNestedInput {
 
 export interface CommentCreateWithoutCommentsInput {
   id?: Maybe<ID_Input>;
-  owner?: Maybe<UserCreateOneInput>;
-  parentPost: PostCreateOneWithoutCommentsInput;
+  owner: UserCreateOneInput;
+  parentPost?: Maybe<PostCreateOneWithoutCommentsInput>;
   parentComment?: Maybe<CommentCreateOneWithoutCommentsInput>;
   parentUpdate?: Maybe<UpdateCreateOneWithoutCommentsInput>;
   content?: Maybe<String>;
@@ -4395,12 +4397,10 @@ export interface ExperienceUpdateManyMutationInput {
   currentRole?: Maybe<Boolean>;
 }
 
-export interface UserUpdateOneInput {
+export interface UserUpdateOneRequiredInput {
   create?: Maybe<UserCreateInput>;
   update?: Maybe<UserUpdateDataInput>;
   upsert?: Maybe<UserUpsertNestedInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
@@ -5432,8 +5432,8 @@ export interface Comment {
   content?: String;
   image?: String;
   likes: String[];
-  likesCount: Int;
-  likedByMe: Boolean;
+  likesCount?: Int;
+  likedByMe?: Boolean;
   commentsCount?: Int;
 }
 
@@ -5581,8 +5581,8 @@ export interface CommentPreviousValues {
   content?: String;
   image?: String;
   likes: String[];
-  likesCount: Int;
-  likedByMe: Boolean;
+  likesCount?: Int;
+  likedByMe?: Boolean;
   commentsCount?: Int;
 }
 
@@ -5993,8 +5993,8 @@ export interface UpdatePreviousValues {
   content: String;
   image?: String;
   likes: String[];
-  likesCount: Int;
-  likedByMe: Boolean;
+  likesCount?: Int;
+  likedByMe?: Boolean;
   commentsCount?: Int;
   sharesCount?: Int;
 }
@@ -6128,8 +6128,8 @@ export interface Update {
   content: String;
   image?: String;
   likes: String[];
-  likesCount: Int;
-  likedByMe: Boolean;
+  likesCount?: Int;
+  likedByMe?: Boolean;
   commentsCount?: Int;
   sharesCount?: Int;
 }
@@ -6329,8 +6329,8 @@ export interface Post {
   pitch?: String;
   isPrivate: Boolean;
   likes: String[];
-  likesCount: Int;
-  likedByMe: Boolean;
+  likesCount?: Int;
+  likedByMe?: Boolean;
   commentsCount?: Int;
   sharesCount?: Int;
 }
@@ -6642,8 +6642,8 @@ export interface PostPreviousValues {
   pitch?: String;
   isPrivate: Boolean;
   likes: String[];
-  likesCount: Int;
-  likedByMe: Boolean;
+  likesCount?: Int;
+  likedByMe?: Boolean;
   commentsCount?: Int;
   sharesCount?: Int;
 }

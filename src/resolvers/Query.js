@@ -113,38 +113,33 @@ const Query = {
     return posts
   },
 
-  async allComments(parent, { postId, isUpdate = false }, context) {
+  async singlePost(parent, { id }, context) {
 
-    if (!context.request.userId) {
-      // don't throw an error, just return nothing. It is ok to not be logged in.
-      return null;
-    }
+    const post = await context.prisma.post({ id });
 
-    const whereInput = isUpdate ? { parentUpdate: { id: postId } } : { parentPost: { id: postId } }
-
-    const comments = await context.prisma.comments(
-      {
-        where: whereInput,
-        orderBy: 'createdAt_DESC'
-      }
-    );
-
-    return comments
+    return post
   },
 
-  // async singlePost(parent, { id }, context) {
-  //   // modify so isPrivate only applies if not connected
-  //   // first check if user requesting is connected to args.id
+  // async allComments(parent, { postId, isUpdate = false }, context) {
 
   //   if (!context.request.userId) {
   //     // don't throw an error, just return nothing. It is ok to not be logged in.
   //     return null;
   //   }
 
-  //   const post = await context.prisma.post({ id });
+  //   const whereInput = isUpdate ? { parentUpdate: { id: postId } } : { parentPost: { id: postId } }
 
-  //   return post
+  //   const comments = await context.prisma.comments(
+  //     {
+  //       where: whereInput,
+  //       orderBy: 'createdAt_DESC'
+  //     }
+  //   );
+
+  //   return comments
   // },
+
+
 };
 
 module.exports = {

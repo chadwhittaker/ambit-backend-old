@@ -91,11 +91,11 @@ type Post {
   video: String
   pitch: String
   isPrivate: Boolean! @default(value: false)
-  comments: [Comment!]! @relation(name: "CommentToPostRelation" onDelete: CASCADE)
-  updates: [Update!]! @relation(name: "UpdateToPostRelation" onDelete: CASCADE)
+  comments: [Comment]! @relation(name: "CommentToPostRelation" onDelete: CASCADE)
+  updates: [Update]! @relation(name: "UpdateToPostRelation" onDelete: CASCADE)
   likes: [String]! @scalarList(strategy: RELATION)
-  likesCount: Int! @default(value: 0)
-  likedByMe: Boolean! @default(value: false)
+  likesCount: Int
+  likedByMe: Boolean
   commentsCount: Int
   sharesCount: Int
 }
@@ -107,9 +107,9 @@ type Update {
   content: String!
   image: String
   likes: [String]! @scalarList(strategy: RELATION)
-  likesCount: Int! @default(value: 0)
-  likedByMe: Boolean! @default(value: false)
-  comments: [Comment!]! @relation(name: "CommentToUpdateRelation" onDelete: CASCADE)
+  likesCount: Int
+  likedByMe: Boolean
+  comments: [Comment]! @relation(name: "CommentToUpdateRelation" onDelete: CASCADE)
   commentsCount: Int
   sharesCount: Int
 }
@@ -117,16 +117,16 @@ type Update {
 type Comment {
   id: ID! @id
   createdAt: DateTime! @createdAt
-  owner: User
-  parentPost: Post! @relation(name: "CommentToPostRelation")
-  parentComment: Comment @relation(name: "CommentToCommentRelation")
+  owner: User!
+  parentPost: Post @relation(name: "CommentToPostRelation")
   parentUpdate: Update @relation(name: "CommentToUpdateRelation")
+  parentComment: Comment @relation(name: "CommentToCommentRelation")
   content: String
   image: String
   likes: [String]! @scalarList(strategy: RELATION)
-  likesCount: Int! @default(value: 0)
-  likedByMe: Boolean! @default(value: false)
-  comments: [Comment!]! @relation(name: "CommentToCommentRelation" onDelete: CASCADE)
+  likesCount: Int
+  likedByMe: Boolean
+  comments: [Comment]! @relation(name: "CommentToCommentRelation" onDelete: CASCADE)
   commentsCount: Int
 }
 

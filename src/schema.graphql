@@ -9,33 +9,45 @@ type Query {
   postsGlobal: [Post]!
   postsLocal(lat: Float, lon: Float, radius: Int): [Post]!
   postsUser(id: ID!): [Post]!
+  singlePost(id: ID!): Post!
+  # allComments(postId: ID!, isUpdate: Boolean): [Comment!]!
 
-  allComments(postId: ID!, isUpdate: Boolean): [Comment!]!
-
-  # singlePost(id: ID!): Post!
+  
   # singleUpdate(id: ID!): Update!
 }
 
 type Mutation {
+  # user
   signup(firstName: String!, lastName: String!, email: String!, password: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
+
+  # profile
   editBio(id: ID!, data: UserUpdateInput!): User!
   editSkills(id: ID!, skills: [SkillCreateWithoutOwnerInput!]): User!
 
+  #experience
   createExperience(owner: ID!, experience: ExperienceCreateWithoutOwnerInput!): User!
   editExperience(owner: ID!, id: ID!, experience: ExperienceUpdateInput!): User!
   deleteExperience(owner: ID!, id: ID!): User!
 
+  # education
   createEducation(owner: ID!, education: EducationCreateWithoutOwnerInput!): User!
   editEducation(owner: ID!, id: ID!, education: EducationUpdateInput!): User!
   deleteEducation(owner: ID!, id: ID!): User!
 
+  # post
   createPost(owner: ID!, post: PostCreateInput!): Post
   deletePost(owner: ID!, id: ID!): Education
-
-  createUpdate(postId: ID!, update: UpdateCreateWithoutParentPostInput!): Post
-
   likePost(postId: ID!): Post!
+
+  #update
+  createUpdate(postId: ID!, update: UpdateCreateWithoutParentPostInput!): Post
+  likeUpdate(updateId: ID!): Update!
+
+  # comment
+  createComment(comment: CommentCreateInput!): Comment
+  likeComment(id: ID!): Comment!
+  deleteComment(owner: ID!, id: ID!): Comment
 }
 
 type AuthPayload {

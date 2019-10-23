@@ -46,15 +46,15 @@ type BatchPayload {
 type Comment {
   id: ID!
   createdAt: DateTime!
-  owner: User
-  parentPost: Post!
+  owner: User!
+  parentPost: Post
   parentComment: Comment
   parentUpdate: Update
   content: String
   image: String
   likes: [String!]!
-  likesCount: Int!
-  likedByMe: Boolean!
+  likesCount: Int
+  likedByMe: Boolean
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   commentsCount: Int
 }
@@ -67,8 +67,8 @@ type CommentConnection {
 
 input CommentCreateInput {
   id: ID
-  owner: UserCreateOneInput
-  parentPost: PostCreateOneWithoutCommentsInput!
+  owner: UserCreateOneInput!
+  parentPost: PostCreateOneWithoutCommentsInput
   parentComment: CommentCreateOneWithoutCommentsInput
   parentUpdate: UpdateCreateOneWithoutCommentsInput
   content: String
@@ -106,8 +106,8 @@ input CommentCreateOneWithoutCommentsInput {
 
 input CommentCreateWithoutCommentsInput {
   id: ID
-  owner: UserCreateOneInput
-  parentPost: PostCreateOneWithoutCommentsInput!
+  owner: UserCreateOneInput!
+  parentPost: PostCreateOneWithoutCommentsInput
   parentComment: CommentCreateOneWithoutCommentsInput
   parentUpdate: UpdateCreateOneWithoutCommentsInput
   content: String
@@ -120,8 +120,8 @@ input CommentCreateWithoutCommentsInput {
 
 input CommentCreateWithoutParentCommentInput {
   id: ID
-  owner: UserCreateOneInput
-  parentPost: PostCreateOneWithoutCommentsInput!
+  owner: UserCreateOneInput!
+  parentPost: PostCreateOneWithoutCommentsInput
   parentUpdate: UpdateCreateOneWithoutCommentsInput
   content: String
   image: String
@@ -134,7 +134,7 @@ input CommentCreateWithoutParentCommentInput {
 
 input CommentCreateWithoutParentPostInput {
   id: ID
-  owner: UserCreateOneInput
+  owner: UserCreateOneInput!
   parentComment: CommentCreateOneWithoutCommentsInput
   parentUpdate: UpdateCreateOneWithoutCommentsInput
   content: String
@@ -148,8 +148,8 @@ input CommentCreateWithoutParentPostInput {
 
 input CommentCreateWithoutParentUpdateInput {
   id: ID
-  owner: UserCreateOneInput
-  parentPost: PostCreateOneWithoutCommentsInput!
+  owner: UserCreateOneInput!
+  parentPost: PostCreateOneWithoutCommentsInput
   parentComment: CommentCreateOneWithoutCommentsInput
   content: String
   image: String
@@ -188,8 +188,8 @@ type CommentPreviousValues {
   content: String
   image: String
   likes: [String!]!
-  likesCount: Int!
-  likedByMe: Boolean!
+  likesCount: Int
+  likedByMe: Boolean
   commentsCount: Int
 }
 
@@ -286,8 +286,8 @@ input CommentSubscriptionWhereInput {
 }
 
 input CommentUpdateInput {
-  owner: UserUpdateOneInput
-  parentPost: PostUpdateOneRequiredWithoutCommentsInput
+  owner: UserUpdateOneRequiredInput
+  parentPost: PostUpdateOneWithoutCommentsInput
   parentComment: CommentUpdateOneWithoutCommentsInput
   parentUpdate: UpdateUpdateOneWithoutCommentsInput
   content: String
@@ -372,8 +372,8 @@ input CommentUpdateOneWithoutCommentsInput {
 }
 
 input CommentUpdateWithoutCommentsDataInput {
-  owner: UserUpdateOneInput
-  parentPost: PostUpdateOneRequiredWithoutCommentsInput
+  owner: UserUpdateOneRequiredInput
+  parentPost: PostUpdateOneWithoutCommentsInput
   parentComment: CommentUpdateOneWithoutCommentsInput
   parentUpdate: UpdateUpdateOneWithoutCommentsInput
   content: String
@@ -385,8 +385,8 @@ input CommentUpdateWithoutCommentsDataInput {
 }
 
 input CommentUpdateWithoutParentCommentDataInput {
-  owner: UserUpdateOneInput
-  parentPost: PostUpdateOneRequiredWithoutCommentsInput
+  owner: UserUpdateOneRequiredInput
+  parentPost: PostUpdateOneWithoutCommentsInput
   parentUpdate: UpdateUpdateOneWithoutCommentsInput
   content: String
   image: String
@@ -398,7 +398,7 @@ input CommentUpdateWithoutParentCommentDataInput {
 }
 
 input CommentUpdateWithoutParentPostDataInput {
-  owner: UserUpdateOneInput
+  owner: UserUpdateOneRequiredInput
   parentComment: CommentUpdateOneWithoutCommentsInput
   parentUpdate: UpdateUpdateOneWithoutCommentsInput
   content: String
@@ -411,8 +411,8 @@ input CommentUpdateWithoutParentPostDataInput {
 }
 
 input CommentUpdateWithoutParentUpdateDataInput {
-  owner: UserUpdateOneInput
-  parentPost: PostUpdateOneRequiredWithoutCommentsInput
+  owner: UserUpdateOneRequiredInput
+  parentPost: PostUpdateOneWithoutCommentsInput
   parentComment: CommentUpdateOneWithoutCommentsInput
   content: String
   image: String
@@ -1810,8 +1810,8 @@ type Post {
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   updates(where: UpdateWhereInput, orderBy: UpdateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Update!]
   likes: [String!]!
-  likesCount: Int!
-  likedByMe: Boolean!
+  likesCount: Int
+  likedByMe: Boolean
   commentsCount: Int
   sharesCount: Int
 }
@@ -1998,8 +1998,8 @@ type PostPreviousValues {
   pitch: String
   isPrivate: Boolean!
   likes: [String!]!
-  likesCount: Int!
-  likedByMe: Boolean!
+  likesCount: Int
+  likedByMe: Boolean
   commentsCount: Int
   sharesCount: Int
 }
@@ -2262,17 +2262,19 @@ input PostUpdateManyWithWhereNestedInput {
   data: PostUpdateManyDataInput!
 }
 
-input PostUpdateOneRequiredWithoutCommentsInput {
-  create: PostCreateWithoutCommentsInput
-  update: PostUpdateWithoutCommentsDataInput
-  upsert: PostUpsertWithoutCommentsInput
-  connect: PostWhereUniqueInput
-}
-
 input PostUpdateOneRequiredWithoutUpdatesInput {
   create: PostCreateWithoutUpdatesInput
   update: PostUpdateWithoutUpdatesDataInput
   upsert: PostUpsertWithoutUpdatesInput
+  connect: PostWhereUniqueInput
+}
+
+input PostUpdateOneWithoutCommentsInput {
+  create: PostCreateWithoutCommentsInput
+  update: PostUpdateWithoutCommentsDataInput
+  upsert: PostUpsertWithoutCommentsInput
+  delete: Boolean
+  disconnect: Boolean
   connect: PostWhereUniqueInput
 }
 
@@ -2783,8 +2785,8 @@ type Update {
   content: String!
   image: String
   likes: [String!]!
-  likesCount: Int!
-  likedByMe: Boolean!
+  likesCount: Int
+  likedByMe: Boolean
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   commentsCount: Int
   sharesCount: Int
@@ -2877,8 +2879,8 @@ type UpdatePreviousValues {
   content: String!
   image: String
   likes: [String!]!
-  likesCount: Int!
-  likedByMe: Boolean!
+  likesCount: Int
+  likedByMe: Boolean
   commentsCount: Int
   sharesCount: Int
 }
@@ -4092,12 +4094,10 @@ input UserUpdateManyWithWhereNestedInput {
   data: UserUpdateManyDataInput!
 }
 
-input UserUpdateOneInput {
+input UserUpdateOneRequiredInput {
   create: UserCreateInput
   update: UserUpdateDataInput
   upsert: UserUpsertNestedInput
-  delete: Boolean
-  disconnect: Boolean
   connect: UserWhereUniqueInput
 }
 

@@ -2,7 +2,16 @@ const { hash, compare } = require('bcryptjs')
 const { sign } = require('jsonwebtoken')
 const { getUserId } = require('../utils')
 
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
 const Mutation = {
+
+  // ================
+  // USER
+  // ================
+
   async signup(parent, { firstName, lastName, email, password }, context) {
     // 1. lowercase the email
     const emailLower = email.toLowerCase();
@@ -48,7 +57,9 @@ const Mutation = {
     }
   },
 
-  // editProfile(name: String, jobTitle: String, profession: String, industry: String, location: String, website: String, bio: String): User
+  // ================
+  // PROFILE
+  // ================
 
   async editBio(parent, args, context) {
     const id = args.id
@@ -112,6 +123,10 @@ const Mutation = {
 
     return user;
   },
+
+  // ================
+  // EXPERIENCE
+  // ================
 
   async createExperience(parent, args, context) {
     const id = args.owner
@@ -193,6 +208,9 @@ const Mutation = {
     return user
   },
 
+  // ================
+  // EDUCATION
+  // ================
 
   async createEducation(parent, args, context) {
     const id = args.owner
@@ -274,6 +292,10 @@ const Mutation = {
     return user
   },
 
+  // ================
+  // POSTS
+  // ================
+
   async createPost(parent, args, context) {
     const id = args.owner
 
@@ -317,6 +339,38 @@ const Mutation = {
     return post
   },
 
+  async likePost(parent, { postId }, context) {
+
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      throw new Error(`You must be logged in to do that`)
+    }
+
+    // 2. query for the post
+    const postToEdit = await context.prisma.post({ id: postId })
+    if (!postToEdit) throw new Error(`No post found`)
+
+    const liked = postToEdit.likes.includes(context.request.userId)
+
+    // 3. update the post
+    const post = await context.prisma.updatePost(
+      {
+        where: { id: postId },
+        data: {
+          likes: {
+            set: liked ? [...postToEdit.likes.filter(like => like !== context.request.userId)] : [...postToEdit.likes, context.request.userId]
+          },
+        }
+      }
+    )
+
+    return post
+  },
+
+  // ================
+  // UPDATES
+  // ================
+
   async createUpdate(parent, { postId, update }, context) {
 
     // 1. check if user is logged in
@@ -352,7 +406,7 @@ const Mutation = {
     return post
   },
 
-  async likePost(parent, { postId }, context) {
+  async likeUpdate(parent, { updateId }, context) {
 
     // 1. check if user is logged in
     if (!context.request.userId) {
@@ -360,26 +414,87 @@ const Mutation = {
     }
 
     // 2. query for the post
-    const postToEdit = await context.prisma.post({ id: postId })
-    if (!postToEdit) throw new Error(`No post found`)
+    const updateToEdit = await context.prisma.update({ id: updateId })
+    if (!updateToEdit) throw new Error(`No update found`)
 
-    const liked = postToEdit.likedByMe
+    const liked = updateToEdit.likes.includes(context.request.userId)
 
     // 3. update the post
-    const post = await context.prisma.updatePost(
+    const update = await context.prisma.updateUpdate(
       {
-        where: { id: postId },
+        where: { id: updateId },
         data: {
-          likedByMe: !liked,
-          likesCount: liked ? --postToEdit.likesCount : ++postToEdit.likesCount,
           likes: {
-            set: liked ? [...postToEdit.likes.filter(like => like !== context.request.userId)] : [...postToEdit.likes, context.request.userId]
+            set: liked ? [...updateToEdit.likes.filter(like => like !== context.request.userId)] : [...updateToEdit.likes, context.request.userId]
           },
         }
       }
     )
 
-    return post
+    return update
+  },
+
+  // ================
+  // COMMENTS
+  // ================
+
+  async createComment(parent, { comment }, context) {
+
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      throw new Error(`You must be logged in to do that`)
+    }
+
+    // 2. create the comment
+    const commentCreated = await context.prisma.createComment({...comment})
+
+    return commentCreated;
+  },
+
+  async likeComment(parent, { id }, context) {
+
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      throw new Error(`You must be logged in to do that`)
+    }
+
+    // 2. query for the post
+    const commentToEdit = await context.prisma.comment({ id })
+    if (!commentToEdit) throw new Error(`No post found`)
+
+    const liked = commentToEdit.likes.includes(context.request.userId)
+
+    // 3. update the comment
+    const comment = await context.prisma.updateComment(
+      {
+        where: { id },
+        data: {
+          likes: {
+            set: liked ? [...commentToEdit.likes.filter(like => like !== context.request.userId)] : [...commentToEdit.likes, context.request.userId]
+          },
+        }
+      }
+    )
+
+    return comment
+  },
+
+  async deleteComment(parent, args, context) {
+
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      throw new Error(`You must be logged in to do that`)
+    }
+
+    // 2. check if user on the request owns the post
+    if (context.request.userId !== args.owner) {
+      throw new Error(`You cannot edit a post that is not your own`)
+    }
+
+    // 3. delete comment
+    const comment = await context.prisma.deleteComment({ id: args.id })
+
+    return comment
   },
 
 }
