@@ -21,12 +21,20 @@ type User {
   location: String
   locationLat: Float
   locationLon: Float
-  jobTitle: String
-  profession: String
-  industry: String
+  headline: String
   website: String
   bio: String
+  about: String
+  isMentor: Boolean
+  isFreelancer: Boolean
+  isAgency: Boolean
+  isInvestor: Boolean
+  mentorFields: [String] @scalarList(strategy: RELATION)
+  freelanceFields: [String] @scalarList(strategy: RELATION)
+  investorFields: [String] @scalarList(strategy: RELATION)
+  agencyFields: [String] @scalarList(strategy: RELATION)
   skills: [Skill] @relation(name: "SkillsByUser" onDelete: CASCADE)
+  industry: [String] @scalarList(strategy: RELATION)
   interests: [String] @scalarList(strategy: RELATION)
   experience: [Experience] @relation(name: "ExperiencesByUser" onDelete: CASCADE)
   education: [Education] @relation(name: "EducationByUser" onDelete: CASCADE)

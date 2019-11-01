@@ -48,8 +48,8 @@ type Comment {
   createdAt: DateTime!
   owner: User!
   parentPost: Post
-  parentComment: Comment
   parentUpdate: Update
+  parentComment: Comment
   content: String
   image: String
   likes: [String!]!
@@ -69,8 +69,8 @@ input CommentCreateInput {
   id: ID
   owner: UserCreateOneInput!
   parentPost: PostCreateOneWithoutCommentsInput
-  parentComment: CommentCreateOneWithoutCommentsInput
   parentUpdate: UpdateCreateOneWithoutCommentsInput
+  parentComment: CommentCreateOneWithoutCommentsInput
   content: String
   image: String
   likes: CommentCreatelikesInput
@@ -108,8 +108,8 @@ input CommentCreateWithoutCommentsInput {
   id: ID
   owner: UserCreateOneInput!
   parentPost: PostCreateOneWithoutCommentsInput
-  parentComment: CommentCreateOneWithoutCommentsInput
   parentUpdate: UpdateCreateOneWithoutCommentsInput
+  parentComment: CommentCreateOneWithoutCommentsInput
   content: String
   image: String
   likes: CommentCreatelikesInput
@@ -135,8 +135,8 @@ input CommentCreateWithoutParentCommentInput {
 input CommentCreateWithoutParentPostInput {
   id: ID
   owner: UserCreateOneInput!
-  parentComment: CommentCreateOneWithoutCommentsInput
   parentUpdate: UpdateCreateOneWithoutCommentsInput
+  parentComment: CommentCreateOneWithoutCommentsInput
   content: String
   image: String
   likes: CommentCreatelikesInput
@@ -288,8 +288,8 @@ input CommentSubscriptionWhereInput {
 input CommentUpdateInput {
   owner: UserUpdateOneRequiredInput
   parentPost: PostUpdateOneWithoutCommentsInput
-  parentComment: CommentUpdateOneWithoutCommentsInput
   parentUpdate: UpdateUpdateOneWithoutCommentsInput
+  parentComment: CommentUpdateOneWithoutCommentsInput
   content: String
   image: String
   likes: CommentUpdatelikesInput
@@ -374,8 +374,8 @@ input CommentUpdateOneWithoutCommentsInput {
 input CommentUpdateWithoutCommentsDataInput {
   owner: UserUpdateOneRequiredInput
   parentPost: PostUpdateOneWithoutCommentsInput
-  parentComment: CommentUpdateOneWithoutCommentsInput
   parentUpdate: UpdateUpdateOneWithoutCommentsInput
+  parentComment: CommentUpdateOneWithoutCommentsInput
   content: String
   image: String
   likes: CommentUpdatelikesInput
@@ -399,8 +399,8 @@ input CommentUpdateWithoutParentCommentDataInput {
 
 input CommentUpdateWithoutParentPostDataInput {
   owner: UserUpdateOneRequiredInput
-  parentComment: CommentUpdateOneWithoutCommentsInput
   parentUpdate: UpdateUpdateOneWithoutCommentsInput
+  parentComment: CommentUpdateOneWithoutCommentsInput
   content: String
   image: String
   likes: CommentUpdatelikesInput
@@ -486,8 +486,8 @@ input CommentWhereInput {
   createdAt_gte: DateTime
   owner: UserWhereInput
   parentPost: PostWhereInput
-  parentComment: CommentWhereInput
   parentUpdate: UpdateWhereInput
+  parentComment: CommentWhereInput
   content: String
   content_not: String
   content_in: [String!]
@@ -3188,12 +3188,20 @@ type User {
   location: String
   locationLat: Float
   locationLon: Float
-  jobTitle: String
-  profession: String
-  industry: String
+  headline: String
   website: String
   bio: String
+  about: String
+  isMentor: Boolean
+  isFreelancer: Boolean
+  isAgency: Boolean
+  isInvestor: Boolean
+  mentorFields: [String!]!
+  freelanceFields: [String!]!
+  investorFields: [String!]!
+  agencyFields: [String!]!
   skills(where: SkillWhereInput, orderBy: SkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Skill!]
+  industry: [String!]!
   interests: [String!]!
   experience(where: ExperienceWhereInput, orderBy: ExperienceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Experience!]
   education(where: EducationWhereInput, orderBy: EducationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Education!]
@@ -3215,6 +3223,18 @@ type UserConnection {
   aggregate: AggregateUser!
 }
 
+input UserCreateagencyFieldsInput {
+  set: [String!]
+}
+
+input UserCreatefreelanceFieldsInput {
+  set: [String!]
+}
+
+input UserCreateindustryInput {
+  set: [String!]
+}
+
 input UserCreateInput {
   id: ID
   name: String!
@@ -3227,12 +3247,20 @@ input UserCreateInput {
   location: String
   locationLat: Float
   locationLon: Float
-  jobTitle: String
-  profession: String
-  industry: String
+  headline: String
   website: String
   bio: String
+  about: String
+  isMentor: Boolean
+  isFreelancer: Boolean
+  isAgency: Boolean
+  isInvestor: Boolean
+  mentorFields: UserCreatementorFieldsInput
+  freelanceFields: UserCreatefreelanceFieldsInput
+  investorFields: UserCreateinvestorFieldsInput
+  agencyFields: UserCreateagencyFieldsInput
   skills: SkillCreateManyWithoutOwnerInput
+  industry: UserCreateindustryInput
   interests: UserCreateinterestsInput
   experience: ExperienceCreateManyWithoutOwnerInput
   education: EducationCreateManyWithoutOwnerInput
@@ -3256,6 +3284,10 @@ input UserCreateintroInput {
   set: [String!]
 }
 
+input UserCreateinvestorFieldsInput {
+  set: [String!]
+}
+
 input UserCreateManyWithoutConnectionsInput {
   create: [UserCreateWithoutConnectionsInput!]
   connect: [UserWhereUniqueInput!]
@@ -3274,6 +3306,10 @@ input UserCreateManyWithoutFollowingInput {
 input UserCreateManyWithoutMeetingsInput {
   create: [UserCreateWithoutMeetingsInput!]
   connect: [UserWhereUniqueInput!]
+}
+
+input UserCreatementorFieldsInput {
+  set: [String!]
 }
 
 input UserCreateOneInput {
@@ -3326,12 +3362,20 @@ input UserCreateWithoutConnectionsInput {
   location: String
   locationLat: Float
   locationLon: Float
-  jobTitle: String
-  profession: String
-  industry: String
+  headline: String
   website: String
   bio: String
+  about: String
+  isMentor: Boolean
+  isFreelancer: Boolean
+  isAgency: Boolean
+  isInvestor: Boolean
+  mentorFields: UserCreatementorFieldsInput
+  freelanceFields: UserCreatefreelanceFieldsInput
+  investorFields: UserCreateinvestorFieldsInput
+  agencyFields: UserCreateagencyFieldsInput
   skills: SkillCreateManyWithoutOwnerInput
+  industry: UserCreateindustryInput
   interests: UserCreateinterestsInput
   experience: ExperienceCreateManyWithoutOwnerInput
   education: EducationCreateManyWithoutOwnerInput
@@ -3358,12 +3402,20 @@ input UserCreateWithoutEducationInput {
   location: String
   locationLat: Float
   locationLon: Float
-  jobTitle: String
-  profession: String
-  industry: String
+  headline: String
   website: String
   bio: String
+  about: String
+  isMentor: Boolean
+  isFreelancer: Boolean
+  isAgency: Boolean
+  isInvestor: Boolean
+  mentorFields: UserCreatementorFieldsInput
+  freelanceFields: UserCreatefreelanceFieldsInput
+  investorFields: UserCreateinvestorFieldsInput
+  agencyFields: UserCreateagencyFieldsInput
   skills: SkillCreateManyWithoutOwnerInput
+  industry: UserCreateindustryInput
   interests: UserCreateinterestsInput
   experience: ExperienceCreateManyWithoutOwnerInput
   posts: PostCreateManyWithoutOwnerInput
@@ -3390,12 +3442,20 @@ input UserCreateWithoutExperienceInput {
   location: String
   locationLat: Float
   locationLon: Float
-  jobTitle: String
-  profession: String
-  industry: String
+  headline: String
   website: String
   bio: String
+  about: String
+  isMentor: Boolean
+  isFreelancer: Boolean
+  isAgency: Boolean
+  isInvestor: Boolean
+  mentorFields: UserCreatementorFieldsInput
+  freelanceFields: UserCreatefreelanceFieldsInput
+  investorFields: UserCreateinvestorFieldsInput
+  agencyFields: UserCreateagencyFieldsInput
   skills: SkillCreateManyWithoutOwnerInput
+  industry: UserCreateindustryInput
   interests: UserCreateinterestsInput
   education: EducationCreateManyWithoutOwnerInput
   posts: PostCreateManyWithoutOwnerInput
@@ -3422,12 +3482,20 @@ input UserCreateWithoutFollowersInput {
   location: String
   locationLat: Float
   locationLon: Float
-  jobTitle: String
-  profession: String
-  industry: String
+  headline: String
   website: String
   bio: String
+  about: String
+  isMentor: Boolean
+  isFreelancer: Boolean
+  isAgency: Boolean
+  isInvestor: Boolean
+  mentorFields: UserCreatementorFieldsInput
+  freelanceFields: UserCreatefreelanceFieldsInput
+  investorFields: UserCreateinvestorFieldsInput
+  agencyFields: UserCreateagencyFieldsInput
   skills: SkillCreateManyWithoutOwnerInput
+  industry: UserCreateindustryInput
   interests: UserCreateinterestsInput
   experience: ExperienceCreateManyWithoutOwnerInput
   education: EducationCreateManyWithoutOwnerInput
@@ -3454,12 +3522,20 @@ input UserCreateWithoutFollowingInput {
   location: String
   locationLat: Float
   locationLon: Float
-  jobTitle: String
-  profession: String
-  industry: String
+  headline: String
   website: String
   bio: String
+  about: String
+  isMentor: Boolean
+  isFreelancer: Boolean
+  isAgency: Boolean
+  isInvestor: Boolean
+  mentorFields: UserCreatementorFieldsInput
+  freelanceFields: UserCreatefreelanceFieldsInput
+  investorFields: UserCreateinvestorFieldsInput
+  agencyFields: UserCreateagencyFieldsInput
   skills: SkillCreateManyWithoutOwnerInput
+  industry: UserCreateindustryInput
   interests: UserCreateinterestsInput
   experience: ExperienceCreateManyWithoutOwnerInput
   education: EducationCreateManyWithoutOwnerInput
@@ -3486,12 +3562,20 @@ input UserCreateWithoutMeetingsInput {
   location: String
   locationLat: Float
   locationLon: Float
-  jobTitle: String
-  profession: String
-  industry: String
+  headline: String
   website: String
   bio: String
+  about: String
+  isMentor: Boolean
+  isFreelancer: Boolean
+  isAgency: Boolean
+  isInvestor: Boolean
+  mentorFields: UserCreatementorFieldsInput
+  freelanceFields: UserCreatefreelanceFieldsInput
+  investorFields: UserCreateinvestorFieldsInput
+  agencyFields: UserCreateagencyFieldsInput
   skills: SkillCreateManyWithoutOwnerInput
+  industry: UserCreateindustryInput
   interests: UserCreateinterestsInput
   experience: ExperienceCreateManyWithoutOwnerInput
   education: EducationCreateManyWithoutOwnerInput
@@ -3518,12 +3602,20 @@ input UserCreateWithoutPostsInput {
   location: String
   locationLat: Float
   locationLon: Float
-  jobTitle: String
-  profession: String
-  industry: String
+  headline: String
   website: String
   bio: String
+  about: String
+  isMentor: Boolean
+  isFreelancer: Boolean
+  isAgency: Boolean
+  isInvestor: Boolean
+  mentorFields: UserCreatementorFieldsInput
+  freelanceFields: UserCreatefreelanceFieldsInput
+  investorFields: UserCreateinvestorFieldsInput
+  agencyFields: UserCreateagencyFieldsInput
   skills: SkillCreateManyWithoutOwnerInput
+  industry: UserCreateindustryInput
   interests: UserCreateinterestsInput
   experience: ExperienceCreateManyWithoutOwnerInput
   education: EducationCreateManyWithoutOwnerInput
@@ -3550,12 +3642,20 @@ input UserCreateWithoutSavedFiltersInput {
   location: String
   locationLat: Float
   locationLon: Float
-  jobTitle: String
-  profession: String
-  industry: String
+  headline: String
   website: String
   bio: String
+  about: String
+  isMentor: Boolean
+  isFreelancer: Boolean
+  isAgency: Boolean
+  isInvestor: Boolean
+  mentorFields: UserCreatementorFieldsInput
+  freelanceFields: UserCreatefreelanceFieldsInput
+  investorFields: UserCreateinvestorFieldsInput
+  agencyFields: UserCreateagencyFieldsInput
   skills: SkillCreateManyWithoutOwnerInput
+  industry: UserCreateindustryInput
   interests: UserCreateinterestsInput
   experience: ExperienceCreateManyWithoutOwnerInput
   education: EducationCreateManyWithoutOwnerInput
@@ -3582,11 +3682,19 @@ input UserCreateWithoutSkillsInput {
   location: String
   locationLat: Float
   locationLon: Float
-  jobTitle: String
-  profession: String
-  industry: String
+  headline: String
   website: String
   bio: String
+  about: String
+  isMentor: Boolean
+  isFreelancer: Boolean
+  isAgency: Boolean
+  isInvestor: Boolean
+  mentorFields: UserCreatementorFieldsInput
+  freelanceFields: UserCreatefreelanceFieldsInput
+  investorFields: UserCreateinvestorFieldsInput
+  agencyFields: UserCreateagencyFieldsInput
+  industry: UserCreateindustryInput
   interests: UserCreateinterestsInput
   experience: ExperienceCreateManyWithoutOwnerInput
   education: EducationCreateManyWithoutOwnerInput
@@ -3632,16 +3740,22 @@ enum UserOrderByInput {
   locationLat_DESC
   locationLon_ASC
   locationLon_DESC
-  jobTitle_ASC
-  jobTitle_DESC
-  profession_ASC
-  profession_DESC
-  industry_ASC
-  industry_DESC
+  headline_ASC
+  headline_DESC
   website_ASC
   website_DESC
   bio_ASC
   bio_DESC
+  about_ASC
+  about_DESC
+  isMentor_ASC
+  isMentor_DESC
+  isFreelancer_ASC
+  isFreelancer_DESC
+  isAgency_ASC
+  isAgency_DESC
+  isInvestor_ASC
+  isInvestor_DESC
   rank_ASC
   rank_DESC
 }
@@ -3659,11 +3773,19 @@ type UserPreviousValues {
   location: String
   locationLat: Float
   locationLon: Float
-  jobTitle: String
-  profession: String
-  industry: String
+  headline: String
   website: String
   bio: String
+  about: String
+  isMentor: Boolean
+  isFreelancer: Boolean
+  isAgency: Boolean
+  isInvestor: Boolean
+  mentorFields: [String!]!
+  freelanceFields: [String!]!
+  investorFields: [String!]!
+  agencyFields: [String!]!
+  industry: [String!]!
   interests: [String!]!
   intro: [String!]!
   projects: [String!]!
@@ -3822,48 +3944,20 @@ input UserScalarWhereInput {
   locationLon_lte: Float
   locationLon_gt: Float
   locationLon_gte: Float
-  jobTitle: String
-  jobTitle_not: String
-  jobTitle_in: [String!]
-  jobTitle_not_in: [String!]
-  jobTitle_lt: String
-  jobTitle_lte: String
-  jobTitle_gt: String
-  jobTitle_gte: String
-  jobTitle_contains: String
-  jobTitle_not_contains: String
-  jobTitle_starts_with: String
-  jobTitle_not_starts_with: String
-  jobTitle_ends_with: String
-  jobTitle_not_ends_with: String
-  profession: String
-  profession_not: String
-  profession_in: [String!]
-  profession_not_in: [String!]
-  profession_lt: String
-  profession_lte: String
-  profession_gt: String
-  profession_gte: String
-  profession_contains: String
-  profession_not_contains: String
-  profession_starts_with: String
-  profession_not_starts_with: String
-  profession_ends_with: String
-  profession_not_ends_with: String
-  industry: String
-  industry_not: String
-  industry_in: [String!]
-  industry_not_in: [String!]
-  industry_lt: String
-  industry_lte: String
-  industry_gt: String
-  industry_gte: String
-  industry_contains: String
-  industry_not_contains: String
-  industry_starts_with: String
-  industry_not_starts_with: String
-  industry_ends_with: String
-  industry_not_ends_with: String
+  headline: String
+  headline_not: String
+  headline_in: [String!]
+  headline_not_in: [String!]
+  headline_lt: String
+  headline_lte: String
+  headline_gt: String
+  headline_gte: String
+  headline_contains: String
+  headline_not_contains: String
+  headline_starts_with: String
+  headline_not_starts_with: String
+  headline_ends_with: String
+  headline_not_ends_with: String
   website: String
   website_not: String
   website_in: [String!]
@@ -3892,6 +3986,28 @@ input UserScalarWhereInput {
   bio_not_starts_with: String
   bio_ends_with: String
   bio_not_ends_with: String
+  about: String
+  about_not: String
+  about_in: [String!]
+  about_not_in: [String!]
+  about_lt: String
+  about_lte: String
+  about_gt: String
+  about_gte: String
+  about_contains: String
+  about_not_contains: String
+  about_starts_with: String
+  about_not_starts_with: String
+  about_ends_with: String
+  about_not_ends_with: String
+  isMentor: Boolean
+  isMentor_not: Boolean
+  isFreelancer: Boolean
+  isFreelancer_not: Boolean
+  isAgency: Boolean
+  isAgency_not: Boolean
+  isInvestor: Boolean
+  isInvestor_not: Boolean
   rank: Int
   rank_not: Int
   rank_in: [Int!]
@@ -3923,6 +4039,10 @@ input UserSubscriptionWhereInput {
   NOT: [UserSubscriptionWhereInput!]
 }
 
+input UserUpdateagencyFieldsInput {
+  set: [String!]
+}
+
 input UserUpdateDataInput {
   name: String
   firstName: String
@@ -3934,12 +4054,20 @@ input UserUpdateDataInput {
   location: String
   locationLat: Float
   locationLon: Float
-  jobTitle: String
-  profession: String
-  industry: String
+  headline: String
   website: String
   bio: String
+  about: String
+  isMentor: Boolean
+  isFreelancer: Boolean
+  isAgency: Boolean
+  isInvestor: Boolean
+  mentorFields: UserUpdatementorFieldsInput
+  freelanceFields: UserUpdatefreelanceFieldsInput
+  investorFields: UserUpdateinvestorFieldsInput
+  agencyFields: UserUpdateagencyFieldsInput
   skills: SkillUpdateManyWithoutOwnerInput
+  industry: UserUpdateindustryInput
   interests: UserUpdateinterestsInput
   experience: ExperienceUpdateManyWithoutOwnerInput
   education: EducationUpdateManyWithoutOwnerInput
@@ -3955,6 +4083,14 @@ input UserUpdateDataInput {
   roles: UserUpdaterolesInput
 }
 
+input UserUpdatefreelanceFieldsInput {
+  set: [String!]
+}
+
+input UserUpdateindustryInput {
+  set: [String!]
+}
+
 input UserUpdateInput {
   name: String
   firstName: String
@@ -3966,12 +4102,20 @@ input UserUpdateInput {
   location: String
   locationLat: Float
   locationLon: Float
-  jobTitle: String
-  profession: String
-  industry: String
+  headline: String
   website: String
   bio: String
+  about: String
+  isMentor: Boolean
+  isFreelancer: Boolean
+  isAgency: Boolean
+  isInvestor: Boolean
+  mentorFields: UserUpdatementorFieldsInput
+  freelanceFields: UserUpdatefreelanceFieldsInput
+  investorFields: UserUpdateinvestorFieldsInput
+  agencyFields: UserUpdateagencyFieldsInput
   skills: SkillUpdateManyWithoutOwnerInput
+  industry: UserUpdateindustryInput
   interests: UserUpdateinterestsInput
   experience: ExperienceUpdateManyWithoutOwnerInput
   education: EducationUpdateManyWithoutOwnerInput
@@ -3995,6 +4139,10 @@ input UserUpdateintroInput {
   set: [String!]
 }
 
+input UserUpdateinvestorFieldsInput {
+  set: [String!]
+}
+
 input UserUpdateManyDataInput {
   name: String
   firstName: String
@@ -4006,11 +4154,19 @@ input UserUpdateManyDataInput {
   location: String
   locationLat: Float
   locationLon: Float
-  jobTitle: String
-  profession: String
-  industry: String
+  headline: String
   website: String
   bio: String
+  about: String
+  isMentor: Boolean
+  isFreelancer: Boolean
+  isAgency: Boolean
+  isInvestor: Boolean
+  mentorFields: UserUpdatementorFieldsInput
+  freelanceFields: UserUpdatefreelanceFieldsInput
+  investorFields: UserUpdateinvestorFieldsInput
+  agencyFields: UserUpdateagencyFieldsInput
+  industry: UserUpdateindustryInput
   interests: UserUpdateinterestsInput
   intro: UserUpdateintroInput
   projects: UserUpdateprojectsInput
@@ -4029,11 +4185,19 @@ input UserUpdateManyMutationInput {
   location: String
   locationLat: Float
   locationLon: Float
-  jobTitle: String
-  profession: String
-  industry: String
+  headline: String
   website: String
   bio: String
+  about: String
+  isMentor: Boolean
+  isFreelancer: Boolean
+  isAgency: Boolean
+  isInvestor: Boolean
+  mentorFields: UserUpdatementorFieldsInput
+  freelanceFields: UserUpdatefreelanceFieldsInput
+  investorFields: UserUpdateinvestorFieldsInput
+  agencyFields: UserUpdateagencyFieldsInput
+  industry: UserUpdateindustryInput
   interests: UserUpdateinterestsInput
   intro: UserUpdateintroInput
   projects: UserUpdateprojectsInput
@@ -4092,6 +4256,10 @@ input UserUpdateManyWithoutMeetingsInput {
 input UserUpdateManyWithWhereNestedInput {
   where: UserScalarWhereInput!
   data: UserUpdateManyDataInput!
+}
+
+input UserUpdatementorFieldsInput {
+  set: [String!]
 }
 
 input UserUpdateOneRequiredInput {
@@ -4157,12 +4325,20 @@ input UserUpdateWithoutConnectionsDataInput {
   location: String
   locationLat: Float
   locationLon: Float
-  jobTitle: String
-  profession: String
-  industry: String
+  headline: String
   website: String
   bio: String
+  about: String
+  isMentor: Boolean
+  isFreelancer: Boolean
+  isAgency: Boolean
+  isInvestor: Boolean
+  mentorFields: UserUpdatementorFieldsInput
+  freelanceFields: UserUpdatefreelanceFieldsInput
+  investorFields: UserUpdateinvestorFieldsInput
+  agencyFields: UserUpdateagencyFieldsInput
   skills: SkillUpdateManyWithoutOwnerInput
+  industry: UserUpdateindustryInput
   interests: UserUpdateinterestsInput
   experience: ExperienceUpdateManyWithoutOwnerInput
   education: EducationUpdateManyWithoutOwnerInput
@@ -4188,12 +4364,20 @@ input UserUpdateWithoutEducationDataInput {
   location: String
   locationLat: Float
   locationLon: Float
-  jobTitle: String
-  profession: String
-  industry: String
+  headline: String
   website: String
   bio: String
+  about: String
+  isMentor: Boolean
+  isFreelancer: Boolean
+  isAgency: Boolean
+  isInvestor: Boolean
+  mentorFields: UserUpdatementorFieldsInput
+  freelanceFields: UserUpdatefreelanceFieldsInput
+  investorFields: UserUpdateinvestorFieldsInput
+  agencyFields: UserUpdateagencyFieldsInput
   skills: SkillUpdateManyWithoutOwnerInput
+  industry: UserUpdateindustryInput
   interests: UserUpdateinterestsInput
   experience: ExperienceUpdateManyWithoutOwnerInput
   posts: PostUpdateManyWithoutOwnerInput
@@ -4219,12 +4403,20 @@ input UserUpdateWithoutExperienceDataInput {
   location: String
   locationLat: Float
   locationLon: Float
-  jobTitle: String
-  profession: String
-  industry: String
+  headline: String
   website: String
   bio: String
+  about: String
+  isMentor: Boolean
+  isFreelancer: Boolean
+  isAgency: Boolean
+  isInvestor: Boolean
+  mentorFields: UserUpdatementorFieldsInput
+  freelanceFields: UserUpdatefreelanceFieldsInput
+  investorFields: UserUpdateinvestorFieldsInput
+  agencyFields: UserUpdateagencyFieldsInput
   skills: SkillUpdateManyWithoutOwnerInput
+  industry: UserUpdateindustryInput
   interests: UserUpdateinterestsInput
   education: EducationUpdateManyWithoutOwnerInput
   posts: PostUpdateManyWithoutOwnerInput
@@ -4250,12 +4442,20 @@ input UserUpdateWithoutFollowersDataInput {
   location: String
   locationLat: Float
   locationLon: Float
-  jobTitle: String
-  profession: String
-  industry: String
+  headline: String
   website: String
   bio: String
+  about: String
+  isMentor: Boolean
+  isFreelancer: Boolean
+  isAgency: Boolean
+  isInvestor: Boolean
+  mentorFields: UserUpdatementorFieldsInput
+  freelanceFields: UserUpdatefreelanceFieldsInput
+  investorFields: UserUpdateinvestorFieldsInput
+  agencyFields: UserUpdateagencyFieldsInput
   skills: SkillUpdateManyWithoutOwnerInput
+  industry: UserUpdateindustryInput
   interests: UserUpdateinterestsInput
   experience: ExperienceUpdateManyWithoutOwnerInput
   education: EducationUpdateManyWithoutOwnerInput
@@ -4281,12 +4481,20 @@ input UserUpdateWithoutFollowingDataInput {
   location: String
   locationLat: Float
   locationLon: Float
-  jobTitle: String
-  profession: String
-  industry: String
+  headline: String
   website: String
   bio: String
+  about: String
+  isMentor: Boolean
+  isFreelancer: Boolean
+  isAgency: Boolean
+  isInvestor: Boolean
+  mentorFields: UserUpdatementorFieldsInput
+  freelanceFields: UserUpdatefreelanceFieldsInput
+  investorFields: UserUpdateinvestorFieldsInput
+  agencyFields: UserUpdateagencyFieldsInput
   skills: SkillUpdateManyWithoutOwnerInput
+  industry: UserUpdateindustryInput
   interests: UserUpdateinterestsInput
   experience: ExperienceUpdateManyWithoutOwnerInput
   education: EducationUpdateManyWithoutOwnerInput
@@ -4312,12 +4520,20 @@ input UserUpdateWithoutMeetingsDataInput {
   location: String
   locationLat: Float
   locationLon: Float
-  jobTitle: String
-  profession: String
-  industry: String
+  headline: String
   website: String
   bio: String
+  about: String
+  isMentor: Boolean
+  isFreelancer: Boolean
+  isAgency: Boolean
+  isInvestor: Boolean
+  mentorFields: UserUpdatementorFieldsInput
+  freelanceFields: UserUpdatefreelanceFieldsInput
+  investorFields: UserUpdateinvestorFieldsInput
+  agencyFields: UserUpdateagencyFieldsInput
   skills: SkillUpdateManyWithoutOwnerInput
+  industry: UserUpdateindustryInput
   interests: UserUpdateinterestsInput
   experience: ExperienceUpdateManyWithoutOwnerInput
   education: EducationUpdateManyWithoutOwnerInput
@@ -4343,12 +4559,20 @@ input UserUpdateWithoutPostsDataInput {
   location: String
   locationLat: Float
   locationLon: Float
-  jobTitle: String
-  profession: String
-  industry: String
+  headline: String
   website: String
   bio: String
+  about: String
+  isMentor: Boolean
+  isFreelancer: Boolean
+  isAgency: Boolean
+  isInvestor: Boolean
+  mentorFields: UserUpdatementorFieldsInput
+  freelanceFields: UserUpdatefreelanceFieldsInput
+  investorFields: UserUpdateinvestorFieldsInput
+  agencyFields: UserUpdateagencyFieldsInput
   skills: SkillUpdateManyWithoutOwnerInput
+  industry: UserUpdateindustryInput
   interests: UserUpdateinterestsInput
   experience: ExperienceUpdateManyWithoutOwnerInput
   education: EducationUpdateManyWithoutOwnerInput
@@ -4374,12 +4598,20 @@ input UserUpdateWithoutSavedFiltersDataInput {
   location: String
   locationLat: Float
   locationLon: Float
-  jobTitle: String
-  profession: String
-  industry: String
+  headline: String
   website: String
   bio: String
+  about: String
+  isMentor: Boolean
+  isFreelancer: Boolean
+  isAgency: Boolean
+  isInvestor: Boolean
+  mentorFields: UserUpdatementorFieldsInput
+  freelanceFields: UserUpdatefreelanceFieldsInput
+  investorFields: UserUpdateinvestorFieldsInput
+  agencyFields: UserUpdateagencyFieldsInput
   skills: SkillUpdateManyWithoutOwnerInput
+  industry: UserUpdateindustryInput
   interests: UserUpdateinterestsInput
   experience: ExperienceUpdateManyWithoutOwnerInput
   education: EducationUpdateManyWithoutOwnerInput
@@ -4405,11 +4637,19 @@ input UserUpdateWithoutSkillsDataInput {
   location: String
   locationLat: Float
   locationLon: Float
-  jobTitle: String
-  profession: String
-  industry: String
+  headline: String
   website: String
   bio: String
+  about: String
+  isMentor: Boolean
+  isFreelancer: Boolean
+  isAgency: Boolean
+  isInvestor: Boolean
+  mentorFields: UserUpdatementorFieldsInput
+  freelanceFields: UserUpdatefreelanceFieldsInput
+  investorFields: UserUpdateinvestorFieldsInput
+  agencyFields: UserUpdateagencyFieldsInput
+  industry: UserUpdateindustryInput
   interests: UserUpdateinterestsInput
   experience: ExperienceUpdateManyWithoutOwnerInput
   education: EducationUpdateManyWithoutOwnerInput
@@ -4650,48 +4890,20 @@ input UserWhereInput {
   locationLon_lte: Float
   locationLon_gt: Float
   locationLon_gte: Float
-  jobTitle: String
-  jobTitle_not: String
-  jobTitle_in: [String!]
-  jobTitle_not_in: [String!]
-  jobTitle_lt: String
-  jobTitle_lte: String
-  jobTitle_gt: String
-  jobTitle_gte: String
-  jobTitle_contains: String
-  jobTitle_not_contains: String
-  jobTitle_starts_with: String
-  jobTitle_not_starts_with: String
-  jobTitle_ends_with: String
-  jobTitle_not_ends_with: String
-  profession: String
-  profession_not: String
-  profession_in: [String!]
-  profession_not_in: [String!]
-  profession_lt: String
-  profession_lte: String
-  profession_gt: String
-  profession_gte: String
-  profession_contains: String
-  profession_not_contains: String
-  profession_starts_with: String
-  profession_not_starts_with: String
-  profession_ends_with: String
-  profession_not_ends_with: String
-  industry: String
-  industry_not: String
-  industry_in: [String!]
-  industry_not_in: [String!]
-  industry_lt: String
-  industry_lte: String
-  industry_gt: String
-  industry_gte: String
-  industry_contains: String
-  industry_not_contains: String
-  industry_starts_with: String
-  industry_not_starts_with: String
-  industry_ends_with: String
-  industry_not_ends_with: String
+  headline: String
+  headline_not: String
+  headline_in: [String!]
+  headline_not_in: [String!]
+  headline_lt: String
+  headline_lte: String
+  headline_gt: String
+  headline_gte: String
+  headline_contains: String
+  headline_not_contains: String
+  headline_starts_with: String
+  headline_not_starts_with: String
+  headline_ends_with: String
+  headline_not_ends_with: String
   website: String
   website_not: String
   website_in: [String!]
@@ -4720,6 +4932,28 @@ input UserWhereInput {
   bio_not_starts_with: String
   bio_ends_with: String
   bio_not_ends_with: String
+  about: String
+  about_not: String
+  about_in: [String!]
+  about_not_in: [String!]
+  about_lt: String
+  about_lte: String
+  about_gt: String
+  about_gte: String
+  about_contains: String
+  about_not_contains: String
+  about_starts_with: String
+  about_not_starts_with: String
+  about_ends_with: String
+  about_not_ends_with: String
+  isMentor: Boolean
+  isMentor_not: Boolean
+  isFreelancer: Boolean
+  isFreelancer_not: Boolean
+  isAgency: Boolean
+  isAgency_not: Boolean
+  isInvestor: Boolean
+  isInvestor_not: Boolean
   skills_every: SkillWhereInput
   skills_some: SkillWhereInput
   skills_none: SkillWhereInput
