@@ -1798,6 +1798,7 @@ type Post {
   owner: User!
   isGoal: Boolean!
   goal: String
+  field: String
   location: String!
   locationLat: Float!
   locationLon: Float!
@@ -1832,6 +1833,7 @@ input PostCreateInput {
   owner: UserCreateOneWithoutPostsInput!
   isGoal: Boolean
   goal: String
+  field: String
   location: String!
   locationLat: Float!
   locationLon: Float!
@@ -1879,6 +1881,7 @@ input PostCreateWithoutCommentsInput {
   owner: UserCreateOneWithoutPostsInput!
   isGoal: Boolean
   goal: String
+  field: String
   location: String!
   locationLat: Float!
   locationLon: Float!
@@ -1901,6 +1904,7 @@ input PostCreateWithoutOwnerInput {
   lastUpdated: DateTime!
   isGoal: Boolean
   goal: String
+  field: String
   location: String!
   locationLat: Float!
   locationLon: Float!
@@ -1925,6 +1929,7 @@ input PostCreateWithoutUpdatesInput {
   owner: UserCreateOneWithoutPostsInput!
   isGoal: Boolean
   goal: String
+  field: String
   location: String!
   locationLat: Float!
   locationLon: Float!
@@ -1958,6 +1963,8 @@ enum PostOrderByInput {
   isGoal_DESC
   goal_ASC
   goal_DESC
+  field_ASC
+  field_DESC
   location_ASC
   location_DESC
   locationLat_ASC
@@ -1988,6 +1995,7 @@ type PostPreviousValues {
   lastUpdated: DateTime!
   isGoal: Boolean!
   goal: String
+  field: String
   location: String!
   locationLat: Float!
   locationLon: Float!
@@ -2051,6 +2059,20 @@ input PostScalarWhereInput {
   goal_not_starts_with: String
   goal_ends_with: String
   goal_not_ends_with: String
+  field: String
+  field_not: String
+  field_in: [String!]
+  field_not_in: [String!]
+  field_lt: String
+  field_lte: String
+  field_gt: String
+  field_gte: String
+  field_contains: String
+  field_not_contains: String
+  field_starts_with: String
+  field_not_starts_with: String
+  field_ends_with: String
+  field_not_ends_with: String
   location: String
   location_not: String
   location_in: [String!]
@@ -2183,6 +2205,7 @@ input PostUpdateInput {
   owner: UserUpdateOneRequiredWithoutPostsInput
   isGoal: Boolean
   goal: String
+  field: String
   location: String
   locationLat: Float
   locationLon: Float
@@ -2209,6 +2232,7 @@ input PostUpdateManyDataInput {
   lastUpdated: DateTime
   isGoal: Boolean
   goal: String
+  field: String
   location: String
   locationLat: Float
   locationLon: Float
@@ -2229,6 +2253,7 @@ input PostUpdateManyMutationInput {
   lastUpdated: DateTime
   isGoal: Boolean
   goal: String
+  field: String
   location: String
   locationLat: Float
   locationLon: Float
@@ -2287,6 +2312,7 @@ input PostUpdateWithoutCommentsDataInput {
   owner: UserUpdateOneRequiredWithoutPostsInput
   isGoal: Boolean
   goal: String
+  field: String
   location: String
   locationLat: Float
   locationLon: Float
@@ -2308,6 +2334,7 @@ input PostUpdateWithoutOwnerDataInput {
   lastUpdated: DateTime
   isGoal: Boolean
   goal: String
+  field: String
   location: String
   locationLat: Float
   locationLon: Float
@@ -2331,6 +2358,7 @@ input PostUpdateWithoutUpdatesDataInput {
   owner: UserUpdateOneRequiredWithoutPostsInput
   isGoal: Boolean
   goal: String
+  field: String
   location: String
   locationLat: Float
   locationLon: Float
@@ -2417,6 +2445,20 @@ input PostWhereInput {
   goal_not_starts_with: String
   goal_ends_with: String
   goal_not_ends_with: String
+  field: String
+  field_not: String
+  field_in: [String!]
+  field_not_in: [String!]
+  field_lt: String
+  field_lte: String
+  field_gt: String
+  field_gte: String
+  field_contains: String
+  field_not_contains: String
+  field_starts_with: String
+  field_not_starts_with: String
+  field_ends_with: String
+  field_not_ends_with: String
   location: String
   location_not: String
   location_in: [String!]

@@ -90,6 +90,7 @@ type Post {
   owner: User! @relation(name: "PostsByUser")
   isGoal: Boolean! @default(value: false)
   goal: String
+  field: String
   location: String!
   locationLat: Float!
   locationLon: Float!

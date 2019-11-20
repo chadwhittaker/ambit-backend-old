@@ -486,6 +486,8 @@ export type PostOrderByInput =
   | "isGoal_DESC"
   | "goal_ASC"
   | "goal_DESC"
+  | "field_ASC"
+  | "field_DESC"
   | "location_ASC"
   | "location_DESC"
   | "locationLat_ASC"
@@ -672,6 +674,20 @@ export interface PostWhereInput {
   goal_not_starts_with?: Maybe<String>;
   goal_ends_with?: Maybe<String>;
   goal_not_ends_with?: Maybe<String>;
+  field?: Maybe<String>;
+  field_not?: Maybe<String>;
+  field_in?: Maybe<String[] | String>;
+  field_not_in?: Maybe<String[] | String>;
+  field_lt?: Maybe<String>;
+  field_lte?: Maybe<String>;
+  field_gt?: Maybe<String>;
+  field_gte?: Maybe<String>;
+  field_contains?: Maybe<String>;
+  field_not_contains?: Maybe<String>;
+  field_starts_with?: Maybe<String>;
+  field_not_starts_with?: Maybe<String>;
+  field_ends_with?: Maybe<String>;
+  field_not_ends_with?: Maybe<String>;
   location?: Maybe<String>;
   location_not?: Maybe<String>;
   location_in?: Maybe<String[] | String>;
@@ -1761,6 +1777,7 @@ export interface PostUpdateInput {
   owner?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
+  field?: Maybe<String>;
   location?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
@@ -1791,6 +1808,7 @@ export interface PostCreateInput {
   owner: UserCreateOneWithoutPostsInput;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
+  field?: Maybe<String>;
   location: String;
   locationLat: Float;
   locationLon: Float;
@@ -2028,6 +2046,7 @@ export interface PostUpdateWithoutOwnerDataInput {
   lastUpdated?: Maybe<DateTimeInput>;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
+  field?: Maybe<String>;
   location?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
@@ -2509,6 +2528,7 @@ export interface PostUpdateWithoutUpdatesDataInput {
   owner?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
+  field?: Maybe<String>;
   location?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
@@ -2627,6 +2647,7 @@ export interface PostCreateWithoutOwnerInput {
   lastUpdated: DateTimeInput;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
+  field?: Maybe<String>;
   location: String;
   locationLat: Float;
   locationLon: Float;
@@ -2752,6 +2773,7 @@ export interface PostCreateWithoutUpdatesInput {
   owner: UserCreateOneWithoutPostsInput;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
+  field?: Maybe<String>;
   location: String;
   locationLat: Float;
   locationLon: Float;
@@ -3743,6 +3765,7 @@ export interface PostUpdateManyMutationInput {
   lastUpdated?: Maybe<DateTimeInput>;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
+  field?: Maybe<String>;
   location?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
@@ -3856,6 +3879,7 @@ export interface PostUpdateWithoutCommentsDataInput {
   owner?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
+  field?: Maybe<String>;
   location?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
@@ -4146,6 +4170,7 @@ export interface PostCreateWithoutCommentsInput {
   owner: UserCreateOneWithoutPostsInput;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
+  field?: Maybe<String>;
   location: String;
   locationLat: Float;
   locationLon: Float;
@@ -4434,6 +4459,20 @@ export interface PostScalarWhereInput {
   goal_not_starts_with?: Maybe<String>;
   goal_ends_with?: Maybe<String>;
   goal_not_ends_with?: Maybe<String>;
+  field?: Maybe<String>;
+  field_not?: Maybe<String>;
+  field_in?: Maybe<String[] | String>;
+  field_not_in?: Maybe<String[] | String>;
+  field_lt?: Maybe<String>;
+  field_lte?: Maybe<String>;
+  field_gt?: Maybe<String>;
+  field_gte?: Maybe<String>;
+  field_contains?: Maybe<String>;
+  field_not_contains?: Maybe<String>;
+  field_starts_with?: Maybe<String>;
+  field_not_starts_with?: Maybe<String>;
+  field_ends_with?: Maybe<String>;
+  field_not_ends_with?: Maybe<String>;
   location?: Maybe<String>;
   location_not?: Maybe<String>;
   location_in?: Maybe<String[] | String>;
@@ -4562,6 +4601,7 @@ export interface PostUpdateManyDataInput {
   lastUpdated?: Maybe<DateTimeInput>;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
+  field?: Maybe<String>;
   location?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
@@ -6757,6 +6797,7 @@ export interface Post {
   lastUpdated: DateTimeOutput;
   isGoal: Boolean;
   goal?: String;
+  field?: String;
   location: String;
   locationLat: Float;
   locationLon: Float;
@@ -6780,6 +6821,7 @@ export interface PostPromise extends Promise<Post>, Fragmentable {
   owner: <T = UserPromise>() => T;
   isGoal: () => Promise<Boolean>;
   goal: () => Promise<String>;
+  field: () => Promise<String>;
   location: () => Promise<String>;
   locationLat: () => Promise<Float>;
   locationLon: () => Promise<Float>;
@@ -6823,6 +6865,7 @@ export interface PostSubscription
   owner: <T = UserSubscription>() => T;
   isGoal: () => Promise<AsyncIterator<Boolean>>;
   goal: () => Promise<AsyncIterator<String>>;
+  field: () => Promise<AsyncIterator<String>>;
   location: () => Promise<AsyncIterator<String>>;
   locationLat: () => Promise<AsyncIterator<Float>>;
   locationLon: () => Promise<AsyncIterator<Float>>;
@@ -6866,6 +6909,7 @@ export interface PostNullablePromise
   owner: <T = UserPromise>() => T;
   isGoal: () => Promise<Boolean>;
   goal: () => Promise<String>;
+  field: () => Promise<String>;
   location: () => Promise<String>;
   locationLat: () => Promise<Float>;
   locationLon: () => Promise<Float>;
@@ -6906,6 +6950,7 @@ export interface PostPreviousValues {
   lastUpdated: DateTimeOutput;
   isGoal: Boolean;
   goal?: String;
+  field?: String;
   location: String;
   locationLat: Float;
   locationLon: Float;
@@ -6930,6 +6975,7 @@ export interface PostPreviousValuesPromise
   lastUpdated: () => Promise<DateTimeOutput>;
   isGoal: () => Promise<Boolean>;
   goal: () => Promise<String>;
+  field: () => Promise<String>;
   location: () => Promise<String>;
   locationLat: () => Promise<Float>;
   locationLon: () => Promise<Float>;
@@ -6954,6 +7000,7 @@ export interface PostPreviousValuesSubscription
   lastUpdated: () => Promise<AsyncIterator<DateTimeOutput>>;
   isGoal: () => Promise<AsyncIterator<Boolean>>;
   goal: () => Promise<AsyncIterator<String>>;
+  field: () => Promise<AsyncIterator<String>>;
   location: () => Promise<AsyncIterator<String>>;
   locationLat: () => Promise<AsyncIterator<Float>>;
   locationLon: () => Promise<AsyncIterator<Float>>;
