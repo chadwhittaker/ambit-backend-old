@@ -42,12 +42,28 @@ type User {
   connections: [User] @relation(name: "MyConnections")
   following: [User] @relation(name: "ImFollowing")
   followers: [User] @relation(name: "MyFollowers")
-  intro: [String!] @scalarList(strategy: RELATION)
-  projects: [String] @scalarList(strategy: RELATION)
+  intro: Story @relation(name: "MyIntro")
+  projects: [Story] @relation(name: "MyProjects")
   meetings: [Meeting]
   savedFilters: [Filter]
   rank: Int! @default(value: 0)
   roles: [Role] @scalarList(strategy: RELATION)
+}
+
+type Story {
+  id: ID! @id
+  title: String!
+  items: [StoryItem!]!
+}
+
+type StoryItem {
+  id: ID! @id
+  story: Story!
+  type: String!
+  url: String!
+  link: String
+  text: String
+  duration: Float
 }
 
 type Skill {

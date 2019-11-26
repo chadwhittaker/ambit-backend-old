@@ -48,6 +48,9 @@ type Mutation {
   createComment(comment: CommentCreateInput!): Comment
   likeComment(id: ID!): Comment!
   deleteComment(owner: ID!, id: ID!): Comment
+
+  # intro
+  editIntro(userId: ID!, title: String, items: [StoryItemCreateWithoutStoryInput!]): User!
 }
 
 type AuthPayload {
