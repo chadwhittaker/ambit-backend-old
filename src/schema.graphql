@@ -6,8 +6,9 @@ type Query {
   userLoggedIn: User
   user(id: ID!): User
   users: [User]!
-  postsGlobal: [Post]!
-  postsLocal(lat: Float, lon: Float, radius: Int): [Post]!
+  postsGlobal(after: String): PostConnection!
+  postsLocal(lat: Float, lon: Float, radius: Int, after: String): PostConnection!
+  postsTopic(topic: String, after: String): PostConnection!
   postsUser(id: ID!): [Post]!
   singlePost(id: ID!): Post!
   # allComments(postId: ID!, isUpdate: Boolean): [Comment!]!

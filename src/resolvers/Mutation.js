@@ -143,7 +143,7 @@ const Mutation = {
     // future upgrade:
     // could ask the user if they want to keep their changes...or they say no, revert back to old Intro
     // if they say yes then we can delete the old Intro
-    const oldIntroID = oldIntro.id || null
+    const oldIntroID = oldIntro ? oldIntro.id : null
 
     // 4. update intro (if one already exists) or create intro (if one doesnt exist) - autoamtically linked to user
     const user = await context.prisma.updateUser(
@@ -161,6 +161,10 @@ const Mutation = {
         },
       },
     )
+
+    // if there was an existing intro...delete it
+    if (oldIntroID) await context.prisma.deleteStory({ id: oldIntroID })
+    
 
     return user;
   },

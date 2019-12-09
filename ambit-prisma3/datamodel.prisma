@@ -53,12 +53,12 @@ type User {
 type Story {
   id: ID! @id
   title: String!
-  items: [StoryItem!]!
+  items: [StoryItem!]! @relation(name: "StoryToStoryItem" onDelete: CASCADE)
 }
 
 type StoryItem {
   id: ID! @id
-  story: Story!
+  story: Story! @relation(name: "StoryToStoryItem")
   type: String!
   url: String!
   link: String
@@ -106,12 +106,12 @@ type Post {
   owner: User! @relation(name: "PostsByUser")
   isGoal: Boolean! @default(value: false)
   goal: String
-  field: String
+  topic: String
+  subTopic: String
   location: String!
   locationLat: Float!
   locationLon: Float!
   content: String!
-  tags: [String]! @scalarList(strategy: RELATION)
   images: [String]! @scalarList(strategy: RELATION)
   video: String
   pitch: String

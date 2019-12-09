@@ -27,18 +27,22 @@ const Query = {
     return users;
   },
 
-  async postsGlobal(parent, args, context) {
-    const posts = await context.prisma.posts(
+  async postsGlobal(parent, { after }, context) {
+    const posts = await context.prisma.postsConnection(
       {
+        first: 30,
+        after,
         where: { isPrivate: false },
         orderBy: 'lastUpdated_DESC'
       }
     );
 
+    // console.log(posts)
+
     return posts
   },
 
-  async postsLocal(parent, { lat, lon, radius }, context) {
+  async postsLocal(parent, { lat, lon, radius, after }, context) {
 
     // console.log(lat, lon,)
 
@@ -56,7 +60,7 @@ const Query = {
     // console.log(minLon, maxLon)
 
 
-    const posts = await context.prisma.posts(
+    const posts = await context.prisma.postsConnection(
       {
         where: {
           AND: [
@@ -67,9 +71,30 @@ const Query = {
             { locationLon_lte: maxLon },
           ],
         },
+        first: 30,
+        after,
         orderBy: 'lastUpdated_DESC'
       }
     );
+
+    return posts
+  },
+
+  async postsTopic(parent, { after, topic }, context) {
+    let where = { isPrivate: false, topic }
+    if (topic === 'Trending') where = { isPrivate: false }
+    
+
+    const posts = await context.prisma.postsConnection(
+      {
+        first: 30,
+        after,
+        where,
+        orderBy: 'lastUpdated_DESC'
+      }
+    );
+
+    // console.log(posts)
 
     return posts
   },
