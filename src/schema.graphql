@@ -44,6 +44,7 @@ type Mutation {
   #update
   createUpdate(postId: ID!, update: UpdateCreateWithoutParentPostInput!): Post
   likeUpdate(updateId: ID!): Update!
+  deleteUpdate(owner: ID!, id: ID!): Update
 
   # comment
   createComment(comment: CommentCreateInput!): Comment

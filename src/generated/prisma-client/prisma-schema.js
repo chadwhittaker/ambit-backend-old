@@ -1818,6 +1818,7 @@ type Post {
   owner: User!
   isGoal: Boolean!
   goal: String
+  subField: String
   topic: String
   subTopic: String
   location: String!
@@ -1853,6 +1854,7 @@ input PostCreateInput {
   owner: UserCreateOneWithoutPostsInput!
   isGoal: Boolean
   goal: String
+  subField: String
   topic: String
   subTopic: String
   location: String!
@@ -1897,6 +1899,7 @@ input PostCreateWithoutCommentsInput {
   owner: UserCreateOneWithoutPostsInput!
   isGoal: Boolean
   goal: String
+  subField: String
   topic: String
   subTopic: String
   location: String!
@@ -1920,6 +1923,7 @@ input PostCreateWithoutOwnerInput {
   lastUpdated: DateTime!
   isGoal: Boolean
   goal: String
+  subField: String
   topic: String
   subTopic: String
   location: String!
@@ -1945,6 +1949,7 @@ input PostCreateWithoutUpdatesInput {
   owner: UserCreateOneWithoutPostsInput!
   isGoal: Boolean
   goal: String
+  subField: String
   topic: String
   subTopic: String
   location: String!
@@ -1979,6 +1984,8 @@ enum PostOrderByInput {
   isGoal_DESC
   goal_ASC
   goal_DESC
+  subField_ASC
+  subField_DESC
   topic_ASC
   topic_DESC
   subTopic_ASC
@@ -2013,6 +2020,7 @@ type PostPreviousValues {
   lastUpdated: DateTime!
   isGoal: Boolean!
   goal: String
+  subField: String
   topic: String
   subTopic: String
   location: String!
@@ -2077,6 +2085,20 @@ input PostScalarWhereInput {
   goal_not_starts_with: String
   goal_ends_with: String
   goal_not_ends_with: String
+  subField: String
+  subField_not: String
+  subField_in: [String!]
+  subField_not_in: [String!]
+  subField_lt: String
+  subField_lte: String
+  subField_gt: String
+  subField_gte: String
+  subField_contains: String
+  subField_not_contains: String
+  subField_starts_with: String
+  subField_not_starts_with: String
+  subField_ends_with: String
+  subField_not_ends_with: String
   topic: String
   topic_not: String
   topic_in: [String!]
@@ -2237,6 +2259,7 @@ input PostUpdateInput {
   owner: UserUpdateOneRequiredWithoutPostsInput
   isGoal: Boolean
   goal: String
+  subField: String
   topic: String
   subTopic: String
   location: String
@@ -2264,6 +2287,7 @@ input PostUpdateManyDataInput {
   lastUpdated: DateTime
   isGoal: Boolean
   goal: String
+  subField: String
   topic: String
   subTopic: String
   location: String
@@ -2285,6 +2309,7 @@ input PostUpdateManyMutationInput {
   lastUpdated: DateTime
   isGoal: Boolean
   goal: String
+  subField: String
   topic: String
   subTopic: String
   location: String
@@ -2340,6 +2365,7 @@ input PostUpdateWithoutCommentsDataInput {
   owner: UserUpdateOneRequiredWithoutPostsInput
   isGoal: Boolean
   goal: String
+  subField: String
   topic: String
   subTopic: String
   location: String
@@ -2362,6 +2388,7 @@ input PostUpdateWithoutOwnerDataInput {
   lastUpdated: DateTime
   isGoal: Boolean
   goal: String
+  subField: String
   topic: String
   subTopic: String
   location: String
@@ -2386,6 +2413,7 @@ input PostUpdateWithoutUpdatesDataInput {
   owner: UserUpdateOneRequiredWithoutPostsInput
   isGoal: Boolean
   goal: String
+  subField: String
   topic: String
   subTopic: String
   location: String
@@ -2473,6 +2501,20 @@ input PostWhereInput {
   goal_not_starts_with: String
   goal_ends_with: String
   goal_not_ends_with: String
+  subField: String
+  subField_not: String
+  subField_in: [String!]
+  subField_not_in: [String!]
+  subField_lt: String
+  subField_lte: String
+  subField_gt: String
+  subField_gte: String
+  subField_contains: String
+  subField_not_contains: String
+  subField_starts_with: String
+  subField_not_starts_with: String
+  subField_ends_with: String
+  subField_not_ends_with: String
   topic: String
   topic_not: String
   topic_in: [String!]

@@ -479,6 +479,24 @@ const Mutation = {
     return update
   },
 
+  async deleteUpdate(parent, args, context) {
+
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      throw new Error(`You must be logged in to do that`)
+    }
+
+    // 2. check if user on the request owns the post
+    if (context.request.userId !== args.owner) {
+      throw new Error(`You cannot edit a post that is not your own`)
+    }
+
+    // 3. delete update
+    const update = await context.prisma.deleteUpdate({ id: args.id })
+
+    return update
+  },
+
   // ================
   // COMMENTS
   // ================
