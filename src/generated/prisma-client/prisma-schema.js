@@ -3880,8 +3880,8 @@ type User {
   investorFields: [String!]!
   agencyFields: [String!]!
   skills(where: SkillWhereInput, orderBy: SkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Skill!]
-  industry: [String!]!
-  interests: [String!]!
+  topicsFocus: [String!]!
+  topicsInterest: [String!]!
   experience(where: ExperienceWhereInput, orderBy: ExperienceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Experience!]
   education(where: EducationWhereInput, orderBy: EducationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Education!]
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
@@ -3910,10 +3910,6 @@ input UserCreatefreelanceFieldsInput {
   set: [String!]
 }
 
-input UserCreateindustryInput {
-  set: [String!]
-}
-
 input UserCreateInput {
   id: ID
   name: String!
@@ -3939,8 +3935,8 @@ input UserCreateInput {
   investorFields: UserCreateinvestorFieldsInput
   agencyFields: UserCreateagencyFieldsInput
   skills: SkillCreateManyWithoutOwnerInput
-  industry: UserCreateindustryInput
-  interests: UserCreateinterestsInput
+  topicsFocus: UserCreatetopicsFocusInput
+  topicsInterest: UserCreatetopicsInterestInput
   experience: ExperienceCreateManyWithoutOwnerInput
   education: EducationCreateManyWithoutOwnerInput
   posts: PostCreateManyWithoutOwnerInput
@@ -3953,10 +3949,6 @@ input UserCreateInput {
   savedFilters: FilterCreateManyWithoutOwnerInput
   rank: Int
   roles: UserCreaterolesInput
-}
-
-input UserCreateinterestsInput {
-  set: [String!]
 }
 
 input UserCreateinvestorFieldsInput {
@@ -4021,6 +4013,14 @@ input UserCreaterolesInput {
   set: [Role!]
 }
 
+input UserCreatetopicsFocusInput {
+  set: [String!]
+}
+
+input UserCreatetopicsInterestInput {
+  set: [String!]
+}
+
 input UserCreateWithoutConnectionsInput {
   id: ID
   name: String!
@@ -4046,8 +4046,8 @@ input UserCreateWithoutConnectionsInput {
   investorFields: UserCreateinvestorFieldsInput
   agencyFields: UserCreateagencyFieldsInput
   skills: SkillCreateManyWithoutOwnerInput
-  industry: UserCreateindustryInput
-  interests: UserCreateinterestsInput
+  topicsFocus: UserCreatetopicsFocusInput
+  topicsInterest: UserCreatetopicsInterestInput
   experience: ExperienceCreateManyWithoutOwnerInput
   education: EducationCreateManyWithoutOwnerInput
   posts: PostCreateManyWithoutOwnerInput
@@ -4086,8 +4086,8 @@ input UserCreateWithoutEducationInput {
   investorFields: UserCreateinvestorFieldsInput
   agencyFields: UserCreateagencyFieldsInput
   skills: SkillCreateManyWithoutOwnerInput
-  industry: UserCreateindustryInput
-  interests: UserCreateinterestsInput
+  topicsFocus: UserCreatetopicsFocusInput
+  topicsInterest: UserCreatetopicsInterestInput
   experience: ExperienceCreateManyWithoutOwnerInput
   posts: PostCreateManyWithoutOwnerInput
   connections: UserCreateManyWithoutConnectionsInput
@@ -4126,8 +4126,8 @@ input UserCreateWithoutExperienceInput {
   investorFields: UserCreateinvestorFieldsInput
   agencyFields: UserCreateagencyFieldsInput
   skills: SkillCreateManyWithoutOwnerInput
-  industry: UserCreateindustryInput
-  interests: UserCreateinterestsInput
+  topicsFocus: UserCreatetopicsFocusInput
+  topicsInterest: UserCreatetopicsInterestInput
   education: EducationCreateManyWithoutOwnerInput
   posts: PostCreateManyWithoutOwnerInput
   connections: UserCreateManyWithoutConnectionsInput
@@ -4166,8 +4166,8 @@ input UserCreateWithoutFollowersInput {
   investorFields: UserCreateinvestorFieldsInput
   agencyFields: UserCreateagencyFieldsInput
   skills: SkillCreateManyWithoutOwnerInput
-  industry: UserCreateindustryInput
-  interests: UserCreateinterestsInput
+  topicsFocus: UserCreatetopicsFocusInput
+  topicsInterest: UserCreatetopicsInterestInput
   experience: ExperienceCreateManyWithoutOwnerInput
   education: EducationCreateManyWithoutOwnerInput
   posts: PostCreateManyWithoutOwnerInput
@@ -4206,8 +4206,8 @@ input UserCreateWithoutFollowingInput {
   investorFields: UserCreateinvestorFieldsInput
   agencyFields: UserCreateagencyFieldsInput
   skills: SkillCreateManyWithoutOwnerInput
-  industry: UserCreateindustryInput
-  interests: UserCreateinterestsInput
+  topicsFocus: UserCreatetopicsFocusInput
+  topicsInterest: UserCreatetopicsInterestInput
   experience: ExperienceCreateManyWithoutOwnerInput
   education: EducationCreateManyWithoutOwnerInput
   posts: PostCreateManyWithoutOwnerInput
@@ -4246,8 +4246,8 @@ input UserCreateWithoutMeetingsInput {
   investorFields: UserCreateinvestorFieldsInput
   agencyFields: UserCreateagencyFieldsInput
   skills: SkillCreateManyWithoutOwnerInput
-  industry: UserCreateindustryInput
-  interests: UserCreateinterestsInput
+  topicsFocus: UserCreatetopicsFocusInput
+  topicsInterest: UserCreatetopicsInterestInput
   experience: ExperienceCreateManyWithoutOwnerInput
   education: EducationCreateManyWithoutOwnerInput
   posts: PostCreateManyWithoutOwnerInput
@@ -4286,8 +4286,8 @@ input UserCreateWithoutPostsInput {
   investorFields: UserCreateinvestorFieldsInput
   agencyFields: UserCreateagencyFieldsInput
   skills: SkillCreateManyWithoutOwnerInput
-  industry: UserCreateindustryInput
-  interests: UserCreateinterestsInput
+  topicsFocus: UserCreatetopicsFocusInput
+  topicsInterest: UserCreatetopicsInterestInput
   experience: ExperienceCreateManyWithoutOwnerInput
   education: EducationCreateManyWithoutOwnerInput
   connections: UserCreateManyWithoutConnectionsInput
@@ -4326,8 +4326,8 @@ input UserCreateWithoutSavedFiltersInput {
   investorFields: UserCreateinvestorFieldsInput
   agencyFields: UserCreateagencyFieldsInput
   skills: SkillCreateManyWithoutOwnerInput
-  industry: UserCreateindustryInput
-  interests: UserCreateinterestsInput
+  topicsFocus: UserCreatetopicsFocusInput
+  topicsInterest: UserCreatetopicsInterestInput
   experience: ExperienceCreateManyWithoutOwnerInput
   education: EducationCreateManyWithoutOwnerInput
   posts: PostCreateManyWithoutOwnerInput
@@ -4365,8 +4365,8 @@ input UserCreateWithoutSkillsInput {
   freelanceFields: UserCreatefreelanceFieldsInput
   investorFields: UserCreateinvestorFieldsInput
   agencyFields: UserCreateagencyFieldsInput
-  industry: UserCreateindustryInput
-  interests: UserCreateinterestsInput
+  topicsFocus: UserCreatetopicsFocusInput
+  topicsInterest: UserCreatetopicsInterestInput
   experience: ExperienceCreateManyWithoutOwnerInput
   education: EducationCreateManyWithoutOwnerInput
   posts: PostCreateManyWithoutOwnerInput
@@ -4456,8 +4456,8 @@ type UserPreviousValues {
   freelanceFields: [String!]!
   investorFields: [String!]!
   agencyFields: [String!]!
-  industry: [String!]!
-  interests: [String!]!
+  topicsFocus: [String!]!
+  topicsInterest: [String!]!
   rank: Int!
   roles: [Role!]!
 }
@@ -4736,8 +4736,8 @@ input UserUpdateDataInput {
   investorFields: UserUpdateinvestorFieldsInput
   agencyFields: UserUpdateagencyFieldsInput
   skills: SkillUpdateManyWithoutOwnerInput
-  industry: UserUpdateindustryInput
-  interests: UserUpdateinterestsInput
+  topicsFocus: UserUpdatetopicsFocusInput
+  topicsInterest: UserUpdatetopicsInterestInput
   experience: ExperienceUpdateManyWithoutOwnerInput
   education: EducationUpdateManyWithoutOwnerInput
   posts: PostUpdateManyWithoutOwnerInput
@@ -4753,10 +4753,6 @@ input UserUpdateDataInput {
 }
 
 input UserUpdatefreelanceFieldsInput {
-  set: [String!]
-}
-
-input UserUpdateindustryInput {
   set: [String!]
 }
 
@@ -4784,8 +4780,8 @@ input UserUpdateInput {
   investorFields: UserUpdateinvestorFieldsInput
   agencyFields: UserUpdateagencyFieldsInput
   skills: SkillUpdateManyWithoutOwnerInput
-  industry: UserUpdateindustryInput
-  interests: UserUpdateinterestsInput
+  topicsFocus: UserUpdatetopicsFocusInput
+  topicsInterest: UserUpdatetopicsInterestInput
   experience: ExperienceUpdateManyWithoutOwnerInput
   education: EducationUpdateManyWithoutOwnerInput
   posts: PostUpdateManyWithoutOwnerInput
@@ -4798,10 +4794,6 @@ input UserUpdateInput {
   savedFilters: FilterUpdateManyWithoutOwnerInput
   rank: Int
   roles: UserUpdaterolesInput
-}
-
-input UserUpdateinterestsInput {
-  set: [String!]
 }
 
 input UserUpdateinvestorFieldsInput {
@@ -4831,8 +4823,8 @@ input UserUpdateManyDataInput {
   freelanceFields: UserUpdatefreelanceFieldsInput
   investorFields: UserUpdateinvestorFieldsInput
   agencyFields: UserUpdateagencyFieldsInput
-  industry: UserUpdateindustryInput
-  interests: UserUpdateinterestsInput
+  topicsFocus: UserUpdatetopicsFocusInput
+  topicsInterest: UserUpdatetopicsInterestInput
   rank: Int
   roles: UserUpdaterolesInput
 }
@@ -4860,8 +4852,8 @@ input UserUpdateManyMutationInput {
   freelanceFields: UserUpdatefreelanceFieldsInput
   investorFields: UserUpdateinvestorFieldsInput
   agencyFields: UserUpdateagencyFieldsInput
-  industry: UserUpdateindustryInput
-  interests: UserUpdateinterestsInput
+  topicsFocus: UserUpdatetopicsFocusInput
+  topicsInterest: UserUpdatetopicsInterestInput
   rank: Int
   roles: UserUpdaterolesInput
 }
@@ -4971,6 +4963,14 @@ input UserUpdaterolesInput {
   set: [Role!]
 }
 
+input UserUpdatetopicsFocusInput {
+  set: [String!]
+}
+
+input UserUpdatetopicsInterestInput {
+  set: [String!]
+}
+
 input UserUpdateWithoutConnectionsDataInput {
   name: String
   firstName: String
@@ -4995,8 +4995,8 @@ input UserUpdateWithoutConnectionsDataInput {
   investorFields: UserUpdateinvestorFieldsInput
   agencyFields: UserUpdateagencyFieldsInput
   skills: SkillUpdateManyWithoutOwnerInput
-  industry: UserUpdateindustryInput
-  interests: UserUpdateinterestsInput
+  topicsFocus: UserUpdatetopicsFocusInput
+  topicsInterest: UserUpdatetopicsInterestInput
   experience: ExperienceUpdateManyWithoutOwnerInput
   education: EducationUpdateManyWithoutOwnerInput
   posts: PostUpdateManyWithoutOwnerInput
@@ -5034,8 +5034,8 @@ input UserUpdateWithoutEducationDataInput {
   investorFields: UserUpdateinvestorFieldsInput
   agencyFields: UserUpdateagencyFieldsInput
   skills: SkillUpdateManyWithoutOwnerInput
-  industry: UserUpdateindustryInput
-  interests: UserUpdateinterestsInput
+  topicsFocus: UserUpdatetopicsFocusInput
+  topicsInterest: UserUpdatetopicsInterestInput
   experience: ExperienceUpdateManyWithoutOwnerInput
   posts: PostUpdateManyWithoutOwnerInput
   connections: UserUpdateManyWithoutConnectionsInput
@@ -5073,8 +5073,8 @@ input UserUpdateWithoutExperienceDataInput {
   investorFields: UserUpdateinvestorFieldsInput
   agencyFields: UserUpdateagencyFieldsInput
   skills: SkillUpdateManyWithoutOwnerInput
-  industry: UserUpdateindustryInput
-  interests: UserUpdateinterestsInput
+  topicsFocus: UserUpdatetopicsFocusInput
+  topicsInterest: UserUpdatetopicsInterestInput
   education: EducationUpdateManyWithoutOwnerInput
   posts: PostUpdateManyWithoutOwnerInput
   connections: UserUpdateManyWithoutConnectionsInput
@@ -5112,8 +5112,8 @@ input UserUpdateWithoutFollowersDataInput {
   investorFields: UserUpdateinvestorFieldsInput
   agencyFields: UserUpdateagencyFieldsInput
   skills: SkillUpdateManyWithoutOwnerInput
-  industry: UserUpdateindustryInput
-  interests: UserUpdateinterestsInput
+  topicsFocus: UserUpdatetopicsFocusInput
+  topicsInterest: UserUpdatetopicsInterestInput
   experience: ExperienceUpdateManyWithoutOwnerInput
   education: EducationUpdateManyWithoutOwnerInput
   posts: PostUpdateManyWithoutOwnerInput
@@ -5151,8 +5151,8 @@ input UserUpdateWithoutFollowingDataInput {
   investorFields: UserUpdateinvestorFieldsInput
   agencyFields: UserUpdateagencyFieldsInput
   skills: SkillUpdateManyWithoutOwnerInput
-  industry: UserUpdateindustryInput
-  interests: UserUpdateinterestsInput
+  topicsFocus: UserUpdatetopicsFocusInput
+  topicsInterest: UserUpdatetopicsInterestInput
   experience: ExperienceUpdateManyWithoutOwnerInput
   education: EducationUpdateManyWithoutOwnerInput
   posts: PostUpdateManyWithoutOwnerInput
@@ -5190,8 +5190,8 @@ input UserUpdateWithoutMeetingsDataInput {
   investorFields: UserUpdateinvestorFieldsInput
   agencyFields: UserUpdateagencyFieldsInput
   skills: SkillUpdateManyWithoutOwnerInput
-  industry: UserUpdateindustryInput
-  interests: UserUpdateinterestsInput
+  topicsFocus: UserUpdatetopicsFocusInput
+  topicsInterest: UserUpdatetopicsInterestInput
   experience: ExperienceUpdateManyWithoutOwnerInput
   education: EducationUpdateManyWithoutOwnerInput
   posts: PostUpdateManyWithoutOwnerInput
@@ -5229,8 +5229,8 @@ input UserUpdateWithoutPostsDataInput {
   investorFields: UserUpdateinvestorFieldsInput
   agencyFields: UserUpdateagencyFieldsInput
   skills: SkillUpdateManyWithoutOwnerInput
-  industry: UserUpdateindustryInput
-  interests: UserUpdateinterestsInput
+  topicsFocus: UserUpdatetopicsFocusInput
+  topicsInterest: UserUpdatetopicsInterestInput
   experience: ExperienceUpdateManyWithoutOwnerInput
   education: EducationUpdateManyWithoutOwnerInput
   connections: UserUpdateManyWithoutConnectionsInput
@@ -5268,8 +5268,8 @@ input UserUpdateWithoutSavedFiltersDataInput {
   investorFields: UserUpdateinvestorFieldsInput
   agencyFields: UserUpdateagencyFieldsInput
   skills: SkillUpdateManyWithoutOwnerInput
-  industry: UserUpdateindustryInput
-  interests: UserUpdateinterestsInput
+  topicsFocus: UserUpdatetopicsFocusInput
+  topicsInterest: UserUpdatetopicsInterestInput
   experience: ExperienceUpdateManyWithoutOwnerInput
   education: EducationUpdateManyWithoutOwnerInput
   posts: PostUpdateManyWithoutOwnerInput
@@ -5306,8 +5306,8 @@ input UserUpdateWithoutSkillsDataInput {
   freelanceFields: UserUpdatefreelanceFieldsInput
   investorFields: UserUpdateinvestorFieldsInput
   agencyFields: UserUpdateagencyFieldsInput
-  industry: UserUpdateindustryInput
-  interests: UserUpdateinterestsInput
+  topicsFocus: UserUpdatetopicsFocusInput
+  topicsInterest: UserUpdatetopicsInterestInput
   experience: ExperienceUpdateManyWithoutOwnerInput
   education: EducationUpdateManyWithoutOwnerInput
   posts: PostUpdateManyWithoutOwnerInput

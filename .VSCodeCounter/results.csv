@@ -1,7 +1,17 @@
-filename, language, JavaScript, comment, blank, total
-Mutation.js, JavaScript, 231, 49, 74, 354
-Post.js, JavaScript, 8, 0, 4, 12
-Query.js, JavaScript, 82, 28, 28, 138
-User.js, JavaScript, 17, 0, 6, 23
-index.js, JavaScript, 13, 0, 2, 15
-Total, -, 351, 77, 114, 542
+filename, language, JavaScript, GraphQL, TypeScript, comment, blank, total
+/Users/chadwhittaker/Documents/CodeProjects/react-native-apps/ambit-backend/src/generated/prisma-client/index.d.ts, TypeScript, 0, 0, 7592, 42, 526, 8160
+/Users/chadwhittaker/Documents/CodeProjects/react-native-apps/ambit-backend/src/generated/prisma-client/index.js, JavaScript, 60, 0, 0, 0, 2, 62
+/Users/chadwhittaker/Documents/CodeProjects/react-native-apps/ambit-backend/src/generated/prisma-client/prisma-schema.js, JavaScript, 5660, 0, 0, 2, 2, 5664
+/Users/chadwhittaker/Documents/CodeProjects/react-native-apps/ambit-backend/src/generated/prisma.graphql, GraphQL, 0, 5303, 0, 0, 354, 5657
+/Users/chadwhittaker/Documents/CodeProjects/react-native-apps/ambit-backend/src/index.js, JavaScript, 21, 0, 0, 3, 7, 31
+/Users/chadwhittaker/Documents/CodeProjects/react-native-apps/ambit-backend/src/resolvers/Comment.js, JavaScript, 34, 0, 0, 1, 16, 51
+/Users/chadwhittaker/Documents/CodeProjects/react-native-apps/ambit-backend/src/resolvers/Mutation.js, JavaScript, 368, 0, 0, 99, 127, 594
+/Users/chadwhittaker/Documents/CodeProjects/react-native-apps/ambit-backend/src/resolvers/Post.js, JavaScript, 28, 0, 0, 0, 15, 43
+/Users/chadwhittaker/Documents/CodeProjects/react-native-apps/ambit-backend/src/resolvers/Query.js, JavaScript, 103, 0, 0, 29, 41, 173
+/Users/chadwhittaker/Documents/CodeProjects/react-native-apps/ambit-backend/src/resolvers/Story.js, JavaScript, 8, 0, 0, 15, 8, 31
+/Users/chadwhittaker/Documents/CodeProjects/react-native-apps/ambit-backend/src/resolvers/Update.js, JavaScript, 25, 0, 0, 0, 14, 39
+/Users/chadwhittaker/Documents/CodeProjects/react-native-apps/ambit-backend/src/resolvers/User.js, JavaScript, 20, 0, 0, 0, 7, 27
+/Users/chadwhittaker/Documents/CodeProjects/react-native-apps/ambit-backend/src/resolvers/index.js, JavaScript, 19, 0, 0, 0, 2, 21
+/Users/chadwhittaker/Documents/CodeProjects/react-native-apps/ambit-backend/src/schema.graphql, GraphQL, 0, 45, 0, 11, 15, 71
+/Users/chadwhittaker/Documents/CodeProjects/react-native-apps/ambit-backend/src/utils.js, JavaScript, 28, 0, 0, 1, 7, 36
+Total, -, 6374, 5348, 7592, 203, 1143, 20660

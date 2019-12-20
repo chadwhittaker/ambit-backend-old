@@ -819,8 +819,8 @@ export interface UserUpdateWithoutConnectionsDataInput {
   investorFields?: Maybe<UserUpdateinvestorFieldsInput>;
   agencyFields?: Maybe<UserUpdateagencyFieldsInput>;
   skills?: Maybe<SkillUpdateManyWithoutOwnerInput>;
-  industry?: Maybe<UserUpdateindustryInput>;
-  interests?: Maybe<UserUpdateinterestsInput>;
+  topicsFocus?: Maybe<UserUpdatetopicsFocusInput>;
+  topicsInterest?: Maybe<UserUpdatetopicsInterestInput>;
   experience?: Maybe<ExperienceUpdateManyWithoutOwnerInput>;
   education?: Maybe<EducationUpdateManyWithoutOwnerInput>;
   posts?: Maybe<PostUpdateManyWithoutOwnerInput>;
@@ -1127,7 +1127,7 @@ export interface EducationWhereInput {
   NOT?: Maybe<EducationWhereInput[] | EducationWhereInput>;
 }
 
-export interface UserUpdateindustryInput {
+export interface UserUpdatetopicsFocusInput {
   set?: Maybe<String[] | String>;
 }
 
@@ -1148,7 +1148,7 @@ export interface StoryItemSubscriptionWhereInput {
   >;
 }
 
-export interface UserUpdateinterestsInput {
+export interface UserUpdatetopicsInterestInput {
   set?: Maybe<String[] | String>;
 }
 
@@ -1487,8 +1487,8 @@ export interface UserUpdateManyMutationInput {
   freelanceFields?: Maybe<UserUpdatefreelanceFieldsInput>;
   investorFields?: Maybe<UserUpdateinvestorFieldsInput>;
   agencyFields?: Maybe<UserUpdateagencyFieldsInput>;
-  industry?: Maybe<UserUpdateindustryInput>;
-  interests?: Maybe<UserUpdateinterestsInput>;
+  topicsFocus?: Maybe<UserUpdatetopicsFocusInput>;
+  topicsInterest?: Maybe<UserUpdatetopicsInterestInput>;
   rank?: Maybe<Int>;
   roles?: Maybe<UserUpdaterolesInput>;
 }
@@ -1968,8 +1968,8 @@ export interface UserUpdateWithoutMeetingsDataInput {
   investorFields?: Maybe<UserUpdateinvestorFieldsInput>;
   agencyFields?: Maybe<UserUpdateagencyFieldsInput>;
   skills?: Maybe<SkillUpdateManyWithoutOwnerInput>;
-  industry?: Maybe<UserUpdateindustryInput>;
-  interests?: Maybe<UserUpdateinterestsInput>;
+  topicsFocus?: Maybe<UserUpdatetopicsFocusInput>;
+  topicsInterest?: Maybe<UserUpdatetopicsInterestInput>;
   experience?: Maybe<ExperienceUpdateManyWithoutOwnerInput>;
   education?: Maybe<EducationUpdateManyWithoutOwnerInput>;
   posts?: Maybe<PostUpdateManyWithoutOwnerInput>;
@@ -2081,8 +2081,8 @@ export interface UserUpdateWithoutPostsDataInput {
   investorFields?: Maybe<UserUpdateinvestorFieldsInput>;
   agencyFields?: Maybe<UserUpdateagencyFieldsInput>;
   skills?: Maybe<SkillUpdateManyWithoutOwnerInput>;
-  industry?: Maybe<UserUpdateindustryInput>;
-  interests?: Maybe<UserUpdateinterestsInput>;
+  topicsFocus?: Maybe<UserUpdatetopicsFocusInput>;
+  topicsInterest?: Maybe<UserUpdatetopicsInterestInput>;
   experience?: Maybe<ExperienceUpdateManyWithoutOwnerInput>;
   education?: Maybe<EducationUpdateManyWithoutOwnerInput>;
   connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
@@ -2150,8 +2150,8 @@ export interface UserUpdateWithoutSavedFiltersDataInput {
   investorFields?: Maybe<UserUpdateinvestorFieldsInput>;
   agencyFields?: Maybe<UserUpdateagencyFieldsInput>;
   skills?: Maybe<SkillUpdateManyWithoutOwnerInput>;
-  industry?: Maybe<UserUpdateindustryInput>;
-  interests?: Maybe<UserUpdateinterestsInput>;
+  topicsFocus?: Maybe<UserUpdatetopicsFocusInput>;
+  topicsInterest?: Maybe<UserUpdatetopicsInterestInput>;
   experience?: Maybe<ExperienceUpdateManyWithoutOwnerInput>;
   education?: Maybe<EducationUpdateManyWithoutOwnerInput>;
   posts?: Maybe<PostUpdateManyWithoutOwnerInput>;
@@ -2303,8 +2303,8 @@ export interface UserCreateInput {
   investorFields?: Maybe<UserCreateinvestorFieldsInput>;
   agencyFields?: Maybe<UserCreateagencyFieldsInput>;
   skills?: Maybe<SkillCreateManyWithoutOwnerInput>;
-  industry?: Maybe<UserCreateindustryInput>;
-  interests?: Maybe<UserCreateinterestsInput>;
+  topicsFocus?: Maybe<UserCreatetopicsFocusInput>;
+  topicsInterest?: Maybe<UserCreatetopicsInterestInput>;
   experience?: Maybe<ExperienceCreateManyWithoutOwnerInput>;
   education?: Maybe<EducationCreateManyWithoutOwnerInput>;
   posts?: Maybe<PostCreateManyWithoutOwnerInput>;
@@ -2633,8 +2633,8 @@ export interface UserUpdateWithoutFollowingDataInput {
   investorFields?: Maybe<UserUpdateinvestorFieldsInput>;
   agencyFields?: Maybe<UserUpdateagencyFieldsInput>;
   skills?: Maybe<SkillUpdateManyWithoutOwnerInput>;
-  industry?: Maybe<UserUpdateindustryInput>;
-  interests?: Maybe<UserUpdateinterestsInput>;
+  topicsFocus?: Maybe<UserUpdatetopicsFocusInput>;
+  topicsInterest?: Maybe<UserUpdatetopicsInterestInput>;
   experience?: Maybe<ExperienceUpdateManyWithoutOwnerInput>;
   education?: Maybe<EducationUpdateManyWithoutOwnerInput>;
   posts?: Maybe<PostUpdateManyWithoutOwnerInput>;
@@ -2676,7 +2676,7 @@ export interface UserUpdateManyWithoutFollowersInput {
   >;
 }
 
-export interface UserCreateinterestsInput {
+export interface UserCreatetopicsInterestInput {
   set?: Maybe<String[] | String>;
 }
 
@@ -2721,8 +2721,8 @@ export interface UserUpdateWithoutFollowersDataInput {
   investorFields?: Maybe<UserUpdateinvestorFieldsInput>;
   agencyFields?: Maybe<UserUpdateagencyFieldsInput>;
   skills?: Maybe<SkillUpdateManyWithoutOwnerInput>;
-  industry?: Maybe<UserUpdateindustryInput>;
-  interests?: Maybe<UserUpdateinterestsInput>;
+  topicsFocus?: Maybe<UserUpdatetopicsFocusInput>;
+  topicsInterest?: Maybe<UserUpdatetopicsInterestInput>;
   experience?: Maybe<ExperienceUpdateManyWithoutOwnerInput>;
   education?: Maybe<EducationUpdateManyWithoutOwnerInput>;
   posts?: Maybe<PostUpdateManyWithoutOwnerInput>;
@@ -3645,8 +3645,8 @@ export interface UserUpdateManyDataInput {
   freelanceFields?: Maybe<UserUpdatefreelanceFieldsInput>;
   investorFields?: Maybe<UserUpdateinvestorFieldsInput>;
   agencyFields?: Maybe<UserUpdateagencyFieldsInput>;
-  industry?: Maybe<UserUpdateindustryInput>;
-  interests?: Maybe<UserUpdateinterestsInput>;
+  topicsFocus?: Maybe<UserUpdatetopicsFocusInput>;
+  topicsInterest?: Maybe<UserUpdatetopicsInterestInput>;
   rank?: Maybe<Int>;
   roles?: Maybe<UserUpdaterolesInput>;
 }
@@ -3675,8 +3675,8 @@ export interface UserUpdateInput {
   investorFields?: Maybe<UserUpdateinvestorFieldsInput>;
   agencyFields?: Maybe<UserUpdateagencyFieldsInput>;
   skills?: Maybe<SkillUpdateManyWithoutOwnerInput>;
-  industry?: Maybe<UserUpdateindustryInput>;
-  interests?: Maybe<UserUpdateinterestsInput>;
+  topicsFocus?: Maybe<UserUpdatetopicsFocusInput>;
+  topicsInterest?: Maybe<UserUpdatetopicsInterestInput>;
   experience?: Maybe<ExperienceUpdateManyWithoutOwnerInput>;
   education?: Maybe<EducationUpdateManyWithoutOwnerInput>;
   posts?: Maybe<PostUpdateManyWithoutOwnerInput>;
@@ -3765,8 +3765,8 @@ export interface UserUpdateWithoutSkillsDataInput {
   freelanceFields?: Maybe<UserUpdatefreelanceFieldsInput>;
   investorFields?: Maybe<UserUpdateinvestorFieldsInput>;
   agencyFields?: Maybe<UserUpdateagencyFieldsInput>;
-  industry?: Maybe<UserUpdateindustryInput>;
-  interests?: Maybe<UserUpdateinterestsInput>;
+  topicsFocus?: Maybe<UserUpdatetopicsFocusInput>;
+  topicsInterest?: Maybe<UserUpdatetopicsInterestInput>;
   experience?: Maybe<ExperienceUpdateManyWithoutOwnerInput>;
   education?: Maybe<EducationUpdateManyWithoutOwnerInput>;
   posts?: Maybe<PostUpdateManyWithoutOwnerInput>;
@@ -3809,8 +3809,8 @@ export interface UserCreateWithoutSkillsInput {
   freelanceFields?: Maybe<UserCreatefreelanceFieldsInput>;
   investorFields?: Maybe<UserCreateinvestorFieldsInput>;
   agencyFields?: Maybe<UserCreateagencyFieldsInput>;
-  industry?: Maybe<UserCreateindustryInput>;
-  interests?: Maybe<UserCreateinterestsInput>;
+  topicsFocus?: Maybe<UserCreatetopicsFocusInput>;
+  topicsInterest?: Maybe<UserCreatetopicsInterestInput>;
   experience?: Maybe<ExperienceCreateManyWithoutOwnerInput>;
   education?: Maybe<EducationCreateManyWithoutOwnerInput>;
   posts?: Maybe<PostCreateManyWithoutOwnerInput>;
@@ -3919,8 +3919,8 @@ export interface UserCreateWithoutMeetingsInput {
   investorFields?: Maybe<UserCreateinvestorFieldsInput>;
   agencyFields?: Maybe<UserCreateagencyFieldsInput>;
   skills?: Maybe<SkillCreateManyWithoutOwnerInput>;
-  industry?: Maybe<UserCreateindustryInput>;
-  interests?: Maybe<UserCreateinterestsInput>;
+  topicsFocus?: Maybe<UserCreatetopicsFocusInput>;
+  topicsInterest?: Maybe<UserCreatetopicsInterestInput>;
   experience?: Maybe<ExperienceCreateManyWithoutOwnerInput>;
   education?: Maybe<EducationCreateManyWithoutOwnerInput>;
   posts?: Maybe<PostCreateManyWithoutOwnerInput>;
@@ -4011,7 +4011,7 @@ export interface UpdateUpdateWithoutParentPostDataInput {
   sharesCount?: Maybe<Int>;
 }
 
-export interface UserCreateindustryInput {
+export interface UserCreatetopicsFocusInput {
   set?: Maybe<String[] | String>;
 }
 
@@ -4109,8 +4109,8 @@ export interface UserCreateWithoutPostsInput {
   investorFields?: Maybe<UserCreateinvestorFieldsInput>;
   agencyFields?: Maybe<UserCreateagencyFieldsInput>;
   skills?: Maybe<SkillCreateManyWithoutOwnerInput>;
-  industry?: Maybe<UserCreateindustryInput>;
-  interests?: Maybe<UserCreateinterestsInput>;
+  topicsFocus?: Maybe<UserCreatetopicsFocusInput>;
+  topicsInterest?: Maybe<UserCreatetopicsInterestInput>;
   experience?: Maybe<ExperienceCreateManyWithoutOwnerInput>;
   education?: Maybe<EducationCreateManyWithoutOwnerInput>;
   connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
@@ -4173,8 +4173,8 @@ export interface UserCreateWithoutFollowingInput {
   investorFields?: Maybe<UserCreateinvestorFieldsInput>;
   agencyFields?: Maybe<UserCreateagencyFieldsInput>;
   skills?: Maybe<SkillCreateManyWithoutOwnerInput>;
-  industry?: Maybe<UserCreateindustryInput>;
-  interests?: Maybe<UserCreateinterestsInput>;
+  topicsFocus?: Maybe<UserCreatetopicsFocusInput>;
+  topicsInterest?: Maybe<UserCreatetopicsInterestInput>;
   experience?: Maybe<ExperienceCreateManyWithoutOwnerInput>;
   education?: Maybe<EducationCreateManyWithoutOwnerInput>;
   posts?: Maybe<PostCreateManyWithoutOwnerInput>;
@@ -4381,8 +4381,8 @@ export interface UserUpdateDataInput {
   investorFields?: Maybe<UserUpdateinvestorFieldsInput>;
   agencyFields?: Maybe<UserUpdateagencyFieldsInput>;
   skills?: Maybe<SkillUpdateManyWithoutOwnerInput>;
-  industry?: Maybe<UserUpdateindustryInput>;
-  interests?: Maybe<UserUpdateinterestsInput>;
+  topicsFocus?: Maybe<UserUpdatetopicsFocusInput>;
+  topicsInterest?: Maybe<UserUpdatetopicsInterestInput>;
   experience?: Maybe<ExperienceUpdateManyWithoutOwnerInput>;
   education?: Maybe<EducationUpdateManyWithoutOwnerInput>;
   posts?: Maybe<PostUpdateManyWithoutOwnerInput>;
@@ -5117,8 +5117,8 @@ export interface UserCreateWithoutFollowersInput {
   investorFields?: Maybe<UserCreateinvestorFieldsInput>;
   agencyFields?: Maybe<UserCreateagencyFieldsInput>;
   skills?: Maybe<SkillCreateManyWithoutOwnerInput>;
-  industry?: Maybe<UserCreateindustryInput>;
-  interests?: Maybe<UserCreateinterestsInput>;
+  topicsFocus?: Maybe<UserCreatetopicsFocusInput>;
+  topicsInterest?: Maybe<UserCreatetopicsInterestInput>;
   experience?: Maybe<ExperienceCreateManyWithoutOwnerInput>;
   education?: Maybe<EducationCreateManyWithoutOwnerInput>;
   posts?: Maybe<PostCreateManyWithoutOwnerInput>;
@@ -5168,8 +5168,8 @@ export interface UserCreateWithoutSavedFiltersInput {
   investorFields?: Maybe<UserCreateinvestorFieldsInput>;
   agencyFields?: Maybe<UserCreateagencyFieldsInput>;
   skills?: Maybe<SkillCreateManyWithoutOwnerInput>;
-  industry?: Maybe<UserCreateindustryInput>;
-  interests?: Maybe<UserCreateinterestsInput>;
+  topicsFocus?: Maybe<UserCreatetopicsFocusInput>;
+  topicsInterest?: Maybe<UserCreatetopicsInterestInput>;
   experience?: Maybe<ExperienceCreateManyWithoutOwnerInput>;
   education?: Maybe<EducationCreateManyWithoutOwnerInput>;
   posts?: Maybe<PostCreateManyWithoutOwnerInput>;
@@ -5270,8 +5270,8 @@ export interface UserCreateWithoutEducationInput {
   investorFields?: Maybe<UserCreateinvestorFieldsInput>;
   agencyFields?: Maybe<UserCreateagencyFieldsInput>;
   skills?: Maybe<SkillCreateManyWithoutOwnerInput>;
-  industry?: Maybe<UserCreateindustryInput>;
-  interests?: Maybe<UserCreateinterestsInput>;
+  topicsFocus?: Maybe<UserCreatetopicsFocusInput>;
+  topicsInterest?: Maybe<UserCreatetopicsInterestInput>;
   experience?: Maybe<ExperienceCreateManyWithoutOwnerInput>;
   posts?: Maybe<PostCreateManyWithoutOwnerInput>;
   connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
@@ -5347,8 +5347,8 @@ export interface UserUpdateWithoutEducationDataInput {
   investorFields?: Maybe<UserUpdateinvestorFieldsInput>;
   agencyFields?: Maybe<UserUpdateagencyFieldsInput>;
   skills?: Maybe<SkillUpdateManyWithoutOwnerInput>;
-  industry?: Maybe<UserUpdateindustryInput>;
-  interests?: Maybe<UserUpdateinterestsInput>;
+  topicsFocus?: Maybe<UserUpdatetopicsFocusInput>;
+  topicsInterest?: Maybe<UserUpdatetopicsInterestInput>;
   experience?: Maybe<ExperienceUpdateManyWithoutOwnerInput>;
   posts?: Maybe<PostUpdateManyWithoutOwnerInput>;
   connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
@@ -5415,8 +5415,8 @@ export interface UserCreateWithoutConnectionsInput {
   investorFields?: Maybe<UserCreateinvestorFieldsInput>;
   agencyFields?: Maybe<UserCreateagencyFieldsInput>;
   skills?: Maybe<SkillCreateManyWithoutOwnerInput>;
-  industry?: Maybe<UserCreateindustryInput>;
-  interests?: Maybe<UserCreateinterestsInput>;
+  topicsFocus?: Maybe<UserCreatetopicsFocusInput>;
+  topicsInterest?: Maybe<UserCreatetopicsInterestInput>;
   experience?: Maybe<ExperienceCreateManyWithoutOwnerInput>;
   education?: Maybe<EducationCreateManyWithoutOwnerInput>;
   posts?: Maybe<PostCreateManyWithoutOwnerInput>;
@@ -5481,8 +5481,8 @@ export interface UserCreateWithoutExperienceInput {
   investorFields?: Maybe<UserCreateinvestorFieldsInput>;
   agencyFields?: Maybe<UserCreateagencyFieldsInput>;
   skills?: Maybe<SkillCreateManyWithoutOwnerInput>;
-  industry?: Maybe<UserCreateindustryInput>;
-  interests?: Maybe<UserCreateinterestsInput>;
+  topicsFocus?: Maybe<UserCreatetopicsFocusInput>;
+  topicsInterest?: Maybe<UserCreatetopicsInterestInput>;
   education?: Maybe<EducationCreateManyWithoutOwnerInput>;
   posts?: Maybe<PostCreateManyWithoutOwnerInput>;
   connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
@@ -5590,8 +5590,8 @@ export interface UserUpdateWithoutExperienceDataInput {
   investorFields?: Maybe<UserUpdateinvestorFieldsInput>;
   agencyFields?: Maybe<UserUpdateagencyFieldsInput>;
   skills?: Maybe<SkillUpdateManyWithoutOwnerInput>;
-  industry?: Maybe<UserUpdateindustryInput>;
-  interests?: Maybe<UserUpdateinterestsInput>;
+  topicsFocus?: Maybe<UserUpdatetopicsFocusInput>;
+  topicsInterest?: Maybe<UserUpdatetopicsInterestInput>;
   education?: Maybe<EducationUpdateManyWithoutOwnerInput>;
   posts?: Maybe<PostUpdateManyWithoutOwnerInput>;
   connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
@@ -5676,8 +5676,8 @@ export interface UserPreviousValues {
   freelanceFields: String[];
   investorFields: String[];
   agencyFields: String[];
-  industry: String[];
-  interests: String[];
+  topicsFocus: String[];
+  topicsInterest: String[];
   rank: Int;
   roles: Role[];
 }
@@ -5709,8 +5709,8 @@ export interface UserPreviousValuesPromise
   freelanceFields: () => Promise<String[]>;
   investorFields: () => Promise<String[]>;
   agencyFields: () => Promise<String[]>;
-  industry: () => Promise<String[]>;
-  interests: () => Promise<String[]>;
+  topicsFocus: () => Promise<String[]>;
+  topicsInterest: () => Promise<String[]>;
   rank: () => Promise<Int>;
   roles: () => Promise<Role[]>;
 }
@@ -5742,8 +5742,8 @@ export interface UserPreviousValuesSubscription
   freelanceFields: () => Promise<AsyncIterator<String[]>>;
   investorFields: () => Promise<AsyncIterator<String[]>>;
   agencyFields: () => Promise<AsyncIterator<String[]>>;
-  industry: () => Promise<AsyncIterator<String[]>>;
-  interests: () => Promise<AsyncIterator<String[]>>;
+  topicsFocus: () => Promise<AsyncIterator<String[]>>;
+  topicsInterest: () => Promise<AsyncIterator<String[]>>;
   rank: () => Promise<AsyncIterator<Int>>;
   roles: () => Promise<AsyncIterator<Role[]>>;
 }
@@ -5989,8 +5989,8 @@ export interface User {
   freelanceFields: String[];
   investorFields: String[];
   agencyFields: String[];
-  industry: String[];
-  interests: String[];
+  topicsFocus: String[];
+  topicsInterest: String[];
   rank: Int;
   roles: Role[];
 }
@@ -6029,8 +6029,8 @@ export interface UserPromise extends Promise<User>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
-  industry: () => Promise<String[]>;
-  interests: () => Promise<String[]>;
+  topicsFocus: () => Promise<String[]>;
+  topicsInterest: () => Promise<String[]>;
   experience: <T = FragmentableArray<Experience>>(args?: {
     where?: ExperienceWhereInput;
     orderBy?: ExperienceOrderByInput;
@@ -6153,8 +6153,8 @@ export interface UserSubscription
     first?: Int;
     last?: Int;
   }) => T;
-  industry: () => Promise<AsyncIterator<String[]>>;
-  interests: () => Promise<AsyncIterator<String[]>>;
+  topicsFocus: () => Promise<AsyncIterator<String[]>>;
+  topicsInterest: () => Promise<AsyncIterator<String[]>>;
   experience: <T = Promise<AsyncIterator<ExperienceSubscription>>>(args?: {
     where?: ExperienceWhereInput;
     orderBy?: ExperienceOrderByInput;
@@ -6277,8 +6277,8 @@ export interface UserNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
-  industry: () => Promise<String[]>;
-  interests: () => Promise<String[]>;
+  topicsFocus: () => Promise<String[]>;
+  topicsInterest: () => Promise<String[]>;
   experience: <T = FragmentableArray<Experience>>(args?: {
     where?: ExperienceWhereInput;
     orderBy?: ExperienceOrderByInput;
