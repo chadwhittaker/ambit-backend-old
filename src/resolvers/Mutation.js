@@ -142,6 +142,87 @@ const Mutation = {
     return user;
   },
 
+  async editTopicsFreelance(parent, { id, topics }, context) {
+
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      throw new Error(`You must be logged in to do that`)
+    }
+
+    // 2. check if user on the request owns the profile
+    if (context.request.userId !== id) {
+      throw new Error(`You cannot edit a profile that is not your own`)
+    }
+
+    // 3. make mutation
+    const user = await context.prisma.updateUser(
+      {
+        where: { id },
+        data: {
+          freelanceFields: {
+            set: topics,
+          },
+        }
+      },
+    )
+
+    return user;
+  },
+
+  async editTopicsInvest(parent, { id, topics }, context) {
+
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      throw new Error(`You must be logged in to do that`)
+    }
+
+    // 2. check if user on the request owns the profile
+    if (context.request.userId !== id) {
+      throw new Error(`You cannot edit a profile that is not your own`)
+    }
+
+    // 3. make mutation
+    const user = await context.prisma.updateUser(
+      {
+        where: { id },
+        data: {
+          investorFields: {
+            set: topics,
+          },
+        }
+      },
+    )
+
+    return user;
+  },
+
+  async editTopicsMentor(parent, { id, topics }, context) {
+
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      throw new Error(`You must be logged in to do that`)
+    }
+
+    // 2. check if user on the request owns the profile
+    if (context.request.userId !== id) {
+      throw new Error(`You cannot edit a profile that is not your own`)
+    }
+
+    // 3. make mutation
+    const user = await context.prisma.updateUser(
+      {
+        where: { id },
+        data: {
+          mentorFields: {
+            set: topics,
+          },
+        }
+      },
+    )
+
+    return user;
+  },
+
   async editSkills(parent, args, context) {
     const id = args.id
     delete args.id

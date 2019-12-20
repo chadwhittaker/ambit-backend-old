@@ -27,7 +27,9 @@ type Mutation {
   editSkills(id: ID!, skills: [SkillCreateWithoutOwnerInput!]): User!
   editTopicsFocus(id: ID!, topics: [String]!): User!
   editTopicsInterest(id: ID!, topics: [String]!): User!
-
+  editTopicsFreelance(id: ID!, topics: [String]!): User!
+  editTopicsInvest(id: ID!, topics: [String]!): User!
+  editTopicsMentor(id: ID!, topics: [String]!): User!
 
   #experience
   createExperience(owner: ID!, experience: ExperienceCreateWithoutOwnerInput!): User!
