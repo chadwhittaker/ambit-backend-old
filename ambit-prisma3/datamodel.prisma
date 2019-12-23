@@ -107,8 +107,7 @@ type Post {
   isGoal: Boolean! @default(value: false)
   goal: String
   subField: String
-  topic: String
-  subTopic: String
+  topics: [String]! @scalarList(strategy: RELATION)
   location: String!
   locationLat: Float!
   locationLon: Float!

@@ -1819,8 +1819,7 @@ type Post {
   isGoal: Boolean!
   goal: String
   subField: String
-  topic: String
-  subTopic: String
+  topics: [String!]!
   location: String!
   locationLat: Float!
   locationLon: Float!
@@ -1855,8 +1854,7 @@ input PostCreateInput {
   isGoal: Boolean
   goal: String
   subField: String
-  topic: String
-  subTopic: String
+  topics: PostCreatetopicsInput
   location: String!
   locationLat: Float!
   locationLon: Float!
@@ -1893,6 +1891,10 @@ input PostCreateOneWithoutUpdatesInput {
   connect: PostWhereUniqueInput
 }
 
+input PostCreatetopicsInput {
+  set: [String!]
+}
+
 input PostCreateWithoutCommentsInput {
   id: ID
   lastUpdated: DateTime!
@@ -1900,8 +1902,7 @@ input PostCreateWithoutCommentsInput {
   isGoal: Boolean
   goal: String
   subField: String
-  topic: String
-  subTopic: String
+  topics: PostCreatetopicsInput
   location: String!
   locationLat: Float!
   locationLon: Float!
@@ -1924,8 +1925,7 @@ input PostCreateWithoutOwnerInput {
   isGoal: Boolean
   goal: String
   subField: String
-  topic: String
-  subTopic: String
+  topics: PostCreatetopicsInput
   location: String!
   locationLat: Float!
   locationLon: Float!
@@ -1950,8 +1950,7 @@ input PostCreateWithoutUpdatesInput {
   isGoal: Boolean
   goal: String
   subField: String
-  topic: String
-  subTopic: String
+  topics: PostCreatetopicsInput
   location: String!
   locationLat: Float!
   locationLon: Float!
@@ -1986,10 +1985,6 @@ enum PostOrderByInput {
   goal_DESC
   subField_ASC
   subField_DESC
-  topic_ASC
-  topic_DESC
-  subTopic_ASC
-  subTopic_DESC
   location_ASC
   location_DESC
   locationLat_ASC
@@ -2021,8 +2016,7 @@ type PostPreviousValues {
   isGoal: Boolean!
   goal: String
   subField: String
-  topic: String
-  subTopic: String
+  topics: [String!]!
   location: String!
   locationLat: Float!
   locationLon: Float!
@@ -2099,34 +2093,6 @@ input PostScalarWhereInput {
   subField_not_starts_with: String
   subField_ends_with: String
   subField_not_ends_with: String
-  topic: String
-  topic_not: String
-  topic_in: [String!]
-  topic_not_in: [String!]
-  topic_lt: String
-  topic_lte: String
-  topic_gt: String
-  topic_gte: String
-  topic_contains: String
-  topic_not_contains: String
-  topic_starts_with: String
-  topic_not_starts_with: String
-  topic_ends_with: String
-  topic_not_ends_with: String
-  subTopic: String
-  subTopic_not: String
-  subTopic_in: [String!]
-  subTopic_not_in: [String!]
-  subTopic_lt: String
-  subTopic_lte: String
-  subTopic_gt: String
-  subTopic_gte: String
-  subTopic_contains: String
-  subTopic_not_contains: String
-  subTopic_starts_with: String
-  subTopic_not_starts_with: String
-  subTopic_ends_with: String
-  subTopic_not_ends_with: String
   location: String
   location_not: String
   location_in: [String!]
@@ -2260,8 +2226,7 @@ input PostUpdateInput {
   isGoal: Boolean
   goal: String
   subField: String
-  topic: String
-  subTopic: String
+  topics: PostUpdatetopicsInput
   location: String
   locationLat: Float
   locationLon: Float
@@ -2288,8 +2253,7 @@ input PostUpdateManyDataInput {
   isGoal: Boolean
   goal: String
   subField: String
-  topic: String
-  subTopic: String
+  topics: PostUpdatetopicsInput
   location: String
   locationLat: Float
   locationLon: Float
@@ -2310,8 +2274,7 @@ input PostUpdateManyMutationInput {
   isGoal: Boolean
   goal: String
   subField: String
-  topic: String
-  subTopic: String
+  topics: PostUpdatetopicsInput
   location: String
   locationLat: Float
   locationLon: Float
@@ -2360,14 +2323,17 @@ input PostUpdateOneWithoutCommentsInput {
   connect: PostWhereUniqueInput
 }
 
+input PostUpdatetopicsInput {
+  set: [String!]
+}
+
 input PostUpdateWithoutCommentsDataInput {
   lastUpdated: DateTime
   owner: UserUpdateOneRequiredWithoutPostsInput
   isGoal: Boolean
   goal: String
   subField: String
-  topic: String
-  subTopic: String
+  topics: PostUpdatetopicsInput
   location: String
   locationLat: Float
   locationLon: Float
@@ -2389,8 +2355,7 @@ input PostUpdateWithoutOwnerDataInput {
   isGoal: Boolean
   goal: String
   subField: String
-  topic: String
-  subTopic: String
+  topics: PostUpdatetopicsInput
   location: String
   locationLat: Float
   locationLon: Float
@@ -2414,8 +2379,7 @@ input PostUpdateWithoutUpdatesDataInput {
   isGoal: Boolean
   goal: String
   subField: String
-  topic: String
-  subTopic: String
+  topics: PostUpdatetopicsInput
   location: String
   locationLat: Float
   locationLon: Float
@@ -2515,34 +2479,6 @@ input PostWhereInput {
   subField_not_starts_with: String
   subField_ends_with: String
   subField_not_ends_with: String
-  topic: String
-  topic_not: String
-  topic_in: [String!]
-  topic_not_in: [String!]
-  topic_lt: String
-  topic_lte: String
-  topic_gt: String
-  topic_gte: String
-  topic_contains: String
-  topic_not_contains: String
-  topic_starts_with: String
-  topic_not_starts_with: String
-  topic_ends_with: String
-  topic_not_ends_with: String
-  subTopic: String
-  subTopic_not: String
-  subTopic_in: [String!]
-  subTopic_not_in: [String!]
-  subTopic_lt: String
-  subTopic_lte: String
-  subTopic_gt: String
-  subTopic_gte: String
-  subTopic_contains: String
-  subTopic_not_contains: String
-  subTopic_starts_with: String
-  subTopic_not_starts_with: String
-  subTopic_ends_with: String
-  subTopic_not_ends_with: String
   location: String
   location_not: String
   location_in: [String!]
