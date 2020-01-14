@@ -5,6 +5,7 @@ const { Post } = require('./Post')
 const { Comment } = require('./Comment')
 const { Update } = require('./Update')
 const { Story } = require('./Story')
+const { Topic } = require('./Topic')
 
 const resolvers = {
   Query,
@@ -14,6 +15,7 @@ const resolvers = {
   Comment,
   Update,
   Story,
+  // Topic,
 }
 
 module.exports = {

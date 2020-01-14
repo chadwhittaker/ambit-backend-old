@@ -49,7 +49,11 @@ var models = [
     embedded: false
   },
   {
-    name: "Filter",
+    name: "List",
+    embedded: false
+  },
+  {
+    name: "Topic",
     embedded: false
   }
 ];

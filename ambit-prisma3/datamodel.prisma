@@ -45,8 +45,6 @@ type User {
   intro: Story @relation(name: "MyIntro")
   projects: [Story] @relation(name: "MyProjects")
   meetings: [Meeting]
-  savedFilters: [Filter]
-  rank: Int! @default(value: 0)
   roles: [Role] @scalarList(strategy: RELATION)
 }
 
@@ -107,7 +105,7 @@ type Post {
   isGoal: Boolean! @default(value: false)
   goal: String
   subField: String
-  topics: [String]! @scalarList(strategy: RELATION)
+  topics: [String] @scalarList(strategy: RELATION)
   location: String!
   locationLat: Float!
   locationLon: Float!
@@ -164,7 +162,19 @@ type Meeting {
   place: String
 }
 
-type Filter {
+type List {
   id: ID! @id
-  owner: User
+  listName: String! @unique
+  icon: String
+  mainTopics: [Topic]! @relation(name: "ListToTopicRelation" onDelete: CASCADE)
+}
+
+
+type Topic {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  parentList: List @relation(name: "ListToTopicRelation")
+  parent: Topic @relation(name: "TopicToTopicRelation")
+  name: String
+  children: [Topic]! @relation(name: "TopicToTopicRelation" onDelete: CASCADE)
 }

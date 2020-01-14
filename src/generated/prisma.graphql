@@ -10,7 +10,7 @@ type AggregateExperience {
   count: Int!
 }
 
-type AggregateFilter {
+type AggregateList {
   count: Int!
 }
 
@@ -31,6 +31,10 @@ type AggregateStory {
 }
 
 type AggregateStoryItem {
+  count: Int!
+}
+
+type AggregateTopic {
   count: Int!
 }
 
@@ -1349,97 +1353,106 @@ input ExperienceWhereUniqueInput {
   id: ID
 }
 
-type Filter {
+type List {
   id: ID!
-  owner: User
+  listName: String!
+  icon: String
+  mainTopics(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic!]
 }
 
-type FilterConnection {
+type ListConnection {
   pageInfo: PageInfo!
-  edges: [FilterEdge]!
-  aggregate: AggregateFilter!
+  edges: [ListEdge]!
+  aggregate: AggregateList!
 }
 
-input FilterCreateInput {
+input ListCreateInput {
   id: ID
-  owner: UserCreateOneWithoutSavedFiltersInput
+  listName: String!
+  icon: String
+  mainTopics: TopicCreateManyWithoutParentListInput
 }
 
-input FilterCreateManyWithoutOwnerInput {
-  create: [FilterCreateWithoutOwnerInput!]
-  connect: [FilterWhereUniqueInput!]
+input ListCreateOneWithoutMainTopicsInput {
+  create: ListCreateWithoutMainTopicsInput
+  connect: ListWhereUniqueInput
 }
 
-input FilterCreateWithoutOwnerInput {
+input ListCreateWithoutMainTopicsInput {
   id: ID
+  listName: String!
+  icon: String
 }
 
-type FilterEdge {
-  node: Filter!
+type ListEdge {
+  node: List!
   cursor: String!
 }
 
-enum FilterOrderByInput {
+enum ListOrderByInput {
   id_ASC
   id_DESC
+  listName_ASC
+  listName_DESC
+  icon_ASC
+  icon_DESC
 }
 
-type FilterPreviousValues {
+type ListPreviousValues {
   id: ID!
+  listName: String!
+  icon: String
 }
 
-input FilterScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  AND: [FilterScalarWhereInput!]
-  OR: [FilterScalarWhereInput!]
-  NOT: [FilterScalarWhereInput!]
-}
-
-type FilterSubscriptionPayload {
+type ListSubscriptionPayload {
   mutation: MutationType!
-  node: Filter
+  node: List
   updatedFields: [String!]
-  previousValues: FilterPreviousValues
+  previousValues: ListPreviousValues
 }
 
-input FilterSubscriptionWhereInput {
+input ListSubscriptionWhereInput {
   mutation_in: [MutationType!]
   updatedFields_contains: String
   updatedFields_contains_every: [String!]
   updatedFields_contains_some: [String!]
-  node: FilterWhereInput
-  AND: [FilterSubscriptionWhereInput!]
-  OR: [FilterSubscriptionWhereInput!]
-  NOT: [FilterSubscriptionWhereInput!]
+  node: ListWhereInput
+  AND: [ListSubscriptionWhereInput!]
+  OR: [ListSubscriptionWhereInput!]
+  NOT: [ListSubscriptionWhereInput!]
 }
 
-input FilterUpdateInput {
-  owner: UserUpdateOneWithoutSavedFiltersInput
+input ListUpdateInput {
+  listName: String
+  icon: String
+  mainTopics: TopicUpdateManyWithoutParentListInput
 }
 
-input FilterUpdateManyWithoutOwnerInput {
-  create: [FilterCreateWithoutOwnerInput!]
-  delete: [FilterWhereUniqueInput!]
-  connect: [FilterWhereUniqueInput!]
-  set: [FilterWhereUniqueInput!]
-  disconnect: [FilterWhereUniqueInput!]
-  deleteMany: [FilterScalarWhereInput!]
+input ListUpdateManyMutationInput {
+  listName: String
+  icon: String
 }
 
-input FilterWhereInput {
+input ListUpdateOneWithoutMainTopicsInput {
+  create: ListCreateWithoutMainTopicsInput
+  update: ListUpdateWithoutMainTopicsDataInput
+  upsert: ListUpsertWithoutMainTopicsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: ListWhereUniqueInput
+}
+
+input ListUpdateWithoutMainTopicsDataInput {
+  listName: String
+  icon: String
+}
+
+input ListUpsertWithoutMainTopicsInput {
+  update: ListUpdateWithoutMainTopicsDataInput!
+  create: ListCreateWithoutMainTopicsInput!
+}
+
+input ListWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -1454,14 +1467,45 @@ input FilterWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  owner: UserWhereInput
-  AND: [FilterWhereInput!]
-  OR: [FilterWhereInput!]
-  NOT: [FilterWhereInput!]
+  listName: String
+  listName_not: String
+  listName_in: [String!]
+  listName_not_in: [String!]
+  listName_lt: String
+  listName_lte: String
+  listName_gt: String
+  listName_gte: String
+  listName_contains: String
+  listName_not_contains: String
+  listName_starts_with: String
+  listName_not_starts_with: String
+  listName_ends_with: String
+  listName_not_ends_with: String
+  icon: String
+  icon_not: String
+  icon_in: [String!]
+  icon_not_in: [String!]
+  icon_lt: String
+  icon_lte: String
+  icon_gt: String
+  icon_gte: String
+  icon_contains: String
+  icon_not_contains: String
+  icon_starts_with: String
+  icon_not_starts_with: String
+  icon_ends_with: String
+  icon_not_ends_with: String
+  mainTopics_every: TopicWhereInput
+  mainTopics_some: TopicWhereInput
+  mainTopics_none: TopicWhereInput
+  AND: [ListWhereInput!]
+  OR: [ListWhereInput!]
+  NOT: [ListWhereInput!]
 }
 
-input FilterWhereUniqueInput {
+input ListWhereUniqueInput {
   id: ID
+  listName: String
 }
 
 scalar Long
@@ -1740,11 +1784,12 @@ type Mutation {
   upsertExperience(where: ExperienceWhereUniqueInput!, create: ExperienceCreateInput!, update: ExperienceUpdateInput!): Experience!
   deleteExperience(where: ExperienceWhereUniqueInput!): Experience
   deleteManyExperiences(where: ExperienceWhereInput): BatchPayload!
-  createFilter(data: FilterCreateInput!): Filter!
-  updateFilter(data: FilterUpdateInput!, where: FilterWhereUniqueInput!): Filter
-  upsertFilter(where: FilterWhereUniqueInput!, create: FilterCreateInput!, update: FilterUpdateInput!): Filter!
-  deleteFilter(where: FilterWhereUniqueInput!): Filter
-  deleteManyFilters(where: FilterWhereInput): BatchPayload!
+  createList(data: ListCreateInput!): List!
+  updateList(data: ListUpdateInput!, where: ListWhereUniqueInput!): List
+  updateManyLists(data: ListUpdateManyMutationInput!, where: ListWhereInput): BatchPayload!
+  upsertList(where: ListWhereUniqueInput!, create: ListCreateInput!, update: ListUpdateInput!): List!
+  deleteList(where: ListWhereUniqueInput!): List
+  deleteManyLists(where: ListWhereInput): BatchPayload!
   createMeeting(data: MeetingCreateInput!): Meeting!
   updateMeeting(data: MeetingUpdateInput!, where: MeetingWhereUniqueInput!): Meeting
   updateManyMeetings(data: MeetingUpdateManyMutationInput!, where: MeetingWhereInput): BatchPayload!
@@ -1775,6 +1820,12 @@ type Mutation {
   upsertStoryItem(where: StoryItemWhereUniqueInput!, create: StoryItemCreateInput!, update: StoryItemUpdateInput!): StoryItem!
   deleteStoryItem(where: StoryItemWhereUniqueInput!): StoryItem
   deleteManyStoryItems(where: StoryItemWhereInput): BatchPayload!
+  createTopic(data: TopicCreateInput!): Topic!
+  updateTopic(data: TopicUpdateInput!, where: TopicWhereUniqueInput!): Topic
+  updateManyTopics(data: TopicUpdateManyMutationInput!, where: TopicWhereInput): BatchPayload!
+  upsertTopic(where: TopicWhereUniqueInput!, create: TopicCreateInput!, update: TopicUpdateInput!): Topic!
+  deleteTopic(where: TopicWhereUniqueInput!): Topic
+  deleteManyTopics(where: TopicWhereInput): BatchPayload!
   createUpdate(data: UpdateCreateInput!): Update!
   updateUpdate(data: UpdateUpdateInput!, where: UpdateWhereUniqueInput!): Update
   updateManyUpdates(data: UpdateUpdateManyMutationInput!, where: UpdateWhereInput): BatchPayload!
@@ -2599,9 +2650,9 @@ type Query {
   experience(where: ExperienceWhereUniqueInput!): Experience
   experiences(where: ExperienceWhereInput, orderBy: ExperienceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Experience]!
   experiencesConnection(where: ExperienceWhereInput, orderBy: ExperienceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ExperienceConnection!
-  filter(where: FilterWhereUniqueInput!): Filter
-  filters(where: FilterWhereInput, orderBy: FilterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Filter]!
-  filtersConnection(where: FilterWhereInput, orderBy: FilterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FilterConnection!
+  list(where: ListWhereUniqueInput!): List
+  lists(where: ListWhereInput, orderBy: ListOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [List]!
+  listsConnection(where: ListWhereInput, orderBy: ListOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ListConnection!
   meeting(where: MeetingWhereUniqueInput!): Meeting
   meetings(where: MeetingWhereInput, orderBy: MeetingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Meeting]!
   meetingsConnection(where: MeetingWhereInput, orderBy: MeetingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MeetingConnection!
@@ -2617,6 +2668,9 @@ type Query {
   storyItem(where: StoryItemWhereUniqueInput!): StoryItem
   storyItems(where: StoryItemWhereInput, orderBy: StoryItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StoryItem]!
   storyItemsConnection(where: StoryItemWhereInput, orderBy: StoryItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StoryItemConnection!
+  topic(where: TopicWhereUniqueInput!): Topic
+  topics(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic]!
+  topicsConnection(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TopicConnection!
   update(where: UpdateWhereUniqueInput!): Update
   updates(where: UpdateWhereInput, orderBy: UpdateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Update]!
   updatesConnection(where: UpdateWhereInput, orderBy: UpdateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UpdateConnection!
@@ -3378,14 +3432,303 @@ type Subscription {
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
   education(where: EducationSubscriptionWhereInput): EducationSubscriptionPayload
   experience(where: ExperienceSubscriptionWhereInput): ExperienceSubscriptionPayload
-  filter(where: FilterSubscriptionWhereInput): FilterSubscriptionPayload
+  list(where: ListSubscriptionWhereInput): ListSubscriptionPayload
   meeting(where: MeetingSubscriptionWhereInput): MeetingSubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   skill(where: SkillSubscriptionWhereInput): SkillSubscriptionPayload
   story(where: StorySubscriptionWhereInput): StorySubscriptionPayload
   storyItem(where: StoryItemSubscriptionWhereInput): StoryItemSubscriptionPayload
+  topic(where: TopicSubscriptionWhereInput): TopicSubscriptionPayload
   update(where: UpdateSubscriptionWhereInput): UpdateSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+}
+
+type Topic {
+  id: ID!
+  createdAt: DateTime!
+  parentList: List
+  parent: Topic
+  name: String
+  children(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic!]
+}
+
+type TopicConnection {
+  pageInfo: PageInfo!
+  edges: [TopicEdge]!
+  aggregate: AggregateTopic!
+}
+
+input TopicCreateInput {
+  id: ID
+  parentList: ListCreateOneWithoutMainTopicsInput
+  parent: TopicCreateOneWithoutChildrenInput
+  name: String
+  children: TopicCreateManyWithoutParentInput
+}
+
+input TopicCreateManyWithoutParentInput {
+  create: [TopicCreateWithoutParentInput!]
+  connect: [TopicWhereUniqueInput!]
+}
+
+input TopicCreateManyWithoutParentListInput {
+  create: [TopicCreateWithoutParentListInput!]
+  connect: [TopicWhereUniqueInput!]
+}
+
+input TopicCreateOneWithoutChildrenInput {
+  create: TopicCreateWithoutChildrenInput
+  connect: TopicWhereUniqueInput
+}
+
+input TopicCreateWithoutChildrenInput {
+  id: ID
+  parentList: ListCreateOneWithoutMainTopicsInput
+  parent: TopicCreateOneWithoutChildrenInput
+  name: String
+}
+
+input TopicCreateWithoutParentInput {
+  id: ID
+  parentList: ListCreateOneWithoutMainTopicsInput
+  name: String
+  children: TopicCreateManyWithoutParentInput
+}
+
+input TopicCreateWithoutParentListInput {
+  id: ID
+  parent: TopicCreateOneWithoutChildrenInput
+  name: String
+  children: TopicCreateManyWithoutParentInput
+}
+
+type TopicEdge {
+  node: Topic!
+  cursor: String!
+}
+
+enum TopicOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  name_ASC
+  name_DESC
+}
+
+type TopicPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  name: String
+}
+
+input TopicScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  AND: [TopicScalarWhereInput!]
+  OR: [TopicScalarWhereInput!]
+  NOT: [TopicScalarWhereInput!]
+}
+
+type TopicSubscriptionPayload {
+  mutation: MutationType!
+  node: Topic
+  updatedFields: [String!]
+  previousValues: TopicPreviousValues
+}
+
+input TopicSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: TopicWhereInput
+  AND: [TopicSubscriptionWhereInput!]
+  OR: [TopicSubscriptionWhereInput!]
+  NOT: [TopicSubscriptionWhereInput!]
+}
+
+input TopicUpdateInput {
+  parentList: ListUpdateOneWithoutMainTopicsInput
+  parent: TopicUpdateOneWithoutChildrenInput
+  name: String
+  children: TopicUpdateManyWithoutParentInput
+}
+
+input TopicUpdateManyDataInput {
+  name: String
+}
+
+input TopicUpdateManyMutationInput {
+  name: String
+}
+
+input TopicUpdateManyWithoutParentInput {
+  create: [TopicCreateWithoutParentInput!]
+  delete: [TopicWhereUniqueInput!]
+  connect: [TopicWhereUniqueInput!]
+  set: [TopicWhereUniqueInput!]
+  disconnect: [TopicWhereUniqueInput!]
+  update: [TopicUpdateWithWhereUniqueWithoutParentInput!]
+  upsert: [TopicUpsertWithWhereUniqueWithoutParentInput!]
+  deleteMany: [TopicScalarWhereInput!]
+  updateMany: [TopicUpdateManyWithWhereNestedInput!]
+}
+
+input TopicUpdateManyWithoutParentListInput {
+  create: [TopicCreateWithoutParentListInput!]
+  delete: [TopicWhereUniqueInput!]
+  connect: [TopicWhereUniqueInput!]
+  set: [TopicWhereUniqueInput!]
+  disconnect: [TopicWhereUniqueInput!]
+  update: [TopicUpdateWithWhereUniqueWithoutParentListInput!]
+  upsert: [TopicUpsertWithWhereUniqueWithoutParentListInput!]
+  deleteMany: [TopicScalarWhereInput!]
+  updateMany: [TopicUpdateManyWithWhereNestedInput!]
+}
+
+input TopicUpdateManyWithWhereNestedInput {
+  where: TopicScalarWhereInput!
+  data: TopicUpdateManyDataInput!
+}
+
+input TopicUpdateOneWithoutChildrenInput {
+  create: TopicCreateWithoutChildrenInput
+  update: TopicUpdateWithoutChildrenDataInput
+  upsert: TopicUpsertWithoutChildrenInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: TopicWhereUniqueInput
+}
+
+input TopicUpdateWithoutChildrenDataInput {
+  parentList: ListUpdateOneWithoutMainTopicsInput
+  parent: TopicUpdateOneWithoutChildrenInput
+  name: String
+}
+
+input TopicUpdateWithoutParentDataInput {
+  parentList: ListUpdateOneWithoutMainTopicsInput
+  name: String
+  children: TopicUpdateManyWithoutParentInput
+}
+
+input TopicUpdateWithoutParentListDataInput {
+  parent: TopicUpdateOneWithoutChildrenInput
+  name: String
+  children: TopicUpdateManyWithoutParentInput
+}
+
+input TopicUpdateWithWhereUniqueWithoutParentInput {
+  where: TopicWhereUniqueInput!
+  data: TopicUpdateWithoutParentDataInput!
+}
+
+input TopicUpdateWithWhereUniqueWithoutParentListInput {
+  where: TopicWhereUniqueInput!
+  data: TopicUpdateWithoutParentListDataInput!
+}
+
+input TopicUpsertWithoutChildrenInput {
+  update: TopicUpdateWithoutChildrenDataInput!
+  create: TopicCreateWithoutChildrenInput!
+}
+
+input TopicUpsertWithWhereUniqueWithoutParentInput {
+  where: TopicWhereUniqueInput!
+  update: TopicUpdateWithoutParentDataInput!
+  create: TopicCreateWithoutParentInput!
+}
+
+input TopicUpsertWithWhereUniqueWithoutParentListInput {
+  where: TopicWhereUniqueInput!
+  update: TopicUpdateWithoutParentListDataInput!
+  create: TopicCreateWithoutParentListInput!
+}
+
+input TopicWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  parentList: ListWhereInput
+  parent: TopicWhereInput
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  children_every: TopicWhereInput
+  children_some: TopicWhereInput
+  children_none: TopicWhereInput
+  AND: [TopicWhereInput!]
+  OR: [TopicWhereInput!]
+  NOT: [TopicWhereInput!]
+}
+
+input TopicWhereUniqueInput {
+  id: ID
 }
 
 type Update {
@@ -3822,8 +4165,6 @@ type User {
   intro: Story
   projects(where: StoryWhereInput, orderBy: StoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Story!]
   meetings(where: MeetingWhereInput, orderBy: MeetingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Meeting!]
-  savedFilters(where: FilterWhereInput, orderBy: FilterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Filter!]
-  rank: Int!
   roles: [Role!]!
 }
 
@@ -3877,8 +4218,6 @@ input UserCreateInput {
   intro: StoryCreateOneInput
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
-  savedFilters: FilterCreateManyWithoutOwnerInput
-  rank: Int
   roles: UserCreaterolesInput
 }
 
@@ -3927,11 +4266,6 @@ input UserCreateOneWithoutExperienceInput {
 
 input UserCreateOneWithoutPostsInput {
   create: UserCreateWithoutPostsInput
-  connect: UserWhereUniqueInput
-}
-
-input UserCreateOneWithoutSavedFiltersInput {
-  create: UserCreateWithoutSavedFiltersInput
   connect: UserWhereUniqueInput
 }
 
@@ -3987,8 +4321,6 @@ input UserCreateWithoutConnectionsInput {
   intro: StoryCreateOneInput
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
-  savedFilters: FilterCreateManyWithoutOwnerInput
-  rank: Int
   roles: UserCreaterolesInput
 }
 
@@ -4027,8 +4359,6 @@ input UserCreateWithoutEducationInput {
   intro: StoryCreateOneInput
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
-  savedFilters: FilterCreateManyWithoutOwnerInput
-  rank: Int
   roles: UserCreaterolesInput
 }
 
@@ -4067,8 +4397,6 @@ input UserCreateWithoutExperienceInput {
   intro: StoryCreateOneInput
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
-  savedFilters: FilterCreateManyWithoutOwnerInput
-  rank: Int
   roles: UserCreaterolesInput
 }
 
@@ -4107,8 +4435,6 @@ input UserCreateWithoutFollowersInput {
   intro: StoryCreateOneInput
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
-  savedFilters: FilterCreateManyWithoutOwnerInput
-  rank: Int
   roles: UserCreaterolesInput
 }
 
@@ -4147,8 +4473,6 @@ input UserCreateWithoutFollowingInput {
   intro: StoryCreateOneInput
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
-  savedFilters: FilterCreateManyWithoutOwnerInput
-  rank: Int
   roles: UserCreaterolesInput
 }
 
@@ -4187,8 +4511,6 @@ input UserCreateWithoutMeetingsInput {
   followers: UserCreateManyWithoutFollowersInput
   intro: StoryCreateOneInput
   projects: StoryCreateManyInput
-  savedFilters: FilterCreateManyWithoutOwnerInput
-  rank: Int
   roles: UserCreaterolesInput
 }
 
@@ -4227,48 +4549,6 @@ input UserCreateWithoutPostsInput {
   intro: StoryCreateOneInput
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
-  savedFilters: FilterCreateManyWithoutOwnerInput
-  rank: Int
-  roles: UserCreaterolesInput
-}
-
-input UserCreateWithoutSavedFiltersInput {
-  id: ID
-  name: String!
-  firstName: String!
-  lastName: String!
-  email: String!
-  password: String!
-  profilePic: String
-  bannerPic: String
-  location: String
-  locationLat: Float
-  locationLon: Float
-  headline: String
-  website: String
-  bio: String
-  about: String
-  isMentor: Boolean
-  isFreelancer: Boolean
-  isAgency: Boolean
-  isInvestor: Boolean
-  mentorFields: UserCreatementorFieldsInput
-  freelanceFields: UserCreatefreelanceFieldsInput
-  investorFields: UserCreateinvestorFieldsInput
-  agencyFields: UserCreateagencyFieldsInput
-  skills: SkillCreateManyWithoutOwnerInput
-  topicsFocus: UserCreatetopicsFocusInput
-  topicsInterest: UserCreatetopicsInterestInput
-  experience: ExperienceCreateManyWithoutOwnerInput
-  education: EducationCreateManyWithoutOwnerInput
-  posts: PostCreateManyWithoutOwnerInput
-  connections: UserCreateManyWithoutConnectionsInput
-  following: UserCreateManyWithoutFollowingInput
-  followers: UserCreateManyWithoutFollowersInput
-  intro: StoryCreateOneInput
-  projects: StoryCreateManyInput
-  meetings: MeetingCreateManyWithoutUsersInput
-  rank: Int
   roles: UserCreaterolesInput
 }
 
@@ -4307,8 +4587,6 @@ input UserCreateWithoutSkillsInput {
   intro: StoryCreateOneInput
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
-  savedFilters: FilterCreateManyWithoutOwnerInput
-  rank: Int
   roles: UserCreaterolesInput
 }
 
@@ -4358,8 +4636,6 @@ enum UserOrderByInput {
   isAgency_DESC
   isInvestor_ASC
   isInvestor_DESC
-  rank_ASC
-  rank_DESC
 }
 
 type UserPreviousValues {
@@ -4389,7 +4665,6 @@ type UserPreviousValues {
   agencyFields: [String!]!
   topicsFocus: [String!]!
   topicsInterest: [String!]!
-  rank: Int!
   roles: [Role!]!
 }
 
@@ -4608,14 +4883,6 @@ input UserScalarWhereInput {
   isAgency_not: Boolean
   isInvestor: Boolean
   isInvestor_not: Boolean
-  rank: Int
-  rank_not: Int
-  rank_in: [Int!]
-  rank_not_in: [Int!]
-  rank_lt: Int
-  rank_lte: Int
-  rank_gt: Int
-  rank_gte: Int
   AND: [UserScalarWhereInput!]
   OR: [UserScalarWhereInput!]
   NOT: [UserScalarWhereInput!]
@@ -4678,8 +4945,6 @@ input UserUpdateDataInput {
   intro: StoryUpdateOneInput
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
-  savedFilters: FilterUpdateManyWithoutOwnerInput
-  rank: Int
   roles: UserUpdaterolesInput
 }
 
@@ -4722,8 +4987,6 @@ input UserUpdateInput {
   intro: StoryUpdateOneInput
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
-  savedFilters: FilterUpdateManyWithoutOwnerInput
-  rank: Int
   roles: UserUpdaterolesInput
 }
 
@@ -4756,7 +5019,6 @@ input UserUpdateManyDataInput {
   agencyFields: UserUpdateagencyFieldsInput
   topicsFocus: UserUpdatetopicsFocusInput
   topicsInterest: UserUpdatetopicsInterestInput
-  rank: Int
   roles: UserUpdaterolesInput
 }
 
@@ -4785,7 +5047,6 @@ input UserUpdateManyMutationInput {
   agencyFields: UserUpdateagencyFieldsInput
   topicsFocus: UserUpdatetopicsFocusInput
   topicsInterest: UserUpdatetopicsInterestInput
-  rank: Int
   roles: UserUpdaterolesInput
 }
 
@@ -4881,15 +5142,6 @@ input UserUpdateOneRequiredWithoutSkillsInput {
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateOneWithoutSavedFiltersInput {
-  create: UserCreateWithoutSavedFiltersInput
-  update: UserUpdateWithoutSavedFiltersDataInput
-  upsert: UserUpsertWithoutSavedFiltersInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: UserWhereUniqueInput
-}
-
 input UserUpdaterolesInput {
   set: [Role!]
 }
@@ -4936,8 +5188,6 @@ input UserUpdateWithoutConnectionsDataInput {
   intro: StoryUpdateOneInput
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
-  savedFilters: FilterUpdateManyWithoutOwnerInput
-  rank: Int
   roles: UserUpdaterolesInput
 }
 
@@ -4975,8 +5225,6 @@ input UserUpdateWithoutEducationDataInput {
   intro: StoryUpdateOneInput
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
-  savedFilters: FilterUpdateManyWithoutOwnerInput
-  rank: Int
   roles: UserUpdaterolesInput
 }
 
@@ -5014,8 +5262,6 @@ input UserUpdateWithoutExperienceDataInput {
   intro: StoryUpdateOneInput
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
-  savedFilters: FilterUpdateManyWithoutOwnerInput
-  rank: Int
   roles: UserUpdaterolesInput
 }
 
@@ -5053,8 +5299,6 @@ input UserUpdateWithoutFollowersDataInput {
   intro: StoryUpdateOneInput
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
-  savedFilters: FilterUpdateManyWithoutOwnerInput
-  rank: Int
   roles: UserUpdaterolesInput
 }
 
@@ -5092,8 +5336,6 @@ input UserUpdateWithoutFollowingDataInput {
   intro: StoryUpdateOneInput
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
-  savedFilters: FilterUpdateManyWithoutOwnerInput
-  rank: Int
   roles: UserUpdaterolesInput
 }
 
@@ -5131,8 +5373,6 @@ input UserUpdateWithoutMeetingsDataInput {
   followers: UserUpdateManyWithoutFollowersInput
   intro: StoryUpdateOneInput
   projects: StoryUpdateManyInput
-  savedFilters: FilterUpdateManyWithoutOwnerInput
-  rank: Int
   roles: UserUpdaterolesInput
 }
 
@@ -5170,47 +5410,6 @@ input UserUpdateWithoutPostsDataInput {
   intro: StoryUpdateOneInput
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
-  savedFilters: FilterUpdateManyWithoutOwnerInput
-  rank: Int
-  roles: UserUpdaterolesInput
-}
-
-input UserUpdateWithoutSavedFiltersDataInput {
-  name: String
-  firstName: String
-  lastName: String
-  email: String
-  password: String
-  profilePic: String
-  bannerPic: String
-  location: String
-  locationLat: Float
-  locationLon: Float
-  headline: String
-  website: String
-  bio: String
-  about: String
-  isMentor: Boolean
-  isFreelancer: Boolean
-  isAgency: Boolean
-  isInvestor: Boolean
-  mentorFields: UserUpdatementorFieldsInput
-  freelanceFields: UserUpdatefreelanceFieldsInput
-  investorFields: UserUpdateinvestorFieldsInput
-  agencyFields: UserUpdateagencyFieldsInput
-  skills: SkillUpdateManyWithoutOwnerInput
-  topicsFocus: UserUpdatetopicsFocusInput
-  topicsInterest: UserUpdatetopicsInterestInput
-  experience: ExperienceUpdateManyWithoutOwnerInput
-  education: EducationUpdateManyWithoutOwnerInput
-  posts: PostUpdateManyWithoutOwnerInput
-  connections: UserUpdateManyWithoutConnectionsInput
-  following: UserUpdateManyWithoutFollowingInput
-  followers: UserUpdateManyWithoutFollowersInput
-  intro: StoryUpdateOneInput
-  projects: StoryUpdateManyInput
-  meetings: MeetingUpdateManyWithoutUsersInput
-  rank: Int
   roles: UserUpdaterolesInput
 }
 
@@ -5248,8 +5447,6 @@ input UserUpdateWithoutSkillsDataInput {
   intro: StoryUpdateOneInput
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
-  savedFilters: FilterUpdateManyWithoutOwnerInput
-  rank: Int
   roles: UserUpdaterolesInput
 }
 
@@ -5291,11 +5488,6 @@ input UserUpsertWithoutExperienceInput {
 input UserUpsertWithoutPostsInput {
   update: UserUpdateWithoutPostsDataInput!
   create: UserCreateWithoutPostsInput!
-}
-
-input UserUpsertWithoutSavedFiltersInput {
-  update: UserUpdateWithoutSavedFiltersDataInput!
-  create: UserCreateWithoutSavedFiltersInput!
 }
 
 input UserUpsertWithoutSkillsInput {
@@ -5570,17 +5762,6 @@ input UserWhereInput {
   meetings_every: MeetingWhereInput
   meetings_some: MeetingWhereInput
   meetings_none: MeetingWhereInput
-  savedFilters_every: FilterWhereInput
-  savedFilters_some: FilterWhereInput
-  savedFilters_none: FilterWhereInput
-  rank: Int
-  rank_not: Int
-  rank_in: [Int!]
-  rank_not_in: [Int!]
-  rank_lt: Int
-  rank_lte: Int
-  rank_gt: Int
-  rank_gte: Int
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
