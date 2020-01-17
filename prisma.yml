@@ -1,0 +1,8 @@
+endpoint: https://eu1.prisma.sh/ambit-workspace-3/ambit-service/dev
+datamodel: datamodel.prisma
+
+generate:
+  - generator: javascript-client
+    output: ./generated/prisma-client/
+  - generator: graphql-schema
+    output: ./generated/prisma.graphql

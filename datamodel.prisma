@@ -162,6 +162,7 @@ type Meeting {
   place: String
 }
 
+
 type List {
   id: ID! @id
   listName: String! @unique
@@ -169,12 +170,13 @@ type List {
   mainTopics: [Topic]! @relation(name: "ListToTopicRelation" onDelete: CASCADE)
 }
 
-
 type Topic {
   id: ID! @id
-  createdAt: DateTime! @createdAt
+  topicID: String! @unique
+  name: String!
   parentList: List @relation(name: "ListToTopicRelation")
-  parent: Topic @relation(name: "TopicToTopicRelation")
-  name: String
+  parentTopic: Topic @relation(name: "TopicToTopicRelation")
   children: [Topic]! @relation(name: "TopicToTopicRelation" onDelete: CASCADE)
+  icon: String
+  order: Int
 }
