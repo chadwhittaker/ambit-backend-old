@@ -25,17 +25,13 @@ type User {
   website: String
   bio: String
   about: String
-  isMentor: Boolean
-  isFreelancer: Boolean
-  isAgency: Boolean
-  isInvestor: Boolean
-  mentorFields: [String] @scalarList(strategy: RELATION)
-  freelanceFields: [String] @scalarList(strategy: RELATION)
-  investorFields: [String] @scalarList(strategy: RELATION)
-  agencyFields: [String] @scalarList(strategy: RELATION)
+  topicsMentor: [Topic]! @relation(name: "TopicsMentorUser")
+  topicsFreelance: [Topic]! @relation(name: "TopicsFreelanceUser")
+  topicsInvest: [Topic]! @relation(name: "TopicsInvestUser")
+  topicsAgency: [Topic]! @relation(name: "TopicsAgencyUser")
+  topicsFocus: [Topic]! @relation(name: "TopicsFocusUser")
+  topicsInterest: [Topic]! @relation(name: "TopicsInterestUser")
   skills: [Skill] @relation(name: "SkillsByUser" onDelete: CASCADE)
-  topicsFocus: [String] @scalarList(strategy: RELATION)
-  topicsInterest: [String] @scalarList(strategy: RELATION)
   experience: [Experience] @relation(name: "ExperiencesByUser" onDelete: CASCADE)
   education: [Education] @relation(name: "EducationByUser" onDelete: CASCADE)
   posts: [Post] @relation(name: "PostsByUser" onDelete: CASCADE)
@@ -104,8 +100,8 @@ type Post {
   owner: User! @relation(name: "PostsByUser")
   isGoal: Boolean! @default(value: false)
   goal: String
-  subField: String
-  topics: [String] @scalarList(strategy: RELATION)
+  subField: [Topic]! @relation(name: "SubFieldOnPost")
+  topics: [Topic]! @relation(name: "TopicsOnPost")
   location: String!
   locationLat: Float!
   locationLon: Float!

@@ -1,5 +1,25 @@
 const User = {
 
+  async topicsFocus(parent, args, context) {
+    return context.prisma.user({ id: parent.id }).topicsFocus()
+  },
+
+  async topicsInterest(parent, args, context) {
+    return context.prisma.user({ id: parent.id }).topicsInterest()
+  },
+
+  async topicsFreelance(parent, args, context) {
+    return context.prisma.user({ id: parent.id }).topicsFreelance()
+  },
+
+  async topicsInvest(parent, args, context) {
+    return context.prisma.user({ id: parent.id }).topicsInvest()
+  },
+
+  async topicsMentor(parent, args, context) {
+    return context.prisma.user({ id: parent.id }).topicsMentor()
+  },
+
   async skills(parent, args, context) {
     return context.prisma.user({ id: parent.id }).skills()
   },

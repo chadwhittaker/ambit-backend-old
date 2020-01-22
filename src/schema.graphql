@@ -1,4 +1,4 @@
-# import * from "./generated/prisma.graphql"
+# import * from "../generated/prisma.graphql"
 
 scalar DateTime 
 
@@ -25,11 +25,11 @@ type Mutation {
   # profile
   editBio(id: ID!, data: UserUpdateInput!): User!
   editSkills(id: ID!, skills: [SkillCreateWithoutOwnerInput!]): User!
-  editTopicsFocus(id: ID!, topics: [String]!): User!
-  editTopicsInterest(id: ID!, topics: [String]!): User!
-  editTopicsFreelance(id: ID!, topics: [String]!): User!
-  editTopicsInvest(id: ID!, topics: [String]!): User!
-  editTopicsMentor(id: ID!, topics: [String]!): User!
+  editTopicsFocus(id: ID!, topics: [TopicWhereUniqueInput]!): User!
+  editTopicsInterest(id: ID!, topics: [TopicWhereUniqueInput]!): User!
+  editTopicsFreelance(id: ID!, topics: [TopicWhereUniqueInput]!): User!
+  editTopicsInvest(id: ID!, topics: [TopicWhereUniqueInput]!): User!
+  editTopicsMentor(id: ID!, topics: [TopicWhereUniqueInput]!): User!
 
   #experience
   createExperience(owner: ID!, experience: ExperienceCreateWithoutOwnerInput!): User!

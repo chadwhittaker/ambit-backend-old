@@ -159,7 +159,7 @@ const Mutation = {
       {
         where: { id },
         data: {
-          freelanceFields: {
+          topicsFreelance: {
             set: topics,
           },
         }
@@ -186,7 +186,7 @@ const Mutation = {
       {
         where: { id },
         data: {
-          investorFields: {
+          topicsInvest: {
             set: topics,
           },
         }
@@ -213,7 +213,7 @@ const Mutation = {
       {
         where: { id },
         data: {
-          mentorFields: {
+          topicsMentor: {
             set: topics,
           },
         }

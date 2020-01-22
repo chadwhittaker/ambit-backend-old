@@ -1869,8 +1869,8 @@ type Post {
   owner: User!
   isGoal: Boolean!
   goal: String
-  subField: String
-  topics: [String!]!
+  subField: Topic
+  topics(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic!]
   location: String!
   locationLat: Float!
   locationLon: Float!
@@ -1904,8 +1904,8 @@ input PostCreateInput {
   owner: UserCreateOneWithoutPostsInput!
   isGoal: Boolean
   goal: String
-  subField: String
-  topics: PostCreatetopicsInput
+  subField: TopicCreateOneInput
+  topics: TopicCreateManyInput
   location: String!
   locationLat: Float!
   locationLon: Float!
@@ -1942,18 +1942,14 @@ input PostCreateOneWithoutUpdatesInput {
   connect: PostWhereUniqueInput
 }
 
-input PostCreatetopicsInput {
-  set: [String!]
-}
-
 input PostCreateWithoutCommentsInput {
   id: ID
   lastUpdated: DateTime!
   owner: UserCreateOneWithoutPostsInput!
   isGoal: Boolean
   goal: String
-  subField: String
-  topics: PostCreatetopicsInput
+  subField: TopicCreateOneInput
+  topics: TopicCreateManyInput
   location: String!
   locationLat: Float!
   locationLon: Float!
@@ -1975,8 +1971,8 @@ input PostCreateWithoutOwnerInput {
   lastUpdated: DateTime!
   isGoal: Boolean
   goal: String
-  subField: String
-  topics: PostCreatetopicsInput
+  subField: TopicCreateOneInput
+  topics: TopicCreateManyInput
   location: String!
   locationLat: Float!
   locationLon: Float!
@@ -2000,8 +1996,8 @@ input PostCreateWithoutUpdatesInput {
   owner: UserCreateOneWithoutPostsInput!
   isGoal: Boolean
   goal: String
-  subField: String
-  topics: PostCreatetopicsInput
+  subField: TopicCreateOneInput
+  topics: TopicCreateManyInput
   location: String!
   locationLat: Float!
   locationLon: Float!
@@ -2034,8 +2030,6 @@ enum PostOrderByInput {
   isGoal_DESC
   goal_ASC
   goal_DESC
-  subField_ASC
-  subField_DESC
   location_ASC
   location_DESC
   locationLat_ASC
@@ -2066,8 +2060,6 @@ type PostPreviousValues {
   lastUpdated: DateTime!
   isGoal: Boolean!
   goal: String
-  subField: String
-  topics: [String!]!
   location: String!
   locationLat: Float!
   locationLon: Float!
@@ -2130,20 +2122,6 @@ input PostScalarWhereInput {
   goal_not_starts_with: String
   goal_ends_with: String
   goal_not_ends_with: String
-  subField: String
-  subField_not: String
-  subField_in: [String!]
-  subField_not_in: [String!]
-  subField_lt: String
-  subField_lte: String
-  subField_gt: String
-  subField_gte: String
-  subField_contains: String
-  subField_not_contains: String
-  subField_starts_with: String
-  subField_not_starts_with: String
-  subField_ends_with: String
-  subField_not_ends_with: String
   location: String
   location_not: String
   location_in: [String!]
@@ -2276,8 +2254,8 @@ input PostUpdateInput {
   owner: UserUpdateOneRequiredWithoutPostsInput
   isGoal: Boolean
   goal: String
-  subField: String
-  topics: PostUpdatetopicsInput
+  subField: TopicUpdateOneInput
+  topics: TopicUpdateManyInput
   location: String
   locationLat: Float
   locationLon: Float
@@ -2303,8 +2281,6 @@ input PostUpdateManyDataInput {
   lastUpdated: DateTime
   isGoal: Boolean
   goal: String
-  subField: String
-  topics: PostUpdatetopicsInput
   location: String
   locationLat: Float
   locationLon: Float
@@ -2324,8 +2300,6 @@ input PostUpdateManyMutationInput {
   lastUpdated: DateTime
   isGoal: Boolean
   goal: String
-  subField: String
-  topics: PostUpdatetopicsInput
   location: String
   locationLat: Float
   locationLon: Float
@@ -2374,17 +2348,13 @@ input PostUpdateOneWithoutCommentsInput {
   connect: PostWhereUniqueInput
 }
 
-input PostUpdatetopicsInput {
-  set: [String!]
-}
-
 input PostUpdateWithoutCommentsDataInput {
   lastUpdated: DateTime
   owner: UserUpdateOneRequiredWithoutPostsInput
   isGoal: Boolean
   goal: String
-  subField: String
-  topics: PostUpdatetopicsInput
+  subField: TopicUpdateOneInput
+  topics: TopicUpdateManyInput
   location: String
   locationLat: Float
   locationLon: Float
@@ -2405,8 +2375,8 @@ input PostUpdateWithoutOwnerDataInput {
   lastUpdated: DateTime
   isGoal: Boolean
   goal: String
-  subField: String
-  topics: PostUpdatetopicsInput
+  subField: TopicUpdateOneInput
+  topics: TopicUpdateManyInput
   location: String
   locationLat: Float
   locationLon: Float
@@ -2429,8 +2399,8 @@ input PostUpdateWithoutUpdatesDataInput {
   owner: UserUpdateOneRequiredWithoutPostsInput
   isGoal: Boolean
   goal: String
-  subField: String
-  topics: PostUpdatetopicsInput
+  subField: TopicUpdateOneInput
+  topics: TopicUpdateManyInput
   location: String
   locationLat: Float
   locationLon: Float
@@ -2516,20 +2486,10 @@ input PostWhereInput {
   goal_not_starts_with: String
   goal_ends_with: String
   goal_not_ends_with: String
-  subField: String
-  subField_not: String
-  subField_in: [String!]
-  subField_not_in: [String!]
-  subField_lt: String
-  subField_lte: String
-  subField_gt: String
-  subField_gte: String
-  subField_contains: String
-  subField_not_contains: String
-  subField_starts_with: String
-  subField_not_starts_with: String
-  subField_ends_with: String
-  subField_not_ends_with: String
+  subField: TopicWhereInput
+  topics_every: TopicWhereInput
+  topics_some: TopicWhereInput
+  topics_none: TopicWhereInput
   location: String
   location_not: String
   location_in: [String!]
@@ -3476,6 +3436,11 @@ input TopicCreateInput {
   order: Int
 }
 
+input TopicCreateManyInput {
+  create: [TopicCreateInput!]
+  connect: [TopicWhereUniqueInput!]
+}
+
 input TopicCreateManyWithoutParentListInput {
   create: [TopicCreateWithoutParentListInput!]
   connect: [TopicWhereUniqueInput!]
@@ -3484,6 +3449,11 @@ input TopicCreateManyWithoutParentListInput {
 input TopicCreateManyWithoutParentTopicInput {
   create: [TopicCreateWithoutParentTopicInput!]
   connect: [TopicWhereUniqueInput!]
+}
+
+input TopicCreateOneInput {
+  create: TopicCreateInput
+  connect: TopicWhereUniqueInput
 }
 
 input TopicCreateOneWithoutChildrenInput {
@@ -3635,6 +3605,16 @@ input TopicSubscriptionWhereInput {
   NOT: [TopicSubscriptionWhereInput!]
 }
 
+input TopicUpdateDataInput {
+  topicID: String
+  name: String
+  parentList: ListUpdateOneWithoutMainTopicsInput
+  parentTopic: TopicUpdateOneWithoutChildrenInput
+  children: TopicUpdateManyWithoutParentTopicInput
+  icon: String
+  order: Int
+}
+
 input TopicUpdateInput {
   topicID: String
   name: String
@@ -3650,6 +3630,18 @@ input TopicUpdateManyDataInput {
   name: String
   icon: String
   order: Int
+}
+
+input TopicUpdateManyInput {
+  create: [TopicCreateInput!]
+  update: [TopicUpdateWithWhereUniqueNestedInput!]
+  upsert: [TopicUpsertWithWhereUniqueNestedInput!]
+  delete: [TopicWhereUniqueInput!]
+  connect: [TopicWhereUniqueInput!]
+  set: [TopicWhereUniqueInput!]
+  disconnect: [TopicWhereUniqueInput!]
+  deleteMany: [TopicScalarWhereInput!]
+  updateMany: [TopicUpdateManyWithWhereNestedInput!]
 }
 
 input TopicUpdateManyMutationInput {
@@ -3688,6 +3680,15 @@ input TopicUpdateManyWithWhereNestedInput {
   data: TopicUpdateManyDataInput!
 }
 
+input TopicUpdateOneInput {
+  create: TopicCreateInput
+  update: TopicUpdateDataInput
+  upsert: TopicUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: TopicWhereUniqueInput
+}
+
 input TopicUpdateOneWithoutChildrenInput {
   create: TopicCreateWithoutChildrenInput
   update: TopicUpdateWithoutChildrenDataInput
@@ -3724,6 +3725,11 @@ input TopicUpdateWithoutParentTopicDataInput {
   order: Int
 }
 
+input TopicUpdateWithWhereUniqueNestedInput {
+  where: TopicWhereUniqueInput!
+  data: TopicUpdateDataInput!
+}
+
 input TopicUpdateWithWhereUniqueWithoutParentListInput {
   where: TopicWhereUniqueInput!
   data: TopicUpdateWithoutParentListDataInput!
@@ -3734,9 +3740,20 @@ input TopicUpdateWithWhereUniqueWithoutParentTopicInput {
   data: TopicUpdateWithoutParentTopicDataInput!
 }
 
+input TopicUpsertNestedInput {
+  update: TopicUpdateDataInput!
+  create: TopicCreateInput!
+}
+
 input TopicUpsertWithoutChildrenInput {
   update: TopicUpdateWithoutChildrenDataInput!
   create: TopicCreateWithoutChildrenInput!
+}
+
+input TopicUpsertWithWhereUniqueNestedInput {
+  where: TopicWhereUniqueInput!
+  update: TopicUpdateDataInput!
+  create: TopicCreateInput!
 }
 
 input TopicUpsertWithWhereUniqueWithoutParentListInput {
@@ -4245,17 +4262,13 @@ type User {
   website: String
   bio: String
   about: String
-  isMentor: Boolean
-  isFreelancer: Boolean
-  isAgency: Boolean
-  isInvestor: Boolean
-  mentorFields: [String!]!
-  freelanceFields: [String!]!
-  investorFields: [String!]!
-  agencyFields: [String!]!
+  topicsMentor(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic!]
+  topicsFreelance(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic!]
+  topicsInvest(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic!]
+  topicsAgency(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic!]
+  topicsFocus(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic!]
+  topicsInterest(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic!]
   skills(where: SkillWhereInput, orderBy: SkillOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Skill!]
-  topicsFocus: [String!]!
-  topicsInterest: [String!]!
   experience(where: ExperienceWhereInput, orderBy: ExperienceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Experience!]
   education(where: EducationWhereInput, orderBy: EducationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Education!]
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
@@ -4274,14 +4287,6 @@ type UserConnection {
   aggregate: AggregateUser!
 }
 
-input UserCreateagencyFieldsInput {
-  set: [String!]
-}
-
-input UserCreatefreelanceFieldsInput {
-  set: [String!]
-}
-
 input UserCreateInput {
   id: ID
   name: String!
@@ -4298,17 +4303,13 @@ input UserCreateInput {
   website: String
   bio: String
   about: String
-  isMentor: Boolean
-  isFreelancer: Boolean
-  isAgency: Boolean
-  isInvestor: Boolean
-  mentorFields: UserCreatementorFieldsInput
-  freelanceFields: UserCreatefreelanceFieldsInput
-  investorFields: UserCreateinvestorFieldsInput
-  agencyFields: UserCreateagencyFieldsInput
+  topicsMentor: TopicCreateManyInput
+  topicsFreelance: TopicCreateManyInput
+  topicsInvest: TopicCreateManyInput
+  topicsAgency: TopicCreateManyInput
+  topicsFocus: TopicCreateManyInput
+  topicsInterest: TopicCreateManyInput
   skills: SkillCreateManyWithoutOwnerInput
-  topicsFocus: UserCreatetopicsFocusInput
-  topicsInterest: UserCreatetopicsInterestInput
   experience: ExperienceCreateManyWithoutOwnerInput
   education: EducationCreateManyWithoutOwnerInput
   posts: PostCreateManyWithoutOwnerInput
@@ -4319,10 +4320,6 @@ input UserCreateInput {
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
-}
-
-input UserCreateinvestorFieldsInput {
-  set: [String!]
 }
 
 input UserCreateManyWithoutConnectionsInput {
@@ -4343,10 +4340,6 @@ input UserCreateManyWithoutFollowingInput {
 input UserCreateManyWithoutMeetingsInput {
   create: [UserCreateWithoutMeetingsInput!]
   connect: [UserWhereUniqueInput!]
-}
-
-input UserCreatementorFieldsInput {
-  set: [String!]
 }
 
 input UserCreateOneInput {
@@ -4378,14 +4371,6 @@ input UserCreaterolesInput {
   set: [Role!]
 }
 
-input UserCreatetopicsFocusInput {
-  set: [String!]
-}
-
-input UserCreatetopicsInterestInput {
-  set: [String!]
-}
-
 input UserCreateWithoutConnectionsInput {
   id: ID
   name: String!
@@ -4402,17 +4387,13 @@ input UserCreateWithoutConnectionsInput {
   website: String
   bio: String
   about: String
-  isMentor: Boolean
-  isFreelancer: Boolean
-  isAgency: Boolean
-  isInvestor: Boolean
-  mentorFields: UserCreatementorFieldsInput
-  freelanceFields: UserCreatefreelanceFieldsInput
-  investorFields: UserCreateinvestorFieldsInput
-  agencyFields: UserCreateagencyFieldsInput
+  topicsMentor: TopicCreateManyInput
+  topicsFreelance: TopicCreateManyInput
+  topicsInvest: TopicCreateManyInput
+  topicsAgency: TopicCreateManyInput
+  topicsFocus: TopicCreateManyInput
+  topicsInterest: TopicCreateManyInput
   skills: SkillCreateManyWithoutOwnerInput
-  topicsFocus: UserCreatetopicsFocusInput
-  topicsInterest: UserCreatetopicsInterestInput
   experience: ExperienceCreateManyWithoutOwnerInput
   education: EducationCreateManyWithoutOwnerInput
   posts: PostCreateManyWithoutOwnerInput
@@ -4440,17 +4421,13 @@ input UserCreateWithoutEducationInput {
   website: String
   bio: String
   about: String
-  isMentor: Boolean
-  isFreelancer: Boolean
-  isAgency: Boolean
-  isInvestor: Boolean
-  mentorFields: UserCreatementorFieldsInput
-  freelanceFields: UserCreatefreelanceFieldsInput
-  investorFields: UserCreateinvestorFieldsInput
-  agencyFields: UserCreateagencyFieldsInput
+  topicsMentor: TopicCreateManyInput
+  topicsFreelance: TopicCreateManyInput
+  topicsInvest: TopicCreateManyInput
+  topicsAgency: TopicCreateManyInput
+  topicsFocus: TopicCreateManyInput
+  topicsInterest: TopicCreateManyInput
   skills: SkillCreateManyWithoutOwnerInput
-  topicsFocus: UserCreatetopicsFocusInput
-  topicsInterest: UserCreatetopicsInterestInput
   experience: ExperienceCreateManyWithoutOwnerInput
   posts: PostCreateManyWithoutOwnerInput
   connections: UserCreateManyWithoutConnectionsInput
@@ -4478,17 +4455,13 @@ input UserCreateWithoutExperienceInput {
   website: String
   bio: String
   about: String
-  isMentor: Boolean
-  isFreelancer: Boolean
-  isAgency: Boolean
-  isInvestor: Boolean
-  mentorFields: UserCreatementorFieldsInput
-  freelanceFields: UserCreatefreelanceFieldsInput
-  investorFields: UserCreateinvestorFieldsInput
-  agencyFields: UserCreateagencyFieldsInput
+  topicsMentor: TopicCreateManyInput
+  topicsFreelance: TopicCreateManyInput
+  topicsInvest: TopicCreateManyInput
+  topicsAgency: TopicCreateManyInput
+  topicsFocus: TopicCreateManyInput
+  topicsInterest: TopicCreateManyInput
   skills: SkillCreateManyWithoutOwnerInput
-  topicsFocus: UserCreatetopicsFocusInput
-  topicsInterest: UserCreatetopicsInterestInput
   education: EducationCreateManyWithoutOwnerInput
   posts: PostCreateManyWithoutOwnerInput
   connections: UserCreateManyWithoutConnectionsInput
@@ -4516,17 +4489,13 @@ input UserCreateWithoutFollowersInput {
   website: String
   bio: String
   about: String
-  isMentor: Boolean
-  isFreelancer: Boolean
-  isAgency: Boolean
-  isInvestor: Boolean
-  mentorFields: UserCreatementorFieldsInput
-  freelanceFields: UserCreatefreelanceFieldsInput
-  investorFields: UserCreateinvestorFieldsInput
-  agencyFields: UserCreateagencyFieldsInput
+  topicsMentor: TopicCreateManyInput
+  topicsFreelance: TopicCreateManyInput
+  topicsInvest: TopicCreateManyInput
+  topicsAgency: TopicCreateManyInput
+  topicsFocus: TopicCreateManyInput
+  topicsInterest: TopicCreateManyInput
   skills: SkillCreateManyWithoutOwnerInput
-  topicsFocus: UserCreatetopicsFocusInput
-  topicsInterest: UserCreatetopicsInterestInput
   experience: ExperienceCreateManyWithoutOwnerInput
   education: EducationCreateManyWithoutOwnerInput
   posts: PostCreateManyWithoutOwnerInput
@@ -4554,17 +4523,13 @@ input UserCreateWithoutFollowingInput {
   website: String
   bio: String
   about: String
-  isMentor: Boolean
-  isFreelancer: Boolean
-  isAgency: Boolean
-  isInvestor: Boolean
-  mentorFields: UserCreatementorFieldsInput
-  freelanceFields: UserCreatefreelanceFieldsInput
-  investorFields: UserCreateinvestorFieldsInput
-  agencyFields: UserCreateagencyFieldsInput
+  topicsMentor: TopicCreateManyInput
+  topicsFreelance: TopicCreateManyInput
+  topicsInvest: TopicCreateManyInput
+  topicsAgency: TopicCreateManyInput
+  topicsFocus: TopicCreateManyInput
+  topicsInterest: TopicCreateManyInput
   skills: SkillCreateManyWithoutOwnerInput
-  topicsFocus: UserCreatetopicsFocusInput
-  topicsInterest: UserCreatetopicsInterestInput
   experience: ExperienceCreateManyWithoutOwnerInput
   education: EducationCreateManyWithoutOwnerInput
   posts: PostCreateManyWithoutOwnerInput
@@ -4592,17 +4557,13 @@ input UserCreateWithoutMeetingsInput {
   website: String
   bio: String
   about: String
-  isMentor: Boolean
-  isFreelancer: Boolean
-  isAgency: Boolean
-  isInvestor: Boolean
-  mentorFields: UserCreatementorFieldsInput
-  freelanceFields: UserCreatefreelanceFieldsInput
-  investorFields: UserCreateinvestorFieldsInput
-  agencyFields: UserCreateagencyFieldsInput
+  topicsMentor: TopicCreateManyInput
+  topicsFreelance: TopicCreateManyInput
+  topicsInvest: TopicCreateManyInput
+  topicsAgency: TopicCreateManyInput
+  topicsFocus: TopicCreateManyInput
+  topicsInterest: TopicCreateManyInput
   skills: SkillCreateManyWithoutOwnerInput
-  topicsFocus: UserCreatetopicsFocusInput
-  topicsInterest: UserCreatetopicsInterestInput
   experience: ExperienceCreateManyWithoutOwnerInput
   education: EducationCreateManyWithoutOwnerInput
   posts: PostCreateManyWithoutOwnerInput
@@ -4630,17 +4591,13 @@ input UserCreateWithoutPostsInput {
   website: String
   bio: String
   about: String
-  isMentor: Boolean
-  isFreelancer: Boolean
-  isAgency: Boolean
-  isInvestor: Boolean
-  mentorFields: UserCreatementorFieldsInput
-  freelanceFields: UserCreatefreelanceFieldsInput
-  investorFields: UserCreateinvestorFieldsInput
-  agencyFields: UserCreateagencyFieldsInput
+  topicsMentor: TopicCreateManyInput
+  topicsFreelance: TopicCreateManyInput
+  topicsInvest: TopicCreateManyInput
+  topicsAgency: TopicCreateManyInput
+  topicsFocus: TopicCreateManyInput
+  topicsInterest: TopicCreateManyInput
   skills: SkillCreateManyWithoutOwnerInput
-  topicsFocus: UserCreatetopicsFocusInput
-  topicsInterest: UserCreatetopicsInterestInput
   experience: ExperienceCreateManyWithoutOwnerInput
   education: EducationCreateManyWithoutOwnerInput
   connections: UserCreateManyWithoutConnectionsInput
@@ -4668,16 +4625,12 @@ input UserCreateWithoutSkillsInput {
   website: String
   bio: String
   about: String
-  isMentor: Boolean
-  isFreelancer: Boolean
-  isAgency: Boolean
-  isInvestor: Boolean
-  mentorFields: UserCreatementorFieldsInput
-  freelanceFields: UserCreatefreelanceFieldsInput
-  investorFields: UserCreateinvestorFieldsInput
-  agencyFields: UserCreateagencyFieldsInput
-  topicsFocus: UserCreatetopicsFocusInput
-  topicsInterest: UserCreatetopicsInterestInput
+  topicsMentor: TopicCreateManyInput
+  topicsFreelance: TopicCreateManyInput
+  topicsInvest: TopicCreateManyInput
+  topicsAgency: TopicCreateManyInput
+  topicsFocus: TopicCreateManyInput
+  topicsInterest: TopicCreateManyInput
   experience: ExperienceCreateManyWithoutOwnerInput
   education: EducationCreateManyWithoutOwnerInput
   posts: PostCreateManyWithoutOwnerInput
@@ -4728,14 +4681,6 @@ enum UserOrderByInput {
   bio_DESC
   about_ASC
   about_DESC
-  isMentor_ASC
-  isMentor_DESC
-  isFreelancer_ASC
-  isFreelancer_DESC
-  isAgency_ASC
-  isAgency_DESC
-  isInvestor_ASC
-  isInvestor_DESC
 }
 
 type UserPreviousValues {
@@ -4755,16 +4700,6 @@ type UserPreviousValues {
   website: String
   bio: String
   about: String
-  isMentor: Boolean
-  isFreelancer: Boolean
-  isAgency: Boolean
-  isInvestor: Boolean
-  mentorFields: [String!]!
-  freelanceFields: [String!]!
-  investorFields: [String!]!
-  agencyFields: [String!]!
-  topicsFocus: [String!]!
-  topicsInterest: [String!]!
   roles: [Role!]!
 }
 
@@ -4975,14 +4910,6 @@ input UserScalarWhereInput {
   about_not_starts_with: String
   about_ends_with: String
   about_not_ends_with: String
-  isMentor: Boolean
-  isMentor_not: Boolean
-  isFreelancer: Boolean
-  isFreelancer_not: Boolean
-  isAgency: Boolean
-  isAgency_not: Boolean
-  isInvestor: Boolean
-  isInvestor_not: Boolean
   AND: [UserScalarWhereInput!]
   OR: [UserScalarWhereInput!]
   NOT: [UserScalarWhereInput!]
@@ -5006,10 +4933,6 @@ input UserSubscriptionWhereInput {
   NOT: [UserSubscriptionWhereInput!]
 }
 
-input UserUpdateagencyFieldsInput {
-  set: [String!]
-}
-
 input UserUpdateDataInput {
   name: String
   firstName: String
@@ -5025,17 +4948,13 @@ input UserUpdateDataInput {
   website: String
   bio: String
   about: String
-  isMentor: Boolean
-  isFreelancer: Boolean
-  isAgency: Boolean
-  isInvestor: Boolean
-  mentorFields: UserUpdatementorFieldsInput
-  freelanceFields: UserUpdatefreelanceFieldsInput
-  investorFields: UserUpdateinvestorFieldsInput
-  agencyFields: UserUpdateagencyFieldsInput
+  topicsMentor: TopicUpdateManyInput
+  topicsFreelance: TopicUpdateManyInput
+  topicsInvest: TopicUpdateManyInput
+  topicsAgency: TopicUpdateManyInput
+  topicsFocus: TopicUpdateManyInput
+  topicsInterest: TopicUpdateManyInput
   skills: SkillUpdateManyWithoutOwnerInput
-  topicsFocus: UserUpdatetopicsFocusInput
-  topicsInterest: UserUpdatetopicsInterestInput
   experience: ExperienceUpdateManyWithoutOwnerInput
   education: EducationUpdateManyWithoutOwnerInput
   posts: PostUpdateManyWithoutOwnerInput
@@ -5046,10 +4965,6 @@ input UserUpdateDataInput {
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
-}
-
-input UserUpdatefreelanceFieldsInput {
-  set: [String!]
 }
 
 input UserUpdateInput {
@@ -5067,17 +4982,13 @@ input UserUpdateInput {
   website: String
   bio: String
   about: String
-  isMentor: Boolean
-  isFreelancer: Boolean
-  isAgency: Boolean
-  isInvestor: Boolean
-  mentorFields: UserUpdatementorFieldsInput
-  freelanceFields: UserUpdatefreelanceFieldsInput
-  investorFields: UserUpdateinvestorFieldsInput
-  agencyFields: UserUpdateagencyFieldsInput
+  topicsMentor: TopicUpdateManyInput
+  topicsFreelance: TopicUpdateManyInput
+  topicsInvest: TopicUpdateManyInput
+  topicsAgency: TopicUpdateManyInput
+  topicsFocus: TopicUpdateManyInput
+  topicsInterest: TopicUpdateManyInput
   skills: SkillUpdateManyWithoutOwnerInput
-  topicsFocus: UserUpdatetopicsFocusInput
-  topicsInterest: UserUpdatetopicsInterestInput
   experience: ExperienceUpdateManyWithoutOwnerInput
   education: EducationUpdateManyWithoutOwnerInput
   posts: PostUpdateManyWithoutOwnerInput
@@ -5088,10 +4999,6 @@ input UserUpdateInput {
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
-}
-
-input UserUpdateinvestorFieldsInput {
-  set: [String!]
 }
 
 input UserUpdateManyDataInput {
@@ -5109,16 +5016,6 @@ input UserUpdateManyDataInput {
   website: String
   bio: String
   about: String
-  isMentor: Boolean
-  isFreelancer: Boolean
-  isAgency: Boolean
-  isInvestor: Boolean
-  mentorFields: UserUpdatementorFieldsInput
-  freelanceFields: UserUpdatefreelanceFieldsInput
-  investorFields: UserUpdateinvestorFieldsInput
-  agencyFields: UserUpdateagencyFieldsInput
-  topicsFocus: UserUpdatetopicsFocusInput
-  topicsInterest: UserUpdatetopicsInterestInput
   roles: UserUpdaterolesInput
 }
 
@@ -5137,16 +5034,6 @@ input UserUpdateManyMutationInput {
   website: String
   bio: String
   about: String
-  isMentor: Boolean
-  isFreelancer: Boolean
-  isAgency: Boolean
-  isInvestor: Boolean
-  mentorFields: UserUpdatementorFieldsInput
-  freelanceFields: UserUpdatefreelanceFieldsInput
-  investorFields: UserUpdateinvestorFieldsInput
-  agencyFields: UserUpdateagencyFieldsInput
-  topicsFocus: UserUpdatetopicsFocusInput
-  topicsInterest: UserUpdatetopicsInterestInput
   roles: UserUpdaterolesInput
 }
 
@@ -5203,10 +5090,6 @@ input UserUpdateManyWithWhereNestedInput {
   data: UserUpdateManyDataInput!
 }
 
-input UserUpdatementorFieldsInput {
-  set: [String!]
-}
-
 input UserUpdateOneRequiredInput {
   create: UserCreateInput
   update: UserUpdateDataInput
@@ -5246,14 +5129,6 @@ input UserUpdaterolesInput {
   set: [Role!]
 }
 
-input UserUpdatetopicsFocusInput {
-  set: [String!]
-}
-
-input UserUpdatetopicsInterestInput {
-  set: [String!]
-}
-
 input UserUpdateWithoutConnectionsDataInput {
   name: String
   firstName: String
@@ -5269,17 +5144,13 @@ input UserUpdateWithoutConnectionsDataInput {
   website: String
   bio: String
   about: String
-  isMentor: Boolean
-  isFreelancer: Boolean
-  isAgency: Boolean
-  isInvestor: Boolean
-  mentorFields: UserUpdatementorFieldsInput
-  freelanceFields: UserUpdatefreelanceFieldsInput
-  investorFields: UserUpdateinvestorFieldsInput
-  agencyFields: UserUpdateagencyFieldsInput
+  topicsMentor: TopicUpdateManyInput
+  topicsFreelance: TopicUpdateManyInput
+  topicsInvest: TopicUpdateManyInput
+  topicsAgency: TopicUpdateManyInput
+  topicsFocus: TopicUpdateManyInput
+  topicsInterest: TopicUpdateManyInput
   skills: SkillUpdateManyWithoutOwnerInput
-  topicsFocus: UserUpdatetopicsFocusInput
-  topicsInterest: UserUpdatetopicsInterestInput
   experience: ExperienceUpdateManyWithoutOwnerInput
   education: EducationUpdateManyWithoutOwnerInput
   posts: PostUpdateManyWithoutOwnerInput
@@ -5306,17 +5177,13 @@ input UserUpdateWithoutEducationDataInput {
   website: String
   bio: String
   about: String
-  isMentor: Boolean
-  isFreelancer: Boolean
-  isAgency: Boolean
-  isInvestor: Boolean
-  mentorFields: UserUpdatementorFieldsInput
-  freelanceFields: UserUpdatefreelanceFieldsInput
-  investorFields: UserUpdateinvestorFieldsInput
-  agencyFields: UserUpdateagencyFieldsInput
+  topicsMentor: TopicUpdateManyInput
+  topicsFreelance: TopicUpdateManyInput
+  topicsInvest: TopicUpdateManyInput
+  topicsAgency: TopicUpdateManyInput
+  topicsFocus: TopicUpdateManyInput
+  topicsInterest: TopicUpdateManyInput
   skills: SkillUpdateManyWithoutOwnerInput
-  topicsFocus: UserUpdatetopicsFocusInput
-  topicsInterest: UserUpdatetopicsInterestInput
   experience: ExperienceUpdateManyWithoutOwnerInput
   posts: PostUpdateManyWithoutOwnerInput
   connections: UserUpdateManyWithoutConnectionsInput
@@ -5343,17 +5210,13 @@ input UserUpdateWithoutExperienceDataInput {
   website: String
   bio: String
   about: String
-  isMentor: Boolean
-  isFreelancer: Boolean
-  isAgency: Boolean
-  isInvestor: Boolean
-  mentorFields: UserUpdatementorFieldsInput
-  freelanceFields: UserUpdatefreelanceFieldsInput
-  investorFields: UserUpdateinvestorFieldsInput
-  agencyFields: UserUpdateagencyFieldsInput
+  topicsMentor: TopicUpdateManyInput
+  topicsFreelance: TopicUpdateManyInput
+  topicsInvest: TopicUpdateManyInput
+  topicsAgency: TopicUpdateManyInput
+  topicsFocus: TopicUpdateManyInput
+  topicsInterest: TopicUpdateManyInput
   skills: SkillUpdateManyWithoutOwnerInput
-  topicsFocus: UserUpdatetopicsFocusInput
-  topicsInterest: UserUpdatetopicsInterestInput
   education: EducationUpdateManyWithoutOwnerInput
   posts: PostUpdateManyWithoutOwnerInput
   connections: UserUpdateManyWithoutConnectionsInput
@@ -5380,17 +5243,13 @@ input UserUpdateWithoutFollowersDataInput {
   website: String
   bio: String
   about: String
-  isMentor: Boolean
-  isFreelancer: Boolean
-  isAgency: Boolean
-  isInvestor: Boolean
-  mentorFields: UserUpdatementorFieldsInput
-  freelanceFields: UserUpdatefreelanceFieldsInput
-  investorFields: UserUpdateinvestorFieldsInput
-  agencyFields: UserUpdateagencyFieldsInput
+  topicsMentor: TopicUpdateManyInput
+  topicsFreelance: TopicUpdateManyInput
+  topicsInvest: TopicUpdateManyInput
+  topicsAgency: TopicUpdateManyInput
+  topicsFocus: TopicUpdateManyInput
+  topicsInterest: TopicUpdateManyInput
   skills: SkillUpdateManyWithoutOwnerInput
-  topicsFocus: UserUpdatetopicsFocusInput
-  topicsInterest: UserUpdatetopicsInterestInput
   experience: ExperienceUpdateManyWithoutOwnerInput
   education: EducationUpdateManyWithoutOwnerInput
   posts: PostUpdateManyWithoutOwnerInput
@@ -5417,17 +5276,13 @@ input UserUpdateWithoutFollowingDataInput {
   website: String
   bio: String
   about: String
-  isMentor: Boolean
-  isFreelancer: Boolean
-  isAgency: Boolean
-  isInvestor: Boolean
-  mentorFields: UserUpdatementorFieldsInput
-  freelanceFields: UserUpdatefreelanceFieldsInput
-  investorFields: UserUpdateinvestorFieldsInput
-  agencyFields: UserUpdateagencyFieldsInput
+  topicsMentor: TopicUpdateManyInput
+  topicsFreelance: TopicUpdateManyInput
+  topicsInvest: TopicUpdateManyInput
+  topicsAgency: TopicUpdateManyInput
+  topicsFocus: TopicUpdateManyInput
+  topicsInterest: TopicUpdateManyInput
   skills: SkillUpdateManyWithoutOwnerInput
-  topicsFocus: UserUpdatetopicsFocusInput
-  topicsInterest: UserUpdatetopicsInterestInput
   experience: ExperienceUpdateManyWithoutOwnerInput
   education: EducationUpdateManyWithoutOwnerInput
   posts: PostUpdateManyWithoutOwnerInput
@@ -5454,17 +5309,13 @@ input UserUpdateWithoutMeetingsDataInput {
   website: String
   bio: String
   about: String
-  isMentor: Boolean
-  isFreelancer: Boolean
-  isAgency: Boolean
-  isInvestor: Boolean
-  mentorFields: UserUpdatementorFieldsInput
-  freelanceFields: UserUpdatefreelanceFieldsInput
-  investorFields: UserUpdateinvestorFieldsInput
-  agencyFields: UserUpdateagencyFieldsInput
+  topicsMentor: TopicUpdateManyInput
+  topicsFreelance: TopicUpdateManyInput
+  topicsInvest: TopicUpdateManyInput
+  topicsAgency: TopicUpdateManyInput
+  topicsFocus: TopicUpdateManyInput
+  topicsInterest: TopicUpdateManyInput
   skills: SkillUpdateManyWithoutOwnerInput
-  topicsFocus: UserUpdatetopicsFocusInput
-  topicsInterest: UserUpdatetopicsInterestInput
   experience: ExperienceUpdateManyWithoutOwnerInput
   education: EducationUpdateManyWithoutOwnerInput
   posts: PostUpdateManyWithoutOwnerInput
@@ -5491,17 +5342,13 @@ input UserUpdateWithoutPostsDataInput {
   website: String
   bio: String
   about: String
-  isMentor: Boolean
-  isFreelancer: Boolean
-  isAgency: Boolean
-  isInvestor: Boolean
-  mentorFields: UserUpdatementorFieldsInput
-  freelanceFields: UserUpdatefreelanceFieldsInput
-  investorFields: UserUpdateinvestorFieldsInput
-  agencyFields: UserUpdateagencyFieldsInput
+  topicsMentor: TopicUpdateManyInput
+  topicsFreelance: TopicUpdateManyInput
+  topicsInvest: TopicUpdateManyInput
+  topicsAgency: TopicUpdateManyInput
+  topicsFocus: TopicUpdateManyInput
+  topicsInterest: TopicUpdateManyInput
   skills: SkillUpdateManyWithoutOwnerInput
-  topicsFocus: UserUpdatetopicsFocusInput
-  topicsInterest: UserUpdatetopicsInterestInput
   experience: ExperienceUpdateManyWithoutOwnerInput
   education: EducationUpdateManyWithoutOwnerInput
   connections: UserUpdateManyWithoutConnectionsInput
@@ -5528,16 +5375,12 @@ input UserUpdateWithoutSkillsDataInput {
   website: String
   bio: String
   about: String
-  isMentor: Boolean
-  isFreelancer: Boolean
-  isAgency: Boolean
-  isInvestor: Boolean
-  mentorFields: UserUpdatementorFieldsInput
-  freelanceFields: UserUpdatefreelanceFieldsInput
-  investorFields: UserUpdateinvestorFieldsInput
-  agencyFields: UserUpdateagencyFieldsInput
-  topicsFocus: UserUpdatetopicsFocusInput
-  topicsInterest: UserUpdatetopicsInterestInput
+  topicsMentor: TopicUpdateManyInput
+  topicsFreelance: TopicUpdateManyInput
+  topicsInvest: TopicUpdateManyInput
+  topicsAgency: TopicUpdateManyInput
+  topicsFocus: TopicUpdateManyInput
+  topicsInterest: TopicUpdateManyInput
   experience: ExperienceUpdateManyWithoutOwnerInput
   education: EducationUpdateManyWithoutOwnerInput
   posts: PostUpdateManyWithoutOwnerInput
@@ -5826,14 +5669,24 @@ input UserWhereInput {
   about_not_starts_with: String
   about_ends_with: String
   about_not_ends_with: String
-  isMentor: Boolean
-  isMentor_not: Boolean
-  isFreelancer: Boolean
-  isFreelancer_not: Boolean
-  isAgency: Boolean
-  isAgency_not: Boolean
-  isInvestor: Boolean
-  isInvestor_not: Boolean
+  topicsMentor_every: TopicWhereInput
+  topicsMentor_some: TopicWhereInput
+  topicsMentor_none: TopicWhereInput
+  topicsFreelance_every: TopicWhereInput
+  topicsFreelance_some: TopicWhereInput
+  topicsFreelance_none: TopicWhereInput
+  topicsInvest_every: TopicWhereInput
+  topicsInvest_some: TopicWhereInput
+  topicsInvest_none: TopicWhereInput
+  topicsAgency_every: TopicWhereInput
+  topicsAgency_some: TopicWhereInput
+  topicsAgency_none: TopicWhereInput
+  topicsFocus_every: TopicWhereInput
+  topicsFocus_some: TopicWhereInput
+  topicsFocus_none: TopicWhereInput
+  topicsInterest_every: TopicWhereInput
+  topicsInterest_some: TopicWhereInput
+  topicsInterest_none: TopicWhereInput
   skills_every: SkillWhereInput
   skills_some: SkillWhereInput
   skills_none: SkillWhereInput

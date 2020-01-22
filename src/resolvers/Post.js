@@ -4,6 +4,14 @@ const Post = {
     return context.prisma.post({ id: parent.id }).owner()
   },
 
+  async topics(parent, args, context) {
+    return context.prisma.post({ id: parent.id }).topics()
+  },
+
+  async subField(parent, args, context) {
+    return context.prisma.post({ id: parent.id }).subField()
+  },
+
   async updates(parent, args, context) {
     return context.prisma.post({ id: parent.id }).updates()
   },
