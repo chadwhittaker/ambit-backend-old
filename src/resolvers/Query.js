@@ -80,10 +80,9 @@ const Query = {
     return posts
   },
 
-  async postsTopic(parent, { after, topic }, context) {
-    let where = { isPrivate: false, topic }
-    if (topic === 'Trending') where = { isPrivate: false }
-    
+  async postsTopic(parent, { after, topicID }, context) {
+    let where = { isPrivate: false, topics_some: { topicID_contains: topicID }}
+    // if (topic === 'Trending') where = { isPrivate: false }
 
     const posts = await context.prisma.postsConnection(
       {

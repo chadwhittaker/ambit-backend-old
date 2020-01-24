@@ -100,8 +100,8 @@ type Post {
   owner: User! @relation(name: "PostsByUser")
   isGoal: Boolean! @default(value: false)
   goal: String
-  subField: [Topic]! @relation(name: "SubFieldOnPost")
-  topics: [Topic]! @relation(name: "TopicsOnPost")
+  subField: Topic @relation(name: "SubFieldOnPost")
+  topics: [Topic] @relation(name: "TopicsOnPost")
   location: String!
   locationLat: Float!
   locationLon: Float!

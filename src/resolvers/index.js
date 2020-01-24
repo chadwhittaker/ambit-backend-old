@@ -15,7 +15,7 @@ const resolvers = {
   Comment,
   Update,
   Story,
-  // Topic,
+  Topic,
 }
 
 module.exports = {
