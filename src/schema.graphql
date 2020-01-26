@@ -9,6 +9,7 @@ type Query {
   postsGlobal(after: String): PostConnection!
   postsLocal(lat: Float, lon: Float, radius: Int, after: String): PostConnection!
   postsTopic(topicID: String!, after: String): PostConnection!
+  postsSearch(text: String, topicID: String, lat: Float, lon: Float, after: String): PostConnection!
   postsUser(id: ID!): [Post]!
   singlePost(id: ID!): Post!
   # allComments(postId: ID!, isUpdate: Boolean): [Comment!]!

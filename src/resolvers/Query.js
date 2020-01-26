@@ -98,6 +98,64 @@ const Query = {
     return posts
   },
 
+  async postsSearch(parent, { text, topicID, lat, lon, after }, context) {
+
+    const haveInputs = !!text || !!topicID;
+    const blankSearch = { id: "99" }
+    const allSearch = { id_not: "99" }
+
+    // text stuff - must return a PostWhereInput
+    const getTextQuery = () => {
+      if (!haveInputs) return blankSearch;
+      if (!text) return allSearch;
+
+      return { OR: [{ content_contains: text }, { goal_contains: text }, { owner: { name_contains: text } }]}
+    }
+
+    // topic stuff - must return a PostWhereInput
+    const getTopicQuery = () => {
+      if (!haveInputs) return blankSearch;
+      if (!topicID) return allSearch;
+
+      return { topics_some: { topicID_contains: topicID }}
+    }
+
+    // location stuff - must return a PostWhereInput
+    const getLocationQuery = () => {
+      if (!!lat && !!lon && !!radius) {
+        const EARTH_RADIUS_MI = 3959;
+        const distance = 50;  // default to 50 miles radius
+        const maxLat = lat + rad2Deg(distance / EARTH_RADIUS_MI);
+        const minLat = lat - rad2Deg(distance / EARTH_RADIUS_MI);
+        const maxLon = lon + rad2Deg(distance / EARTH_RADIUS_MI / Math.cos(deg2Rad(lat)));
+        const minLon = lon - rad2Deg(distance / EARTH_RADIUS_MI / Math.cos(deg2Rad(lat)));
+
+        return [{ locationLat_gte: minLat },
+          { locationLat_lte: maxLat },
+          { locationLon_gte: minLon },
+          { locationLon_lte: maxLon }];
+      }
+
+      return null
+    }
+
+    const posts = await context.prisma.postsConnection(
+      {
+        where: {
+          AND: [
+            getTextQuery(),
+            getTopicQuery()
+          ],
+        },
+        first: 30,
+        after,
+        orderBy: 'lastUpdated_DESC'
+      }
+    );
+
+    return posts
+  },
+
   async postsUser(parent, args, context) {
     // modify so isPrivate only applies if not connected
     // first check if user requesting is connected to args.id
