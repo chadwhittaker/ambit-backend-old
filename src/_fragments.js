@@ -1,0 +1,389 @@
+const gql = require('graphql-tag')
+
+const MyInfoForConnections = gql`
+  fragment MyInfoForConnections on User {
+    id
+    name
+    location
+    locationLat
+    locationLon
+    topicsFocus {
+      topicID
+    }
+    topicsInterest {
+      topicID
+    }
+  }
+`;
+
+const MinimalUser = gql`
+  fragment MinimalUser on User {
+    id
+    name
+    profilePic
+    headline
+    location
+    intro {
+      id
+      title
+      items {
+        id
+        type
+        url
+        link
+        text
+        duration
+      }
+    }
+  }
+`;
+
+const ListPosts = gql`
+  fragment ListPosts on Post {
+    id
+    createdAt
+    lastUpdated
+    owner {
+      id
+      name
+      profilePic
+      headline
+      location
+      intro {
+        id
+        title
+        items {
+          id
+          type
+          url
+          link
+          text
+          duration
+        }
+      }
+    }
+    isGoal
+    goal
+    subField {
+      id
+      name
+    }
+    topics {
+      id
+      name
+      topicID
+      parentTopic {
+        topicID
+      }
+    }
+    location
+    locationLat
+    locationLon
+    content
+    images
+    video
+    pitch
+    isPrivate
+    likesCount
+    likedByMe
+    commentsCount
+    sharesCount
+  }
+`;
+
+const DetailPost = gql`
+  fragment DetailPost on Post {
+    id
+    createdAt
+    lastUpdated
+    owner {
+      id
+      name
+      profilePic
+      headline
+      location
+      intro {
+        id
+        title
+        items {
+          id
+          type
+          url
+          link
+          text
+          duration
+        }
+      }
+    }
+    isGoal
+    goal
+    subField {
+      id
+      name
+    }
+    topics {
+      id
+      name
+      topicID
+      parentTopic {
+        topicID
+      }
+    }
+    location
+    locationLat
+    locationLon
+    content
+    images
+    video
+    pitch
+    isPrivate
+    likesCount
+    likedByMe
+    commentsCount
+    sharesCount
+    comments {
+      id
+    createdAt
+    owner {
+      id
+      name
+      profilePic
+      headline
+      location
+      intro {
+        id
+        title
+        items {
+          id
+          type
+          url
+          link
+          text
+          duration
+        }
+      }
+    }
+    parentPost {
+      id
+    }
+    parentComment {
+      id
+    }
+    parentUpdate {
+      id
+    }
+    content
+    image
+    likesCount
+    likedByMe
+    commentsCount
+    comments {
+      id
+      createdAt
+      owner {
+        id
+        name
+        profilePic
+        headline
+        location
+        intro {
+          id
+          title
+          items {
+            id
+            type
+            url
+            link
+            text
+            duration
+          }
+        }
+      }
+      parentPost {
+        id
+      }
+      parentComment {
+        id
+      }
+      parentUpdate {
+        id
+      }
+      content
+      image
+      likesCount
+      likedByMe
+      commentsCount
+      comments {
+        id
+      }
+    }
+    }
+    updates {
+      comments {
+        id
+    createdAt
+    owner {
+      id
+      name
+      profilePic
+      headline
+      location
+      intro {
+        id
+        title
+        items {
+          id
+          type
+          url
+          link
+          text
+          duration
+        }
+      }
+    }
+    parentPost {
+      id
+    }
+    parentComment {
+      id
+    }
+    parentUpdate {
+      id
+    }
+    content
+    image
+    likesCount
+    likedByMe
+    commentsCount
+    comments {
+      id
+      createdAt
+      owner {
+        id
+        name
+        profilePic
+        headline
+        location
+        intro {
+          id
+          title
+          items {
+            id
+            type
+            url
+            link
+            text
+            duration
+          }
+        }
+      }
+      parentPost {
+        id
+      }
+      parentComment {
+        id
+      }
+      parentUpdate {
+        id
+      }
+      content
+      image
+      likesCount
+      likedByMe
+      commentsCount
+      comments {
+        id
+      }
+    }
+      }
+    }
+  }
+  ${MinimalUser}
+`;
+
+const CommentFragment = gql`
+  fragment CommentFragment on Comment {
+    id
+    createdAt
+    owner {
+      id
+      name
+      profilePic
+      headline
+      location
+      intro {
+        id
+        title
+        items {
+          id
+          type
+          url
+          link
+          text
+          duration
+        }
+      }
+    }
+    parentPost {
+      id
+    }
+    parentComment {
+      id
+    }
+    parentUpdate {
+      id
+    }
+    content
+    image
+    likesCount
+    likedByMe
+    commentsCount
+    comments {
+      id
+      createdAt
+      owner {
+        id
+        name
+        profilePic
+        headline
+        location
+        intro {
+          id
+          title
+          items {
+            id
+            type
+            url
+            link
+            text
+            duration
+          }
+        }
+      }
+      parentPost {
+        id
+      }
+      parentComment {
+        id
+      }
+      parentUpdate {
+        id
+      }
+      content
+      image
+      likesCount
+      likedByMe
+      commentsCount
+      comments {
+        id
+      }
+    }
+  }
+`;
+
+
+module.exports = {
+  MyInfoForConnections,
+  ListPosts,
+  DetailPost,
+}

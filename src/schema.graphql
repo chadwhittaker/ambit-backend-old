@@ -3,19 +3,19 @@
 scalar DateTime 
 
 type Query {
+  # users
   userLoggedIn: User
   user(id: ID!): User
   users: [User]!
+  usersForYou: [SuggestedConnection]!
+
+  # posts
   postsGlobal(after: String): PostConnection!
   postsLocal(lat: Float, lon: Float, radius: Int, after: String): PostConnection!
   postsTopic(topicID: String!, after: String): PostConnection!
-  postsSearch(text: String, topicID: String, lat: Float, lon: Float, after: String): PostConnection!
+  postsSearch(text: String, goal: String, topicID: String, lat: Float, lon: Float, after: String): PostConnection!
   postsUser(id: ID!): [Post]!
-  singlePost(id: ID!): Post!
-  # allComments(postId: ID!, isUpdate: Boolean): [Comment!]!
-
-  
-  # singleUpdate(id: ID!): Update!
+  singlePost(id: ID!): PostWithMatches!
 }
 
 type Mutation {
@@ -64,6 +64,21 @@ type Mutation {
 type AuthPayload {
   token: String
   user: User
+}
+
+type SuggestedConnection {
+  user: User!
+  reason: Reason!
+}
+
+type Reason {
+  text: String!
+  icon: String
+}
+
+type PostWithMatches {
+  post: Post!
+  matches: [User]
 }
 
 enum Role {
