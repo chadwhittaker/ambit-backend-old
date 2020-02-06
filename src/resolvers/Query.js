@@ -2,74 +2,7 @@
 // const { PostOrderByInput } = require('../generated/prisma-client/prisma-schema.js')
 const { rad2Deg, deg2Rad } = require('../utils')
 const { MyInfoForConnections, DetailPost } = require('../_fragments.js')
-
-// custom functions
-const getUsersMatchingTopicsFocus = async (me, context) => {
-  try {
-    const usersMatchingTopicsFocus = await context.prisma.users({
-      first: 3,
-      where: {
-        AND: [
-          { topicsFocus_some: { OR: me.topicsFocus } },
-          { id_not: me.id },
-        ]
-      }
-    });
-
-    // add reason
-    const usersMatchingTopicsFocusReason = usersMatchingTopicsFocus.map(user => {
-      return { user, reason: { text: 'You have a matching topic of focus', icon: 'comment' } };
-    })
-
-    return usersMatchingTopicsFocusReason;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-}
-
-const getUsersMatchingGoal = async (me, post, context) => {
-  const {
-    goal,
-    subField,
-    location,
-    locationLat,
-    locationLon,
-    topics,
-  } = post;
-
-  if (!goal) return [];
-
-  // prepare variables for query
-  const topicsIDonly = topics.map(topic => {
-    return { topicID: topic.topicID }
-  })
-
-  try {
-    const usersMatchingGoal = await context.prisma.users({
-      first: 10,
-      where: {
-
-        AND: [
-          { id_not: me.id },
-          {
-            OR: [
-              // subtopic is one of their topics of focus
-              { topicsFocus_some: subField.topicID },
-              // one of the post's topics is one of their topics of interest
-              { topicsFocus_some: { OR: topicsIDonly } },
-            ],
-          }
-        ]
-      }
-    });
-
-    return usersMatchingGoal;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-}
+const { getUsersMatchingManyGoals, getUsersMatchingGoal, getUsersMatchingTopicsFocus, getActiveGoalsOfUser } = require('./functions')
 
 const Query = {
 
@@ -96,27 +29,6 @@ const Query = {
     const users = await context.prisma.users();
 
     return users;
-  },
-
-
-
-  // CONNECTIONS FOR YOU
-  async usersForYou(parent, args, context) {
-    // get my user data
-    const me = await context.prisma.user({ id: context.request.userId }).$fragment(MyInfoForConnections);
-
-    // 1. find users that supplement of your Active Goals
-    // add reason 
-
-    // 2. find users that share a common Topic of Focus
-    const usersMatchingTopicsFocusReason = await getUsersMatchingTopicsFocus(me, context)
-
-
-    // combine all the arrays
-    const SuggestedConnections = [...usersMatchingTopicsFocusReason];
-    // console.log(SuggestedConnections)
-
-    return SuggestedConnections;
   },
 
   async postsGlobal(parent, { after }, context) {
@@ -310,9 +222,54 @@ const Query = {
     const post = await context.prisma.post({ id }).$fragment(DetailPost);
 
     // get matches based on Goal and User 
-    const usersMatchingGoal = await getUsersMatchingGoal(me, post, context)
+    const isMyPost = context.request.userId === post.owner.id;
+
+    let usersMatchingGoal = null;
+    if (isMyPost && !!post.goal) {
+      usersMatchingGoal = await getUsersMatchingGoal(me, post, context) // returns [Match]
+    }
 
     return { post, matches: usersMatchingGoal }
+  },
+
+  async activeGoalsUser(parent, args, context) {
+    // all these await functions need parallized
+    const me = await context.prisma.user({ id: context.request.userId }).$fragment(MyInfoForConnections);
+    const myActiveGoals = await getActiveGoalsOfUser(me, context)
+
+    const myActiveGoalsWithMatches = myActiveGoals.map(post => {
+      try {
+        const usersMatchingGoal = getUsersMatchingGoal(me, post, context) // returns [Match]
+        return { post, matches: usersMatchingGoal }
+      } catch (e) {
+        console.error(e)
+        return { post, matches: [] }
+      }
+    })
+
+    return myActiveGoalsWithMatches; // [PostWithMatches]!
+  },
+
+  async allConnections(parent, args, context) {
+    // all these await functions need parallized
+
+    // 1. find matches for each active goal
+    const me = await context.prisma.user({ id: context.request.userId }).$fragment(MyInfoForConnections);
+    const myActiveGoals = await getActiveGoalsOfUser(me, context)
+    const myActiveGoalsWithMatches = myActiveGoals.map(post => {
+      try {
+        const usersMatchingGoal = getUsersMatchingGoal(me, post, context) // returns [Match]
+        return { post, matches: usersMatchingGoal } // returns [PostWithMatches]
+      } catch (e) {
+        console.error(e)
+        return { post, matches: [] }
+      }
+    })
+
+    // 2. find users that share a common Topic of Focus
+    const usersMatchingTopicsFocus = await getUsersMatchingTopicsFocus(me, context) // returns [Match]
+
+    return { postsWithMatches: myActiveGoalsWithMatches, matches: usersMatchingTopicsFocus }; // AllConnections
   },
 
 };

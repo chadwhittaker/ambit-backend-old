@@ -120,6 +120,7 @@ const DetailPost = gql`
     subField {
       id
       name
+      topicID
     }
     topics {
       id
