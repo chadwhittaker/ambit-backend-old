@@ -69,7 +69,7 @@ const getUsersMatchingTopicsFocus = async (me, context, excludeIDs = []) => {
 // find matches for MANY goals
 const getUsersMatchingManyGoals = (me, posts, context) => {
   const usersMatchingGoalsPromises = posts.map(post => {
-    const usersMatchingGoal = getUsersMatchingGoal(me, post, context, 3);  // each one returns a promise
+    const usersMatchingGoal = getUsersMatchingGoal(me, post, context, 10);  // each one returns a promise
     return usersMatchingGoal;
   })
   return Promise.all(usersMatchingGoalsPromises);
@@ -84,6 +84,8 @@ const getUsersMatchingGoal = async (me, post, context, first = 10) => {
   if (post.goal === 'Find mentors') return getMatchesFindMentors(me, post, context, first);
   if (post.goal === 'Find freelancers') return getMatchesFindFreelancers(me, post, context, first);
   if (post.goal === 'Find agencies') return getMatchesFindFreelancers(me, post, context, first);
+  if (post.goal === 'Find business partners') return getMatchesFindBusinessPartners(me, post, context, first);
+  if (post.goal === 'Network') return getMatchesFindBusinessPartners(me, post, context, first);
   if (post.goal === 'Get coffee') {
     try {
       const coffeeUsers1 = await getMatchesGetCoffee1(me, post, context, first);
@@ -297,6 +299,43 @@ const getMatchesGetCoffee2 = async (me, post, context, first = 10, excludeIDs) =
     // add reason
     const usersMatchingGoalWithReason = usersMatchingGoal.map(user => {
       return { user, reason: { text: `You and ${user.firstName} are both focused on photography & live nearby`, icon: 'comment' } };
+    })
+
+    return usersMatchingGoalWithReason;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+// FIND FREELANCERS - Matches
+const getMatchesFindBusinessPartners = async (me, post, context, first = 10) => {
+  const {
+    goal,
+    subField,
+    // location,
+    // locationLat,
+    // locationLon,
+    // topics = [],
+  } = post;
+
+  if (goal !== "Find business partners" || !goal || !subField.topicID) return [];
+
+  try {
+    const usersMatchingGoal = await context.prisma.users({
+      first,
+      where: {
+        AND: [
+          { id_not: me.id },
+          // the user is a freelancer of type subField
+          { topicsFocus_some: { topicID: subField.topicID } },
+        ]
+      }
+    });
+
+    // add reason
+    const usersMatchingGoalWithReason = usersMatchingGoal.map(user => {
+      return { user, reason: { text: `You and ${user.firstName} are both focused on ${subField.name.toLowerCase()}`, icon: 'users' } };
     })
 
     return usersMatchingGoalWithReason;
