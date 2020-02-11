@@ -19,6 +19,7 @@ type User {
   profilePic: String
   bannerPic: String
   location: String
+  locationID: String
   locationLat: Float
   locationLon: Float
   headline: String
@@ -77,6 +78,9 @@ type Experience {
   endDateMonth: String
   endDateYear: Int
   location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
   currentRole: Boolean @default(value: false)
 }
 
@@ -90,6 +94,9 @@ type Education {
   endDateMonth: String
   endDateYear: Int
   location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
   currentRole: Boolean @default(value: false)
 }
 
@@ -103,6 +110,7 @@ type Post {
   subField: Topic @relation(name: "SubFieldOnPost")
   topics: [Topic] @relation(name: "TopicsOnPost")
   location: String!
+  locationID: String!
   locationLat: Float!
   locationLon: Float!
   content: String!

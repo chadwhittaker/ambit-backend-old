@@ -570,6 +570,9 @@ type Education {
   endDateMonth: String
   endDateYear: Int
   location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
   currentRole: Boolean
 }
 
@@ -589,6 +592,9 @@ input EducationCreateInput {
   endDateMonth: String
   endDateYear: Int
   location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
   currentRole: Boolean
 }
 
@@ -606,6 +612,9 @@ input EducationCreateWithoutOwnerInput {
   endDateMonth: String
   endDateYear: Int
   location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
   currentRole: Boolean
 }
 
@@ -631,6 +640,12 @@ enum EducationOrderByInput {
   endDateYear_DESC
   location_ASC
   location_DESC
+  locationID_ASC
+  locationID_DESC
+  locationLat_ASC
+  locationLat_DESC
+  locationLon_ASC
+  locationLon_DESC
   currentRole_ASC
   currentRole_DESC
 }
@@ -644,6 +659,9 @@ type EducationPreviousValues {
   endDateMonth: String
   endDateYear: Int
   location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
   currentRole: Boolean
 }
 
@@ -748,6 +766,36 @@ input EducationScalarWhereInput {
   location_not_starts_with: String
   location_ends_with: String
   location_not_ends_with: String
+  locationID: String
+  locationID_not: String
+  locationID_in: [String!]
+  locationID_not_in: [String!]
+  locationID_lt: String
+  locationID_lte: String
+  locationID_gt: String
+  locationID_gte: String
+  locationID_contains: String
+  locationID_not_contains: String
+  locationID_starts_with: String
+  locationID_not_starts_with: String
+  locationID_ends_with: String
+  locationID_not_ends_with: String
+  locationLat: Float
+  locationLat_not: Float
+  locationLat_in: [Float!]
+  locationLat_not_in: [Float!]
+  locationLat_lt: Float
+  locationLat_lte: Float
+  locationLat_gt: Float
+  locationLat_gte: Float
+  locationLon: Float
+  locationLon_not: Float
+  locationLon_in: [Float!]
+  locationLon_not_in: [Float!]
+  locationLon_lt: Float
+  locationLon_lte: Float
+  locationLon_gt: Float
+  locationLon_gte: Float
   currentRole: Boolean
   currentRole_not: Boolean
   AND: [EducationScalarWhereInput!]
@@ -782,6 +830,9 @@ input EducationUpdateInput {
   endDateMonth: String
   endDateYear: Int
   location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
   currentRole: Boolean
 }
 
@@ -793,6 +844,9 @@ input EducationUpdateManyDataInput {
   endDateMonth: String
   endDateYear: Int
   location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
   currentRole: Boolean
 }
 
@@ -804,6 +858,9 @@ input EducationUpdateManyMutationInput {
   endDateMonth: String
   endDateYear: Int
   location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
   currentRole: Boolean
 }
 
@@ -832,6 +889,9 @@ input EducationUpdateWithoutOwnerDataInput {
   endDateMonth: String
   endDateYear: Int
   location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
   currentRole: Boolean
 }
 
@@ -948,6 +1008,36 @@ input EducationWhereInput {
   location_not_starts_with: String
   location_ends_with: String
   location_not_ends_with: String
+  locationID: String
+  locationID_not: String
+  locationID_in: [String!]
+  locationID_not_in: [String!]
+  locationID_lt: String
+  locationID_lte: String
+  locationID_gt: String
+  locationID_gte: String
+  locationID_contains: String
+  locationID_not_contains: String
+  locationID_starts_with: String
+  locationID_not_starts_with: String
+  locationID_ends_with: String
+  locationID_not_ends_with: String
+  locationLat: Float
+  locationLat_not: Float
+  locationLat_in: [Float!]
+  locationLat_not_in: [Float!]
+  locationLat_lt: Float
+  locationLat_lte: Float
+  locationLat_gt: Float
+  locationLat_gte: Float
+  locationLon: Float
+  locationLon_not: Float
+  locationLon_in: [Float!]
+  locationLon_not_in: [Float!]
+  locationLon_lt: Float
+  locationLon_lte: Float
+  locationLon_gt: Float
+  locationLon_gte: Float
   currentRole: Boolean
   currentRole_not: Boolean
   AND: [EducationWhereInput!]
@@ -969,6 +1059,9 @@ type Experience {
   endDateMonth: String
   endDateYear: Int
   location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
   currentRole: Boolean
 }
 
@@ -988,6 +1081,9 @@ input ExperienceCreateInput {
   endDateMonth: String
   endDateYear: Int
   location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
   currentRole: Boolean
 }
 
@@ -1005,6 +1101,9 @@ input ExperienceCreateWithoutOwnerInput {
   endDateMonth: String
   endDateYear: Int
   location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
   currentRole: Boolean
 }
 
@@ -1030,6 +1129,12 @@ enum ExperienceOrderByInput {
   endDateYear_DESC
   location_ASC
   location_DESC
+  locationID_ASC
+  locationID_DESC
+  locationLat_ASC
+  locationLat_DESC
+  locationLon_ASC
+  locationLon_DESC
   currentRole_ASC
   currentRole_DESC
 }
@@ -1043,6 +1148,9 @@ type ExperiencePreviousValues {
   endDateMonth: String
   endDateYear: Int
   location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
   currentRole: Boolean
 }
 
@@ -1147,6 +1255,36 @@ input ExperienceScalarWhereInput {
   location_not_starts_with: String
   location_ends_with: String
   location_not_ends_with: String
+  locationID: String
+  locationID_not: String
+  locationID_in: [String!]
+  locationID_not_in: [String!]
+  locationID_lt: String
+  locationID_lte: String
+  locationID_gt: String
+  locationID_gte: String
+  locationID_contains: String
+  locationID_not_contains: String
+  locationID_starts_with: String
+  locationID_not_starts_with: String
+  locationID_ends_with: String
+  locationID_not_ends_with: String
+  locationLat: Float
+  locationLat_not: Float
+  locationLat_in: [Float!]
+  locationLat_not_in: [Float!]
+  locationLat_lt: Float
+  locationLat_lte: Float
+  locationLat_gt: Float
+  locationLat_gte: Float
+  locationLon: Float
+  locationLon_not: Float
+  locationLon_in: [Float!]
+  locationLon_not_in: [Float!]
+  locationLon_lt: Float
+  locationLon_lte: Float
+  locationLon_gt: Float
+  locationLon_gte: Float
   currentRole: Boolean
   currentRole_not: Boolean
   AND: [ExperienceScalarWhereInput!]
@@ -1181,6 +1319,9 @@ input ExperienceUpdateInput {
   endDateMonth: String
   endDateYear: Int
   location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
   currentRole: Boolean
 }
 
@@ -1192,6 +1333,9 @@ input ExperienceUpdateManyDataInput {
   endDateMonth: String
   endDateYear: Int
   location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
   currentRole: Boolean
 }
 
@@ -1203,6 +1347,9 @@ input ExperienceUpdateManyMutationInput {
   endDateMonth: String
   endDateYear: Int
   location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
   currentRole: Boolean
 }
 
@@ -1231,6 +1378,9 @@ input ExperienceUpdateWithoutOwnerDataInput {
   endDateMonth: String
   endDateYear: Int
   location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
   currentRole: Boolean
 }
 
@@ -1347,6 +1497,36 @@ input ExperienceWhereInput {
   location_not_starts_with: String
   location_ends_with: String
   location_not_ends_with: String
+  locationID: String
+  locationID_not: String
+  locationID_in: [String!]
+  locationID_not_in: [String!]
+  locationID_lt: String
+  locationID_lte: String
+  locationID_gt: String
+  locationID_gte: String
+  locationID_contains: String
+  locationID_not_contains: String
+  locationID_starts_with: String
+  locationID_not_starts_with: String
+  locationID_ends_with: String
+  locationID_not_ends_with: String
+  locationLat: Float
+  locationLat_not: Float
+  locationLat_in: [Float!]
+  locationLat_not_in: [Float!]
+  locationLat_lt: Float
+  locationLat_lte: Float
+  locationLat_gt: Float
+  locationLat_gte: Float
+  locationLon: Float
+  locationLon_not: Float
+  locationLon_in: [Float!]
+  locationLon_not_in: [Float!]
+  locationLon_lt: Float
+  locationLon_lte: Float
+  locationLon_gt: Float
+  locationLon_gte: Float
   currentRole: Boolean
   currentRole_not: Boolean
   AND: [ExperienceWhereInput!]
@@ -1872,6 +2052,7 @@ type Post {
   subField: Topic
   topics(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic!]
   location: String!
+  locationID: String!
   locationLat: Float!
   locationLon: Float!
   content: String!
@@ -1907,6 +2088,7 @@ input PostCreateInput {
   subField: TopicCreateOneInput
   topics: TopicCreateManyInput
   location: String!
+  locationID: String!
   locationLat: Float!
   locationLon: Float!
   content: String!
@@ -1951,6 +2133,7 @@ input PostCreateWithoutCommentsInput {
   subField: TopicCreateOneInput
   topics: TopicCreateManyInput
   location: String!
+  locationID: String!
   locationLat: Float!
   locationLon: Float!
   content: String!
@@ -1974,6 +2157,7 @@ input PostCreateWithoutOwnerInput {
   subField: TopicCreateOneInput
   topics: TopicCreateManyInput
   location: String!
+  locationID: String!
   locationLat: Float!
   locationLon: Float!
   content: String!
@@ -1999,6 +2183,7 @@ input PostCreateWithoutUpdatesInput {
   subField: TopicCreateOneInput
   topics: TopicCreateManyInput
   location: String!
+  locationID: String!
   locationLat: Float!
   locationLon: Float!
   content: String!
@@ -2032,6 +2217,8 @@ enum PostOrderByInput {
   goal_DESC
   location_ASC
   location_DESC
+  locationID_ASC
+  locationID_DESC
   locationLat_ASC
   locationLat_DESC
   locationLon_ASC
@@ -2061,6 +2248,7 @@ type PostPreviousValues {
   isGoal: Boolean!
   goal: String
   location: String!
+  locationID: String!
   locationLat: Float!
   locationLon: Float!
   content: String!
@@ -2136,6 +2324,20 @@ input PostScalarWhereInput {
   location_not_starts_with: String
   location_ends_with: String
   location_not_ends_with: String
+  locationID: String
+  locationID_not: String
+  locationID_in: [String!]
+  locationID_not_in: [String!]
+  locationID_lt: String
+  locationID_lte: String
+  locationID_gt: String
+  locationID_gte: String
+  locationID_contains: String
+  locationID_not_contains: String
+  locationID_starts_with: String
+  locationID_not_starts_with: String
+  locationID_ends_with: String
+  locationID_not_ends_with: String
   locationLat: Float
   locationLat_not: Float
   locationLat_in: [Float!]
@@ -2257,6 +2459,7 @@ input PostUpdateInput {
   subField: TopicUpdateOneInput
   topics: TopicUpdateManyInput
   location: String
+  locationID: String
   locationLat: Float
   locationLon: Float
   content: String
@@ -2282,6 +2485,7 @@ input PostUpdateManyDataInput {
   isGoal: Boolean
   goal: String
   location: String
+  locationID: String
   locationLat: Float
   locationLon: Float
   content: String
@@ -2301,6 +2505,7 @@ input PostUpdateManyMutationInput {
   isGoal: Boolean
   goal: String
   location: String
+  locationID: String
   locationLat: Float
   locationLon: Float
   content: String
@@ -2356,6 +2561,7 @@ input PostUpdateWithoutCommentsDataInput {
   subField: TopicUpdateOneInput
   topics: TopicUpdateManyInput
   location: String
+  locationID: String
   locationLat: Float
   locationLon: Float
   content: String
@@ -2378,6 +2584,7 @@ input PostUpdateWithoutOwnerDataInput {
   subField: TopicUpdateOneInput
   topics: TopicUpdateManyInput
   location: String
+  locationID: String
   locationLat: Float
   locationLon: Float
   content: String
@@ -2402,6 +2609,7 @@ input PostUpdateWithoutUpdatesDataInput {
   subField: TopicUpdateOneInput
   topics: TopicUpdateManyInput
   location: String
+  locationID: String
   locationLat: Float
   locationLon: Float
   content: String
@@ -2504,6 +2712,20 @@ input PostWhereInput {
   location_not_starts_with: String
   location_ends_with: String
   location_not_ends_with: String
+  locationID: String
+  locationID_not: String
+  locationID_in: [String!]
+  locationID_not_in: [String!]
+  locationID_lt: String
+  locationID_lte: String
+  locationID_gt: String
+  locationID_gte: String
+  locationID_contains: String
+  locationID_not_contains: String
+  locationID_starts_with: String
+  locationID_not_starts_with: String
+  locationID_ends_with: String
+  locationID_not_ends_with: String
   locationLat: Float
   locationLat_not: Float
   locationLat_in: [Float!]
@@ -4256,6 +4478,7 @@ type User {
   profilePic: String
   bannerPic: String
   location: String
+  locationID: String
   locationLat: Float
   locationLon: Float
   headline: String
@@ -4297,6 +4520,7 @@ input UserCreateInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationID: String
   locationLat: Float
   locationLon: Float
   headline: String
@@ -4381,6 +4605,7 @@ input UserCreateWithoutConnectionsInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationID: String
   locationLat: Float
   locationLon: Float
   headline: String
@@ -4415,6 +4640,7 @@ input UserCreateWithoutEducationInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationID: String
   locationLat: Float
   locationLon: Float
   headline: String
@@ -4449,6 +4675,7 @@ input UserCreateWithoutExperienceInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationID: String
   locationLat: Float
   locationLon: Float
   headline: String
@@ -4483,6 +4710,7 @@ input UserCreateWithoutFollowersInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationID: String
   locationLat: Float
   locationLon: Float
   headline: String
@@ -4517,6 +4745,7 @@ input UserCreateWithoutFollowingInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationID: String
   locationLat: Float
   locationLon: Float
   headline: String
@@ -4551,6 +4780,7 @@ input UserCreateWithoutMeetingsInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationID: String
   locationLat: Float
   locationLon: Float
   headline: String
@@ -4585,6 +4815,7 @@ input UserCreateWithoutPostsInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationID: String
   locationLat: Float
   locationLon: Float
   headline: String
@@ -4619,6 +4850,7 @@ input UserCreateWithoutSkillsInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationID: String
   locationLat: Float
   locationLon: Float
   headline: String
@@ -4669,6 +4901,8 @@ enum UserOrderByInput {
   bannerPic_DESC
   location_ASC
   location_DESC
+  locationID_ASC
+  locationID_DESC
   locationLat_ASC
   locationLat_DESC
   locationLon_ASC
@@ -4694,6 +4928,7 @@ type UserPreviousValues {
   profilePic: String
   bannerPic: String
   location: String
+  locationID: String
   locationLat: Float
   locationLon: Float
   headline: String
@@ -4838,6 +5073,20 @@ input UserScalarWhereInput {
   location_not_starts_with: String
   location_ends_with: String
   location_not_ends_with: String
+  locationID: String
+  locationID_not: String
+  locationID_in: [String!]
+  locationID_not_in: [String!]
+  locationID_lt: String
+  locationID_lte: String
+  locationID_gt: String
+  locationID_gte: String
+  locationID_contains: String
+  locationID_not_contains: String
+  locationID_starts_with: String
+  locationID_not_starts_with: String
+  locationID_ends_with: String
+  locationID_not_ends_with: String
   locationLat: Float
   locationLat_not: Float
   locationLat_in: [Float!]
@@ -4942,6 +5191,7 @@ input UserUpdateDataInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationID: String
   locationLat: Float
   locationLon: Float
   headline: String
@@ -4976,6 +5226,7 @@ input UserUpdateInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationID: String
   locationLat: Float
   locationLon: Float
   headline: String
@@ -5010,6 +5261,7 @@ input UserUpdateManyDataInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationID: String
   locationLat: Float
   locationLon: Float
   headline: String
@@ -5028,6 +5280,7 @@ input UserUpdateManyMutationInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationID: String
   locationLat: Float
   locationLon: Float
   headline: String
@@ -5138,6 +5391,7 @@ input UserUpdateWithoutConnectionsDataInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationID: String
   locationLat: Float
   locationLon: Float
   headline: String
@@ -5171,6 +5425,7 @@ input UserUpdateWithoutEducationDataInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationID: String
   locationLat: Float
   locationLon: Float
   headline: String
@@ -5204,6 +5459,7 @@ input UserUpdateWithoutExperienceDataInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationID: String
   locationLat: Float
   locationLon: Float
   headline: String
@@ -5237,6 +5493,7 @@ input UserUpdateWithoutFollowersDataInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationID: String
   locationLat: Float
   locationLon: Float
   headline: String
@@ -5270,6 +5527,7 @@ input UserUpdateWithoutFollowingDataInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationID: String
   locationLat: Float
   locationLon: Float
   headline: String
@@ -5303,6 +5561,7 @@ input UserUpdateWithoutMeetingsDataInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationID: String
   locationLat: Float
   locationLon: Float
   headline: String
@@ -5336,6 +5595,7 @@ input UserUpdateWithoutPostsDataInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationID: String
   locationLat: Float
   locationLon: Float
   headline: String
@@ -5369,6 +5629,7 @@ input UserUpdateWithoutSkillsDataInput {
   profilePic: String
   bannerPic: String
   location: String
+  locationID: String
   locationLat: Float
   locationLon: Float
   headline: String
@@ -5597,6 +5858,20 @@ input UserWhereInput {
   location_not_starts_with: String
   location_ends_with: String
   location_not_ends_with: String
+  locationID: String
+  locationID_not: String
+  locationID_in: [String!]
+  locationID_not_in: [String!]
+  locationID_lt: String
+  locationID_lte: String
+  locationID_gt: String
+  locationID_gte: String
+  locationID_contains: String
+  locationID_not_contains: String
+  locationID_starts_with: String
+  locationID_not_starts_with: String
+  locationID_ends_with: String
+  locationID_not_ends_with: String
   locationLat: Float
   locationLat_not: Float
   locationLat_in: [Float!]

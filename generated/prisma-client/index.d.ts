@@ -551,6 +551,8 @@ export type UserOrderByInput =
   | "bannerPic_DESC"
   | "location_ASC"
   | "location_DESC"
+  | "locationID_ASC"
+  | "locationID_DESC"
   | "locationLat_ASC"
   | "locationLat_DESC"
   | "locationLon_ASC"
@@ -639,6 +641,12 @@ export type ExperienceOrderByInput =
   | "endDateYear_DESC"
   | "location_ASC"
   | "location_DESC"
+  | "locationID_ASC"
+  | "locationID_DESC"
+  | "locationLat_ASC"
+  | "locationLat_DESC"
+  | "locationLon_ASC"
+  | "locationLon_DESC"
   | "currentRole_ASC"
   | "currentRole_DESC";
 
@@ -659,6 +667,12 @@ export type EducationOrderByInput =
   | "endDateYear_DESC"
   | "location_ASC"
   | "location_DESC"
+  | "locationID_ASC"
+  | "locationID_DESC"
+  | "locationLat_ASC"
+  | "locationLat_DESC"
+  | "locationLon_ASC"
+  | "locationLon_DESC"
   | "currentRole_ASC"
   | "currentRole_DESC";
 
@@ -675,6 +689,8 @@ export type PostOrderByInput =
   | "goal_DESC"
   | "location_ASC"
   | "location_DESC"
+  | "locationID_ASC"
+  | "locationID_DESC"
   | "locationLat_ASC"
   | "locationLat_DESC"
   | "locationLon_ASC"
@@ -1330,6 +1346,7 @@ export interface UserUpdateManyMutationInput {
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
   headline?: Maybe<String>;
@@ -1460,6 +1477,9 @@ export interface ExperienceUpdateWithoutOwnerDataInput {
   endDateMonth?: Maybe<String>;
   endDateYear?: Maybe<Int>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
   currentRole?: Maybe<Boolean>;
 }
 
@@ -1582,6 +1602,36 @@ export interface ExperienceScalarWhereInput {
   location_not_starts_with?: Maybe<String>;
   location_ends_with?: Maybe<String>;
   location_not_ends_with?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationID_not?: Maybe<String>;
+  locationID_in?: Maybe<String[] | String>;
+  locationID_not_in?: Maybe<String[] | String>;
+  locationID_lt?: Maybe<String>;
+  locationID_lte?: Maybe<String>;
+  locationID_gt?: Maybe<String>;
+  locationID_gte?: Maybe<String>;
+  locationID_contains?: Maybe<String>;
+  locationID_not_contains?: Maybe<String>;
+  locationID_starts_with?: Maybe<String>;
+  locationID_not_starts_with?: Maybe<String>;
+  locationID_ends_with?: Maybe<String>;
+  locationID_not_ends_with?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLat_not?: Maybe<Float>;
+  locationLat_in?: Maybe<Float[] | Float>;
+  locationLat_not_in?: Maybe<Float[] | Float>;
+  locationLat_lt?: Maybe<Float>;
+  locationLat_lte?: Maybe<Float>;
+  locationLat_gt?: Maybe<Float>;
+  locationLat_gte?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  locationLon_not?: Maybe<Float>;
+  locationLon_in?: Maybe<Float[] | Float>;
+  locationLon_not_in?: Maybe<Float[] | Float>;
+  locationLon_lt?: Maybe<Float>;
+  locationLon_lte?: Maybe<Float>;
+  locationLon_gt?: Maybe<Float>;
+  locationLon_gte?: Maybe<Float>;
   currentRole?: Maybe<Boolean>;
   currentRole_not?: Maybe<Boolean>;
   AND?: Maybe<ExperienceScalarWhereInput[] | ExperienceScalarWhereInput>;
@@ -1611,6 +1661,9 @@ export interface ExperienceUpdateManyDataInput {
   endDateMonth?: Maybe<String>;
   endDateYear?: Maybe<Int>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
   currentRole?: Maybe<Boolean>;
 }
 
@@ -1661,6 +1714,7 @@ export interface UserUpdateWithoutSkillsDataInput {
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
   headline?: Maybe<String>;
@@ -1693,6 +1747,9 @@ export interface EducationUpdateWithoutOwnerDataInput {
   endDateMonth?: Maybe<String>;
   endDateYear?: Maybe<Int>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
   currentRole?: Maybe<Boolean>;
 }
 
@@ -1718,6 +1775,7 @@ export interface UserCreateWithoutSkillsInput {
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
   headline?: Maybe<String>;
@@ -1843,6 +1901,36 @@ export interface EducationScalarWhereInput {
   location_not_starts_with?: Maybe<String>;
   location_ends_with?: Maybe<String>;
   location_not_ends_with?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationID_not?: Maybe<String>;
+  locationID_in?: Maybe<String[] | String>;
+  locationID_not_in?: Maybe<String[] | String>;
+  locationID_lt?: Maybe<String>;
+  locationID_lte?: Maybe<String>;
+  locationID_gt?: Maybe<String>;
+  locationID_gte?: Maybe<String>;
+  locationID_contains?: Maybe<String>;
+  locationID_not_contains?: Maybe<String>;
+  locationID_starts_with?: Maybe<String>;
+  locationID_not_starts_with?: Maybe<String>;
+  locationID_ends_with?: Maybe<String>;
+  locationID_not_ends_with?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLat_not?: Maybe<Float>;
+  locationLat_in?: Maybe<Float[] | Float>;
+  locationLat_not_in?: Maybe<Float[] | Float>;
+  locationLat_lt?: Maybe<Float>;
+  locationLat_lte?: Maybe<Float>;
+  locationLat_gt?: Maybe<Float>;
+  locationLat_gte?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  locationLon_not?: Maybe<Float>;
+  locationLon_in?: Maybe<Float[] | Float>;
+  locationLon_not_in?: Maybe<Float[] | Float>;
+  locationLon_lt?: Maybe<Float>;
+  locationLon_lte?: Maybe<Float>;
+  locationLon_gt?: Maybe<Float>;
+  locationLon_gte?: Maybe<Float>;
   currentRole?: Maybe<Boolean>;
   currentRole_not?: Maybe<Boolean>;
   AND?: Maybe<EducationScalarWhereInput[] | EducationScalarWhereInput>;
@@ -1867,6 +1955,7 @@ export interface PostUpdateManyMutationInput {
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
   content?: Maybe<String>;
@@ -1889,6 +1978,9 @@ export interface EducationUpdateManyDataInput {
   endDateMonth?: Maybe<String>;
   endDateYear?: Maybe<Int>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
   currentRole?: Maybe<Boolean>;
 }
 
@@ -1901,6 +1993,7 @@ export interface PostCreateInput {
   subField?: Maybe<TopicCreateOneInput>;
   topics?: Maybe<TopicCreateManyInput>;
   location: String;
+  locationID: String;
   locationLat: Float;
   locationLon: Float;
   content: String;
@@ -1957,6 +2050,7 @@ export interface UserUpdateWithoutMeetingsDataInput {
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
   headline?: Maybe<String>;
@@ -1988,6 +2082,7 @@ export interface PostUpdateWithoutOwnerDataInput {
   subField?: Maybe<TopicUpdateOneInput>;
   topics?: Maybe<TopicUpdateManyInput>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
   content?: Maybe<String>;
@@ -2040,6 +2135,7 @@ export interface UserCreateWithoutMeetingsInput {
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
   headline?: Maybe<String>;
@@ -2248,6 +2344,36 @@ export interface EducationWhereInput {
   location_not_starts_with?: Maybe<String>;
   location_ends_with?: Maybe<String>;
   location_not_ends_with?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationID_not?: Maybe<String>;
+  locationID_in?: Maybe<String[] | String>;
+  locationID_not_in?: Maybe<String[] | String>;
+  locationID_lt?: Maybe<String>;
+  locationID_lte?: Maybe<String>;
+  locationID_gt?: Maybe<String>;
+  locationID_gte?: Maybe<String>;
+  locationID_contains?: Maybe<String>;
+  locationID_not_contains?: Maybe<String>;
+  locationID_starts_with?: Maybe<String>;
+  locationID_not_starts_with?: Maybe<String>;
+  locationID_ends_with?: Maybe<String>;
+  locationID_not_ends_with?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLat_not?: Maybe<Float>;
+  locationLat_in?: Maybe<Float[] | Float>;
+  locationLat_not_in?: Maybe<Float[] | Float>;
+  locationLat_lt?: Maybe<Float>;
+  locationLat_lte?: Maybe<Float>;
+  locationLat_gt?: Maybe<Float>;
+  locationLat_gte?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  locationLon_not?: Maybe<Float>;
+  locationLon_in?: Maybe<Float[] | Float>;
+  locationLon_not_in?: Maybe<Float[] | Float>;
+  locationLon_lt?: Maybe<Float>;
+  locationLon_lte?: Maybe<Float>;
+  locationLon_gt?: Maybe<Float>;
+  locationLon_gte?: Maybe<Float>;
   currentRole?: Maybe<Boolean>;
   currentRole_not?: Maybe<Boolean>;
   AND?: Maybe<EducationWhereInput[] | EducationWhereInput>;
@@ -2265,6 +2391,7 @@ export interface UserCreateInput {
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
   headline?: Maybe<String>;
@@ -2333,6 +2460,7 @@ export interface PostUpdateWithoutUpdatesDataInput {
   subField?: Maybe<TopicUpdateOneInput>;
   topics?: Maybe<TopicUpdateManyInput>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
   content?: Maybe<String>;
@@ -2384,6 +2512,7 @@ export interface UserUpdateWithoutPostsDataInput {
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
   headline?: Maybe<String>;
@@ -2445,6 +2574,9 @@ export interface ExperienceCreateWithoutOwnerInput {
   endDateMonth?: Maybe<String>;
   endDateYear?: Maybe<Int>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
   currentRole?: Maybe<Boolean>;
 }
 
@@ -2462,6 +2594,9 @@ export interface EducationCreateWithoutOwnerInput {
   endDateMonth?: Maybe<String>;
   endDateYear?: Maybe<Int>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
   currentRole?: Maybe<Boolean>;
 }
 
@@ -2474,6 +2609,7 @@ export interface UserUpdateWithoutConnectionsDataInput {
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
   headline?: Maybe<String>;
@@ -2506,6 +2642,7 @@ export interface PostCreateWithoutOwnerInput {
   subField?: Maybe<TopicCreateOneInput>;
   topics?: Maybe<TopicCreateManyInput>;
   location: String;
+  locationID: String;
   locationLat: Float;
   locationLon: Float;
   content: String;
@@ -2576,6 +2713,7 @@ export interface UserUpdateWithoutFollowingDataInput {
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
   headline?: Maybe<String>;
@@ -2643,6 +2781,7 @@ export interface PostCreateWithoutUpdatesInput {
   subField?: Maybe<TopicCreateOneInput>;
   topics?: Maybe<TopicCreateManyInput>;
   location: String;
+  locationID: String;
   locationLat: Float;
   locationLon: Float;
   content: String;
@@ -2673,6 +2812,7 @@ export interface UserCreateWithoutPostsInput {
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
   headline?: Maybe<String>;
@@ -2706,6 +2846,7 @@ export interface UserUpdateWithoutFollowersDataInput {
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
   headline?: Maybe<String>;
@@ -2740,6 +2881,7 @@ export interface UserCreateWithoutConnectionsInput {
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
   headline?: Maybe<String>;
@@ -2783,6 +2925,7 @@ export interface UserCreateWithoutFollowingInput {
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
   headline?: Maybe<String>;
@@ -2822,6 +2965,7 @@ export interface UserCreateWithoutFollowersInput {
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
   headline?: Maybe<String>;
@@ -3038,6 +3182,7 @@ export interface PostCreateWithoutCommentsInput {
   subField?: Maybe<TopicCreateOneInput>;
   topics?: Maybe<TopicCreateManyInput>;
   location: String;
+  locationID: String;
   locationLat: Float;
   locationLon: Float;
   content: String;
@@ -3180,6 +3325,7 @@ export interface UserUpdateDataInput {
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
   headline?: Maybe<String>;
@@ -3327,6 +3473,20 @@ export interface PostWhereInput {
   location_not_starts_with?: Maybe<String>;
   location_ends_with?: Maybe<String>;
   location_not_ends_with?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationID_not?: Maybe<String>;
+  locationID_in?: Maybe<String[] | String>;
+  locationID_not_in?: Maybe<String[] | String>;
+  locationID_lt?: Maybe<String>;
+  locationID_lte?: Maybe<String>;
+  locationID_gt?: Maybe<String>;
+  locationID_gte?: Maybe<String>;
+  locationID_contains?: Maybe<String>;
+  locationID_not_contains?: Maybe<String>;
+  locationID_starts_with?: Maybe<String>;
+  locationID_not_starts_with?: Maybe<String>;
+  locationID_ends_with?: Maybe<String>;
+  locationID_not_ends_with?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLat_not?: Maybe<Float>;
   locationLat_in?: Maybe<Float[] | Float>;
@@ -3656,6 +3816,20 @@ export interface UserWhereInput {
   location_not_starts_with?: Maybe<String>;
   location_ends_with?: Maybe<String>;
   location_not_ends_with?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationID_not?: Maybe<String>;
+  locationID_in?: Maybe<String[] | String>;
+  locationID_not_in?: Maybe<String[] | String>;
+  locationID_lt?: Maybe<String>;
+  locationID_lte?: Maybe<String>;
+  locationID_gt?: Maybe<String>;
+  locationID_gte?: Maybe<String>;
+  locationID_contains?: Maybe<String>;
+  locationID_not_contains?: Maybe<String>;
+  locationID_starts_with?: Maybe<String>;
+  locationID_not_starts_with?: Maybe<String>;
+  locationID_ends_with?: Maybe<String>;
+  locationID_not_ends_with?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLat_not?: Maybe<Float>;
   locationLat_in?: Maybe<Float[] | Float>;
@@ -3906,6 +4080,7 @@ export interface UserUpdateInput {
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
   headline?: Maybe<String>;
@@ -4079,6 +4254,20 @@ export interface UserScalarWhereInput {
   location_not_starts_with?: Maybe<String>;
   location_ends_with?: Maybe<String>;
   location_not_ends_with?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationID_not?: Maybe<String>;
+  locationID_in?: Maybe<String[] | String>;
+  locationID_not_in?: Maybe<String[] | String>;
+  locationID_lt?: Maybe<String>;
+  locationID_lte?: Maybe<String>;
+  locationID_gt?: Maybe<String>;
+  locationID_gte?: Maybe<String>;
+  locationID_contains?: Maybe<String>;
+  locationID_not_contains?: Maybe<String>;
+  locationID_starts_with?: Maybe<String>;
+  locationID_not_starts_with?: Maybe<String>;
+  locationID_ends_with?: Maybe<String>;
+  locationID_not_ends_with?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLat_not?: Maybe<Float>;
   locationLat_in?: Maybe<Float[] | Float>;
@@ -4184,6 +4373,7 @@ export interface UserUpdateManyDataInput {
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
   headline?: Maybe<String>;
@@ -4249,6 +4439,7 @@ export interface PostUpdateInput {
   subField?: Maybe<TopicUpdateOneInput>;
   topics?: Maybe<TopicUpdateManyInput>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
   content?: Maybe<String>;
@@ -4369,6 +4560,7 @@ export interface PostUpdateWithoutCommentsDataInput {
   subField?: Maybe<TopicUpdateOneInput>;
   topics?: Maybe<TopicUpdateManyInput>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
   content?: Maybe<String>;
@@ -4814,6 +5006,36 @@ export interface ExperienceWhereInput {
   location_not_starts_with?: Maybe<String>;
   location_ends_with?: Maybe<String>;
   location_not_ends_with?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationID_not?: Maybe<String>;
+  locationID_in?: Maybe<String[] | String>;
+  locationID_not_in?: Maybe<String[] | String>;
+  locationID_lt?: Maybe<String>;
+  locationID_lte?: Maybe<String>;
+  locationID_gt?: Maybe<String>;
+  locationID_gte?: Maybe<String>;
+  locationID_contains?: Maybe<String>;
+  locationID_not_contains?: Maybe<String>;
+  locationID_starts_with?: Maybe<String>;
+  locationID_not_starts_with?: Maybe<String>;
+  locationID_ends_with?: Maybe<String>;
+  locationID_not_ends_with?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLat_not?: Maybe<Float>;
+  locationLat_in?: Maybe<Float[] | Float>;
+  locationLat_not_in?: Maybe<Float[] | Float>;
+  locationLat_lt?: Maybe<Float>;
+  locationLat_lte?: Maybe<Float>;
+  locationLat_gt?: Maybe<Float>;
+  locationLat_gte?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  locationLon_not?: Maybe<Float>;
+  locationLon_in?: Maybe<Float[] | Float>;
+  locationLon_not_in?: Maybe<Float[] | Float>;
+  locationLon_lt?: Maybe<Float>;
+  locationLon_lte?: Maybe<Float>;
+  locationLon_gt?: Maybe<Float>;
+  locationLon_gte?: Maybe<Float>;
   currentRole?: Maybe<Boolean>;
   currentRole_not?: Maybe<Boolean>;
   AND?: Maybe<ExperienceWhereInput[] | ExperienceWhereInput>;
@@ -5062,6 +5284,20 @@ export interface PostScalarWhereInput {
   location_not_starts_with?: Maybe<String>;
   location_ends_with?: Maybe<String>;
   location_not_ends_with?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationID_not?: Maybe<String>;
+  locationID_in?: Maybe<String[] | String>;
+  locationID_not_in?: Maybe<String[] | String>;
+  locationID_lt?: Maybe<String>;
+  locationID_lte?: Maybe<String>;
+  locationID_gt?: Maybe<String>;
+  locationID_gte?: Maybe<String>;
+  locationID_contains?: Maybe<String>;
+  locationID_not_contains?: Maybe<String>;
+  locationID_starts_with?: Maybe<String>;
+  locationID_not_starts_with?: Maybe<String>;
+  locationID_ends_with?: Maybe<String>;
+  locationID_not_ends_with?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLat_not?: Maybe<Float>;
   locationLat_in?: Maybe<Float[] | Float>;
@@ -5173,6 +5409,7 @@ export interface PostUpdateManyDataInput {
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
   content?: Maybe<String>;
@@ -5266,6 +5503,9 @@ export interface EducationCreateInput {
   endDateMonth?: Maybe<String>;
   endDateYear?: Maybe<Int>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
   currentRole?: Maybe<Boolean>;
 }
 
@@ -5390,6 +5630,7 @@ export interface UserCreateWithoutEducationInput {
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
   headline?: Maybe<String>;
@@ -5434,6 +5675,9 @@ export interface EducationUpdateInput {
   endDateMonth?: Maybe<String>;
   endDateYear?: Maybe<Int>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
   currentRole?: Maybe<Boolean>;
 }
 
@@ -5461,6 +5705,7 @@ export interface UserUpdateWithoutEducationDataInput {
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
   headline?: Maybe<String>;
@@ -5507,6 +5752,9 @@ export interface EducationUpdateManyMutationInput {
   endDateMonth?: Maybe<String>;
   endDateYear?: Maybe<Int>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
   currentRole?: Maybe<Boolean>;
 }
 
@@ -5525,6 +5773,9 @@ export interface ExperienceCreateInput {
   endDateMonth?: Maybe<String>;
   endDateYear?: Maybe<Int>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
   currentRole?: Maybe<Boolean>;
 }
 
@@ -5562,6 +5813,7 @@ export interface UserCreateWithoutExperienceInput {
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
   headline?: Maybe<String>;
@@ -5632,6 +5884,9 @@ export interface ExperienceUpdateInput {
   endDateMonth?: Maybe<String>;
   endDateYear?: Maybe<Int>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
   currentRole?: Maybe<Boolean>;
 }
 
@@ -5662,6 +5917,7 @@ export interface UserUpdateWithoutExperienceDataInput {
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
   headline?: Maybe<String>;
@@ -5713,6 +5969,9 @@ export interface ExperienceUpdateManyMutationInput {
   endDateMonth?: Maybe<String>;
   endDateYear?: Maybe<Int>;
   location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
   currentRole?: Maybe<Boolean>;
 }
 
@@ -5764,6 +6023,7 @@ export interface UserPreviousValues {
   profilePic?: String;
   bannerPic?: String;
   location?: String;
+  locationID?: String;
   locationLat?: Float;
   locationLon?: Float;
   headline?: String;
@@ -5786,6 +6046,7 @@ export interface UserPreviousValuesPromise
   profilePic: () => Promise<String>;
   bannerPic: () => Promise<String>;
   location: () => Promise<String>;
+  locationID: () => Promise<String>;
   locationLat: () => Promise<Float>;
   locationLon: () => Promise<Float>;
   headline: () => Promise<String>;
@@ -5808,6 +6069,7 @@ export interface UserPreviousValuesSubscription
   profilePic: () => Promise<AsyncIterator<String>>;
   bannerPic: () => Promise<AsyncIterator<String>>;
   location: () => Promise<AsyncIterator<String>>;
+  locationID: () => Promise<AsyncIterator<String>>;
   locationLat: () => Promise<AsyncIterator<Float>>;
   locationLon: () => Promise<AsyncIterator<Float>>;
   headline: () => Promise<AsyncIterator<String>>;
@@ -5986,6 +6248,7 @@ export interface User {
   profilePic?: String;
   bannerPic?: String;
   location?: String;
+  locationID?: String;
   locationLat?: Float;
   locationLon?: Float;
   headline?: String;
@@ -6006,6 +6269,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   profilePic: () => Promise<String>;
   bannerPic: () => Promise<String>;
   location: () => Promise<String>;
+  locationID: () => Promise<String>;
   locationLat: () => Promise<Float>;
   locationLon: () => Promise<Float>;
   headline: () => Promise<String>;
@@ -6164,6 +6428,7 @@ export interface UserSubscription
   profilePic: () => Promise<AsyncIterator<String>>;
   bannerPic: () => Promise<AsyncIterator<String>>;
   location: () => Promise<AsyncIterator<String>>;
+  locationID: () => Promise<AsyncIterator<String>>;
   locationLat: () => Promise<AsyncIterator<Float>>;
   locationLon: () => Promise<AsyncIterator<Float>>;
   headline: () => Promise<AsyncIterator<String>>;
@@ -6322,6 +6587,7 @@ export interface UserNullablePromise
   profilePic: () => Promise<String>;
   bannerPic: () => Promise<String>;
   location: () => Promise<String>;
+  locationID: () => Promise<String>;
   locationLat: () => Promise<Float>;
   locationLon: () => Promise<Float>;
   headline: () => Promise<String>;
@@ -6921,6 +7187,9 @@ export interface EducationPreviousValues {
   endDateMonth?: String;
   endDateYear?: Int;
   location?: String;
+  locationID?: String;
+  locationLat?: Float;
+  locationLon?: Float;
   currentRole?: Boolean;
 }
 
@@ -6935,6 +7204,9 @@ export interface EducationPreviousValuesPromise
   endDateMonth: () => Promise<String>;
   endDateYear: () => Promise<Int>;
   location: () => Promise<String>;
+  locationID: () => Promise<String>;
+  locationLat: () => Promise<Float>;
+  locationLon: () => Promise<Float>;
   currentRole: () => Promise<Boolean>;
 }
 
@@ -6949,6 +7221,9 @@ export interface EducationPreviousValuesSubscription
   endDateMonth: () => Promise<AsyncIterator<String>>;
   endDateYear: () => Promise<AsyncIterator<Int>>;
   location: () => Promise<AsyncIterator<String>>;
+  locationID: () => Promise<AsyncIterator<String>>;
+  locationLat: () => Promise<AsyncIterator<Float>>;
+  locationLon: () => Promise<AsyncIterator<Float>>;
   currentRole: () => Promise<AsyncIterator<Boolean>>;
 }
 
@@ -7083,6 +7358,9 @@ export interface ExperiencePreviousValues {
   endDateMonth?: String;
   endDateYear?: Int;
   location?: String;
+  locationID?: String;
+  locationLat?: Float;
+  locationLon?: Float;
   currentRole?: Boolean;
 }
 
@@ -7097,6 +7375,9 @@ export interface ExperiencePreviousValuesPromise
   endDateMonth: () => Promise<String>;
   endDateYear: () => Promise<Int>;
   location: () => Promise<String>;
+  locationID: () => Promise<String>;
+  locationLat: () => Promise<Float>;
+  locationLon: () => Promise<Float>;
   currentRole: () => Promise<Boolean>;
 }
 
@@ -7111,6 +7392,9 @@ export interface ExperiencePreviousValuesSubscription
   endDateMonth: () => Promise<AsyncIterator<String>>;
   endDateYear: () => Promise<AsyncIterator<Int>>;
   location: () => Promise<AsyncIterator<String>>;
+  locationID: () => Promise<AsyncIterator<String>>;
+  locationLat: () => Promise<AsyncIterator<Float>>;
+  locationLon: () => Promise<AsyncIterator<Float>>;
   currentRole: () => Promise<AsyncIterator<Boolean>>;
 }
 
@@ -7491,6 +7775,9 @@ export interface Experience {
   endDateMonth?: String;
   endDateYear?: Int;
   location?: String;
+  locationID?: String;
+  locationLat?: Float;
+  locationLon?: Float;
   currentRole?: Boolean;
 }
 
@@ -7504,6 +7791,9 @@ export interface ExperiencePromise extends Promise<Experience>, Fragmentable {
   endDateMonth: () => Promise<String>;
   endDateYear: () => Promise<Int>;
   location: () => Promise<String>;
+  locationID: () => Promise<String>;
+  locationLat: () => Promise<Float>;
+  locationLon: () => Promise<Float>;
   currentRole: () => Promise<Boolean>;
 }
 
@@ -7519,6 +7809,9 @@ export interface ExperienceSubscription
   endDateMonth: () => Promise<AsyncIterator<String>>;
   endDateYear: () => Promise<AsyncIterator<Int>>;
   location: () => Promise<AsyncIterator<String>>;
+  locationID: () => Promise<AsyncIterator<String>>;
+  locationLat: () => Promise<AsyncIterator<Float>>;
+  locationLon: () => Promise<AsyncIterator<Float>>;
   currentRole: () => Promise<AsyncIterator<Boolean>>;
 }
 
@@ -7534,6 +7827,9 @@ export interface ExperienceNullablePromise
   endDateMonth: () => Promise<String>;
   endDateYear: () => Promise<Int>;
   location: () => Promise<String>;
+  locationID: () => Promise<String>;
+  locationLat: () => Promise<Float>;
+  locationLon: () => Promise<Float>;
   currentRole: () => Promise<Boolean>;
 }
 
@@ -7606,6 +7902,7 @@ export interface PostPreviousValues {
   isGoal: Boolean;
   goal?: String;
   location: String;
+  locationID: String;
   locationLat: Float;
   locationLon: Float;
   content: String;
@@ -7629,6 +7926,7 @@ export interface PostPreviousValuesPromise
   isGoal: () => Promise<Boolean>;
   goal: () => Promise<String>;
   location: () => Promise<String>;
+  locationID: () => Promise<String>;
   locationLat: () => Promise<Float>;
   locationLon: () => Promise<Float>;
   content: () => Promise<String>;
@@ -7652,6 +7950,7 @@ export interface PostPreviousValuesSubscription
   isGoal: () => Promise<AsyncIterator<Boolean>>;
   goal: () => Promise<AsyncIterator<String>>;
   location: () => Promise<AsyncIterator<String>>;
+  locationID: () => Promise<AsyncIterator<String>>;
   locationLat: () => Promise<AsyncIterator<Float>>;
   locationLon: () => Promise<AsyncIterator<Float>>;
   content: () => Promise<AsyncIterator<String>>;
@@ -7874,6 +8173,7 @@ export interface Post {
   isGoal: Boolean;
   goal?: String;
   location: String;
+  locationID: String;
   locationLat: Float;
   locationLon: Float;
   content: String;
@@ -7906,6 +8206,7 @@ export interface PostPromise extends Promise<Post>, Fragmentable {
     last?: Int;
   }) => T;
   location: () => Promise<String>;
+  locationID: () => Promise<String>;
   locationLat: () => Promise<Float>;
   locationLon: () => Promise<Float>;
   content: () => Promise<String>;
@@ -7958,6 +8259,7 @@ export interface PostSubscription
     last?: Int;
   }) => T;
   location: () => Promise<AsyncIterator<String>>;
+  locationID: () => Promise<AsyncIterator<String>>;
   locationLat: () => Promise<AsyncIterator<Float>>;
   locationLon: () => Promise<AsyncIterator<Float>>;
   content: () => Promise<AsyncIterator<String>>;
@@ -8010,6 +8312,7 @@ export interface PostNullablePromise
     last?: Int;
   }) => T;
   location: () => Promise<String>;
+  locationID: () => Promise<String>;
   locationLat: () => Promise<Float>;
   locationLon: () => Promise<Float>;
   content: () => Promise<String>;
@@ -8267,6 +8570,9 @@ export interface Education {
   endDateMonth?: String;
   endDateYear?: Int;
   location?: String;
+  locationID?: String;
+  locationLat?: Float;
+  locationLon?: Float;
   currentRole?: Boolean;
 }
 
@@ -8280,6 +8586,9 @@ export interface EducationPromise extends Promise<Education>, Fragmentable {
   endDateMonth: () => Promise<String>;
   endDateYear: () => Promise<Int>;
   location: () => Promise<String>;
+  locationID: () => Promise<String>;
+  locationLat: () => Promise<Float>;
+  locationLon: () => Promise<Float>;
   currentRole: () => Promise<Boolean>;
 }
 
@@ -8295,6 +8604,9 @@ export interface EducationSubscription
   endDateMonth: () => Promise<AsyncIterator<String>>;
   endDateYear: () => Promise<AsyncIterator<Int>>;
   location: () => Promise<AsyncIterator<String>>;
+  locationID: () => Promise<AsyncIterator<String>>;
+  locationLat: () => Promise<AsyncIterator<Float>>;
+  locationLon: () => Promise<AsyncIterator<Float>>;
   currentRole: () => Promise<AsyncIterator<Boolean>>;
 }
 
@@ -8310,6 +8622,9 @@ export interface EducationNullablePromise
   endDateMonth: () => Promise<String>;
   endDateYear: () => Promise<Int>;
   location: () => Promise<String>;
+  locationID: () => Promise<String>;
+  locationLat: () => Promise<Float>;
+  locationLon: () => Promise<Float>;
   currentRole: () => Promise<Boolean>;
 }
 

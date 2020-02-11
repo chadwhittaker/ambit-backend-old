@@ -5,6 +5,7 @@ const MyInfoForConnections = gql`
     id
     name
     location
+    locationID
     locationLat
     locationLon
     topicsFocus {
@@ -23,6 +24,9 @@ const MinimalUser = gql`
     profilePic
     headline
     location
+    locationID
+    locationLat
+    locationLon
     intro {
       id
       title
@@ -49,6 +53,9 @@ const ListPosts = gql`
       profilePic
       headline
       location
+      locationID
+      locationLat
+      locationLon
       intro {
         id
         title
@@ -77,6 +84,7 @@ const ListPosts = gql`
       }
     }
     location
+    locationID
     locationLat
     locationLon
     content
@@ -102,6 +110,9 @@ const DetailPost = gql`
       profilePic
       headline
       location
+      locationID
+      locationLat
+      locationLon
       intro {
         id
         title
@@ -131,6 +142,7 @@ const DetailPost = gql`
       }
     }
     location
+    locationID
     locationLat
     locationLon
     content
@@ -151,6 +163,9 @@ const DetailPost = gql`
       profilePic
       headline
       location
+      locationID
+      locationLat
+      locationLon
       intro {
         id
         title
@@ -187,6 +202,9 @@ const DetailPost = gql`
         profilePic
         headline
         location
+        locationID
+        locationLat
+        locationLon
         intro {
           id
           title
@@ -229,6 +247,9 @@ const DetailPost = gql`
       profilePic
       headline
       location
+      locationID
+      locationLat
+      locationLon
       intro {
         id
         title
@@ -265,6 +286,9 @@ const DetailPost = gql`
         profilePic
         headline
         location
+        locationID
+        locationLat
+        locationLon
         intro {
           id
           title
@@ -312,6 +336,9 @@ const CommentFragment = gql`
       profilePic
       headline
       location
+      locationID
+      locationLat
+      locationLon
       intro {
         id
         title
@@ -348,6 +375,9 @@ const CommentFragment = gql`
         profilePic
         headline
         location
+        locationID
+        locationLat
+        locationLon
         intro {
           id
           title
