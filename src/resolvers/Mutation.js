@@ -286,12 +286,12 @@ const Mutation = {
         where: { id: userId },
         data: {
           intro: {
-              create: {
-                title: args.title,
-                items: {
-                  create: [...args.items]
-                }
-              },
+            create: {
+              title: args.title,
+              items: {
+                create: [...args.items]
+              }
+            },
           }
         },
       },
@@ -299,7 +299,7 @@ const Mutation = {
 
     // if there was an existing intro...delete it
     if (oldIntroID) await context.prisma.deleteStory({ id: oldIntroID })
-    
+
 
     return user;
   },
@@ -489,7 +489,6 @@ const Mutation = {
       throw new Error(`You cannot edit a profile that is not your own`)
     }
 
-    // 3. create education & connect to owner
     const post = await context.prisma.createPost(
       {
         ...args.post,
@@ -644,7 +643,7 @@ const Mutation = {
     }
 
     // 2. create the comment
-    const commentCreated = await context.prisma.createComment({...comment})
+    const commentCreated = await context.prisma.createComment({ ...comment })
 
     return commentCreated;
   },
@@ -694,6 +693,38 @@ const Mutation = {
 
     return comment
   },
+
+  // ================
+  // CHAT
+  // ================
+
+  async createChat(parent, args, context) {
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      throw new Error(`You must be logged in to do that`)
+    }
+
+    // 3. create chat
+    const chat = await context.prisma.createChat({ data: args.chat })
+
+    return chat
+  },
+
+  async createMessage(parent, args, context) {
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      throw new Error(`You must be logged in to do that`)
+    }
+
+    // 3. create message
+    const message = await context.prisma.createMessage({ ...args.message })
+
+    // get full chat
+    const chat = await context.prisma.chat({ id: args.message.chat.connect.id })
+
+    return chat     // must return fullChat in fragment DetailedChat
+    // return { pizza: 'hey '}
+  }
 
 }
 

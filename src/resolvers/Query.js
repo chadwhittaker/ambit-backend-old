@@ -272,6 +272,34 @@ const Query = {
     return { postsWithMatches: myActiveGoalsWithMatches, matches: usersMatchingTopicsFocus }; // AllConnections
   },
 
+  // CHATS
+
+  async allMyChats(parent, args, context) {
+    // 1. check if there is a user on the request
+    if (!context.request.userId) {
+      throw new Error(`You must be logged in to see messages`)
+    }
+    // 2. if there is a user, get all my chats
+    const chats = await context.prisma.chats(
+      {
+        where: { users_some: { id: context.request.userId } }
+      }
+    );
+
+    return chats;
+  },
+
+  async fullChat(parent, args, context) {
+    // 1. check if there is a user on the request
+    if (!context.request.userId) {
+      throw new Error(`You must be logged in to see messages`)
+    }
+    // 2. if there is a user, get all my chats
+    const chat = await context.prisma.chat({ id: args.id });
+
+    return chat;
+  }
+
 };
 
 module.exports = {

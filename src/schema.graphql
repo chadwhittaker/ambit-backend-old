@@ -17,6 +17,10 @@ type Query {
   postsUser(id: ID!): [Post]!
   singlePost(id: ID!): PostWithMatches!
   activeGoalsUser: [PostWithMatches]!
+
+  #chats
+  allMyChats: [Chat]!
+  fullChat(id: ID!): Chat!
 }
 
 type Mutation {
@@ -60,6 +64,10 @@ type Mutation {
 
   # intro
   editIntro(userId: ID!, title: String, items: [StoryItemCreateWithoutStoryInput!]): User!
+
+  #chat
+  createChat(chat: ChatCreateInput!): Chat!
+  createMessage(message: MessageCreateInput!): Chat!
 }
 
 type AuthPayload {
