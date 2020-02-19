@@ -43,6 +43,7 @@ type User {
   projects: [Story] @relation(name: "MyProjects")
   meetings: [Meeting]
   roles: [Role] @scalarList(strategy: RELATION)
+  chats: [Chat]
 }
 
 type Story {
@@ -188,7 +189,7 @@ type Topic {
 type Chat {
   id: ID! @id
   updatedAt: DateTime! @updatedAt
-  users: [User]!
+  users: [User!]!
   messages: [Message] @relation(name: "MessageToChatRelation" onDelete: CASCADE)
   latestMessage: Message @relation(name: "LatestMessageToChatRelation")
 }

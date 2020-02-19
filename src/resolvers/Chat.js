@@ -5,7 +5,7 @@ const Chat = {
   },
 
   async messages(parent, args, context) {
-    return context.prisma.chat({ id: parent.id }).messages({ orderBy: "createdAt_DESC" })
+    return context.prisma.chat({ id: parent.id }).messages({ first: 50, orderBy: "createdAt_DESC" })
   },
 
   async latestMessage (parent, args, context) {

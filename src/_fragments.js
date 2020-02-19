@@ -1,5 +1,23 @@
 const gql = require('graphql-tag')
 
+const MessageFragment = gql`
+  fragment MessageFragment on Message {
+    id
+    createdAt
+    from {
+      id
+      firstName
+      lastName
+      name
+      profilePic
+    }
+    chat {
+      id
+    }
+    content
+  }
+`;
+
 const MyInfoForConnections = gql`
   fragment MyInfoForConnections on User {
     id
@@ -417,4 +435,5 @@ module.exports = {
   MyInfoForConnections,
   ListPosts,
   DetailPost,
+  MessageFragment,
 }

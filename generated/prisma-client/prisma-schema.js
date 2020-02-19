@@ -79,9 +79,14 @@ type ChatConnection {
 
 input ChatCreateInput {
   id: ID
-  users: UserCreateManyInput
+  users: UserCreateManyWithoutChatsInput
   messages: MessageCreateManyWithoutChatInput
   latestMessage: MessageCreateOneInput
+}
+
+input ChatCreateManyWithoutUsersInput {
+  create: [ChatCreateWithoutUsersInput!]
+  connect: [ChatWhereUniqueInput!]
 }
 
 input ChatCreateOneWithoutMessagesInput {
@@ -91,7 +96,13 @@ input ChatCreateOneWithoutMessagesInput {
 
 input ChatCreateWithoutMessagesInput {
   id: ID
-  users: UserCreateManyInput
+  users: UserCreateManyWithoutChatsInput
+  latestMessage: MessageCreateOneInput
+}
+
+input ChatCreateWithoutUsersInput {
+  id: ID
+  messages: MessageCreateManyWithoutChatInput
   latestMessage: MessageCreateOneInput
 }
 
@@ -110,6 +121,34 @@ enum ChatOrderByInput {
 type ChatPreviousValues {
   id: ID!
   updatedAt: DateTime!
+}
+
+input ChatScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [ChatScalarWhereInput!]
+  OR: [ChatScalarWhereInput!]
+  NOT: [ChatScalarWhereInput!]
 }
 
 type ChatSubscriptionPayload {
@@ -131,9 +170,20 @@ input ChatSubscriptionWhereInput {
 }
 
 input ChatUpdateInput {
-  users: UserUpdateManyInput
+  users: UserUpdateManyWithoutChatsInput
   messages: MessageUpdateManyWithoutChatInput
   latestMessage: MessageUpdateOneInput
+}
+
+input ChatUpdateManyWithoutUsersInput {
+  create: [ChatCreateWithoutUsersInput!]
+  delete: [ChatWhereUniqueInput!]
+  connect: [ChatWhereUniqueInput!]
+  set: [ChatWhereUniqueInput!]
+  disconnect: [ChatWhereUniqueInput!]
+  update: [ChatUpdateWithWhereUniqueWithoutUsersInput!]
+  upsert: [ChatUpsertWithWhereUniqueWithoutUsersInput!]
+  deleteMany: [ChatScalarWhereInput!]
 }
 
 input ChatUpdateOneRequiredWithoutMessagesInput {
@@ -144,13 +194,29 @@ input ChatUpdateOneRequiredWithoutMessagesInput {
 }
 
 input ChatUpdateWithoutMessagesDataInput {
-  users: UserUpdateManyInput
+  users: UserUpdateManyWithoutChatsInput
   latestMessage: MessageUpdateOneInput
+}
+
+input ChatUpdateWithoutUsersDataInput {
+  messages: MessageUpdateManyWithoutChatInput
+  latestMessage: MessageUpdateOneInput
+}
+
+input ChatUpdateWithWhereUniqueWithoutUsersInput {
+  where: ChatWhereUniqueInput!
+  data: ChatUpdateWithoutUsersDataInput!
 }
 
 input ChatUpsertWithoutMessagesInput {
   update: ChatUpdateWithoutMessagesDataInput!
   create: ChatCreateWithoutMessagesInput!
+}
+
+input ChatUpsertWithWhereUniqueWithoutUsersInput {
+  where: ChatWhereUniqueInput!
+  update: ChatUpdateWithoutUsersDataInput!
+  create: ChatCreateWithoutUsersInput!
 }
 
 input ChatWhereInput {
@@ -4890,6 +4956,7 @@ type User {
   projects(where: StoryWhereInput, orderBy: StoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Story!]
   meetings(where: MeetingWhereInput, orderBy: MeetingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Meeting!]
   roles: [Role!]!
+  chats(where: ChatWhereInput, orderBy: ChatOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Chat!]
 }
 
 type UserConnection {
@@ -4932,10 +4999,11 @@ input UserCreateInput {
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
+  chats: ChatCreateManyWithoutUsersInput
 }
 
-input UserCreateManyInput {
-  create: [UserCreateInput!]
+input UserCreateManyWithoutChatsInput {
+  create: [UserCreateWithoutChatsInput!]
   connect: [UserWhereUniqueInput!]
 }
 
@@ -4988,6 +5056,42 @@ input UserCreaterolesInput {
   set: [Role!]
 }
 
+input UserCreateWithoutChatsInput {
+  id: ID
+  name: String!
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  profilePic: String
+  bannerPic: String
+  location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
+  headline: String
+  website: String
+  bio: String
+  about: String
+  topicsMentor: TopicCreateManyInput
+  topicsFreelance: TopicCreateManyInput
+  topicsInvest: TopicCreateManyInput
+  topicsAgency: TopicCreateManyInput
+  topicsFocus: TopicCreateManyInput
+  topicsInterest: TopicCreateManyInput
+  skills: SkillCreateManyWithoutOwnerInput
+  experience: ExperienceCreateManyWithoutOwnerInput
+  education: EducationCreateManyWithoutOwnerInput
+  posts: PostCreateManyWithoutOwnerInput
+  connections: UserCreateManyWithoutConnectionsInput
+  following: UserCreateManyWithoutFollowingInput
+  followers: UserCreateManyWithoutFollowersInput
+  intro: StoryCreateOneInput
+  projects: StoryCreateManyInput
+  meetings: MeetingCreateManyWithoutUsersInput
+  roles: UserCreaterolesInput
+}
+
 input UserCreateWithoutConnectionsInput {
   id: ID
   name: String!
@@ -5021,6 +5125,7 @@ input UserCreateWithoutConnectionsInput {
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
+  chats: ChatCreateManyWithoutUsersInput
 }
 
 input UserCreateWithoutEducationInput {
@@ -5056,6 +5161,7 @@ input UserCreateWithoutEducationInput {
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
+  chats: ChatCreateManyWithoutUsersInput
 }
 
 input UserCreateWithoutExperienceInput {
@@ -5091,6 +5197,7 @@ input UserCreateWithoutExperienceInput {
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
+  chats: ChatCreateManyWithoutUsersInput
 }
 
 input UserCreateWithoutFollowersInput {
@@ -5126,6 +5233,7 @@ input UserCreateWithoutFollowersInput {
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
+  chats: ChatCreateManyWithoutUsersInput
 }
 
 input UserCreateWithoutFollowingInput {
@@ -5161,6 +5269,7 @@ input UserCreateWithoutFollowingInput {
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
+  chats: ChatCreateManyWithoutUsersInput
 }
 
 input UserCreateWithoutMeetingsInput {
@@ -5196,6 +5305,7 @@ input UserCreateWithoutMeetingsInput {
   intro: StoryCreateOneInput
   projects: StoryCreateManyInput
   roles: UserCreaterolesInput
+  chats: ChatCreateManyWithoutUsersInput
 }
 
 input UserCreateWithoutPostsInput {
@@ -5231,6 +5341,7 @@ input UserCreateWithoutPostsInput {
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
+  chats: ChatCreateManyWithoutUsersInput
 }
 
 input UserCreateWithoutSkillsInput {
@@ -5266,6 +5377,7 @@ input UserCreateWithoutSkillsInput {
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
+  chats: ChatCreateManyWithoutUsersInput
 }
 
 type UserEdge {
@@ -5608,6 +5720,7 @@ input UserUpdateDataInput {
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
+  chats: ChatUpdateManyWithoutUsersInput
 }
 
 input UserUpdateInput {
@@ -5643,6 +5756,7 @@ input UserUpdateInput {
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
+  chats: ChatUpdateManyWithoutUsersInput
 }
 
 input UserUpdateManyDataInput {
@@ -5664,18 +5778,6 @@ input UserUpdateManyDataInput {
   roles: UserUpdaterolesInput
 }
 
-input UserUpdateManyInput {
-  create: [UserCreateInput!]
-  update: [UserUpdateWithWhereUniqueNestedInput!]
-  upsert: [UserUpsertWithWhereUniqueNestedInput!]
-  delete: [UserWhereUniqueInput!]
-  connect: [UserWhereUniqueInput!]
-  set: [UserWhereUniqueInput!]
-  disconnect: [UserWhereUniqueInput!]
-  deleteMany: [UserScalarWhereInput!]
-  updateMany: [UserUpdateManyWithWhereNestedInput!]
-}
-
 input UserUpdateManyMutationInput {
   name: String
   firstName: String
@@ -5693,6 +5795,18 @@ input UserUpdateManyMutationInput {
   bio: String
   about: String
   roles: UserUpdaterolesInput
+}
+
+input UserUpdateManyWithoutChatsInput {
+  create: [UserCreateWithoutChatsInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutChatsInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutChatsInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
 }
 
 input UserUpdateManyWithoutConnectionsInput {
@@ -5787,6 +5901,41 @@ input UserUpdaterolesInput {
   set: [Role!]
 }
 
+input UserUpdateWithoutChatsDataInput {
+  name: String
+  firstName: String
+  lastName: String
+  email: String
+  password: String
+  profilePic: String
+  bannerPic: String
+  location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
+  headline: String
+  website: String
+  bio: String
+  about: String
+  topicsMentor: TopicUpdateManyInput
+  topicsFreelance: TopicUpdateManyInput
+  topicsInvest: TopicUpdateManyInput
+  topicsAgency: TopicUpdateManyInput
+  topicsFocus: TopicUpdateManyInput
+  topicsInterest: TopicUpdateManyInput
+  skills: SkillUpdateManyWithoutOwnerInput
+  experience: ExperienceUpdateManyWithoutOwnerInput
+  education: EducationUpdateManyWithoutOwnerInput
+  posts: PostUpdateManyWithoutOwnerInput
+  connections: UserUpdateManyWithoutConnectionsInput
+  following: UserUpdateManyWithoutFollowingInput
+  followers: UserUpdateManyWithoutFollowersInput
+  intro: StoryUpdateOneInput
+  projects: StoryUpdateManyInput
+  meetings: MeetingUpdateManyWithoutUsersInput
+  roles: UserUpdaterolesInput
+}
+
 input UserUpdateWithoutConnectionsDataInput {
   name: String
   firstName: String
@@ -5819,6 +5968,7 @@ input UserUpdateWithoutConnectionsDataInput {
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
+  chats: ChatUpdateManyWithoutUsersInput
 }
 
 input UserUpdateWithoutEducationDataInput {
@@ -5853,6 +6003,7 @@ input UserUpdateWithoutEducationDataInput {
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
+  chats: ChatUpdateManyWithoutUsersInput
 }
 
 input UserUpdateWithoutExperienceDataInput {
@@ -5887,6 +6038,7 @@ input UserUpdateWithoutExperienceDataInput {
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
+  chats: ChatUpdateManyWithoutUsersInput
 }
 
 input UserUpdateWithoutFollowersDataInput {
@@ -5921,6 +6073,7 @@ input UserUpdateWithoutFollowersDataInput {
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
+  chats: ChatUpdateManyWithoutUsersInput
 }
 
 input UserUpdateWithoutFollowingDataInput {
@@ -5955,6 +6108,7 @@ input UserUpdateWithoutFollowingDataInput {
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
+  chats: ChatUpdateManyWithoutUsersInput
 }
 
 input UserUpdateWithoutMeetingsDataInput {
@@ -5989,6 +6143,7 @@ input UserUpdateWithoutMeetingsDataInput {
   intro: StoryUpdateOneInput
   projects: StoryUpdateManyInput
   roles: UserUpdaterolesInput
+  chats: ChatUpdateManyWithoutUsersInput
 }
 
 input UserUpdateWithoutPostsDataInput {
@@ -6023,6 +6178,7 @@ input UserUpdateWithoutPostsDataInput {
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
+  chats: ChatUpdateManyWithoutUsersInput
 }
 
 input UserUpdateWithoutSkillsDataInput {
@@ -6057,11 +6213,12 @@ input UserUpdateWithoutSkillsDataInput {
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
+  chats: ChatUpdateManyWithoutUsersInput
 }
 
-input UserUpdateWithWhereUniqueNestedInput {
+input UserUpdateWithWhereUniqueWithoutChatsInput {
   where: UserWhereUniqueInput!
-  data: UserUpdateDataInput!
+  data: UserUpdateWithoutChatsDataInput!
 }
 
 input UserUpdateWithWhereUniqueWithoutConnectionsInput {
@@ -6109,10 +6266,10 @@ input UserUpsertWithoutSkillsInput {
   create: UserCreateWithoutSkillsInput!
 }
 
-input UserUpsertWithWhereUniqueNestedInput {
+input UserUpsertWithWhereUniqueWithoutChatsInput {
   where: UserWhereUniqueInput!
-  update: UserUpdateDataInput!
-  create: UserCreateInput!
+  update: UserUpdateWithoutChatsDataInput!
+  create: UserCreateWithoutChatsInput!
 }
 
 input UserUpsertWithWhereUniqueWithoutConnectionsInput {
@@ -6406,6 +6563,9 @@ input UserWhereInput {
   meetings_every: MeetingWhereInput
   meetings_some: MeetingWhereInput
   meetings_none: MeetingWhereInput
+  chats_every: ChatWhereInput
+  chats_some: ChatWhereInput
+  chats_none: ChatWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

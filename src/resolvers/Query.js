@@ -282,7 +282,8 @@ const Query = {
     // 2. if there is a user, get all my chats
     const chats = await context.prisma.chats(
       {
-        where: { users_some: { id: context.request.userId } }
+        where: { users_some: { id: context.request.userId } },
+        orderBy: "updatedAt_DESC",
       }
     );
 
@@ -294,6 +295,10 @@ const Query = {
     if (!context.request.userId) {
       throw new Error(`You must be logged in to see messages`)
     }
+
+    // if the chat does not exist yet
+    if (!args.id || args.id === null) return null;
+
     // 2. if there is a user, get all my chats
     const chat = await context.prisma.chat({ id: args.id });
 

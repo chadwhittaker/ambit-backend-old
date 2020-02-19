@@ -80,13 +80,13 @@ const getUsersMatchingGoal = async (me, post, context, first = 10) => {
   // must return a PROMISE for an array of type [Match]
   if (!post.goal) return [];
 
-  if (post.goal === 'Find investors') return getMatchesFindInvestor(me, post, context, first);
-  if (post.goal === 'Find mentors') return getMatchesFindMentors(me, post, context, first);
-  if (post.goal === 'Find freelancers') return getMatchesFindFreelancers(me, post, context, first);
-  if (post.goal === 'Find agencies') return getMatchesFindFreelancers(me, post, context, first);
-  if (post.goal === 'Find business partners') return getMatchesFindBusinessPartners(me, post, context, first);
+  if (post.goal === 'Find Investors') return getMatchesFindInvestor(me, post, context, first);
+  if (post.goal === 'Find Mentors') return getMatchesFindMentors(me, post, context, first);
+  if (post.goal === 'Find Freelancers') return getMatchesFindFreelancers(me, post, context, first);
+  if (post.goal === 'Find Agencies') return getMatchesFindFreelancers(me, post, context, first);
+  if (post.goal === 'Find Business Partners') return getMatchesFindBusinessPartners(me, post, context, first);
   if (post.goal === 'Network') return getMatchesFindBusinessPartners(me, post, context, first);
-  if (post.goal === 'Get coffee') {
+  if (post.goal === 'Get Coffee') {
     try {
       const coffeeUsers1 = await getMatchesGetCoffee1(me, post, context, first);
       const coffeeUsers1_IDs = coffeeUsers1.map(item => item.user.id)
@@ -120,7 +120,7 @@ const getMatchesFindInvestor = async (me, post, context, first = 10) => {
     // topics = [],
   } = post;
 
-  if (goal !== "Find investors" || !goal || !subField.topicID) return [];
+  if (goal !== "Find Investors" || !goal || !subField.topicID) return [];
 
   // prepare variables for query
   // const topicsIDonly = topics.map(topic => {
@@ -162,7 +162,7 @@ const getMatchesFindMentors = async (me, post, context, first = 10) => {
     // topics = [],
   } = post;
 
-  if (goal !== "Find mentors" || !goal || !subField.topicID) return [];
+  if (goal !== "Find Mentors" || !goal || !subField.topicID) return [];
 
   try {
     const usersMatchingGoal = await context.prisma.users({
@@ -199,7 +199,7 @@ const getMatchesFindFreelancers = async (me, post, context, first = 10) => {
     // topics = [],
   } = post;
 
-  if (goal !== "Find freelancers" || !goal || !subField.topicID) return [];
+  if (goal !== "Find Freelancers" || !goal || !subField.topicID) return [];
 
   try {
     const usersMatchingGoal = await context.prisma.users({
@@ -237,7 +237,7 @@ const getMatchesGetCoffee1 = async (me, post, context, first = 10) => {
     // topics = [],
   } = post;
 
-  if (goal !== "Get coffee" || !goal || !subField.topicID) return [];
+  if (goal !== "Get Coffee" || !goal || !subField.topicID) return [];
 
   // find users who also posted to Get Coffee in this subject
   try {
@@ -250,7 +250,7 @@ const getMatchesGetCoffee1 = async (me, post, context, first = 10) => {
           {
             posts_some: {
               AND: [
-                { goal: "Get coffee" },
+                { goal: "Get Coffee" },
                 { subField: { topicID: subField.topicID } }
               ]
             }
@@ -280,7 +280,7 @@ const getMatchesGetCoffee2 = async (me, post, context, first = 10, excludeIDs) =
     // topics = [],
   } = post;
 
-  if (goal !== "Get coffee" || !goal || !subField.topicID) return [];
+  if (goal !== "Get Coffee" || !goal || !subField.topicID) return [];
 
   // find users with a topicFocus that matches subField
   try {
@@ -319,7 +319,7 @@ const getMatchesFindBusinessPartners = async (me, post, context, first = 10) => 
     // topics = [],
   } = post;
 
-  if (goal !== "Find business partners" || !goal || !subField.topicID) return [];
+  if (goal !== "Find Business Partners" || !goal || !subField.topicID) return [];
 
   try {
     const usersMatchingGoal = await context.prisma.users({

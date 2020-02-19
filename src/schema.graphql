@@ -1,6 +1,10 @@
 # import * from "../generated/prisma.graphql"
 
-scalar DateTime 
+scalar DateTime
+
+type Subscription {
+  messageAdded(chatID: ID!): Message
+}
 
 type Query {
   # users
@@ -20,7 +24,7 @@ type Query {
 
   #chats
   allMyChats: [Chat]!
-  fullChat(id: ID!): Chat!
+  fullChat(id: ID): Chat
 }
 
 type Mutation {
@@ -66,7 +70,7 @@ type Mutation {
   editIntro(userId: ID!, title: String, items: [StoryItemCreateWithoutStoryInput!]): User!
 
   #chat
-  createChat(chat: ChatCreateInput!): Chat!
+  createChat(users: [UserWhereUniqueInput]!): Chat!
   createMessage(message: MessageCreateInput!): Chat!
 }
 

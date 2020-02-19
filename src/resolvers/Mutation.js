@@ -1,6 +1,7 @@
 const { hash, compare } = require('bcryptjs')
 const { sign } = require('jsonwebtoken')
-const { getUserId } = require('../utils')
+const { getUserId, CHAT_CHANNEL } = require('../utils')
+const { MessageFragment } = require('../_fragments.js')
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
@@ -698,14 +699,22 @@ const Mutation = {
   // CHAT
   // ================
 
-  async createChat(parent, args, context) {
+  async createChat(parent, { users }, context) {
     // 1. check if user is logged in
     if (!context.request.userId) {
       throw new Error(`You must be logged in to do that`)
     }
 
-    // 3. create chat
-    const chat = await context.prisma.createChat({ data: args.chat })
+    // 2. create chat
+    const chat = await context.prisma.createChat(
+      {
+        data: {
+          users: {
+            connect: [users] // [ { id: ##### }, { id: ##### }]
+          }
+        }
+      }
+    )
 
     return chat
   },
@@ -717,13 +726,16 @@ const Mutation = {
     }
 
     // 3. create message
-    const message = await context.prisma.createMessage({ ...args.message })
+    const message = await context.prisma.createMessage({ ...args.message }).$fragment(MessageFragment);
+    // console.log(message)
 
     // get full chat
-    const chat = await context.prisma.chat({ id: args.message.chat.connect.id })
+    const chat = await context.prisma.chat({ id: message.chat.id })
 
-    return chat     // must return fullChat in fragment DetailedChat
-    // return { pizza: 'hey '}
+    // add updated chat to subscription channel
+    // context.pubsub.publish(CHAT_CHANNEL, { messageAdded: message })
+
+    return chat     // must return fullChat w fragment DetailedChat
   }
 
 }

@@ -1,11 +1,12 @@
 require('dotenv').config();
 
-const { GraphQLServer } = require('graphql-yoga');
+const { GraphQLServer, PubSub } = require('graphql-yoga');
 const { prisma } = require('../generated/prisma-client');
 
 const { resolvers } = require('./resolvers');
 const { getUserId } = require('./utils');
 
+// const pubsub = new PubSub()
 const server = new GraphQLServer({
   typeDefs: './src/schema.graphql',
   resolvers,
@@ -14,6 +15,7 @@ const server = new GraphQLServer({
     return {
       ...request,
       prisma,
+      // pubsub,
     };
   },
 });
@@ -22,6 +24,7 @@ const server = new GraphQLServer({
 // 2. convert to userId
 // 3. place userId in request
 server.express.use((req, res, next) => {
+  // console.log(req)
   const userId = getUserId(req);
   req.userId = userId
   next();

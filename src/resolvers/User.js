@@ -39,6 +39,10 @@ const User = {
   async intro(parent, args, context) {
     return context.prisma.user({ id: parent.id }).intro()
   },
+
+  async chats(parent, args, context) {
+    return context.prisma.user({ id: parent.id }).chats({ orderBy: "updatedAt_DESC" })
+  },
 }
 
 module.exports = {
