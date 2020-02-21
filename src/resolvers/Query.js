@@ -217,6 +217,12 @@ const Query = {
   },
 
   async singlePost(parent, { id }, context) {
+    const post = await context.prisma.post({ id })
+
+    return post
+  },
+
+  async singlePostMatches(parent, { id }, context) {
     // all these await functions need parallized
     const me = await context.prisma.user({ id: context.request.userId }).$fragment(MyInfoForConnections);
     const post = await context.prisma.post({ id }).$fragment(DetailPost);
@@ -224,13 +230,15 @@ const Query = {
     // get matches based on Goal and User 
     const isMyPost = context.request.userId === post.owner.id;
 
-    let usersMatchingGoal = null;
+    let matches = null;
     if (isMyPost && !!post.goal) {
-      usersMatchingGoal = await getUsersMatchingGoal(me, post, context) // returns [Match]
+      matches = await getUsersMatchingGoal(me, post, context) // returns [Match]
     }
 
-    return { post, matches: usersMatchingGoal }
+    return matches
   },
+
+  
 
   async activeGoalsUser(parent, args, context) {
     // all these await functions need parallized

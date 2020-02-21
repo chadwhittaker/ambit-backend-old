@@ -1,3 +1,5 @@
+scalar DateTime
+
 enum Role {
   ADMIN
   PRO
@@ -6,7 +8,36 @@ enum Role {
   SUSPENDED
 }
 
-scalar DateTime
+enum NotificationStyle {
+  LIKE_GOAL
+  LIKES_GOAL
+  LIKE_POST
+  LIKES_POST
+  LIKE_UPDATE
+  LIKES_UPDATE
+  LIKE_COMMENT
+  LIKES_COMMENT
+  COMMENT_GOAL
+  COMMENT_POST
+  COMMENT_UPDATE
+
+  LIKE_GOAL_MENTIONEDIN
+  LIKES_GOAL_MENTIONEDIN
+  LIKE_POST_MENTIONEDIN
+  LIKES_POST_MENTIONEDIN
+  LIKE_UPDATE_MENTIONEDIN
+  LIKES_UPDATE_MENTIONEDIN
+  LIKE_COMMENT_MENTIONEDIN
+  LIKES_COMMENT_MENTIONEDIN
+  COMMENT_GOAL_MENTIONEDIN
+  COMMENT_POST_MENTIONEDIN
+  COMMENT_UPDATE_MENTIONEDIN
+
+  MENTIONED_IN_GOAL
+  MENTIONED_IN_POST
+  MENTIONED_IN_UPDATE
+  MENTIONED_IN_COMMENT
+}
 
 type User {
   id: ID! @id
@@ -44,6 +75,18 @@ type User {
   meetings: [Meeting]
   roles: [Role] @scalarList(strategy: RELATION)
   chats: [Chat]
+  notifications: [Notification] @relation(name: "MyNotifications" onDelete: CASCADE)
+}
+
+type Notification {
+  id: ID!
+  target: User! @relation(name: "MyNotifications")
+  style: NotificationStyle!
+  users: [User]
+  post: Post
+  update: Update
+  comment: Comment
+  seen: Boolean! @default(value: false)
 }
 
 type Story {
