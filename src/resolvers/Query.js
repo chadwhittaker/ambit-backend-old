@@ -238,7 +238,7 @@ const Query = {
     return matches
   },
 
-  
+
 
   async activeGoalsUser(parent, args, context) {
     // all these await functions need parallized
@@ -311,7 +311,22 @@ const Query = {
     const chat = await context.prisma.chat({ id: args.id });
 
     return chat;
-  }
+  },
+
+  async myNotifications(parent, args, context) {
+    if (!context.request.userId) {
+      return [];
+    }
+
+    const notifications = await context.prisma.notifications(
+      {
+        where: { target: { id: context.request.userId } },
+        orderBy: 'createdAt_DESC'
+      }
+    );
+
+    return notifications
+  },
 
 };
 

@@ -2,7 +2,6 @@ const Subscription = {
 
   messageAdded: {
     subscribe: async (parent, args, context) => {
-      // console.log('here')
       return context.prisma.$subscribe
         .message({
           AND: [
@@ -22,12 +21,26 @@ const Subscription = {
     },
   },
 
-  // messageAdded: {
-  //   subscribe: (parent, args, context) => {
-  //     console.log('setting up subscription')
-  //     // return context.pubsub.asyncIterator(CHAT_CHANNEL)
-  //   }
-  // }
+  newNotification: {
+    subscribe: async (parent, args, context) => {
+        return context.prisma.$subscribe
+        .notification({
+          AND: [
+            { mutation_in: ['CREATED'] },
+            { node: {
+                target: {
+                  id: args.id,
+                }
+              }
+            }
+          ]
+        })
+        .node()
+    },
+    resolve: payload => {
+      return payload
+    },
+  },
 
 }
 

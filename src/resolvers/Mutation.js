@@ -1,7 +1,8 @@
 const { hash, compare } = require('bcryptjs')
 const { sign } = require('jsonwebtoken')
 const { getUserId, CHAT_CHANNEL } = require('../utils')
-const { MessageFragment } = require('../_fragments.js')
+const { MessageFragment, BasicPost } = require('../_fragments.js')
+const { createNotification } = require('./functions')
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
@@ -542,7 +543,18 @@ const Mutation = {
           },
         }
       }
-    )
+    ).$fragment(BasicPost)
+
+    // dont create notificaton if it is an UNLIKE
+    if (!liked) {
+      createNotification({ 
+        context,
+        style: 'LIKE_POST',
+        targetID: post.owner.id,
+        userID: context.request.userId,
+        postID: post.id 
+      })
+    }
 
     return post
   },

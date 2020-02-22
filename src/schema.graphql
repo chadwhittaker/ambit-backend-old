@@ -4,6 +4,7 @@ scalar DateTime
 
 type Subscription {
   messageAdded(chatID: ID!): Message
+  newNotification(id: ID!): Notification
 }
 
 type Query {
@@ -23,10 +24,12 @@ type Query {
   singlePostMatches(id: ID!): [Match]!
   activeGoalsUser: [PostWithMatches]!
   
-
-  #chats
+  # chats
   allMyChats: [Chat]!
   fullChat(id: ID): Chat
+
+  # notifications
+  myNotifications: [Notification]!
 }
 
 type Mutation {

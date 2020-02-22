@@ -9,8 +9,7 @@ const { Story } = require('./Story')
 const { Topic } = require('./Topic')
 const { Chat } = require('./Chat')
 const { Message } = require('./Message')
-
-
+const { Notification } = require('./Notification')
 
 const resolvers = {
   Query,
@@ -23,7 +22,8 @@ const resolvers = {
   Story,
   Topic,
   Chat,
-  Message
+  Message,
+  Notification
 }
 
 module.exports = {

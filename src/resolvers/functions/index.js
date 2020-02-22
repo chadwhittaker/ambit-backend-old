@@ -345,10 +345,49 @@ const getMatchesFindBusinessPartners = async (me, post, context, first = 10) => 
   }
 }
 
+const createNotification = async ({ context, style, targetID, userID, userIDs, postID, updateID, commentID }) => {
+  // switch between styles
+  switch (style) {
+    case 'LIKE_POST':
+      // check if the same notification already exists
+      try {
+        const notif = await context.prisma.notifications({
+          where: {
+            AND: [
+              { style: 'LIKE_POST' },
+              { post: { id: postID } },
+              { user: { id: userID } },
+            ]
+          }
+        })
+
+        const doesNotExist = (!notif || notif.length === 0)
+
+        // if the notification does not already exist, create notification
+        if (doesNotExist) {
+          await context.prisma.createNotification(
+            {
+              target: { connect: { id: targetID } },
+              user: { connect: { id: userID } },
+              style: 'LIKE_POST',
+              post: { connect: { id: postID } },
+            }
+          )
+        }
+      } catch (e) {
+        console.error(e)
+      }
+      break;
+    default:
+      break;
+  }
+}
+
 
 module.exports = {
   getUsersMatchingTopicsFocus,
   getUsersMatchingManyGoals,
   getUsersMatchingGoal,
   getActiveGoalsOfUser,
+  createNotification,
 }

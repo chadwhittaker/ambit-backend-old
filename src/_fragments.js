@@ -60,8 +60,8 @@ const MinimalUser = gql`
   }
 `;
 
-const ListPosts = gql`
-  fragment ListPosts on Post {
+const BasicPost = gql`
+  fragment BasicPost on Post {
     id
     createdAt
     lastUpdated
@@ -433,7 +433,7 @@ const CommentFragment = gql`
 
 module.exports = {
   MyInfoForConnections,
-  ListPosts,
+  BasicPost,
   DetailPost,
   MessageFragment,
 }

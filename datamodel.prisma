@@ -75,14 +75,16 @@ type User {
   meetings: [Meeting]
   roles: [Role] @scalarList(strategy: RELATION)
   chats: [Chat]
-  notifications: [Notification] @relation(name: "MyNotifications" onDelete: CASCADE)
+  notifications: [Notification] @relation(name: "NotificationTargetUser" onDelete: CASCADE)
 }
 
 type Notification {
-  id: ID!
-  target: User! @relation(name: "MyNotifications")
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  target: User! @relation(name: "NotificationTargetUser")
   style: NotificationStyle!
-  users: [User]
+  user: User @relation(name: "NotificationInvolvedUser")
+  users: [User] @relation(name: "NotificationInvolvedUsers")
   post: Post
   update: Update
   comment: Comment

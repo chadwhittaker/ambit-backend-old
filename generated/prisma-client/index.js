@@ -9,7 +9,15 @@ var models = [
     embedded: false
   },
   {
+    name: "NotificationStyle",
+    embedded: false
+  },
+  {
     name: "User",
+    embedded: false
+  },
+  {
+    name: "Notification",
     embedded: false
   },
   {
