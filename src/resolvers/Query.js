@@ -321,7 +321,8 @@ const Query = {
     const notifications = await context.prisma.notifications(
       {
         where: { target: { id: context.request.userId } },
-        orderBy: 'createdAt_DESC'
+        orderBy: 'createdAt_DESC',
+        first: 50,
       }
     );
 

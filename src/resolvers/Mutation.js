@@ -748,6 +748,35 @@ const Mutation = {
     // context.pubsub.publish(CHAT_CHANNEL, { messageAdded: message })
 
     return chat     // must return fullChat w fragment DetailedChat
+  },
+
+  async clearMyNotifications(parent, args, context) {
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      return null
+    }
+
+    // 2. update all of MY UNSEEN notifications to be SEEN
+    await context.prisma.updateManyNotifications({
+      where: {
+        AND: [
+          { target: { id: context.request.userId } },
+          { seen: false },
+        ]
+      },
+      data: { seen: true },
+    })
+
+    // 3. get an updated list of notifications to send to the frontend
+    const updatedNotifications = await context.prisma.notifications(
+      {
+        where: { target: { id: context.request.userId } },
+        orderBy: 'createdAt_DESC',
+        first: 50,
+      }
+    );
+
+    return updatedNotifications;
   }
 
 }

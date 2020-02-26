@@ -74,9 +74,12 @@ type Mutation {
   # intro
   editIntro(userId: ID!, title: String, items: [StoryItemCreateWithoutStoryInput!]): User!
 
-  #chat
+  # chat
   createChat(users: [UserWhereUniqueInput]!): Chat!
   createMessage(message: MessageCreateInput!): Chat!
+
+  # notifications
+  clearMyNotifications: [Notification]!
 }
 
 type AuthPayload {
