@@ -1,7 +1,3 @@
-type AggregateChat {
-  count: Int!
-}
-
 type AggregateComment {
   count: Int!
 }
@@ -11,6 +7,10 @@ type AggregateEducation {
 }
 
 type AggregateExperience {
+  count: Int!
+}
+
+type AggregateGroup {
   count: Int!
 }
 
@@ -60,201 +60,6 @@ type AggregateUser {
 
 type BatchPayload {
   count: Long!
-}
-
-type Chat {
-  id: ID!
-  updatedAt: DateTime!
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  messages(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Message!]
-  latestMessage: Message
-}
-
-type ChatConnection {
-  pageInfo: PageInfo!
-  edges: [ChatEdge]!
-  aggregate: AggregateChat!
-}
-
-input ChatCreateInput {
-  id: ID
-  users: UserCreateManyWithoutChatsInput
-  messages: MessageCreateManyWithoutChatInput
-  latestMessage: MessageCreateOneInput
-}
-
-input ChatCreateManyWithoutUsersInput {
-  create: [ChatCreateWithoutUsersInput!]
-  connect: [ChatWhereUniqueInput!]
-}
-
-input ChatCreateOneWithoutMessagesInput {
-  create: ChatCreateWithoutMessagesInput
-  connect: ChatWhereUniqueInput
-}
-
-input ChatCreateWithoutMessagesInput {
-  id: ID
-  users: UserCreateManyWithoutChatsInput
-  latestMessage: MessageCreateOneInput
-}
-
-input ChatCreateWithoutUsersInput {
-  id: ID
-  messages: MessageCreateManyWithoutChatInput
-  latestMessage: MessageCreateOneInput
-}
-
-type ChatEdge {
-  node: Chat!
-  cursor: String!
-}
-
-enum ChatOrderByInput {
-  id_ASC
-  id_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-}
-
-type ChatPreviousValues {
-  id: ID!
-  updatedAt: DateTime!
-}
-
-input ChatScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  AND: [ChatScalarWhereInput!]
-  OR: [ChatScalarWhereInput!]
-  NOT: [ChatScalarWhereInput!]
-}
-
-type ChatSubscriptionPayload {
-  mutation: MutationType!
-  node: Chat
-  updatedFields: [String!]
-  previousValues: ChatPreviousValues
-}
-
-input ChatSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: ChatWhereInput
-  AND: [ChatSubscriptionWhereInput!]
-  OR: [ChatSubscriptionWhereInput!]
-  NOT: [ChatSubscriptionWhereInput!]
-}
-
-input ChatUpdateInput {
-  users: UserUpdateManyWithoutChatsInput
-  messages: MessageUpdateManyWithoutChatInput
-  latestMessage: MessageUpdateOneInput
-}
-
-input ChatUpdateManyWithoutUsersInput {
-  create: [ChatCreateWithoutUsersInput!]
-  delete: [ChatWhereUniqueInput!]
-  connect: [ChatWhereUniqueInput!]
-  set: [ChatWhereUniqueInput!]
-  disconnect: [ChatWhereUniqueInput!]
-  update: [ChatUpdateWithWhereUniqueWithoutUsersInput!]
-  upsert: [ChatUpsertWithWhereUniqueWithoutUsersInput!]
-  deleteMany: [ChatScalarWhereInput!]
-}
-
-input ChatUpdateOneRequiredWithoutMessagesInput {
-  create: ChatCreateWithoutMessagesInput
-  update: ChatUpdateWithoutMessagesDataInput
-  upsert: ChatUpsertWithoutMessagesInput
-  connect: ChatWhereUniqueInput
-}
-
-input ChatUpdateWithoutMessagesDataInput {
-  users: UserUpdateManyWithoutChatsInput
-  latestMessage: MessageUpdateOneInput
-}
-
-input ChatUpdateWithoutUsersDataInput {
-  messages: MessageUpdateManyWithoutChatInput
-  latestMessage: MessageUpdateOneInput
-}
-
-input ChatUpdateWithWhereUniqueWithoutUsersInput {
-  where: ChatWhereUniqueInput!
-  data: ChatUpdateWithoutUsersDataInput!
-}
-
-input ChatUpsertWithoutMessagesInput {
-  update: ChatUpdateWithoutMessagesDataInput!
-  create: ChatCreateWithoutMessagesInput!
-}
-
-input ChatUpsertWithWhereUniqueWithoutUsersInput {
-  where: ChatWhereUniqueInput!
-  update: ChatUpdateWithoutUsersDataInput!
-  create: ChatCreateWithoutUsersInput!
-}
-
-input ChatWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  users_every: UserWhereInput
-  users_some: UserWhereInput
-  users_none: UserWhereInput
-  messages_every: MessageWhereInput
-  messages_some: MessageWhereInput
-  messages_none: MessageWhereInput
-  latestMessage: MessageWhereInput
-  AND: [ChatWhereInput!]
-  OR: [ChatWhereInput!]
-  NOT: [ChatWhereInput!]
-}
-
-input ChatWhereUniqueInput {
-  id: ID
 }
 
 type Comment {
@@ -1773,6 +1578,211 @@ input ExperienceWhereUniqueInput {
   id: ID
 }
 
+type Group {
+  id: ID!
+  updatedAt: DateTime!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  messages(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Message!]
+  latestMessage: Message
+  hidden(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+}
+
+type GroupConnection {
+  pageInfo: PageInfo!
+  edges: [GroupEdge]!
+  aggregate: AggregateGroup!
+}
+
+input GroupCreateInput {
+  id: ID
+  users: UserCreateManyWithoutGroupsInput
+  messages: MessageCreateManyWithoutToInput
+  latestMessage: MessageCreateOneInput
+  hidden: UserCreateManyInput
+}
+
+input GroupCreateManyWithoutUsersInput {
+  create: [GroupCreateWithoutUsersInput!]
+  connect: [GroupWhereUniqueInput!]
+}
+
+input GroupCreateOneWithoutMessagesInput {
+  create: GroupCreateWithoutMessagesInput
+  connect: GroupWhereUniqueInput
+}
+
+input GroupCreateWithoutMessagesInput {
+  id: ID
+  users: UserCreateManyWithoutGroupsInput
+  latestMessage: MessageCreateOneInput
+  hidden: UserCreateManyInput
+}
+
+input GroupCreateWithoutUsersInput {
+  id: ID
+  messages: MessageCreateManyWithoutToInput
+  latestMessage: MessageCreateOneInput
+  hidden: UserCreateManyInput
+}
+
+type GroupEdge {
+  node: Group!
+  cursor: String!
+}
+
+enum GroupOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type GroupPreviousValues {
+  id: ID!
+  updatedAt: DateTime!
+}
+
+input GroupScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [GroupScalarWhereInput!]
+  OR: [GroupScalarWhereInput!]
+  NOT: [GroupScalarWhereInput!]
+}
+
+type GroupSubscriptionPayload {
+  mutation: MutationType!
+  node: Group
+  updatedFields: [String!]
+  previousValues: GroupPreviousValues
+}
+
+input GroupSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: GroupWhereInput
+  AND: [GroupSubscriptionWhereInput!]
+  OR: [GroupSubscriptionWhereInput!]
+  NOT: [GroupSubscriptionWhereInput!]
+}
+
+input GroupUpdateInput {
+  users: UserUpdateManyWithoutGroupsInput
+  messages: MessageUpdateManyWithoutToInput
+  latestMessage: MessageUpdateOneInput
+  hidden: UserUpdateManyInput
+}
+
+input GroupUpdateManyWithoutUsersInput {
+  create: [GroupCreateWithoutUsersInput!]
+  delete: [GroupWhereUniqueInput!]
+  connect: [GroupWhereUniqueInput!]
+  set: [GroupWhereUniqueInput!]
+  disconnect: [GroupWhereUniqueInput!]
+  update: [GroupUpdateWithWhereUniqueWithoutUsersInput!]
+  upsert: [GroupUpsertWithWhereUniqueWithoutUsersInput!]
+  deleteMany: [GroupScalarWhereInput!]
+}
+
+input GroupUpdateOneRequiredWithoutMessagesInput {
+  create: GroupCreateWithoutMessagesInput
+  update: GroupUpdateWithoutMessagesDataInput
+  upsert: GroupUpsertWithoutMessagesInput
+  connect: GroupWhereUniqueInput
+}
+
+input GroupUpdateWithoutMessagesDataInput {
+  users: UserUpdateManyWithoutGroupsInput
+  latestMessage: MessageUpdateOneInput
+  hidden: UserUpdateManyInput
+}
+
+input GroupUpdateWithoutUsersDataInput {
+  messages: MessageUpdateManyWithoutToInput
+  latestMessage: MessageUpdateOneInput
+  hidden: UserUpdateManyInput
+}
+
+input GroupUpdateWithWhereUniqueWithoutUsersInput {
+  where: GroupWhereUniqueInput!
+  data: GroupUpdateWithoutUsersDataInput!
+}
+
+input GroupUpsertWithoutMessagesInput {
+  update: GroupUpdateWithoutMessagesDataInput!
+  create: GroupCreateWithoutMessagesInput!
+}
+
+input GroupUpsertWithWhereUniqueWithoutUsersInput {
+  where: GroupWhereUniqueInput!
+  update: GroupUpdateWithoutUsersDataInput!
+  create: GroupCreateWithoutUsersInput!
+}
+
+input GroupWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  users_every: UserWhereInput
+  users_some: UserWhereInput
+  users_none: UserWhereInput
+  messages_every: MessageWhereInput
+  messages_some: MessageWhereInput
+  messages_none: MessageWhereInput
+  latestMessage: MessageWhereInput
+  hidden_every: UserWhereInput
+  hidden_some: UserWhereInput
+  hidden_none: UserWhereInput
+  AND: [GroupWhereInput!]
+  OR: [GroupWhereInput!]
+  NOT: [GroupWhereInput!]
+}
+
+input GroupWhereUniqueInput {
+  id: ID
+}
+
 type List {
   id: ID!
   listName: String!
@@ -2188,9 +2198,11 @@ input MeetingWhereUniqueInput {
 type Message {
   id: ID!
   createdAt: DateTime!
-  chat: Chat!
+  to: Group!
   from: User!
   content: String!
+  seen(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  hidden(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
 }
 
 type MessageConnection {
@@ -2201,13 +2213,15 @@ type MessageConnection {
 
 input MessageCreateInput {
   id: ID
-  chat: ChatCreateOneWithoutMessagesInput!
+  to: GroupCreateOneWithoutMessagesInput!
   from: UserCreateOneInput!
   content: String!
+  seen: UserCreateManyInput
+  hidden: UserCreateManyInput
 }
 
-input MessageCreateManyWithoutChatInput {
-  create: [MessageCreateWithoutChatInput!]
+input MessageCreateManyWithoutToInput {
+  create: [MessageCreateWithoutToInput!]
   connect: [MessageWhereUniqueInput!]
 }
 
@@ -2216,10 +2230,12 @@ input MessageCreateOneInput {
   connect: MessageWhereUniqueInput
 }
 
-input MessageCreateWithoutChatInput {
+input MessageCreateWithoutToInput {
   id: ID
   from: UserCreateOneInput!
   content: String!
+  seen: UserCreateManyInput
+  hidden: UserCreateManyInput
 }
 
 type MessageEdge {
@@ -2303,15 +2319,19 @@ input MessageSubscriptionWhereInput {
 }
 
 input MessageUpdateDataInput {
-  chat: ChatUpdateOneRequiredWithoutMessagesInput
+  to: GroupUpdateOneRequiredWithoutMessagesInput
   from: UserUpdateOneRequiredInput
   content: String
+  seen: UserUpdateManyInput
+  hidden: UserUpdateManyInput
 }
 
 input MessageUpdateInput {
-  chat: ChatUpdateOneRequiredWithoutMessagesInput
+  to: GroupUpdateOneRequiredWithoutMessagesInput
   from: UserUpdateOneRequiredInput
   content: String
+  seen: UserUpdateManyInput
+  hidden: UserUpdateManyInput
 }
 
 input MessageUpdateManyDataInput {
@@ -2322,14 +2342,14 @@ input MessageUpdateManyMutationInput {
   content: String
 }
 
-input MessageUpdateManyWithoutChatInput {
-  create: [MessageCreateWithoutChatInput!]
+input MessageUpdateManyWithoutToInput {
+  create: [MessageCreateWithoutToInput!]
   delete: [MessageWhereUniqueInput!]
   connect: [MessageWhereUniqueInput!]
   set: [MessageWhereUniqueInput!]
   disconnect: [MessageWhereUniqueInput!]
-  update: [MessageUpdateWithWhereUniqueWithoutChatInput!]
-  upsert: [MessageUpsertWithWhereUniqueWithoutChatInput!]
+  update: [MessageUpdateWithWhereUniqueWithoutToInput!]
+  upsert: [MessageUpsertWithWhereUniqueWithoutToInput!]
   deleteMany: [MessageScalarWhereInput!]
   updateMany: [MessageUpdateManyWithWhereNestedInput!]
 }
@@ -2348,14 +2368,16 @@ input MessageUpdateOneInput {
   connect: MessageWhereUniqueInput
 }
 
-input MessageUpdateWithoutChatDataInput {
+input MessageUpdateWithoutToDataInput {
   from: UserUpdateOneRequiredInput
   content: String
+  seen: UserUpdateManyInput
+  hidden: UserUpdateManyInput
 }
 
-input MessageUpdateWithWhereUniqueWithoutChatInput {
+input MessageUpdateWithWhereUniqueWithoutToInput {
   where: MessageWhereUniqueInput!
-  data: MessageUpdateWithoutChatDataInput!
+  data: MessageUpdateWithoutToDataInput!
 }
 
 input MessageUpsertNestedInput {
@@ -2363,10 +2385,10 @@ input MessageUpsertNestedInput {
   create: MessageCreateInput!
 }
 
-input MessageUpsertWithWhereUniqueWithoutChatInput {
+input MessageUpsertWithWhereUniqueWithoutToInput {
   where: MessageWhereUniqueInput!
-  update: MessageUpdateWithoutChatDataInput!
-  create: MessageCreateWithoutChatInput!
+  update: MessageUpdateWithoutToDataInput!
+  create: MessageCreateWithoutToInput!
 }
 
 input MessageWhereInput {
@@ -2392,7 +2414,7 @@ input MessageWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
-  chat: ChatWhereInput
+  to: GroupWhereInput
   from: UserWhereInput
   content: String
   content_not: String
@@ -2408,6 +2430,12 @@ input MessageWhereInput {
   content_not_starts_with: String
   content_ends_with: String
   content_not_ends_with: String
+  seen_every: UserWhereInput
+  seen_some: UserWhereInput
+  seen_none: UserWhereInput
+  hidden_every: UserWhereInput
+  hidden_some: UserWhereInput
+  hidden_none: UserWhereInput
   AND: [MessageWhereInput!]
   OR: [MessageWhereInput!]
   NOT: [MessageWhereInput!]
@@ -2418,11 +2446,6 @@ input MessageWhereUniqueInput {
 }
 
 type Mutation {
-  createChat(data: ChatCreateInput!): Chat!
-  updateChat(data: ChatUpdateInput!, where: ChatWhereUniqueInput!): Chat
-  upsertChat(where: ChatWhereUniqueInput!, create: ChatCreateInput!, update: ChatUpdateInput!): Chat!
-  deleteChat(where: ChatWhereUniqueInput!): Chat
-  deleteManyChats(where: ChatWhereInput): BatchPayload!
   createComment(data: CommentCreateInput!): Comment!
   updateComment(data: CommentUpdateInput!, where: CommentWhereUniqueInput!): Comment
   updateManyComments(data: CommentUpdateManyMutationInput!, where: CommentWhereInput): BatchPayload!
@@ -2441,6 +2464,11 @@ type Mutation {
   upsertExperience(where: ExperienceWhereUniqueInput!, create: ExperienceCreateInput!, update: ExperienceUpdateInput!): Experience!
   deleteExperience(where: ExperienceWhereUniqueInput!): Experience
   deleteManyExperiences(where: ExperienceWhereInput): BatchPayload!
+  createGroup(data: GroupCreateInput!): Group!
+  updateGroup(data: GroupUpdateInput!, where: GroupWhereUniqueInput!): Group
+  upsertGroup(where: GroupWhereUniqueInput!, create: GroupCreateInput!, update: GroupUpdateInput!): Group!
+  deleteGroup(where: GroupWhereUniqueInput!): Group
+  deleteManyGroups(where: GroupWhereInput): BatchPayload!
   createList(data: ListCreateInput!): List!
   updateList(data: ListUpdateInput!, where: ListWhereUniqueInput!): List
   updateManyLists(data: ListUpdateManyMutationInput!, where: ListWhereInput): BatchPayload!
@@ -3612,9 +3640,6 @@ input PostWhereUniqueInput {
 }
 
 type Query {
-  chat(where: ChatWhereUniqueInput!): Chat
-  chats(where: ChatWhereInput, orderBy: ChatOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Chat]!
-  chatsConnection(where: ChatWhereInput, orderBy: ChatOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ChatConnection!
   comment(where: CommentWhereUniqueInput!): Comment
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
   commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
@@ -3624,6 +3649,9 @@ type Query {
   experience(where: ExperienceWhereUniqueInput!): Experience
   experiences(where: ExperienceWhereInput, orderBy: ExperienceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Experience]!
   experiencesConnection(where: ExperienceWhereInput, orderBy: ExperienceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ExperienceConnection!
+  group(where: GroupWhereUniqueInput!): Group
+  groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group]!
+  groupsConnection(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GroupConnection!
   list(where: ListWhereUniqueInput!): List
   lists(where: ListWhereInput, orderBy: ListOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [List]!
   listsConnection(where: ListWhereInput, orderBy: ListOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ListConnection!
@@ -4409,10 +4437,10 @@ input StoryWhereUniqueInput {
 }
 
 type Subscription {
-  chat(where: ChatSubscriptionWhereInput): ChatSubscriptionPayload
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
   education(where: EducationSubscriptionWhereInput): EducationSubscriptionPayload
   experience(where: ExperienceSubscriptionWhereInput): ExperienceSubscriptionPayload
+  group(where: GroupSubscriptionWhereInput): GroupSubscriptionPayload
   list(where: ListSubscriptionWhereInput): ListSubscriptionPayload
   meeting(where: MeetingSubscriptionWhereInput): MeetingSubscriptionPayload
   message(where: MessageSubscriptionWhereInput): MessageSubscriptionPayload
@@ -5329,7 +5357,7 @@ type User {
   projects(where: StoryWhereInput, orderBy: StoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Story!]
   meetings(where: MeetingWhereInput, orderBy: MeetingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Meeting!]
   roles: [Role!]!
-  chats(where: ChatWhereInput, orderBy: ChatOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Chat!]
+  groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group!]
   notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification!]
 }
 
@@ -5373,17 +5401,12 @@ input UserCreateInput {
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
-  chats: ChatCreateManyWithoutUsersInput
+  groups: GroupCreateManyWithoutUsersInput
   notifications: NotificationCreateManyWithoutTargetInput
 }
 
 input UserCreateManyInput {
   create: [UserCreateInput!]
-  connect: [UserWhereUniqueInput!]
-}
-
-input UserCreateManyWithoutChatsInput {
-  create: [UserCreateWithoutChatsInput!]
   connect: [UserWhereUniqueInput!]
 }
 
@@ -5399,6 +5422,11 @@ input UserCreateManyWithoutFollowersInput {
 
 input UserCreateManyWithoutFollowingInput {
   create: [UserCreateWithoutFollowingInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateManyWithoutGroupsInput {
+  create: [UserCreateWithoutGroupsInput!]
   connect: [UserWhereUniqueInput!]
 }
 
@@ -5441,43 +5469,6 @@ input UserCreaterolesInput {
   set: [Role!]
 }
 
-input UserCreateWithoutChatsInput {
-  id: ID
-  name: String!
-  firstName: String!
-  lastName: String!
-  email: String!
-  password: String!
-  profilePic: String
-  bannerPic: String
-  location: String
-  locationID: String
-  locationLat: Float
-  locationLon: Float
-  headline: String
-  website: String
-  bio: String
-  about: String
-  topicsMentor: TopicCreateManyInput
-  topicsFreelance: TopicCreateManyInput
-  topicsInvest: TopicCreateManyInput
-  topicsAgency: TopicCreateManyInput
-  topicsFocus: TopicCreateManyInput
-  topicsInterest: TopicCreateManyInput
-  skills: SkillCreateManyWithoutOwnerInput
-  experience: ExperienceCreateManyWithoutOwnerInput
-  education: EducationCreateManyWithoutOwnerInput
-  posts: PostCreateManyWithoutOwnerInput
-  connections: UserCreateManyWithoutConnectionsInput
-  following: UserCreateManyWithoutFollowingInput
-  followers: UserCreateManyWithoutFollowersInput
-  intro: StoryCreateOneInput
-  projects: StoryCreateManyInput
-  meetings: MeetingCreateManyWithoutUsersInput
-  roles: UserCreaterolesInput
-  notifications: NotificationCreateManyWithoutTargetInput
-}
-
 input UserCreateWithoutConnectionsInput {
   id: ID
   name: String!
@@ -5511,7 +5502,7 @@ input UserCreateWithoutConnectionsInput {
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
-  chats: ChatCreateManyWithoutUsersInput
+  groups: GroupCreateManyWithoutUsersInput
   notifications: NotificationCreateManyWithoutTargetInput
 }
 
@@ -5548,7 +5539,7 @@ input UserCreateWithoutEducationInput {
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
-  chats: ChatCreateManyWithoutUsersInput
+  groups: GroupCreateManyWithoutUsersInput
   notifications: NotificationCreateManyWithoutTargetInput
 }
 
@@ -5585,7 +5576,7 @@ input UserCreateWithoutExperienceInput {
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
-  chats: ChatCreateManyWithoutUsersInput
+  groups: GroupCreateManyWithoutUsersInput
   notifications: NotificationCreateManyWithoutTargetInput
 }
 
@@ -5622,7 +5613,7 @@ input UserCreateWithoutFollowersInput {
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
-  chats: ChatCreateManyWithoutUsersInput
+  groups: GroupCreateManyWithoutUsersInput
   notifications: NotificationCreateManyWithoutTargetInput
 }
 
@@ -5659,7 +5650,44 @@ input UserCreateWithoutFollowingInput {
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
-  chats: ChatCreateManyWithoutUsersInput
+  groups: GroupCreateManyWithoutUsersInput
+  notifications: NotificationCreateManyWithoutTargetInput
+}
+
+input UserCreateWithoutGroupsInput {
+  id: ID
+  name: String!
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  profilePic: String
+  bannerPic: String
+  location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
+  headline: String
+  website: String
+  bio: String
+  about: String
+  topicsMentor: TopicCreateManyInput
+  topicsFreelance: TopicCreateManyInput
+  topicsInvest: TopicCreateManyInput
+  topicsAgency: TopicCreateManyInput
+  topicsFocus: TopicCreateManyInput
+  topicsInterest: TopicCreateManyInput
+  skills: SkillCreateManyWithoutOwnerInput
+  experience: ExperienceCreateManyWithoutOwnerInput
+  education: EducationCreateManyWithoutOwnerInput
+  posts: PostCreateManyWithoutOwnerInput
+  connections: UserCreateManyWithoutConnectionsInput
+  following: UserCreateManyWithoutFollowingInput
+  followers: UserCreateManyWithoutFollowersInput
+  intro: StoryCreateOneInput
+  projects: StoryCreateManyInput
+  meetings: MeetingCreateManyWithoutUsersInput
+  roles: UserCreaterolesInput
   notifications: NotificationCreateManyWithoutTargetInput
 }
 
@@ -5696,7 +5724,7 @@ input UserCreateWithoutMeetingsInput {
   intro: StoryCreateOneInput
   projects: StoryCreateManyInput
   roles: UserCreaterolesInput
-  chats: ChatCreateManyWithoutUsersInput
+  groups: GroupCreateManyWithoutUsersInput
   notifications: NotificationCreateManyWithoutTargetInput
 }
 
@@ -5734,7 +5762,7 @@ input UserCreateWithoutNotificationsInput {
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
-  chats: ChatCreateManyWithoutUsersInput
+  groups: GroupCreateManyWithoutUsersInput
 }
 
 input UserCreateWithoutPostsInput {
@@ -5770,7 +5798,7 @@ input UserCreateWithoutPostsInput {
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
-  chats: ChatCreateManyWithoutUsersInput
+  groups: GroupCreateManyWithoutUsersInput
   notifications: NotificationCreateManyWithoutTargetInput
 }
 
@@ -5807,7 +5835,7 @@ input UserCreateWithoutSkillsInput {
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
-  chats: ChatCreateManyWithoutUsersInput
+  groups: GroupCreateManyWithoutUsersInput
   notifications: NotificationCreateManyWithoutTargetInput
 }
 
@@ -6151,7 +6179,7 @@ input UserUpdateDataInput {
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
-  chats: ChatUpdateManyWithoutUsersInput
+  groups: GroupUpdateManyWithoutUsersInput
   notifications: NotificationUpdateManyWithoutTargetInput
 }
 
@@ -6188,7 +6216,7 @@ input UserUpdateInput {
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
-  chats: ChatUpdateManyWithoutUsersInput
+  groups: GroupUpdateManyWithoutUsersInput
   notifications: NotificationUpdateManyWithoutTargetInput
 }
 
@@ -6242,18 +6270,6 @@ input UserUpdateManyMutationInput {
   roles: UserUpdaterolesInput
 }
 
-input UserUpdateManyWithoutChatsInput {
-  create: [UserCreateWithoutChatsInput!]
-  delete: [UserWhereUniqueInput!]
-  connect: [UserWhereUniqueInput!]
-  set: [UserWhereUniqueInput!]
-  disconnect: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueWithoutChatsInput!]
-  upsert: [UserUpsertWithWhereUniqueWithoutChatsInput!]
-  deleteMany: [UserScalarWhereInput!]
-  updateMany: [UserUpdateManyWithWhereNestedInput!]
-}
-
 input UserUpdateManyWithoutConnectionsInput {
   create: [UserCreateWithoutConnectionsInput!]
   delete: [UserWhereUniqueInput!]
@@ -6286,6 +6302,18 @@ input UserUpdateManyWithoutFollowingInput {
   disconnect: [UserWhereUniqueInput!]
   update: [UserUpdateWithWhereUniqueWithoutFollowingInput!]
   upsert: [UserUpsertWithWhereUniqueWithoutFollowingInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+}
+
+input UserUpdateManyWithoutGroupsInput {
+  create: [UserCreateWithoutGroupsInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutGroupsInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutGroupsInput!]
   deleteMany: [UserScalarWhereInput!]
   updateMany: [UserUpdateManyWithWhereNestedInput!]
 }
@@ -6362,42 +6390,6 @@ input UserUpdaterolesInput {
   set: [Role!]
 }
 
-input UserUpdateWithoutChatsDataInput {
-  name: String
-  firstName: String
-  lastName: String
-  email: String
-  password: String
-  profilePic: String
-  bannerPic: String
-  location: String
-  locationID: String
-  locationLat: Float
-  locationLon: Float
-  headline: String
-  website: String
-  bio: String
-  about: String
-  topicsMentor: TopicUpdateManyInput
-  topicsFreelance: TopicUpdateManyInput
-  topicsInvest: TopicUpdateManyInput
-  topicsAgency: TopicUpdateManyInput
-  topicsFocus: TopicUpdateManyInput
-  topicsInterest: TopicUpdateManyInput
-  skills: SkillUpdateManyWithoutOwnerInput
-  experience: ExperienceUpdateManyWithoutOwnerInput
-  education: EducationUpdateManyWithoutOwnerInput
-  posts: PostUpdateManyWithoutOwnerInput
-  connections: UserUpdateManyWithoutConnectionsInput
-  following: UserUpdateManyWithoutFollowingInput
-  followers: UserUpdateManyWithoutFollowersInput
-  intro: StoryUpdateOneInput
-  projects: StoryUpdateManyInput
-  meetings: MeetingUpdateManyWithoutUsersInput
-  roles: UserUpdaterolesInput
-  notifications: NotificationUpdateManyWithoutTargetInput
-}
-
 input UserUpdateWithoutConnectionsDataInput {
   name: String
   firstName: String
@@ -6430,7 +6422,7 @@ input UserUpdateWithoutConnectionsDataInput {
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
-  chats: ChatUpdateManyWithoutUsersInput
+  groups: GroupUpdateManyWithoutUsersInput
   notifications: NotificationUpdateManyWithoutTargetInput
 }
 
@@ -6466,7 +6458,7 @@ input UserUpdateWithoutEducationDataInput {
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
-  chats: ChatUpdateManyWithoutUsersInput
+  groups: GroupUpdateManyWithoutUsersInput
   notifications: NotificationUpdateManyWithoutTargetInput
 }
 
@@ -6502,7 +6494,7 @@ input UserUpdateWithoutExperienceDataInput {
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
-  chats: ChatUpdateManyWithoutUsersInput
+  groups: GroupUpdateManyWithoutUsersInput
   notifications: NotificationUpdateManyWithoutTargetInput
 }
 
@@ -6538,7 +6530,7 @@ input UserUpdateWithoutFollowersDataInput {
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
-  chats: ChatUpdateManyWithoutUsersInput
+  groups: GroupUpdateManyWithoutUsersInput
   notifications: NotificationUpdateManyWithoutTargetInput
 }
 
@@ -6574,7 +6566,43 @@ input UserUpdateWithoutFollowingDataInput {
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
-  chats: ChatUpdateManyWithoutUsersInput
+  groups: GroupUpdateManyWithoutUsersInput
+  notifications: NotificationUpdateManyWithoutTargetInput
+}
+
+input UserUpdateWithoutGroupsDataInput {
+  name: String
+  firstName: String
+  lastName: String
+  email: String
+  password: String
+  profilePic: String
+  bannerPic: String
+  location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
+  headline: String
+  website: String
+  bio: String
+  about: String
+  topicsMentor: TopicUpdateManyInput
+  topicsFreelance: TopicUpdateManyInput
+  topicsInvest: TopicUpdateManyInput
+  topicsAgency: TopicUpdateManyInput
+  topicsFocus: TopicUpdateManyInput
+  topicsInterest: TopicUpdateManyInput
+  skills: SkillUpdateManyWithoutOwnerInput
+  experience: ExperienceUpdateManyWithoutOwnerInput
+  education: EducationUpdateManyWithoutOwnerInput
+  posts: PostUpdateManyWithoutOwnerInput
+  connections: UserUpdateManyWithoutConnectionsInput
+  following: UserUpdateManyWithoutFollowingInput
+  followers: UserUpdateManyWithoutFollowersInput
+  intro: StoryUpdateOneInput
+  projects: StoryUpdateManyInput
+  meetings: MeetingUpdateManyWithoutUsersInput
+  roles: UserUpdaterolesInput
   notifications: NotificationUpdateManyWithoutTargetInput
 }
 
@@ -6610,7 +6638,7 @@ input UserUpdateWithoutMeetingsDataInput {
   intro: StoryUpdateOneInput
   projects: StoryUpdateManyInput
   roles: UserUpdaterolesInput
-  chats: ChatUpdateManyWithoutUsersInput
+  groups: GroupUpdateManyWithoutUsersInput
   notifications: NotificationUpdateManyWithoutTargetInput
 }
 
@@ -6647,7 +6675,7 @@ input UserUpdateWithoutNotificationsDataInput {
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
-  chats: ChatUpdateManyWithoutUsersInput
+  groups: GroupUpdateManyWithoutUsersInput
 }
 
 input UserUpdateWithoutPostsDataInput {
@@ -6682,7 +6710,7 @@ input UserUpdateWithoutPostsDataInput {
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
-  chats: ChatUpdateManyWithoutUsersInput
+  groups: GroupUpdateManyWithoutUsersInput
   notifications: NotificationUpdateManyWithoutTargetInput
 }
 
@@ -6718,18 +6746,13 @@ input UserUpdateWithoutSkillsDataInput {
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
-  chats: ChatUpdateManyWithoutUsersInput
+  groups: GroupUpdateManyWithoutUsersInput
   notifications: NotificationUpdateManyWithoutTargetInput
 }
 
 input UserUpdateWithWhereUniqueNestedInput {
   where: UserWhereUniqueInput!
   data: UserUpdateDataInput!
-}
-
-input UserUpdateWithWhereUniqueWithoutChatsInput {
-  where: UserWhereUniqueInput!
-  data: UserUpdateWithoutChatsDataInput!
 }
 
 input UserUpdateWithWhereUniqueWithoutConnectionsInput {
@@ -6745,6 +6768,11 @@ input UserUpdateWithWhereUniqueWithoutFollowersInput {
 input UserUpdateWithWhereUniqueWithoutFollowingInput {
   where: UserWhereUniqueInput!
   data: UserUpdateWithoutFollowingDataInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutGroupsInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutGroupsDataInput!
 }
 
 input UserUpdateWithWhereUniqueWithoutMeetingsInput {
@@ -6788,12 +6816,6 @@ input UserUpsertWithWhereUniqueNestedInput {
   create: UserCreateInput!
 }
 
-input UserUpsertWithWhereUniqueWithoutChatsInput {
-  where: UserWhereUniqueInput!
-  update: UserUpdateWithoutChatsDataInput!
-  create: UserCreateWithoutChatsInput!
-}
-
 input UserUpsertWithWhereUniqueWithoutConnectionsInput {
   where: UserWhereUniqueInput!
   update: UserUpdateWithoutConnectionsDataInput!
@@ -6810,6 +6832,12 @@ input UserUpsertWithWhereUniqueWithoutFollowingInput {
   where: UserWhereUniqueInput!
   update: UserUpdateWithoutFollowingDataInput!
   create: UserCreateWithoutFollowingInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutGroupsInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutGroupsDataInput!
+  create: UserCreateWithoutGroupsInput!
 }
 
 input UserUpsertWithWhereUniqueWithoutMeetingsInput {
@@ -7085,9 +7113,9 @@ input UserWhereInput {
   meetings_every: MeetingWhereInput
   meetings_some: MeetingWhereInput
   meetings_none: MeetingWhereInput
-  chats_every: ChatWhereInput
-  chats_some: ChatWhereInput
-  chats_none: ChatWhereInput
+  groups_every: GroupWhereInput
+  groups_some: GroupWhereInput
+  groups_none: GroupWhereInput
   notifications_every: NotificationWhereInput
   notifications_some: NotificationWhereInput
   notifications_none: NotificationWhereInput

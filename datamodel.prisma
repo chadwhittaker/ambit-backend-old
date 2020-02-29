@@ -74,7 +74,7 @@ type User {
   projects: [Story] @relation(name: "MyProjects")
   meetings: [Meeting]
   roles: [Role] @scalarList(strategy: RELATION)
-  chats: [Chat]
+  groups: [Group] @relation(name: "GroupsOfUser")
   notifications: [Notification] @relation(name: "NotificationTargetUser" onDelete: CASCADE)
 }
 
@@ -231,19 +231,22 @@ type Topic {
   order: Int
 }
 
-type Chat {
+type Group {
   id: ID! @id
   updatedAt: DateTime! @updatedAt
-  users: [User!]!
-  messages: [Message] @relation(name: "MessageToChatRelation" onDelete: CASCADE)
-  latestMessage: Message @relation(name: "LatestMessageToChatRelation")
+  users: [User!]! @relation(name: "GroupsOfUser")
+  messages: [Message] @relation(name: "MessageToGroupRelation" onDelete: CASCADE)
+  latestMessage: Message @relation(name: "LatestMessageToGroupRelation")
+  hidden: [User] @relation(name: "GroupHiddenBy")
 }
 
 type Message {
   id: ID! @id
   createdAt: DateTime! @createdAt
-  chat: Chat! @relation(name: "MessageToChatRelation")
-  from: User!
+  to: Group! @relation(name: "MessageToGroupRelation")
+  from: User! @relation(name: "MessageFrom")
   content: String!
+  seen: [User] @relation(name: "MessageSeenBy")
+  hidden: [User] @relation(name: "MessageHiddenBy")
 }
 

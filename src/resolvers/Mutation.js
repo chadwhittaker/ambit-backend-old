@@ -1,6 +1,6 @@
 const { hash, compare } = require('bcryptjs')
 const { sign } = require('jsonwebtoken')
-const { getUserId, CHAT_CHANNEL } = require('../utils')
+const { getUserId } = require('../utils')
 const { MessageFragment, BasicPost } = require('../_fragments.js')
 const { createNotification } = require('./functions')
 
@@ -708,17 +708,17 @@ const Mutation = {
   },
 
   // ================
-  // CHAT
+  // GROUP
   // ================
 
-  async createChat(parent, { users }, context) {
+  async createGroup(parent, { users }, context) {
     // 1. check if user is logged in
     if (!context.request.userId) {
       throw new Error(`You must be logged in to do that`)
     }
 
-    // 2. create chat
-    const chat = await context.prisma.createChat(
+    // 2. create group
+    const group = await context.prisma.createGroup(
       {
         data: {
           users: {
@@ -728,7 +728,7 @@ const Mutation = {
       }
     )
 
-    return chat
+    return group
   },
 
   async createMessage(parent, args, context) {
@@ -737,17 +737,21 @@ const Mutation = {
       throw new Error(`You must be logged in to do that`)
     }
 
+    const message = await context.prisma.createMessage({ ...args.message });
+    
+    return message
+
     // 3. create message
-    const message = await context.prisma.createMessage({ ...args.message }).$fragment(MessageFragment);
+    // const message = await context.prisma.createMessage({ ...args.message }).$fragment(MessageFragment);
+
+
     // console.log(message)
 
-    // get full chat
-    const chat = await context.prisma.chat({ id: message.chat.id })
+    // get group
+    // const group = await context.prisma.group({ id: message.group.id })
 
-    // add updated chat to subscription channel
-    // context.pubsub.publish(CHAT_CHANNEL, { messageAdded: message })
+    // return group     // must return fullGroup w fragment DetailedGroup
 
-    return chat     // must return fullChat w fragment DetailedChat
   },
 
   async clearMyNotifications(parent, args, context) {

@@ -65,7 +65,7 @@ var models = [
     embedded: false
   },
   {
-    name: "Chat",
+    name: "Group",
     embedded: false
   },
   {

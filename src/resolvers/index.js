@@ -7,7 +7,7 @@ const { Comment } = require('./Comment')
 const { Update } = require('./Update')
 const { Story } = require('./Story')
 const { Topic } = require('./Topic')
-const { Chat } = require('./Chat')
+const { Group } = require('./Group')
 const { Message } = require('./Message')
 const { Notification } = require('./Notification')
 
@@ -21,7 +21,7 @@ const resolvers = {
   Update,
   Story,
   Topic,
-  Chat,
+  Group,
   Message,
   Notification
 }

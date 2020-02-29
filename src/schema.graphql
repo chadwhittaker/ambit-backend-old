@@ -3,7 +3,7 @@
 scalar DateTime
 
 type Subscription {
-  messageAdded(chatID: ID!): Message
+  newMessageToMe(id: ID!): Message
   newNotification(id: ID!): Notification
 }
 
@@ -24,9 +24,11 @@ type Query {
   singlePostMatches(id: ID!): [Match]!
   activeGoalsUser: [PostWithMatches]!
   
-  # chats
-  allMyChats: [Chat]!
-  fullChat(id: ID): Chat
+  # groups / chats
+  group(id: ID): Group
+  allMyGroups: [Group]!
+  messages(groupID: ID, after: String, first: Int): MessageConnection
+  allMessagesConnections: [MessageConnection]
 
   # notifications
   myNotifications: [Notification]!
@@ -74,9 +76,9 @@ type Mutation {
   # intro
   editIntro(userId: ID!, title: String, items: [StoryItemCreateWithoutStoryInput!]): User!
 
-  # chat
-  createChat(users: [UserWhereUniqueInput]!): Chat!
-  createMessage(message: MessageCreateInput!): Chat!
+  # groups
+  createGroup(users: [UserWhereUniqueInput]!): Group!
+  createMessage(message: MessageCreateInput!): Message!
 
   # notifications
   clearMyNotifications: [Notification]!

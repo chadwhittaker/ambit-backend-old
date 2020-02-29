@@ -40,8 +40,8 @@ const User = {
     return context.prisma.user({ id: parent.id }).intro()
   },
 
-  async chats(parent, args, context) {
-    return context.prisma.user({ id: parent.id }).chats({ orderBy: "updatedAt_DESC" })
+  async groups(parent, args, context) {
+    return context.prisma.user({ id: parent.id }).groups({ orderBy: "updatedAt_DESC" })
   },
 }
 

@@ -383,6 +383,33 @@ const createNotification = async ({ context, style, targetID, userID, userIDs, p
   }
 }
 
+const getAllMessageConnections = (groups, context, first) => {
+  const messageConnectionPromises = groups.map(group => {
+    const messageConnection = getMessageConnection(group, context, first);  // each one returns a promise for MessageConnection
+    return messageConnection;
+  })
+  return Promise.all(messageConnectionPromises);
+}
+
+const getMessageConnection = async (group, context, first) => {
+  // must return a PROMISE for a MessageConnection
+  if (!group) return null;
+
+  try {
+    const messageConnection = await context.prisma.messagesConnection(
+      {
+        where: { to: { id: group.id }},
+        first,
+        orderBy: 'createdAt_DESC'
+      }
+    );
+    return messageConnection
+  } catch(e) {
+    console.error(e)
+    return null
+  }
+}
+
 
 module.exports = {
   getUsersMatchingTopicsFocus,
@@ -390,4 +417,6 @@ module.exports = {
   getUsersMatchingGoal,
   getActiveGoalsOfUser,
   createNotification,
+  getAllMessageConnections,
+  getMessageConnection,
 }

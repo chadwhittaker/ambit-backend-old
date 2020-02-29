@@ -2,7 +2,7 @@
 // const { PostOrderByInput } = require('../generated/prisma-client/prisma-schema.js')
 const { rad2Deg, deg2Rad } = require('../utils')
 const { MyInfoForConnections, DetailPost } = require('../_fragments.js')
-const { getUsersMatchingManyGoals, getUsersMatchingGoal, getUsersMatchingTopicsFocus, getActiveGoalsOfUser } = require('./functions')
+const { getUsersMatchingManyGoals, getUsersMatchingGoal, getUsersMatchingTopicsFocus, getActiveGoalsOfUser, getAllMessageConnections } = require('./functions')
 
 const Query = {
 
@@ -280,37 +280,75 @@ const Query = {
     return { postsWithMatches: myActiveGoalsWithMatches, matches: usersMatchingTopicsFocus }; // AllConnections
   },
 
-  // CHATS
+  // GROUPS
 
-  async allMyChats(parent, args, context) {
+  async allMyGroups(parent, args, context) {
     // 1. check if there is a user on the request
     if (!context.request.userId) {
       throw new Error(`You must be logged in to see messages`)
     }
-    // 2. if there is a user, get all my chats
-    const chats = await context.prisma.chats(
+    // 2. if there is a user, get all my groups
+    const groups = await context.prisma.groups(
       {
         where: { users_some: { id: context.request.userId } },
         orderBy: "updatedAt_DESC",
       }
     );
 
-    return chats;
+    return groups;
   },
 
-  async fullChat(parent, args, context) {
+  async messages(parent, { groupID, after, first }, context) {
     // 1. check if there is a user on the request
     if (!context.request.userId) {
       throw new Error(`You must be logged in to see messages`)
     }
 
-    // if the chat does not exist yet
+    // if the group does not exist yet
+    if (!groupID || groupID === null) return null;
+
+    const messages = await context.prisma.messagesConnection(
+      {
+        where: { to: { id: groupID }},
+        first: first || 30,
+        after,
+        orderBy: 'createdAt_DESC'
+      }
+    );
+    return messages;
+  },
+
+  async allMessagesConnections(parent, args, context) {
+    // 1. check if there is a user on the request
+    if (!context.request.userId) {
+      return null
+    }
+    
+    // get an array of all my group chats
+    const groups = await context.prisma.user({ id: context.request.userId }).groups()
+
+    try {
+      const messageConnectionsArray = await getAllMessageConnections(groups, context, 30); // returns [MessageConnection]
+      return messageConnectionsArray;
+    } catch(e) {
+      console.error(e)
+      return null;
+    }
+  },
+
+  async group(parent, args, context) {
+    // 1. check if there is a user on the request
+    if (!context.request.userId) {
+      throw new Error(`You must be logged in to see messages`)
+    }
+
+    // if the group does not exist yet
     if (!args.id || args.id === null) return null;
 
-    // 2. if there is a user, get all my chats
-    const chat = await context.prisma.chat({ id: args.id });
+    // 2. if there is a user, get all my groups
+    const group = await context.prisma.group({ id: args.id });
 
-    return chat;
+    return group;
   },
 
   async myNotifications(parent, args, context) {

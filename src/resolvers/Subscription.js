@@ -1,17 +1,28 @@
 const Subscription = {
 
-  messageAdded: {
+  newMessageToMe: {
     subscribe: async (parent, args, context) => {
       return context.prisma.$subscribe
         .message({
           AND: [
             { mutation_in: ['CREATED'] },
-            { node: {
-                chat: {
-                  id: args.chatID,
+            {
+              node: {
+                to: {
+                  users_some: { id: args.id },
+                },
+                from: {
+                  id_not: args.id,
                 }
               }
-            }
+            },
+            // {
+            //   node: {
+            //     from: {
+            //       id_not: { id: args.id },
+            //     }
+            //   }
+            // },
           ]
         })
         .node()
@@ -23,11 +34,12 @@ const Subscription = {
 
   newNotification: {
     subscribe: async (parent, args, context) => {
-        return context.prisma.$subscribe
+      return context.prisma.$subscribe
         .notification({
           AND: [
             { mutation_in: ['CREATED'] },
-            { node: {
+            {
+              node: {
                 target: {
                   id: args.id,
                 }

@@ -11,7 +11,7 @@ const MessageFragment = gql`
       name
       profilePic
     }
-    chat {
+    group {
       id
     }
     content
