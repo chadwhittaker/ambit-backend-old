@@ -21,7 +21,7 @@ type Query {
   postsSearch(text: String, goal: String, topicID: String, lat: Float, lon: Float, after: String): PostConnection!
   postsUser(id: ID!): [Post]!
   singlePost(id: ID!): Post!
-  singlePostMatches(id: ID!): [Match]!
+  singlePostMatches(id: ID!): [Match]
   activeGoalsUser: [PostWithMatches]!
   
   # groups / chats
@@ -76,9 +76,10 @@ type Mutation {
   # intro
   editIntro(userId: ID!, title: String, items: [StoryItemCreateWithoutStoryInput!]): User!
 
-  # groups
+  # group chats
   createGroup(users: [UserWhereUniqueInput]!): Group!
   createMessage(message: MessageCreateInput!): Message!
+  clearUnReadMessages(groupID: ID): User!
 
   # notifications
   clearMyNotifications: [Notification]!

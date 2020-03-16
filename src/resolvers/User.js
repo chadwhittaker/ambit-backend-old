@@ -43,6 +43,10 @@ const User = {
   async groups(parent, args, context) {
     return context.prisma.user({ id: parent.id }).groups({ orderBy: "updatedAt_DESC" })
   },
+
+  async unReadMessages(parent, args, context) {
+    return context.prisma.user({ id: parent.id }).unReadMessages()
+  },
 }
 
 module.exports = {

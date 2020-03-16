@@ -378,6 +378,145 @@ const createNotification = async ({ context, style, targetID, userID, userIDs, p
         console.error(e)
       }
       break;
+
+    case 'LIKE_GOAL':
+      // check if the same notification already exists
+      try {
+        const notif = await context.prisma.notifications({
+          where: {
+            AND: [
+              { style: 'LIKE_GOAL' },
+              { post: { id: postID } },
+              { user: { id: userID } },
+            ]
+          }
+        })
+
+        const doesNotExist = (!notif || notif.length === 0)
+
+        // if the notification does not already exist, create notification
+        if (doesNotExist) {
+          await context.prisma.createNotification(
+            {
+              target: { connect: { id: targetID } },
+              user: { connect: { id: userID } },
+              style: 'LIKE_GOAL',
+              post: { connect: { id: postID } },
+            }
+          )
+        }
+      } catch (e) {
+        console.error(e)
+      }
+      break;
+
+    case 'LIKE_UPDATE':
+      // check if the same notification already exists
+      try {
+        const notif = await context.prisma.notifications({
+          where: {
+            AND: [
+              { style: 'LIKE_UPDATE' },
+              { update: { id: updateID } },
+              { user: { id: userID } },
+            ]
+          }
+        })
+
+        const doesNotExist = (!notif || notif.length === 0)
+
+        // if the notification does not already exist, create notification
+        if (doesNotExist) {
+          await context.prisma.createNotification(
+            {
+              target: { connect: { id: targetID } },
+              user: { connect: { id: userID } },
+              style: 'LIKE_UPDATE',
+              update: { connect: { id: updateID } },
+            }
+          )
+        }
+      } catch (e) {
+        console.error(e)
+      }
+      break;
+
+    case 'LIKE_COMMENT':
+      // check if the same notification already exists
+      try {
+        const notif = await context.prisma.notifications({
+          where: {
+            AND: [
+              { style: 'LIKE_COMMENT' },
+              { comment: { id: commentID } },
+              { user: { id: userID } },
+            ]
+          }
+        })
+
+        const doesNotExist = (!notif || notif.length === 0)
+
+        // if the notification does not already exist, create notification
+        if (doesNotExist) {
+          await context.prisma.createNotification(
+            {
+              target: { connect: { id: targetID } },
+              user: { connect: { id: userID } },
+              style: 'LIKE_COMMENT',
+              comment: { connect: { id: commentID } },
+            }
+          )
+        }
+      } catch (e) {
+        console.error(e)
+      }
+      break;
+
+    case 'COMMENT_GOAL':
+      try {
+        await context.prisma.createNotification(
+          {
+            style: 'COMMENT_GOAL',
+            target: { connect: { id: targetID } },
+            user: { connect: { id: userID } },
+            comment: { connect: { id: commentID } },
+          }
+        )
+      } catch (e) {
+        console.error(e)
+      }
+      break;
+
+    case 'COMMENT_POST':
+      try {
+        await context.prisma.createNotification(
+          {
+            style: 'COMMENT_POST',
+            target: { connect: { id: targetID } },
+            user: { connect: { id: userID } },
+            comment: { connect: { id: commentID } },
+          }
+        )
+      } catch (e) {
+        console.error(e)
+      }
+      break;
+
+    case 'COMMENT_UPDATE':
+      try {
+        await context.prisma.createNotification(
+          {
+            style: 'COMMENT_UPDATE',
+            target: { connect: { id: targetID } },
+            user: { connect: { id: userID } },
+            comment: { connect: { id: commentID } },
+          }
+        )
+      } catch (e) {
+        console.error(e)
+      }
+      break;
+
     default:
       break;
   }
@@ -398,17 +537,41 @@ const getMessageConnection = async (group, context, first) => {
   try {
     const messageConnection = await context.prisma.messagesConnection(
       {
-        where: { to: { id: group.id }},
+        where: { to: { id: group.id } },
         first,
         orderBy: 'createdAt_DESC'
       }
     );
     return messageConnection
-  } catch(e) {
+  } catch (e) {
     console.error(e)
     return null
   }
 }
+
+const addMessageToUnread = async (message, context) => {
+  // for each user in the group chat
+  message.to.users.forEach(async user => {
+    // that is not the sender
+    if (user.id !== message.from.id) {
+      // add the message to their unReadMessages
+      try {
+        await context.prisma.updateUser({
+          where: { id: user.id },
+          data: {
+            about: 'lolll',
+            unReadMessages: {
+              connect: [{ id: message.id }],
+            }
+          }
+        })
+      } catch (e) {
+        console.error(e)
+      }
+    }
+  })
+}
+
 
 
 module.exports = {
@@ -419,4 +582,5 @@ module.exports = {
   createNotification,
   getAllMessageConnections,
   getMessageConnection,
+  addMessageToUnread,
 }

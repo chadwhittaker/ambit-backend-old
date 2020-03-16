@@ -76,6 +76,7 @@ type User {
   roles: [Role] @scalarList(strategy: RELATION)
   groups: [Group] @relation(name: "GroupsOfUser")
   notifications: [Notification] @relation(name: "NotificationTargetUser" onDelete: CASCADE)
+  unReadMessages: [Message] @relation(name: "UnReadMessagesOnUser")
 }
 
 type Notification {
@@ -246,7 +247,6 @@ type Message {
   to: Group! @relation(name: "MessageToGroupRelation")
   from: User! @relation(name: "MessageFrom")
   content: String!
-  seen: [User] @relation(name: "MessageSeenBy")
   hidden: [User] @relation(name: "MessageHiddenBy")
 }
 

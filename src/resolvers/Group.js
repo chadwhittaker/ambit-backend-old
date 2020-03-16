@@ -17,7 +17,6 @@ const Group = {
   async hidden(parent, args, context) {
     return context.prisma.group({ id: parent.id }).hidden()
   },
-
 }
 
 module.exports = {

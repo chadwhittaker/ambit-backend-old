@@ -11,8 +11,11 @@ const MessageFragment = gql`
       name
       profilePic
     }
-    group {
+    to {
       id
+      users {
+        id
+      }
     }
     content
   }
@@ -55,6 +58,25 @@ const MinimalUser = gql`
         link
         text
         duration
+      }
+    }
+  }
+`;
+
+const UpdateFragment = gql`
+  fragment UpdateFragment on Update {
+    id
+    createdAt
+    content
+    image
+    likesCount
+    likedByMe
+    commentsCount
+    sharesCount
+    parentPost {
+      id
+      owner {
+        id
       }
     }
   }
@@ -372,9 +394,16 @@ const CommentFragment = gql`
     }
     parentPost {
       id
+      owner {
+        id
+      }
+      goal
     }
     parentComment {
       id
+      owner {
+        id
+      }
     }
     parentUpdate {
       id
@@ -436,4 +465,6 @@ module.exports = {
   BasicPost,
   DetailPost,
   MessageFragment,
+  UpdateFragment,
+  CommentFragment,
 }

@@ -2206,7 +2206,6 @@ type Message {
   to: Group!
   from: User!
   content: String!
-  seen(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   hidden(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
 }
 
@@ -2221,8 +2220,12 @@ input MessageCreateInput {
   to: GroupCreateOneWithoutMessagesInput!
   from: UserCreateOneInput!
   content: String!
-  seen: UserCreateManyInput
   hidden: UserCreateManyInput
+}
+
+input MessageCreateManyInput {
+  create: [MessageCreateInput!]
+  connect: [MessageWhereUniqueInput!]
 }
 
 input MessageCreateManyWithoutToInput {
@@ -2239,7 +2242,6 @@ input MessageCreateWithoutToInput {
   id: ID
   from: UserCreateOneInput!
   content: String!
-  seen: UserCreateManyInput
   hidden: UserCreateManyInput
 }
 
@@ -2327,7 +2329,6 @@ input MessageUpdateDataInput {
   to: GroupUpdateOneRequiredWithoutMessagesInput
   from: UserUpdateOneRequiredInput
   content: String
-  seen: UserUpdateManyInput
   hidden: UserUpdateManyInput
 }
 
@@ -2335,12 +2336,23 @@ input MessageUpdateInput {
   to: GroupUpdateOneRequiredWithoutMessagesInput
   from: UserUpdateOneRequiredInput
   content: String
-  seen: UserUpdateManyInput
   hidden: UserUpdateManyInput
 }
 
 input MessageUpdateManyDataInput {
   content: String
+}
+
+input MessageUpdateManyInput {
+  create: [MessageCreateInput!]
+  update: [MessageUpdateWithWhereUniqueNestedInput!]
+  upsert: [MessageUpsertWithWhereUniqueNestedInput!]
+  delete: [MessageWhereUniqueInput!]
+  connect: [MessageWhereUniqueInput!]
+  set: [MessageWhereUniqueInput!]
+  disconnect: [MessageWhereUniqueInput!]
+  deleteMany: [MessageScalarWhereInput!]
+  updateMany: [MessageUpdateManyWithWhereNestedInput!]
 }
 
 input MessageUpdateManyMutationInput {
@@ -2376,8 +2388,12 @@ input MessageUpdateOneInput {
 input MessageUpdateWithoutToDataInput {
   from: UserUpdateOneRequiredInput
   content: String
-  seen: UserUpdateManyInput
   hidden: UserUpdateManyInput
+}
+
+input MessageUpdateWithWhereUniqueNestedInput {
+  where: MessageWhereUniqueInput!
+  data: MessageUpdateDataInput!
 }
 
 input MessageUpdateWithWhereUniqueWithoutToInput {
@@ -2386,6 +2402,12 @@ input MessageUpdateWithWhereUniqueWithoutToInput {
 }
 
 input MessageUpsertNestedInput {
+  update: MessageUpdateDataInput!
+  create: MessageCreateInput!
+}
+
+input MessageUpsertWithWhereUniqueNestedInput {
+  where: MessageWhereUniqueInput!
   update: MessageUpdateDataInput!
   create: MessageCreateInput!
 }
@@ -2435,9 +2457,6 @@ input MessageWhereInput {
   content_not_starts_with: String
   content_ends_with: String
   content_not_ends_with: String
-  seen_every: UserWhereInput
-  seen_some: UserWhereInput
-  seen_none: UserWhereInput
   hidden_every: UserWhereInput
   hidden_some: UserWhereInput
   hidden_none: UserWhereInput
@@ -5364,6 +5383,7 @@ type User {
   roles: [Role!]!
   groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group!]
   notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification!]
+  unReadMessages(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Message!]
 }
 
 type UserConnection {
@@ -5408,6 +5428,7 @@ input UserCreateInput {
   roles: UserCreaterolesInput
   groups: GroupCreateManyWithoutUsersInput
   notifications: NotificationCreateManyWithoutTargetInput
+  unReadMessages: MessageCreateManyInput
 }
 
 input UserCreateManyInput {
@@ -5509,6 +5530,7 @@ input UserCreateWithoutConnectionsInput {
   roles: UserCreaterolesInput
   groups: GroupCreateManyWithoutUsersInput
   notifications: NotificationCreateManyWithoutTargetInput
+  unReadMessages: MessageCreateManyInput
 }
 
 input UserCreateWithoutEducationInput {
@@ -5546,6 +5568,7 @@ input UserCreateWithoutEducationInput {
   roles: UserCreaterolesInput
   groups: GroupCreateManyWithoutUsersInput
   notifications: NotificationCreateManyWithoutTargetInput
+  unReadMessages: MessageCreateManyInput
 }
 
 input UserCreateWithoutExperienceInput {
@@ -5583,6 +5606,7 @@ input UserCreateWithoutExperienceInput {
   roles: UserCreaterolesInput
   groups: GroupCreateManyWithoutUsersInput
   notifications: NotificationCreateManyWithoutTargetInput
+  unReadMessages: MessageCreateManyInput
 }
 
 input UserCreateWithoutFollowersInput {
@@ -5620,6 +5644,7 @@ input UserCreateWithoutFollowersInput {
   roles: UserCreaterolesInput
   groups: GroupCreateManyWithoutUsersInput
   notifications: NotificationCreateManyWithoutTargetInput
+  unReadMessages: MessageCreateManyInput
 }
 
 input UserCreateWithoutFollowingInput {
@@ -5657,6 +5682,7 @@ input UserCreateWithoutFollowingInput {
   roles: UserCreaterolesInput
   groups: GroupCreateManyWithoutUsersInput
   notifications: NotificationCreateManyWithoutTargetInput
+  unReadMessages: MessageCreateManyInput
 }
 
 input UserCreateWithoutGroupsInput {
@@ -5694,6 +5720,7 @@ input UserCreateWithoutGroupsInput {
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
   notifications: NotificationCreateManyWithoutTargetInput
+  unReadMessages: MessageCreateManyInput
 }
 
 input UserCreateWithoutMeetingsInput {
@@ -5731,6 +5758,7 @@ input UserCreateWithoutMeetingsInput {
   roles: UserCreaterolesInput
   groups: GroupCreateManyWithoutUsersInput
   notifications: NotificationCreateManyWithoutTargetInput
+  unReadMessages: MessageCreateManyInput
 }
 
 input UserCreateWithoutNotificationsInput {
@@ -5768,6 +5796,7 @@ input UserCreateWithoutNotificationsInput {
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
   groups: GroupCreateManyWithoutUsersInput
+  unReadMessages: MessageCreateManyInput
 }
 
 input UserCreateWithoutPostsInput {
@@ -5805,6 +5834,7 @@ input UserCreateWithoutPostsInput {
   roles: UserCreaterolesInput
   groups: GroupCreateManyWithoutUsersInput
   notifications: NotificationCreateManyWithoutTargetInput
+  unReadMessages: MessageCreateManyInput
 }
 
 input UserCreateWithoutSkillsInput {
@@ -5842,6 +5872,7 @@ input UserCreateWithoutSkillsInput {
   roles: UserCreaterolesInput
   groups: GroupCreateManyWithoutUsersInput
   notifications: NotificationCreateManyWithoutTargetInput
+  unReadMessages: MessageCreateManyInput
 }
 
 type UserEdge {
@@ -6186,6 +6217,7 @@ input UserUpdateDataInput {
   roles: UserUpdaterolesInput
   groups: GroupUpdateManyWithoutUsersInput
   notifications: NotificationUpdateManyWithoutTargetInput
+  unReadMessages: MessageUpdateManyInput
 }
 
 input UserUpdateInput {
@@ -6223,6 +6255,7 @@ input UserUpdateInput {
   roles: UserUpdaterolesInput
   groups: GroupUpdateManyWithoutUsersInput
   notifications: NotificationUpdateManyWithoutTargetInput
+  unReadMessages: MessageUpdateManyInput
 }
 
 input UserUpdateManyDataInput {
@@ -6429,6 +6462,7 @@ input UserUpdateWithoutConnectionsDataInput {
   roles: UserUpdaterolesInput
   groups: GroupUpdateManyWithoutUsersInput
   notifications: NotificationUpdateManyWithoutTargetInput
+  unReadMessages: MessageUpdateManyInput
 }
 
 input UserUpdateWithoutEducationDataInput {
@@ -6465,6 +6499,7 @@ input UserUpdateWithoutEducationDataInput {
   roles: UserUpdaterolesInput
   groups: GroupUpdateManyWithoutUsersInput
   notifications: NotificationUpdateManyWithoutTargetInput
+  unReadMessages: MessageUpdateManyInput
 }
 
 input UserUpdateWithoutExperienceDataInput {
@@ -6501,6 +6536,7 @@ input UserUpdateWithoutExperienceDataInput {
   roles: UserUpdaterolesInput
   groups: GroupUpdateManyWithoutUsersInput
   notifications: NotificationUpdateManyWithoutTargetInput
+  unReadMessages: MessageUpdateManyInput
 }
 
 input UserUpdateWithoutFollowersDataInput {
@@ -6537,6 +6573,7 @@ input UserUpdateWithoutFollowersDataInput {
   roles: UserUpdaterolesInput
   groups: GroupUpdateManyWithoutUsersInput
   notifications: NotificationUpdateManyWithoutTargetInput
+  unReadMessages: MessageUpdateManyInput
 }
 
 input UserUpdateWithoutFollowingDataInput {
@@ -6573,6 +6610,7 @@ input UserUpdateWithoutFollowingDataInput {
   roles: UserUpdaterolesInput
   groups: GroupUpdateManyWithoutUsersInput
   notifications: NotificationUpdateManyWithoutTargetInput
+  unReadMessages: MessageUpdateManyInput
 }
 
 input UserUpdateWithoutGroupsDataInput {
@@ -6609,6 +6647,7 @@ input UserUpdateWithoutGroupsDataInput {
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
   notifications: NotificationUpdateManyWithoutTargetInput
+  unReadMessages: MessageUpdateManyInput
 }
 
 input UserUpdateWithoutMeetingsDataInput {
@@ -6645,6 +6684,7 @@ input UserUpdateWithoutMeetingsDataInput {
   roles: UserUpdaterolesInput
   groups: GroupUpdateManyWithoutUsersInput
   notifications: NotificationUpdateManyWithoutTargetInput
+  unReadMessages: MessageUpdateManyInput
 }
 
 input UserUpdateWithoutNotificationsDataInput {
@@ -6681,6 +6721,7 @@ input UserUpdateWithoutNotificationsDataInput {
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
   groups: GroupUpdateManyWithoutUsersInput
+  unReadMessages: MessageUpdateManyInput
 }
 
 input UserUpdateWithoutPostsDataInput {
@@ -6717,6 +6758,7 @@ input UserUpdateWithoutPostsDataInput {
   roles: UserUpdaterolesInput
   groups: GroupUpdateManyWithoutUsersInput
   notifications: NotificationUpdateManyWithoutTargetInput
+  unReadMessages: MessageUpdateManyInput
 }
 
 input UserUpdateWithoutSkillsDataInput {
@@ -6753,6 +6795,7 @@ input UserUpdateWithoutSkillsDataInput {
   roles: UserUpdaterolesInput
   groups: GroupUpdateManyWithoutUsersInput
   notifications: NotificationUpdateManyWithoutTargetInput
+  unReadMessages: MessageUpdateManyInput
 }
 
 input UserUpdateWithWhereUniqueNestedInput {
@@ -7124,6 +7167,9 @@ input UserWhereInput {
   notifications_every: NotificationWhereInput
   notifications_some: NotificationWhereInput
   notifications_none: NotificationWhereInput
+  unReadMessages_every: MessageWhereInput
+  unReadMessages_some: MessageWhereInput
+  unReadMessages_none: MessageWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

@@ -230,7 +230,7 @@ const Query = {
     // get matches based on Goal and User 
     const isMyPost = context.request.userId === post.owner.id;
 
-    let matches = null;
+    let matches = [];
     if (isMyPost && !!post.goal) {
       matches = await getUsersMatchingGoal(me, post, context) // returns [Match]
     }

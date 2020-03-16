@@ -1,8 +1,8 @@
 const { hash, compare } = require('bcryptjs')
 const { sign } = require('jsonwebtoken')
 const { getUserId } = require('../utils')
-const { MessageFragment, BasicPost } = require('../_fragments.js')
-const { createNotification } = require('./functions')
+const { MessageFragment, BasicPost, UpdateFragment, CommentFragment } = require('../_fragments.js')
+const { createNotification, addMessageToUnread } = require('./functions')
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
@@ -547,13 +547,24 @@ const Mutation = {
 
     // dont create notificaton if it is an UNLIKE
     if (!liked) {
-      createNotification({ 
-        context,
-        style: 'LIKE_POST',
-        targetID: post.owner.id,
-        userID: context.request.userId,
-        postID: post.id 
-      })
+      if (!!post.goal) {
+        createNotification({
+          context,
+          style: 'LIKE_GOAL',
+          targetID: post.owner.id,
+          userID: context.request.userId,
+          postID: post.id
+        })
+      } else {
+        createNotification({
+          context,
+          style: 'LIKE_POST',
+          targetID: post.owner.id,
+          userID: context.request.userId,
+          postID: post.id
+        })
+      }
+
     }
 
     return post
@@ -621,7 +632,18 @@ const Mutation = {
           },
         }
       }
-    )
+    ).$fragment(UpdateFragment)
+
+    // dont create notificaton if it is an UNLIKE
+    if (!liked) {
+      createNotification({
+        context,
+        style: 'LIKE_UPDATE',
+        targetID: update.parentPost.owner.id,
+        userID: context.request.userId,
+        updateID: update.id,
+      })
+    }
 
     return update
   },
@@ -656,7 +678,38 @@ const Mutation = {
     }
 
     // 2. create the comment
-    const commentCreated = await context.prisma.createComment({ ...comment })
+    const commentCreated = await context.prisma.createComment({ ...comment }).$fragment(CommentFragment)
+
+    if (!!commentCreated.id) {
+      if (!!commentCreated.parentUpdate) {
+        // if the comment is on an update
+        createNotification({
+          context,
+          style: 'COMMENT_UPDATE',
+          targetID: commentCreated.parentPost.owner.id,
+          userID: context.request.userId,
+          commentID: commentCreated.id,
+        })
+      } else if (!!commentCreated.parentPost.goal) {
+        // if the comment is on a goal
+        createNotification({
+          context,
+          style: 'COMMENT_GOAL',
+          targetID: commentCreated.parentPost.owner.id,
+          userID: context.request.userId,
+          commentID: commentCreated.id,
+        })
+      } else {
+        // if the comment is on a post
+        createNotification({
+          context,
+          style: 'COMMENT_POST',
+          targetID: commentCreated.parentPost.owner.id,
+          userID: context.request.userId,
+          commentID: commentCreated.id,
+        })
+      }
+    }
 
     return commentCreated;
   },
@@ -684,7 +737,18 @@ const Mutation = {
           },
         }
       }
-    )
+    ).$fragment(CommentFragment)
+
+    // dont create notificaton if it is an UNLIKE
+    if (!liked) {
+      createNotification({
+        context,
+        style: 'LIKE_COMMENT',
+        targetID: comment.owner.id,
+        userID: context.request.userId,
+        commentID: comment.id,
+      })
+    }
 
     return comment
   },
@@ -733,25 +797,47 @@ const Mutation = {
 
   async createMessage(parent, args, context) {
     // 1. check if user is logged in
-    if (!context.request.userId) {
-      throw new Error(`You must be logged in to do that`)
+    // if (!context.request.userId) {
+    //   throw new Error(`You must be logged in to do that`)
+    // }
+
+    const message = await context.prisma.createMessage({ ...args.message }).$fragment(MessageFragment);
+
+    // connect message to associated users unseen messages
+    if (message.id) {
+      addMessageToUnread(message, context)
     }
 
-    const message = await context.prisma.createMessage({ ...args.message });
-    
     return message
-
-    // 3. create message
-    // const message = await context.prisma.createMessage({ ...args.message }).$fragment(MessageFragment);
+  },
 
 
-    // console.log(message)
+  async clearUnReadMessages(parent, { groupID }, context) {
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      return null
+    }
+    // if no groupID should we just disconnect all unReadMessages??
 
-    // get group
-    // const group = await context.prisma.group({ id: message.group.id })
+    // 2. get a list of the users unread messages in the groupID 
+    const unReadMessages = await context.prisma.user({ id: context.request.userId }).unReadMessages().$fragment(MessageFragment);
+    const unReadMessagesInGroup = unReadMessages.filter(message => message.to.id === groupID);
+    const unReadMessagesInGroupIDs = unReadMessagesInGroup.map(message => {
+      return { id: message.id }
+    })
 
-    // return group     // must return fullGroup w fragment DetailedGroup
+    // 3. update user to clear the unread messages in the groupID listed
+    const user = await context.prisma.updateUser({
+      where: { id: context.request.userId },
+      data: {
+        unReadMessages: {
+          disconnect: unReadMessagesInGroupIDs,
+        }
+      }
+    })
 
+    // 4. return the user
+    return user;
   },
 
   async clearMyNotifications(parent, args, context) {
