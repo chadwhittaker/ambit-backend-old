@@ -31,7 +31,25 @@ const Post = {
   async likedByMe(parent, args, context) {
     const likes = await context.prisma.post({ id: parent.id }).likes()
 
-    return likes.includes(context.request.userId)
+    let isLiked = false;
+
+    if (context.request) {
+      isLiked = likes.includes(context.request.userId)
+      return isLiked;
+    }
+
+    // if it is a subscription response
+    // had to do this bc was getting nofification errors bc context.request.userId is undefined on subscriptions
+    if (context.connection) {
+      if (context.connection.operationName) {
+        if (context.connection.operationName === 'NEW_NOTIFICATION_SUBSCRIPTION') {
+          isLiked = likes.includes(context.connection.variables.id);
+          return isLiked
+        }
+      }
+    }
+
+    return isLiked;
   },
 
   async commentsCount(parent, args, context) {

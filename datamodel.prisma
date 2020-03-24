@@ -77,6 +77,7 @@ type User {
   groups: [Group] @relation(name: "GroupsOfUser")
   notifications: [Notification] @relation(name: "NotificationTargetUser" onDelete: CASCADE)
   unReadMessages: [Message] @relation(name: "UnReadMessagesOnUser")
+  unReadMessagesCount: Int
 }
 
 type Notification {
@@ -86,9 +87,9 @@ type Notification {
   style: NotificationStyle!
   user: User @relation(name: "NotificationInvolvedUser")
   users: [User] @relation(name: "NotificationInvolvedUsers")
-  post: Post
-  update: Update
-  comment: Comment
+  post: Post @relation(name: "NotificationToPost")
+  update: Update @relation(name: "NotificationToUpdate")
+  comment: Comment @relation(name: "NotificationToComment")
   seen: Boolean! @default(value: false)
 }
 
@@ -172,6 +173,7 @@ type Post {
   likedByMe: Boolean
   commentsCount: Int
   sharesCount: Int
+  notifications: [Notification] @relation(name: "NotificationToPost" onDelete: CASCADE)
 }
 
 type Update {
@@ -186,6 +188,7 @@ type Update {
   comments: [Comment]! @relation(name: "CommentToUpdateRelation" onDelete: CASCADE)
   commentsCount: Int
   sharesCount: Int
+  notifications: [Notification] @relation(name: "NotificationToUpdate" onDelete: CASCADE)
 }
 
 type Comment {
@@ -202,6 +205,7 @@ type Comment {
   likedByMe: Boolean
   comments: [Comment]! @relation(name: "CommentToCommentRelation" onDelete: CASCADE)
   commentsCount: Int
+  notifications: [Notification] @relation(name: "NotificationToComment" onDelete: CASCADE)
 }
 
 type Meeting {

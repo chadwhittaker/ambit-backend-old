@@ -36,7 +36,7 @@ const Comment = {
     }
 
     // if it is a subscription response
-    // had to do this bc was getting nofification errors bc context.requrest.userId is undefined on subscriptions
+    // had to do this bc was getting nofification errors bc context.request.userId is undefined on subscriptions
     if (context.connection) {
       if (context.connection.operationName) {
         if (context.connection.operationName === 'NEW_NOTIFICATION_SUBSCRIPTION') {

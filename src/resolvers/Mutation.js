@@ -501,8 +501,7 @@ const Mutation = {
     return post
   },
 
-  async deletePost(parent, args, context) {
-    const id = args.owner
+  async deletePost(parent, { id, ownerID }, context) {
 
     // 1. check if user is logged in
     if (!context.request.userId) {
@@ -510,14 +509,14 @@ const Mutation = {
     }
 
     // 2. check if user on the request owns the post
-    if (context.request.userId !== id) {
+    if (context.request.userId !== ownerID) {
       throw new Error(`You cannot edit a post that is not your own`)
     }
 
     // 3. create experience & connect to owner
-    const post = await context.prisma.deletePost({ id: args.id })
+    const postDeleted = await context.prisma.deletePost({ id })
 
-    return post
+    return postDeleted
   },
 
   async likePost(parent, { postId }, context) {
@@ -648,7 +647,7 @@ const Mutation = {
     return update
   },
 
-  async deleteUpdate(parent, args, context) {
+  async deleteUpdate(parent, { id, ownerID }, context) {
 
     // 1. check if user is logged in
     if (!context.request.userId) {
@@ -656,14 +655,14 @@ const Mutation = {
     }
 
     // 2. check if user on the request owns the post
-    if (context.request.userId !== args.owner) {
+    if (context.request.userId !== ownerID) {
       throw new Error(`You cannot edit a post that is not your own`)
     }
 
     // 3. delete update
-    const update = await context.prisma.deleteUpdate({ id: args.id })
+    const updateDeleted = await context.prisma.deleteUpdate({ id })
 
-    return update
+    return updateDeleted
   },
 
   // ================
@@ -753,7 +752,7 @@ const Mutation = {
     return comment
   },
 
-  async deleteComment(parent, args, context) {
+  async deleteComment(parent, { id, ownerID }, context) {
 
     // 1. check if user is logged in
     if (!context.request.userId) {
@@ -761,14 +760,14 @@ const Mutation = {
     }
 
     // 2. check if user on the request owns the post
-    if (context.request.userId !== args.owner) {
+    if (context.request.userId !== ownerID) {
       throw new Error(`You cannot edit a post that is not your own`)
     }
 
     // 3. delete comment
-    const comment = await context.prisma.deleteComment({ id: args.id })
+    const commentDeleted = await context.prisma.deleteComment({ id })
 
-    return comment
+    return commentDeleted
   },
 
   // ================
@@ -821,6 +820,7 @@ const Mutation = {
 
     // 2. get a list of the users unread messages in the groupID 
     const unReadMessages = await context.prisma.user({ id: context.request.userId }).unReadMessages().$fragment(MessageFragment);
+    // console.log('unReadMessages', unReadMessages);
     const unReadMessagesInGroup = unReadMessages.filter(message => message.to.id === groupID);
     const unReadMessagesInGroupIDs = unReadMessagesInGroup.map(message => {
       return { id: message.id }

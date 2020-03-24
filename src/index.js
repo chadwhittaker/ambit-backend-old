@@ -30,4 +30,10 @@ server.express.use((req, res, next) => {
   next();
 })
 
+// use with prisma playground to insert a userid for a fake requester
+// server.express.use((req, res, next) => {
+//   req.userId = 'ck62jdm8qynpc09016ed0q8s4'
+//   next();
+// })
+
 server.start((deets) => console.log(`Server is running on http://localhost:${deets.port}`));

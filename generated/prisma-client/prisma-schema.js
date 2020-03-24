@@ -81,6 +81,7 @@ type Comment {
   likedByMe: Boolean
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   commentsCount: Int
+  notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification!]
 }
 
 type CommentConnection {
@@ -102,6 +103,7 @@ input CommentCreateInput {
   likedByMe: Boolean
   comments: CommentCreateManyWithoutParentCommentInput
   commentsCount: Int
+  notifications: NotificationCreateManyWithoutCommentInput
 }
 
 input CommentCreatelikesInput {
@@ -123,13 +125,13 @@ input CommentCreateManyWithoutParentUpdateInput {
   connect: [CommentWhereUniqueInput!]
 }
 
-input CommentCreateOneInput {
-  create: CommentCreateInput
+input CommentCreateOneWithoutCommentsInput {
+  create: CommentCreateWithoutCommentsInput
   connect: CommentWhereUniqueInput
 }
 
-input CommentCreateOneWithoutCommentsInput {
-  create: CommentCreateWithoutCommentsInput
+input CommentCreateOneWithoutNotificationsInput {
+  create: CommentCreateWithoutNotificationsInput
   connect: CommentWhereUniqueInput
 }
 
@@ -145,6 +147,22 @@ input CommentCreateWithoutCommentsInput {
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
+  notifications: NotificationCreateManyWithoutCommentInput
+}
+
+input CommentCreateWithoutNotificationsInput {
+  id: ID
+  owner: UserCreateOneInput!
+  parentPost: PostCreateOneWithoutCommentsInput
+  parentUpdate: UpdateCreateOneWithoutCommentsInput
+  parentComment: CommentCreateOneWithoutCommentsInput
+  content: String
+  image: String
+  likes: CommentCreatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+  comments: CommentCreateManyWithoutParentCommentInput
+  commentsCount: Int
 }
 
 input CommentCreateWithoutParentCommentInput {
@@ -159,6 +177,7 @@ input CommentCreateWithoutParentCommentInput {
   likedByMe: Boolean
   comments: CommentCreateManyWithoutParentCommentInput
   commentsCount: Int
+  notifications: NotificationCreateManyWithoutCommentInput
 }
 
 input CommentCreateWithoutParentPostInput {
@@ -173,6 +192,7 @@ input CommentCreateWithoutParentPostInput {
   likedByMe: Boolean
   comments: CommentCreateManyWithoutParentCommentInput
   commentsCount: Int
+  notifications: NotificationCreateManyWithoutCommentInput
 }
 
 input CommentCreateWithoutParentUpdateInput {
@@ -187,6 +207,7 @@ input CommentCreateWithoutParentUpdateInput {
   likedByMe: Boolean
   comments: CommentCreateManyWithoutParentCommentInput
   commentsCount: Int
+  notifications: NotificationCreateManyWithoutCommentInput
 }
 
 type CommentEdge {
@@ -314,20 +335,6 @@ input CommentSubscriptionWhereInput {
   NOT: [CommentSubscriptionWhereInput!]
 }
 
-input CommentUpdateDataInput {
-  owner: UserUpdateOneRequiredInput
-  parentPost: PostUpdateOneWithoutCommentsInput
-  parentUpdate: UpdateUpdateOneWithoutCommentsInput
-  parentComment: CommentUpdateOneWithoutCommentsInput
-  content: String
-  image: String
-  likes: CommentUpdatelikesInput
-  likesCount: Int
-  likedByMe: Boolean
-  comments: CommentUpdateManyWithoutParentCommentInput
-  commentsCount: Int
-}
-
 input CommentUpdateInput {
   owner: UserUpdateOneRequiredInput
   parentPost: PostUpdateOneWithoutCommentsInput
@@ -340,6 +347,7 @@ input CommentUpdateInput {
   likedByMe: Boolean
   comments: CommentUpdateManyWithoutParentCommentInput
   commentsCount: Int
+  notifications: NotificationUpdateManyWithoutCommentInput
 }
 
 input CommentUpdatelikesInput {
@@ -405,19 +413,19 @@ input CommentUpdateManyWithWhereNestedInput {
   data: CommentUpdateManyDataInput!
 }
 
-input CommentUpdateOneInput {
-  create: CommentCreateInput
-  update: CommentUpdateDataInput
-  upsert: CommentUpsertNestedInput
+input CommentUpdateOneWithoutCommentsInput {
+  create: CommentCreateWithoutCommentsInput
+  update: CommentUpdateWithoutCommentsDataInput
+  upsert: CommentUpsertWithoutCommentsInput
   delete: Boolean
   disconnect: Boolean
   connect: CommentWhereUniqueInput
 }
 
-input CommentUpdateOneWithoutCommentsInput {
-  create: CommentCreateWithoutCommentsInput
-  update: CommentUpdateWithoutCommentsDataInput
-  upsert: CommentUpsertWithoutCommentsInput
+input CommentUpdateOneWithoutNotificationsInput {
+  create: CommentCreateWithoutNotificationsInput
+  update: CommentUpdateWithoutNotificationsDataInput
+  upsert: CommentUpsertWithoutNotificationsInput
   delete: Boolean
   disconnect: Boolean
   connect: CommentWhereUniqueInput
@@ -434,6 +442,21 @@ input CommentUpdateWithoutCommentsDataInput {
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
+  notifications: NotificationUpdateManyWithoutCommentInput
+}
+
+input CommentUpdateWithoutNotificationsDataInput {
+  owner: UserUpdateOneRequiredInput
+  parentPost: PostUpdateOneWithoutCommentsInput
+  parentUpdate: UpdateUpdateOneWithoutCommentsInput
+  parentComment: CommentUpdateOneWithoutCommentsInput
+  content: String
+  image: String
+  likes: CommentUpdatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+  comments: CommentUpdateManyWithoutParentCommentInput
+  commentsCount: Int
 }
 
 input CommentUpdateWithoutParentCommentDataInput {
@@ -447,6 +470,7 @@ input CommentUpdateWithoutParentCommentDataInput {
   likedByMe: Boolean
   comments: CommentUpdateManyWithoutParentCommentInput
   commentsCount: Int
+  notifications: NotificationUpdateManyWithoutCommentInput
 }
 
 input CommentUpdateWithoutParentPostDataInput {
@@ -460,6 +484,7 @@ input CommentUpdateWithoutParentPostDataInput {
   likedByMe: Boolean
   comments: CommentUpdateManyWithoutParentCommentInput
   commentsCount: Int
+  notifications: NotificationUpdateManyWithoutCommentInput
 }
 
 input CommentUpdateWithoutParentUpdateDataInput {
@@ -473,6 +498,7 @@ input CommentUpdateWithoutParentUpdateDataInput {
   likedByMe: Boolean
   comments: CommentUpdateManyWithoutParentCommentInput
   commentsCount: Int
+  notifications: NotificationUpdateManyWithoutCommentInput
 }
 
 input CommentUpdateWithWhereUniqueWithoutParentCommentInput {
@@ -490,14 +516,14 @@ input CommentUpdateWithWhereUniqueWithoutParentUpdateInput {
   data: CommentUpdateWithoutParentUpdateDataInput!
 }
 
-input CommentUpsertNestedInput {
-  update: CommentUpdateDataInput!
-  create: CommentCreateInput!
-}
-
 input CommentUpsertWithoutCommentsInput {
   update: CommentUpdateWithoutCommentsDataInput!
   create: CommentCreateWithoutCommentsInput!
+}
+
+input CommentUpsertWithoutNotificationsInput {
+  update: CommentUpdateWithoutNotificationsDataInput!
+  create: CommentCreateWithoutNotificationsInput!
 }
 
 input CommentUpsertWithWhereUniqueWithoutParentCommentInput {
@@ -594,6 +620,9 @@ input CommentWhereInput {
   commentsCount_lte: Int
   commentsCount_gt: Int
   commentsCount_gte: Int
+  notifications_every: NotificationWhereInput
+  notifications_some: NotificationWhereInput
+  notifications_none: NotificationWhereInput
   AND: [CommentWhereInput!]
   OR: [CommentWhereInput!]
   NOT: [CommentWhereInput!]
@@ -2596,10 +2625,20 @@ input NotificationCreateInput {
   style: NotificationStyle!
   user: UserCreateOneInput
   users: UserCreateManyInput
-  post: PostCreateOneInput
-  update: UpdateCreateOneInput
-  comment: CommentCreateOneInput
+  post: PostCreateOneWithoutNotificationsInput
+  update: UpdateCreateOneWithoutNotificationsInput
+  comment: CommentCreateOneWithoutNotificationsInput
   seen: Boolean
+}
+
+input NotificationCreateManyWithoutCommentInput {
+  create: [NotificationCreateWithoutCommentInput!]
+  connect: [NotificationWhereUniqueInput!]
+}
+
+input NotificationCreateManyWithoutPostInput {
+  create: [NotificationCreateWithoutPostInput!]
+  connect: [NotificationWhereUniqueInput!]
 }
 
 input NotificationCreateManyWithoutTargetInput {
@@ -2607,14 +2646,52 @@ input NotificationCreateManyWithoutTargetInput {
   connect: [NotificationWhereUniqueInput!]
 }
 
+input NotificationCreateManyWithoutUpdateInput {
+  create: [NotificationCreateWithoutUpdateInput!]
+  connect: [NotificationWhereUniqueInput!]
+}
+
+input NotificationCreateWithoutCommentInput {
+  id: ID
+  target: UserCreateOneWithoutNotificationsInput!
+  style: NotificationStyle!
+  user: UserCreateOneInput
+  users: UserCreateManyInput
+  post: PostCreateOneWithoutNotificationsInput
+  update: UpdateCreateOneWithoutNotificationsInput
+  seen: Boolean
+}
+
+input NotificationCreateWithoutPostInput {
+  id: ID
+  target: UserCreateOneWithoutNotificationsInput!
+  style: NotificationStyle!
+  user: UserCreateOneInput
+  users: UserCreateManyInput
+  update: UpdateCreateOneWithoutNotificationsInput
+  comment: CommentCreateOneWithoutNotificationsInput
+  seen: Boolean
+}
+
 input NotificationCreateWithoutTargetInput {
   id: ID
   style: NotificationStyle!
   user: UserCreateOneInput
   users: UserCreateManyInput
-  post: PostCreateOneInput
-  update: UpdateCreateOneInput
-  comment: CommentCreateOneInput
+  post: PostCreateOneWithoutNotificationsInput
+  update: UpdateCreateOneWithoutNotificationsInput
+  comment: CommentCreateOneWithoutNotificationsInput
+  seen: Boolean
+}
+
+input NotificationCreateWithoutUpdateInput {
+  id: ID
+  target: UserCreateOneWithoutNotificationsInput!
+  style: NotificationStyle!
+  user: UserCreateOneInput
+  users: UserCreateManyInput
+  post: PostCreateOneWithoutNotificationsInput
+  comment: CommentCreateOneWithoutNotificationsInput
   seen: Boolean
 }
 
@@ -2727,9 +2804,9 @@ input NotificationUpdateInput {
   style: NotificationStyle
   user: UserUpdateOneInput
   users: UserUpdateManyInput
-  post: PostUpdateOneInput
-  update: UpdateUpdateOneInput
-  comment: CommentUpdateOneInput
+  post: PostUpdateOneWithoutNotificationsInput
+  update: UpdateUpdateOneWithoutNotificationsInput
+  comment: CommentUpdateOneWithoutNotificationsInput
   seen: Boolean
 }
 
@@ -2741,6 +2818,30 @@ input NotificationUpdateManyDataInput {
 input NotificationUpdateManyMutationInput {
   style: NotificationStyle
   seen: Boolean
+}
+
+input NotificationUpdateManyWithoutCommentInput {
+  create: [NotificationCreateWithoutCommentInput!]
+  delete: [NotificationWhereUniqueInput!]
+  connect: [NotificationWhereUniqueInput!]
+  set: [NotificationWhereUniqueInput!]
+  disconnect: [NotificationWhereUniqueInput!]
+  update: [NotificationUpdateWithWhereUniqueWithoutCommentInput!]
+  upsert: [NotificationUpsertWithWhereUniqueWithoutCommentInput!]
+  deleteMany: [NotificationScalarWhereInput!]
+  updateMany: [NotificationUpdateManyWithWhereNestedInput!]
+}
+
+input NotificationUpdateManyWithoutPostInput {
+  create: [NotificationCreateWithoutPostInput!]
+  delete: [NotificationWhereUniqueInput!]
+  connect: [NotificationWhereUniqueInput!]
+  set: [NotificationWhereUniqueInput!]
+  disconnect: [NotificationWhereUniqueInput!]
+  update: [NotificationUpdateWithWhereUniqueWithoutPostInput!]
+  upsert: [NotificationUpsertWithWhereUniqueWithoutPostInput!]
+  deleteMany: [NotificationScalarWhereInput!]
+  updateMany: [NotificationUpdateManyWithWhereNestedInput!]
 }
 
 input NotificationUpdateManyWithoutTargetInput {
@@ -2755,19 +2856,71 @@ input NotificationUpdateManyWithoutTargetInput {
   updateMany: [NotificationUpdateManyWithWhereNestedInput!]
 }
 
+input NotificationUpdateManyWithoutUpdateInput {
+  create: [NotificationCreateWithoutUpdateInput!]
+  delete: [NotificationWhereUniqueInput!]
+  connect: [NotificationWhereUniqueInput!]
+  set: [NotificationWhereUniqueInput!]
+  disconnect: [NotificationWhereUniqueInput!]
+  update: [NotificationUpdateWithWhereUniqueWithoutUpdateInput!]
+  upsert: [NotificationUpsertWithWhereUniqueWithoutUpdateInput!]
+  deleteMany: [NotificationScalarWhereInput!]
+  updateMany: [NotificationUpdateManyWithWhereNestedInput!]
+}
+
 input NotificationUpdateManyWithWhereNestedInput {
   where: NotificationScalarWhereInput!
   data: NotificationUpdateManyDataInput!
+}
+
+input NotificationUpdateWithoutCommentDataInput {
+  target: UserUpdateOneRequiredWithoutNotificationsInput
+  style: NotificationStyle
+  user: UserUpdateOneInput
+  users: UserUpdateManyInput
+  post: PostUpdateOneWithoutNotificationsInput
+  update: UpdateUpdateOneWithoutNotificationsInput
+  seen: Boolean
+}
+
+input NotificationUpdateWithoutPostDataInput {
+  target: UserUpdateOneRequiredWithoutNotificationsInput
+  style: NotificationStyle
+  user: UserUpdateOneInput
+  users: UserUpdateManyInput
+  update: UpdateUpdateOneWithoutNotificationsInput
+  comment: CommentUpdateOneWithoutNotificationsInput
+  seen: Boolean
 }
 
 input NotificationUpdateWithoutTargetDataInput {
   style: NotificationStyle
   user: UserUpdateOneInput
   users: UserUpdateManyInput
-  post: PostUpdateOneInput
-  update: UpdateUpdateOneInput
-  comment: CommentUpdateOneInput
+  post: PostUpdateOneWithoutNotificationsInput
+  update: UpdateUpdateOneWithoutNotificationsInput
+  comment: CommentUpdateOneWithoutNotificationsInput
   seen: Boolean
+}
+
+input NotificationUpdateWithoutUpdateDataInput {
+  target: UserUpdateOneRequiredWithoutNotificationsInput
+  style: NotificationStyle
+  user: UserUpdateOneInput
+  users: UserUpdateManyInput
+  post: PostUpdateOneWithoutNotificationsInput
+  comment: CommentUpdateOneWithoutNotificationsInput
+  seen: Boolean
+}
+
+input NotificationUpdateWithWhereUniqueWithoutCommentInput {
+  where: NotificationWhereUniqueInput!
+  data: NotificationUpdateWithoutCommentDataInput!
+}
+
+input NotificationUpdateWithWhereUniqueWithoutPostInput {
+  where: NotificationWhereUniqueInput!
+  data: NotificationUpdateWithoutPostDataInput!
 }
 
 input NotificationUpdateWithWhereUniqueWithoutTargetInput {
@@ -2775,10 +2928,33 @@ input NotificationUpdateWithWhereUniqueWithoutTargetInput {
   data: NotificationUpdateWithoutTargetDataInput!
 }
 
+input NotificationUpdateWithWhereUniqueWithoutUpdateInput {
+  where: NotificationWhereUniqueInput!
+  data: NotificationUpdateWithoutUpdateDataInput!
+}
+
+input NotificationUpsertWithWhereUniqueWithoutCommentInput {
+  where: NotificationWhereUniqueInput!
+  update: NotificationUpdateWithoutCommentDataInput!
+  create: NotificationCreateWithoutCommentInput!
+}
+
+input NotificationUpsertWithWhereUniqueWithoutPostInput {
+  where: NotificationWhereUniqueInput!
+  update: NotificationUpdateWithoutPostDataInput!
+  create: NotificationCreateWithoutPostInput!
+}
+
 input NotificationUpsertWithWhereUniqueWithoutTargetInput {
   where: NotificationWhereUniqueInput!
   update: NotificationUpdateWithoutTargetDataInput!
   create: NotificationCreateWithoutTargetInput!
+}
+
+input NotificationUpsertWithWhereUniqueWithoutUpdateInput {
+  where: NotificationWhereUniqueInput!
+  update: NotificationUpdateWithoutUpdateDataInput!
+  create: NotificationCreateWithoutUpdateInput!
 }
 
 input NotificationWhereInput {
@@ -2859,6 +3035,7 @@ type Post {
   likedByMe: Boolean
   commentsCount: Int
   sharesCount: Int
+  notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification!]
 }
 
 type PostConnection {
@@ -2895,6 +3072,7 @@ input PostCreateInput {
   likedByMe: Boolean
   commentsCount: Int
   sharesCount: Int
+  notifications: NotificationCreateManyWithoutPostInput
 }
 
 input PostCreatelikesInput {
@@ -2906,13 +3084,13 @@ input PostCreateManyWithoutOwnerInput {
   connect: [PostWhereUniqueInput!]
 }
 
-input PostCreateOneInput {
-  create: PostCreateInput
+input PostCreateOneWithoutCommentsInput {
+  create: PostCreateWithoutCommentsInput
   connect: PostWhereUniqueInput
 }
 
-input PostCreateOneWithoutCommentsInput {
-  create: PostCreateWithoutCommentsInput
+input PostCreateOneWithoutNotificationsInput {
+  create: PostCreateWithoutNotificationsInput
   connect: PostWhereUniqueInput
 }
 
@@ -2944,6 +3122,33 @@ input PostCreateWithoutCommentsInput {
   likedByMe: Boolean
   commentsCount: Int
   sharesCount: Int
+  notifications: NotificationCreateManyWithoutPostInput
+}
+
+input PostCreateWithoutNotificationsInput {
+  id: ID
+  lastUpdated: DateTime!
+  owner: UserCreateOneWithoutPostsInput!
+  isGoal: Boolean
+  goal: String
+  subField: TopicCreateOneInput
+  topics: TopicCreateManyInput
+  location: String!
+  locationID: String!
+  locationLat: Float!
+  locationLon: Float!
+  content: String!
+  images: PostCreateimagesInput
+  video: String
+  pitch: String
+  isPrivate: Boolean
+  comments: CommentCreateManyWithoutParentPostInput
+  updates: UpdateCreateManyWithoutParentPostInput
+  likes: PostCreatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+  commentsCount: Int
+  sharesCount: Int
 }
 
 input PostCreateWithoutOwnerInput {
@@ -2969,6 +3174,7 @@ input PostCreateWithoutOwnerInput {
   likedByMe: Boolean
   commentsCount: Int
   sharesCount: Int
+  notifications: NotificationCreateManyWithoutPostInput
 }
 
 input PostCreateWithoutUpdatesInput {
@@ -2994,6 +3200,7 @@ input PostCreateWithoutUpdatesInput {
   likedByMe: Boolean
   commentsCount: Int
   sharesCount: Int
+  notifications: NotificationCreateManyWithoutPostInput
 }
 
 type PostEdge {
@@ -3244,31 +3451,6 @@ input PostSubscriptionWhereInput {
   NOT: [PostSubscriptionWhereInput!]
 }
 
-input PostUpdateDataInput {
-  lastUpdated: DateTime
-  owner: UserUpdateOneRequiredWithoutPostsInput
-  isGoal: Boolean
-  goal: String
-  subField: TopicUpdateOneInput
-  topics: TopicUpdateManyInput
-  location: String
-  locationID: String
-  locationLat: Float
-  locationLon: Float
-  content: String
-  images: PostUpdateimagesInput
-  video: String
-  pitch: String
-  isPrivate: Boolean
-  comments: CommentUpdateManyWithoutParentPostInput
-  updates: UpdateUpdateManyWithoutParentPostInput
-  likes: PostUpdatelikesInput
-  likesCount: Int
-  likedByMe: Boolean
-  commentsCount: Int
-  sharesCount: Int
-}
-
 input PostUpdateimagesInput {
   set: [String!]
 }
@@ -3296,6 +3478,7 @@ input PostUpdateInput {
   likedByMe: Boolean
   commentsCount: Int
   sharesCount: Int
+  notifications: NotificationUpdateManyWithoutPostInput
 }
 
 input PostUpdatelikesInput {
@@ -3359,15 +3542,6 @@ input PostUpdateManyWithWhereNestedInput {
   data: PostUpdateManyDataInput!
 }
 
-input PostUpdateOneInput {
-  create: PostCreateInput
-  update: PostUpdateDataInput
-  upsert: PostUpsertNestedInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: PostWhereUniqueInput
-}
-
 input PostUpdateOneRequiredWithoutUpdatesInput {
   create: PostCreateWithoutUpdatesInput
   update: PostUpdateWithoutUpdatesDataInput
@@ -3379,6 +3553,15 @@ input PostUpdateOneWithoutCommentsInput {
   create: PostCreateWithoutCommentsInput
   update: PostUpdateWithoutCommentsDataInput
   upsert: PostUpsertWithoutCommentsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: PostWhereUniqueInput
+}
+
+input PostUpdateOneWithoutNotificationsInput {
+  create: PostCreateWithoutNotificationsInput
+  update: PostUpdateWithoutNotificationsDataInput
+  upsert: PostUpsertWithoutNotificationsInput
   delete: Boolean
   disconnect: Boolean
   connect: PostWhereUniqueInput
@@ -3400,6 +3583,32 @@ input PostUpdateWithoutCommentsDataInput {
   video: String
   pitch: String
   isPrivate: Boolean
+  updates: UpdateUpdateManyWithoutParentPostInput
+  likes: PostUpdatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+  commentsCount: Int
+  sharesCount: Int
+  notifications: NotificationUpdateManyWithoutPostInput
+}
+
+input PostUpdateWithoutNotificationsDataInput {
+  lastUpdated: DateTime
+  owner: UserUpdateOneRequiredWithoutPostsInput
+  isGoal: Boolean
+  goal: String
+  subField: TopicUpdateOneInput
+  topics: TopicUpdateManyInput
+  location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
+  content: String
+  images: PostUpdateimagesInput
+  video: String
+  pitch: String
+  isPrivate: Boolean
+  comments: CommentUpdateManyWithoutParentPostInput
   updates: UpdateUpdateManyWithoutParentPostInput
   likes: PostUpdatelikesInput
   likesCount: Int
@@ -3430,6 +3639,7 @@ input PostUpdateWithoutOwnerDataInput {
   likedByMe: Boolean
   commentsCount: Int
   sharesCount: Int
+  notifications: NotificationUpdateManyWithoutPostInput
 }
 
 input PostUpdateWithoutUpdatesDataInput {
@@ -3454,6 +3664,7 @@ input PostUpdateWithoutUpdatesDataInput {
   likedByMe: Boolean
   commentsCount: Int
   sharesCount: Int
+  notifications: NotificationUpdateManyWithoutPostInput
 }
 
 input PostUpdateWithWhereUniqueWithoutOwnerInput {
@@ -3461,14 +3672,14 @@ input PostUpdateWithWhereUniqueWithoutOwnerInput {
   data: PostUpdateWithoutOwnerDataInput!
 }
 
-input PostUpsertNestedInput {
-  update: PostUpdateDataInput!
-  create: PostCreateInput!
-}
-
 input PostUpsertWithoutCommentsInput {
   update: PostUpdateWithoutCommentsDataInput!
   create: PostCreateWithoutCommentsInput!
+}
+
+input PostUpsertWithoutNotificationsInput {
+  update: PostUpdateWithoutNotificationsDataInput!
+  create: PostCreateWithoutNotificationsInput!
 }
 
 input PostUpsertWithoutUpdatesInput {
@@ -3654,6 +3865,9 @@ input PostWhereInput {
   sharesCount_lte: Int
   sharesCount_gt: Int
   sharesCount_gte: Int
+  notifications_every: NotificationWhereInput
+  notifications_some: NotificationWhereInput
+  notifications_none: NotificationWhereInput
   AND: [PostWhereInput!]
   OR: [PostWhereInput!]
   NOT: [PostWhereInput!]
@@ -4930,6 +5144,7 @@ type Update {
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   commentsCount: Int
   sharesCount: Int
+  notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification!]
 }
 
 type UpdateConnection {
@@ -4949,6 +5164,7 @@ input UpdateCreateInput {
   comments: CommentCreateManyWithoutParentUpdateInput
   commentsCount: Int
   sharesCount: Int
+  notifications: NotificationCreateManyWithoutUpdateInput
 }
 
 input UpdateCreatelikesInput {
@@ -4960,13 +5176,13 @@ input UpdateCreateManyWithoutParentPostInput {
   connect: [UpdateWhereUniqueInput!]
 }
 
-input UpdateCreateOneInput {
-  create: UpdateCreateInput
+input UpdateCreateOneWithoutCommentsInput {
+  create: UpdateCreateWithoutCommentsInput
   connect: UpdateWhereUniqueInput
 }
 
-input UpdateCreateOneWithoutCommentsInput {
-  create: UpdateCreateWithoutCommentsInput
+input UpdateCreateOneWithoutNotificationsInput {
+  create: UpdateCreateWithoutNotificationsInput
   connect: UpdateWhereUniqueInput
 }
 
@@ -4978,6 +5194,20 @@ input UpdateCreateWithoutCommentsInput {
   likes: UpdateCreatelikesInput
   likesCount: Int
   likedByMe: Boolean
+  commentsCount: Int
+  sharesCount: Int
+  notifications: NotificationCreateManyWithoutUpdateInput
+}
+
+input UpdateCreateWithoutNotificationsInput {
+  id: ID
+  parentPost: PostCreateOneWithoutUpdatesInput!
+  content: String!
+  image: String
+  likes: UpdateCreatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+  comments: CommentCreateManyWithoutParentUpdateInput
   commentsCount: Int
   sharesCount: Int
 }
@@ -4992,6 +5222,7 @@ input UpdateCreateWithoutParentPostInput {
   comments: CommentCreateManyWithoutParentUpdateInput
   commentsCount: Int
   sharesCount: Int
+  notifications: NotificationCreateManyWithoutUpdateInput
 }
 
 type UpdateEdge {
@@ -5130,18 +5361,6 @@ input UpdateSubscriptionWhereInput {
   NOT: [UpdateSubscriptionWhereInput!]
 }
 
-input UpdateUpdateDataInput {
-  parentPost: PostUpdateOneRequiredWithoutUpdatesInput
-  content: String
-  image: String
-  likes: UpdateUpdatelikesInput
-  likesCount: Int
-  likedByMe: Boolean
-  comments: CommentUpdateManyWithoutParentUpdateInput
-  commentsCount: Int
-  sharesCount: Int
-}
-
 input UpdateUpdateInput {
   parentPost: PostUpdateOneRequiredWithoutUpdatesInput
   content: String
@@ -5152,6 +5371,7 @@ input UpdateUpdateInput {
   comments: CommentUpdateManyWithoutParentUpdateInput
   commentsCount: Int
   sharesCount: Int
+  notifications: NotificationUpdateManyWithoutUpdateInput
 }
 
 input UpdateUpdatelikesInput {
@@ -5195,19 +5415,19 @@ input UpdateUpdateManyWithWhereNestedInput {
   data: UpdateUpdateManyDataInput!
 }
 
-input UpdateUpdateOneInput {
-  create: UpdateCreateInput
-  update: UpdateUpdateDataInput
-  upsert: UpdateUpsertNestedInput
+input UpdateUpdateOneWithoutCommentsInput {
+  create: UpdateCreateWithoutCommentsInput
+  update: UpdateUpdateWithoutCommentsDataInput
+  upsert: UpdateUpsertWithoutCommentsInput
   delete: Boolean
   disconnect: Boolean
   connect: UpdateWhereUniqueInput
 }
 
-input UpdateUpdateOneWithoutCommentsInput {
-  create: UpdateCreateWithoutCommentsInput
-  update: UpdateUpdateWithoutCommentsDataInput
-  upsert: UpdateUpsertWithoutCommentsInput
+input UpdateUpdateOneWithoutNotificationsInput {
+  create: UpdateCreateWithoutNotificationsInput
+  update: UpdateUpdateWithoutNotificationsDataInput
+  upsert: UpdateUpsertWithoutNotificationsInput
   delete: Boolean
   disconnect: Boolean
   connect: UpdateWhereUniqueInput
@@ -5222,6 +5442,19 @@ input UpdateUpdateWithoutCommentsDataInput {
   likedByMe: Boolean
   commentsCount: Int
   sharesCount: Int
+  notifications: NotificationUpdateManyWithoutUpdateInput
+}
+
+input UpdateUpdateWithoutNotificationsDataInput {
+  parentPost: PostUpdateOneRequiredWithoutUpdatesInput
+  content: String
+  image: String
+  likes: UpdateUpdatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+  comments: CommentUpdateManyWithoutParentUpdateInput
+  commentsCount: Int
+  sharesCount: Int
 }
 
 input UpdateUpdateWithoutParentPostDataInput {
@@ -5233,6 +5466,7 @@ input UpdateUpdateWithoutParentPostDataInput {
   comments: CommentUpdateManyWithoutParentUpdateInput
   commentsCount: Int
   sharesCount: Int
+  notifications: NotificationUpdateManyWithoutUpdateInput
 }
 
 input UpdateUpdateWithWhereUniqueWithoutParentPostInput {
@@ -5240,14 +5474,14 @@ input UpdateUpdateWithWhereUniqueWithoutParentPostInput {
   data: UpdateUpdateWithoutParentPostDataInput!
 }
 
-input UpdateUpsertNestedInput {
-  update: UpdateUpdateDataInput!
-  create: UpdateCreateInput!
-}
-
 input UpdateUpsertWithoutCommentsInput {
   update: UpdateUpdateWithoutCommentsDataInput!
   create: UpdateCreateWithoutCommentsInput!
+}
+
+input UpdateUpsertWithoutNotificationsInput {
+  update: UpdateUpdateWithoutNotificationsDataInput!
+  create: UpdateCreateWithoutNotificationsInput!
 }
 
 input UpdateUpsertWithWhereUniqueWithoutParentPostInput {
@@ -5337,6 +5571,9 @@ input UpdateWhereInput {
   sharesCount_lte: Int
   sharesCount_gt: Int
   sharesCount_gte: Int
+  notifications_every: NotificationWhereInput
+  notifications_some: NotificationWhereInput
+  notifications_none: NotificationWhereInput
   AND: [UpdateWhereInput!]
   OR: [UpdateWhereInput!]
   NOT: [UpdateWhereInput!]
@@ -5384,6 +5621,7 @@ type User {
   groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group!]
   notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification!]
   unReadMessages(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Message!]
+  unReadMessagesCount: Int
 }
 
 type UserConnection {
@@ -5429,6 +5667,7 @@ input UserCreateInput {
   groups: GroupCreateManyWithoutUsersInput
   notifications: NotificationCreateManyWithoutTargetInput
   unReadMessages: MessageCreateManyInput
+  unReadMessagesCount: Int
 }
 
 input UserCreateManyInput {
@@ -5531,6 +5770,7 @@ input UserCreateWithoutConnectionsInput {
   groups: GroupCreateManyWithoutUsersInput
   notifications: NotificationCreateManyWithoutTargetInput
   unReadMessages: MessageCreateManyInput
+  unReadMessagesCount: Int
 }
 
 input UserCreateWithoutEducationInput {
@@ -5569,6 +5809,7 @@ input UserCreateWithoutEducationInput {
   groups: GroupCreateManyWithoutUsersInput
   notifications: NotificationCreateManyWithoutTargetInput
   unReadMessages: MessageCreateManyInput
+  unReadMessagesCount: Int
 }
 
 input UserCreateWithoutExperienceInput {
@@ -5607,6 +5848,7 @@ input UserCreateWithoutExperienceInput {
   groups: GroupCreateManyWithoutUsersInput
   notifications: NotificationCreateManyWithoutTargetInput
   unReadMessages: MessageCreateManyInput
+  unReadMessagesCount: Int
 }
 
 input UserCreateWithoutFollowersInput {
@@ -5645,6 +5887,7 @@ input UserCreateWithoutFollowersInput {
   groups: GroupCreateManyWithoutUsersInput
   notifications: NotificationCreateManyWithoutTargetInput
   unReadMessages: MessageCreateManyInput
+  unReadMessagesCount: Int
 }
 
 input UserCreateWithoutFollowingInput {
@@ -5683,6 +5926,7 @@ input UserCreateWithoutFollowingInput {
   groups: GroupCreateManyWithoutUsersInput
   notifications: NotificationCreateManyWithoutTargetInput
   unReadMessages: MessageCreateManyInput
+  unReadMessagesCount: Int
 }
 
 input UserCreateWithoutGroupsInput {
@@ -5721,6 +5965,7 @@ input UserCreateWithoutGroupsInput {
   roles: UserCreaterolesInput
   notifications: NotificationCreateManyWithoutTargetInput
   unReadMessages: MessageCreateManyInput
+  unReadMessagesCount: Int
 }
 
 input UserCreateWithoutMeetingsInput {
@@ -5759,6 +6004,7 @@ input UserCreateWithoutMeetingsInput {
   groups: GroupCreateManyWithoutUsersInput
   notifications: NotificationCreateManyWithoutTargetInput
   unReadMessages: MessageCreateManyInput
+  unReadMessagesCount: Int
 }
 
 input UserCreateWithoutNotificationsInput {
@@ -5797,6 +6043,7 @@ input UserCreateWithoutNotificationsInput {
   roles: UserCreaterolesInput
   groups: GroupCreateManyWithoutUsersInput
   unReadMessages: MessageCreateManyInput
+  unReadMessagesCount: Int
 }
 
 input UserCreateWithoutPostsInput {
@@ -5835,6 +6082,7 @@ input UserCreateWithoutPostsInput {
   groups: GroupCreateManyWithoutUsersInput
   notifications: NotificationCreateManyWithoutTargetInput
   unReadMessages: MessageCreateManyInput
+  unReadMessagesCount: Int
 }
 
 input UserCreateWithoutSkillsInput {
@@ -5873,6 +6121,7 @@ input UserCreateWithoutSkillsInput {
   groups: GroupCreateManyWithoutUsersInput
   notifications: NotificationCreateManyWithoutTargetInput
   unReadMessages: MessageCreateManyInput
+  unReadMessagesCount: Int
 }
 
 type UserEdge {
@@ -5915,6 +6164,8 @@ enum UserOrderByInput {
   bio_DESC
   about_ASC
   about_DESC
+  unReadMessagesCount_ASC
+  unReadMessagesCount_DESC
 }
 
 type UserPreviousValues {
@@ -5936,6 +6187,7 @@ type UserPreviousValues {
   bio: String
   about: String
   roles: [Role!]!
+  unReadMessagesCount: Int
 }
 
 input UserScalarWhereInput {
@@ -6159,6 +6411,14 @@ input UserScalarWhereInput {
   about_not_starts_with: String
   about_ends_with: String
   about_not_ends_with: String
+  unReadMessagesCount: Int
+  unReadMessagesCount_not: Int
+  unReadMessagesCount_in: [Int!]
+  unReadMessagesCount_not_in: [Int!]
+  unReadMessagesCount_lt: Int
+  unReadMessagesCount_lte: Int
+  unReadMessagesCount_gt: Int
+  unReadMessagesCount_gte: Int
   AND: [UserScalarWhereInput!]
   OR: [UserScalarWhereInput!]
   NOT: [UserScalarWhereInput!]
@@ -6218,6 +6478,7 @@ input UserUpdateDataInput {
   groups: GroupUpdateManyWithoutUsersInput
   notifications: NotificationUpdateManyWithoutTargetInput
   unReadMessages: MessageUpdateManyInput
+  unReadMessagesCount: Int
 }
 
 input UserUpdateInput {
@@ -6256,6 +6517,7 @@ input UserUpdateInput {
   groups: GroupUpdateManyWithoutUsersInput
   notifications: NotificationUpdateManyWithoutTargetInput
   unReadMessages: MessageUpdateManyInput
+  unReadMessagesCount: Int
 }
 
 input UserUpdateManyDataInput {
@@ -6275,6 +6537,7 @@ input UserUpdateManyDataInput {
   bio: String
   about: String
   roles: UserUpdaterolesInput
+  unReadMessagesCount: Int
 }
 
 input UserUpdateManyInput {
@@ -6306,6 +6569,7 @@ input UserUpdateManyMutationInput {
   bio: String
   about: String
   roles: UserUpdaterolesInput
+  unReadMessagesCount: Int
 }
 
 input UserUpdateManyWithoutConnectionsInput {
@@ -6463,6 +6727,7 @@ input UserUpdateWithoutConnectionsDataInput {
   groups: GroupUpdateManyWithoutUsersInput
   notifications: NotificationUpdateManyWithoutTargetInput
   unReadMessages: MessageUpdateManyInput
+  unReadMessagesCount: Int
 }
 
 input UserUpdateWithoutEducationDataInput {
@@ -6500,6 +6765,7 @@ input UserUpdateWithoutEducationDataInput {
   groups: GroupUpdateManyWithoutUsersInput
   notifications: NotificationUpdateManyWithoutTargetInput
   unReadMessages: MessageUpdateManyInput
+  unReadMessagesCount: Int
 }
 
 input UserUpdateWithoutExperienceDataInput {
@@ -6537,6 +6803,7 @@ input UserUpdateWithoutExperienceDataInput {
   groups: GroupUpdateManyWithoutUsersInput
   notifications: NotificationUpdateManyWithoutTargetInput
   unReadMessages: MessageUpdateManyInput
+  unReadMessagesCount: Int
 }
 
 input UserUpdateWithoutFollowersDataInput {
@@ -6574,6 +6841,7 @@ input UserUpdateWithoutFollowersDataInput {
   groups: GroupUpdateManyWithoutUsersInput
   notifications: NotificationUpdateManyWithoutTargetInput
   unReadMessages: MessageUpdateManyInput
+  unReadMessagesCount: Int
 }
 
 input UserUpdateWithoutFollowingDataInput {
@@ -6611,6 +6879,7 @@ input UserUpdateWithoutFollowingDataInput {
   groups: GroupUpdateManyWithoutUsersInput
   notifications: NotificationUpdateManyWithoutTargetInput
   unReadMessages: MessageUpdateManyInput
+  unReadMessagesCount: Int
 }
 
 input UserUpdateWithoutGroupsDataInput {
@@ -6648,6 +6917,7 @@ input UserUpdateWithoutGroupsDataInput {
   roles: UserUpdaterolesInput
   notifications: NotificationUpdateManyWithoutTargetInput
   unReadMessages: MessageUpdateManyInput
+  unReadMessagesCount: Int
 }
 
 input UserUpdateWithoutMeetingsDataInput {
@@ -6685,6 +6955,7 @@ input UserUpdateWithoutMeetingsDataInput {
   groups: GroupUpdateManyWithoutUsersInput
   notifications: NotificationUpdateManyWithoutTargetInput
   unReadMessages: MessageUpdateManyInput
+  unReadMessagesCount: Int
 }
 
 input UserUpdateWithoutNotificationsDataInput {
@@ -6722,6 +6993,7 @@ input UserUpdateWithoutNotificationsDataInput {
   roles: UserUpdaterolesInput
   groups: GroupUpdateManyWithoutUsersInput
   unReadMessages: MessageUpdateManyInput
+  unReadMessagesCount: Int
 }
 
 input UserUpdateWithoutPostsDataInput {
@@ -6759,6 +7031,7 @@ input UserUpdateWithoutPostsDataInput {
   groups: GroupUpdateManyWithoutUsersInput
   notifications: NotificationUpdateManyWithoutTargetInput
   unReadMessages: MessageUpdateManyInput
+  unReadMessagesCount: Int
 }
 
 input UserUpdateWithoutSkillsDataInput {
@@ -6796,6 +7069,7 @@ input UserUpdateWithoutSkillsDataInput {
   groups: GroupUpdateManyWithoutUsersInput
   notifications: NotificationUpdateManyWithoutTargetInput
   unReadMessages: MessageUpdateManyInput
+  unReadMessagesCount: Int
 }
 
 input UserUpdateWithWhereUniqueNestedInput {
@@ -7170,6 +7444,14 @@ input UserWhereInput {
   unReadMessages_every: MessageWhereInput
   unReadMessages_some: MessageWhereInput
   unReadMessages_none: MessageWhereInput
+  unReadMessagesCount: Int
+  unReadMessagesCount_not: Int
+  unReadMessagesCount_in: [Int!]
+  unReadMessagesCount_not_in: [Int!]
+  unReadMessagesCount_lt: Int
+  unReadMessagesCount_lte: Int
+  unReadMessagesCount_gt: Int
+  unReadMessagesCount_gte: Int
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

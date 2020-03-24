@@ -47,6 +47,17 @@ const User = {
   async unReadMessages(parent, args, context) {
     return context.prisma.user({ id: parent.id }).unReadMessages()
   },
+
+  async unReadMessagesCount(parent, args, context) {
+    // console.log(parent)
+    let count = 0;
+    const messages = await context.prisma.user({ id: parent.id }).unReadMessages()
+    // console.log(messages)
+    if (messages.length > 0) {
+      count = messages.length;
+    }
+    return count;
+  },
 }
 
 module.exports = {

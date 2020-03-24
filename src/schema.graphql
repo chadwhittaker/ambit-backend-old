@@ -13,6 +13,7 @@ type Query {
   user(id: ID!): User
   users: [User]!
   allConnections: AllConnections
+  unReadMessagesCount: User
 
   # posts
   postsGlobal(after: String): PostConnection!
@@ -60,18 +61,18 @@ type Mutation {
 
   # post
   createPost(owner: ID!, post: PostCreateInput!): Post
-  deletePost(owner: ID!, id: ID!): Education
+  deletePost(ownerID: ID!, id: ID!): Post
   likePost(postId: ID!): Post!
 
   #update
   createUpdate(postId: ID!, update: UpdateCreateWithoutParentPostInput!): Post
   likeUpdate(updateId: ID!): Update!
-  deleteUpdate(owner: ID!, id: ID!): Update
+  deleteUpdate(ownerID: ID!, id: ID!): Update
 
   # comment
   createComment(comment: CommentCreateInput!): Comment
   likeComment(id: ID!): Comment!
-  deleteComment(owner: ID!, id: ID!): Comment
+  deleteComment(ownerID: ID!, id: ID!): Comment
 
   # intro
   editIntro(userId: ID!, title: String, items: [StoryItemCreateWithoutStoryInput!]): User!
