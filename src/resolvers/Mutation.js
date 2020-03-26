@@ -1,8 +1,8 @@
 const { hash, compare } = require('bcryptjs')
 const { sign } = require('jsonwebtoken')
 const { getUserId } = require('../utils')
-const { MessageFragment, BasicPost, UpdateFragment, CommentFragment } = require('../_fragments.js')
-const { createNotification, addMessageToUnread } = require('./functions')
+const { MessageFragment, BasicPost, UpdateFragment, CommentFragment, FollowersFragment, UserIDFragment } = require('../_fragments.js')
+const { createNotification, addMessageToUnread, updateFollowersAndVerify } = require('./functions')
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
@@ -57,6 +57,41 @@ const Mutation = {
       token,
       user,
     }
+  },
+
+  async editFollowing(parent, { userID, newFollow }, context) {
+
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      throw new Error(`You must be logged in to do that`)
+    }
+
+    // 2. decide if this is a follow or un-follow
+    const following = newFollow ? {
+      connect: [{ id: userID }]
+    } : {
+        disconnect: [{ id: userID }]
+      }
+
+    const followers = newFollow ? {
+      connect: [{ id: context.request.userId }]
+    } : {
+        disconnect: [{ id: context.request.userId }]
+      }
+
+    // 3. add user to following of the requester
+    const user = await context.prisma.updateUser(
+      {
+        where: { id: context.request.userId },
+        data: {
+          following
+        }
+      },
+    )
+
+    updateFollowersAndVerify(followers, userID, context);
+
+    return user;
   },
 
   // ================

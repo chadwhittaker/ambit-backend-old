@@ -1,4 +1,4 @@
-const { DetailPost } = require('../../_fragments.js')
+const { DetailPost, FollowersFragment, UserIDFragment } = require('../../_fragments.js')
 const { rad2Deg, deg2Rad } = require('../../utils')
 
 // custom functions for queries
@@ -572,6 +572,47 @@ const addMessageToUnread = async (message, context) => {
   })
 }
 
+const updateFollowersAndVerify = async (followers, userID, context) => {
+    // 3. update followers of userID
+    const userFollowers = await context.prisma.updateUser(
+      {
+        where: { id: userID },
+        data: {
+          followers
+        }
+      },
+    ).$fragment(FollowersFragment)
+
+    // 5. do a verificatoin to make sure all followers are connected
+
+    // search the database for everyone that follows the userID
+    const usersThatFollow = await context.prisma.users({
+      where: {
+        following_some: { id: userID }
+      }
+    }).$fragment(UserIDFragment)
+
+    const usersThatNeedAddedToFollowers = [];
+    // verify they are all connected to userID
+    usersThatFollow.forEach(user => {
+      const check = userFollowers.followers.find(u => u.id === user.id);
+
+      if (!check) {
+        // add it to a list of users that need added to followers
+        console.log('user that needs added to followers', user);
+        usersThatNeedAddedToFollowers.push(user);
+      }
+    })
+
+    if (usersThatNeedAddedToFollowers.length === 0) {
+      console.log('all followers accounted for!')
+    } else {
+      console.log('all followers not accounted for!')
+    }
+
+
+}
+
 
 
 module.exports = {
@@ -583,4 +624,5 @@ module.exports = {
   getAllMessageConnections,
   getMessageConnection,
   addMessageToUnread,
+  updateFollowersAndVerify,
 }

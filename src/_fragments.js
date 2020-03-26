@@ -1,5 +1,18 @@
 const gql = require('graphql-tag')
 
+const UserIDFragment = gql`
+  fragment UserIDFragment on User {
+    id
+  }
+`;
+const FollowersFragment = gql`
+  fragment FollowersFragment on User {
+    followers {
+      id
+    }
+  }
+`;
+
 const MessageFragment = gql`
   fragment MessageFragment on Message {
     id
@@ -461,6 +474,8 @@ const CommentFragment = gql`
 
 
 module.exports = {
+  UserIDFragment,
+  FollowersFragment,
   MyInfoForConnections,
   BasicPost,
   DetailPost,

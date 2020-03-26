@@ -48,6 +48,14 @@ const User = {
     return context.prisma.user({ id: parent.id }).unReadMessages()
   },
 
+  async following(parent, args, context) {
+    return context.prisma.user({ id: parent.id }).following()
+  },
+
+  async followers(parent, args, context) {
+    return context.prisma.user({ id: parent.id }).followers()
+  },
+
   async unReadMessagesCount(parent, args, context) {
     // console.log(parent)
     let count = 0;

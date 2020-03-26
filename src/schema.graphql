@@ -39,6 +39,7 @@ type Mutation {
   # user
   signup(firstName: String!, lastName: String!, email: String!, password: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
+  editFollowing(userID: ID!, newFollow: Boolean!): User!
 
   # profile
   editBio(id: ID!, data: UserUpdateInput!): User!
