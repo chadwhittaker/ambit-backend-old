@@ -1,7 +1,7 @@
 const { hash, compare } = require('bcryptjs')
 const { sign } = require('jsonwebtoken')
 const { getUserId } = require('../utils')
-const { MessageFragment, BasicPost, UpdateFragment, CommentFragment, FollowersFragment, UserIDFragment } = require('../_fragments.js')
+const { MessageFragment, BasicPost, UpdateFragment, CommentFragment, FollowersFragment, UserIDFragment, LoggedInUser } = require('../_fragments.js')
 const { createNotification, addMessageToUnread, updateFollowersAndVerify } = require('./functions')
 
 function getRandomInt(max) {
@@ -84,14 +84,27 @@ const Mutation = {
       {
         where: { id: context.request.userId },
         data: {
-          following
+          following,
         }
       },
-    )
+    ).$fragment(LoggedInUser)
+
+    // console.log(user.following.length)
+    const followingCount = user.following.length;
+    // console.log('following', followingCount);
+    // update the number of following (if i dont await for some reason this doesnt work)
+    await context.prisma.updateUser(
+      {
+        where: { id: context.request.userId },
+        data: {
+          followingCount,
+        }
+      },
+    );
 
     updateFollowersAndVerify(followers, userID, context);
 
-    return user;
+    return { ...user, followingCount: user.following.length };
   },
 
   // ================

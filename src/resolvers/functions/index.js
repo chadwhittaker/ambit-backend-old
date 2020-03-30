@@ -583,6 +583,18 @@ const updateFollowersAndVerify = async (followers, userID, context) => {
       },
     ).$fragment(FollowersFragment)
 
+    // 4. update # of followers of userID
+    const followersCount = userFollowers.followers.length;
+    // console.log('followers', followersCount);
+    await context.prisma.updateUser(
+      {
+        where: { id: userID },
+        data: {
+          followersCount,
+        }
+      },
+    );
+
     // 5. do a verificatoin to make sure all followers are connected
 
     // search the database for everyone that follows the userID
@@ -609,8 +621,6 @@ const updateFollowersAndVerify = async (followers, userID, context) => {
     } else {
       console.log('all followers not accounted for!')
     }
-
-
 }
 
 

@@ -1,7 +1,7 @@
 // import { PostOrderByInput } from "../generated/prisma-client/prisma-schema.js";
 // const { PostOrderByInput } = require('../generated/prisma-client/prisma-schema.js')
 const { rad2Deg, deg2Rad } = require('../utils')
-const { MyInfoForConnections, DetailPost } = require('../_fragments.js')
+const { MyInfoForConnections, DetailPost, MyNetworkFragment } = require('../_fragments.js')
 const { getUsersMatchingManyGoals, getUsersMatchingGoal, getUsersMatchingTopicsFocus, getActiveGoalsOfUser, getAllMessageConnections } = require('./functions')
 
 const Query = {
@@ -43,12 +43,21 @@ const Query = {
     return user;
   },
 
-  async postsGlobal(parent, { after }, context) {
+  async postsNetwork(parent, { after, first = 6 }, context) {
+
+    // get an array of IDs in my network
+    const me = await context.prisma.user({ id: context.request.userId }).$fragment(MyNetworkFragment);
+
+
     const posts = await context.prisma.postsConnection(
       {
-        first: 30,
+        first,
         after,
-        where: { isPrivate: false },
+        where: {
+          owner: {
+
+          }
+         },
         orderBy: 'lastUpdated_DESC'
       }
     );

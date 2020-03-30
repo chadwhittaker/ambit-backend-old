@@ -51,16 +51,53 @@ const MyInfoForConnections = gql`
   }
 `;
 
+// const MyNetworkFragment = gql`
+//   fragment MyNetworkFragment on User {
+//     following {
+//       id
+//     }
+//     connections {
+//       id
+//     }
+//   }
+// `;
+
 const MinimalUser = gql`
   fragment MinimalUser on User {
     id
     name
     profilePic
+    bannerPic
     headline
+    bio
+    website
+    connectionsCount
+    followingCount
+    followersCount
     location
     locationID
     locationLat
     locationLon
+    topicsFocus {
+      topicID
+      name
+    }
+    topicsInterest {
+      topicID
+      name
+    }
+    topicsFreelance {
+      topicID
+      name
+    }
+    topicsInvest {
+      topicID
+      name
+    }
+    topicsMentor {
+      topicID
+      name
+    }
     intro {
       id
       title
@@ -75,6 +112,154 @@ const MinimalUser = gql`
     }
   }
 `;
+
+const LoggedInUser = gql`
+  fragment LoggedInUser on User {
+    id
+    name
+    profilePic
+    bannerPic
+    headline
+    bio
+    website
+    connectionsCount
+    followingCount
+    followersCount
+    location
+    locationID
+    locationLat
+    locationLon
+    topicsFocus {
+      topicID
+      name
+    }
+    topicsInterest {
+      topicID
+      name
+    }
+    topicsFreelance {
+      topicID
+      name
+    }
+    topicsInvest {
+      topicID
+      name
+    }
+    topicsMentor {
+      topicID
+      name
+    }
+    intro {
+      id
+      title
+      items {
+        id
+        type
+        url
+        link
+        text
+        duration
+      }
+    }
+    createdAt
+    firstName
+    lastName
+    email
+    groups {
+      id
+    updatedAt
+    users {
+      id
+    name
+    profilePic
+    bannerPic
+    headline
+    bio
+    website
+    connectionsCount
+    followingCount
+    followersCount
+    location
+    locationID
+    locationLat
+    locationLon
+    topicsFocus {
+      topicID
+      name
+    }
+    topicsInterest {
+      topicID
+      name
+    }
+    topicsFreelance {
+      topicID
+      name
+    }
+    topicsInvest {
+      topicID
+      name
+    }
+    topicsMentor {
+      topicID
+      name
+    }
+    intro {
+      id
+      title
+      items {
+        id
+        type
+        url
+        link
+        text
+        duration
+      }
+    }
+    }
+    latestMessage {
+      id
+      createdAt
+      content
+      hidden {
+        id
+      }
+    }
+    hidden {
+      id
+    }
+    }
+    unReadMessages {
+      id
+    createdAt
+    from {
+      id
+      firstName
+      lastName
+      name
+      profilePic
+    }
+    to {
+      id
+      users {
+        id
+      }
+    }
+    content
+    }
+    unReadMessagesCount
+    connections {
+      id
+    }
+    following {
+      id
+    }
+    followers {
+      id
+    }
+  }
+`;
+
+
 
 const UpdateFragment = gql`
   fragment UpdateFragment on Update {
@@ -476,7 +661,9 @@ const CommentFragment = gql`
 module.exports = {
   UserIDFragment,
   FollowersFragment,
+  LoggedInUser,
   MyInfoForConnections,
+  MyNetworkFragment,
   BasicPost,
   DetailPost,
   MessageFragment,

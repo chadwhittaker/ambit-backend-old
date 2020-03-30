@@ -70,6 +70,9 @@ type User {
   connections: [User] @relation(name: "MyConnections")
   following: [User] @relation(name: "ImFollowing")
   followers: [User] @relation(name: "MyFollowers")
+  connectionsCount: Int @default(value: 0)
+  followingCount: Int @default(value: 0)
+  followersCount: Int @default(value: 0)
   intro: Story @relation(name: "MyIntro")
   projects: [Story] @relation(name: "MyProjects")
   meetings: [Meeting]
@@ -165,7 +168,6 @@ type Post {
   images: [String]! @scalarList(strategy: RELATION)
   video: String
   pitch: String
-  isPrivate: Boolean! @default(value: false)
   comments: [Comment]! @relation(name: "CommentToPostRelation" onDelete: CASCADE)
   updates: [Update]! @relation(name: "UpdateToPostRelation" onDelete: CASCADE)
   likes: [String]! @scalarList(strategy: RELATION)

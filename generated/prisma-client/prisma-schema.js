@@ -5614,6 +5614,9 @@ type User {
   connections(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   following(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   followers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  connectionsCount: Int
+  followingCount: Int
+  followersCount: Int
   intro: Story
   projects(where: StoryWhereInput, orderBy: StoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Story!]
   meetings(where: MeetingWhereInput, orderBy: MeetingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Meeting!]
@@ -5660,6 +5663,9 @@ input UserCreateInput {
   connections: UserCreateManyWithoutConnectionsInput
   following: UserCreateManyWithoutFollowingInput
   followers: UserCreateManyWithoutFollowersInput
+  connectionsCount: Int
+  followingCount: Int
+  followersCount: Int
   intro: StoryCreateOneInput
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
@@ -5763,6 +5769,9 @@ input UserCreateWithoutConnectionsInput {
   posts: PostCreateManyWithoutOwnerInput
   following: UserCreateManyWithoutFollowingInput
   followers: UserCreateManyWithoutFollowersInput
+  connectionsCount: Int
+  followingCount: Int
+  followersCount: Int
   intro: StoryCreateOneInput
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
@@ -5802,6 +5811,9 @@ input UserCreateWithoutEducationInput {
   connections: UserCreateManyWithoutConnectionsInput
   following: UserCreateManyWithoutFollowingInput
   followers: UserCreateManyWithoutFollowersInput
+  connectionsCount: Int
+  followingCount: Int
+  followersCount: Int
   intro: StoryCreateOneInput
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
@@ -5841,6 +5853,9 @@ input UserCreateWithoutExperienceInput {
   connections: UserCreateManyWithoutConnectionsInput
   following: UserCreateManyWithoutFollowingInput
   followers: UserCreateManyWithoutFollowersInput
+  connectionsCount: Int
+  followingCount: Int
+  followersCount: Int
   intro: StoryCreateOneInput
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
@@ -5880,6 +5895,9 @@ input UserCreateWithoutFollowersInput {
   posts: PostCreateManyWithoutOwnerInput
   connections: UserCreateManyWithoutConnectionsInput
   following: UserCreateManyWithoutFollowingInput
+  connectionsCount: Int
+  followingCount: Int
+  followersCount: Int
   intro: StoryCreateOneInput
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
@@ -5919,6 +5937,9 @@ input UserCreateWithoutFollowingInput {
   posts: PostCreateManyWithoutOwnerInput
   connections: UserCreateManyWithoutConnectionsInput
   followers: UserCreateManyWithoutFollowersInput
+  connectionsCount: Int
+  followingCount: Int
+  followersCount: Int
   intro: StoryCreateOneInput
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
@@ -5959,6 +5980,9 @@ input UserCreateWithoutGroupsInput {
   connections: UserCreateManyWithoutConnectionsInput
   following: UserCreateManyWithoutFollowingInput
   followers: UserCreateManyWithoutFollowersInput
+  connectionsCount: Int
+  followingCount: Int
+  followersCount: Int
   intro: StoryCreateOneInput
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
@@ -5998,6 +6022,9 @@ input UserCreateWithoutMeetingsInput {
   connections: UserCreateManyWithoutConnectionsInput
   following: UserCreateManyWithoutFollowingInput
   followers: UserCreateManyWithoutFollowersInput
+  connectionsCount: Int
+  followingCount: Int
+  followersCount: Int
   intro: StoryCreateOneInput
   projects: StoryCreateManyInput
   roles: UserCreaterolesInput
@@ -6037,6 +6064,9 @@ input UserCreateWithoutNotificationsInput {
   connections: UserCreateManyWithoutConnectionsInput
   following: UserCreateManyWithoutFollowingInput
   followers: UserCreateManyWithoutFollowersInput
+  connectionsCount: Int
+  followingCount: Int
+  followersCount: Int
   intro: StoryCreateOneInput
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
@@ -6075,6 +6105,9 @@ input UserCreateWithoutPostsInput {
   connections: UserCreateManyWithoutConnectionsInput
   following: UserCreateManyWithoutFollowingInput
   followers: UserCreateManyWithoutFollowersInput
+  connectionsCount: Int
+  followingCount: Int
+  followersCount: Int
   intro: StoryCreateOneInput
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
@@ -6114,6 +6147,9 @@ input UserCreateWithoutSkillsInput {
   connections: UserCreateManyWithoutConnectionsInput
   following: UserCreateManyWithoutFollowingInput
   followers: UserCreateManyWithoutFollowersInput
+  connectionsCount: Int
+  followingCount: Int
+  followersCount: Int
   intro: StoryCreateOneInput
   projects: StoryCreateManyInput
   meetings: MeetingCreateManyWithoutUsersInput
@@ -6164,6 +6200,12 @@ enum UserOrderByInput {
   bio_DESC
   about_ASC
   about_DESC
+  connectionsCount_ASC
+  connectionsCount_DESC
+  followingCount_ASC
+  followingCount_DESC
+  followersCount_ASC
+  followersCount_DESC
   unReadMessagesCount_ASC
   unReadMessagesCount_DESC
 }
@@ -6186,6 +6228,9 @@ type UserPreviousValues {
   website: String
   bio: String
   about: String
+  connectionsCount: Int
+  followingCount: Int
+  followersCount: Int
   roles: [Role!]!
   unReadMessagesCount: Int
 }
@@ -6411,6 +6456,30 @@ input UserScalarWhereInput {
   about_not_starts_with: String
   about_ends_with: String
   about_not_ends_with: String
+  connectionsCount: Int
+  connectionsCount_not: Int
+  connectionsCount_in: [Int!]
+  connectionsCount_not_in: [Int!]
+  connectionsCount_lt: Int
+  connectionsCount_lte: Int
+  connectionsCount_gt: Int
+  connectionsCount_gte: Int
+  followingCount: Int
+  followingCount_not: Int
+  followingCount_in: [Int!]
+  followingCount_not_in: [Int!]
+  followingCount_lt: Int
+  followingCount_lte: Int
+  followingCount_gt: Int
+  followingCount_gte: Int
+  followersCount: Int
+  followersCount_not: Int
+  followersCount_in: [Int!]
+  followersCount_not_in: [Int!]
+  followersCount_lt: Int
+  followersCount_lte: Int
+  followersCount_gt: Int
+  followersCount_gte: Int
   unReadMessagesCount: Int
   unReadMessagesCount_not: Int
   unReadMessagesCount_in: [Int!]
@@ -6471,6 +6540,9 @@ input UserUpdateDataInput {
   connections: UserUpdateManyWithoutConnectionsInput
   following: UserUpdateManyWithoutFollowingInput
   followers: UserUpdateManyWithoutFollowersInput
+  connectionsCount: Int
+  followingCount: Int
+  followersCount: Int
   intro: StoryUpdateOneInput
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
@@ -6510,6 +6582,9 @@ input UserUpdateInput {
   connections: UserUpdateManyWithoutConnectionsInput
   following: UserUpdateManyWithoutFollowingInput
   followers: UserUpdateManyWithoutFollowersInput
+  connectionsCount: Int
+  followingCount: Int
+  followersCount: Int
   intro: StoryUpdateOneInput
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
@@ -6536,6 +6611,9 @@ input UserUpdateManyDataInput {
   website: String
   bio: String
   about: String
+  connectionsCount: Int
+  followingCount: Int
+  followersCount: Int
   roles: UserUpdaterolesInput
   unReadMessagesCount: Int
 }
@@ -6568,6 +6646,9 @@ input UserUpdateManyMutationInput {
   website: String
   bio: String
   about: String
+  connectionsCount: Int
+  followingCount: Int
+  followersCount: Int
   roles: UserUpdaterolesInput
   unReadMessagesCount: Int
 }
@@ -6720,6 +6801,9 @@ input UserUpdateWithoutConnectionsDataInput {
   posts: PostUpdateManyWithoutOwnerInput
   following: UserUpdateManyWithoutFollowingInput
   followers: UserUpdateManyWithoutFollowersInput
+  connectionsCount: Int
+  followingCount: Int
+  followersCount: Int
   intro: StoryUpdateOneInput
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
@@ -6758,6 +6842,9 @@ input UserUpdateWithoutEducationDataInput {
   connections: UserUpdateManyWithoutConnectionsInput
   following: UserUpdateManyWithoutFollowingInput
   followers: UserUpdateManyWithoutFollowersInput
+  connectionsCount: Int
+  followingCount: Int
+  followersCount: Int
   intro: StoryUpdateOneInput
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
@@ -6796,6 +6883,9 @@ input UserUpdateWithoutExperienceDataInput {
   connections: UserUpdateManyWithoutConnectionsInput
   following: UserUpdateManyWithoutFollowingInput
   followers: UserUpdateManyWithoutFollowersInput
+  connectionsCount: Int
+  followingCount: Int
+  followersCount: Int
   intro: StoryUpdateOneInput
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
@@ -6834,6 +6924,9 @@ input UserUpdateWithoutFollowersDataInput {
   posts: PostUpdateManyWithoutOwnerInput
   connections: UserUpdateManyWithoutConnectionsInput
   following: UserUpdateManyWithoutFollowingInput
+  connectionsCount: Int
+  followingCount: Int
+  followersCount: Int
   intro: StoryUpdateOneInput
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
@@ -6872,6 +6965,9 @@ input UserUpdateWithoutFollowingDataInput {
   posts: PostUpdateManyWithoutOwnerInput
   connections: UserUpdateManyWithoutConnectionsInput
   followers: UserUpdateManyWithoutFollowersInput
+  connectionsCount: Int
+  followingCount: Int
+  followersCount: Int
   intro: StoryUpdateOneInput
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
@@ -6911,6 +7007,9 @@ input UserUpdateWithoutGroupsDataInput {
   connections: UserUpdateManyWithoutConnectionsInput
   following: UserUpdateManyWithoutFollowingInput
   followers: UserUpdateManyWithoutFollowersInput
+  connectionsCount: Int
+  followingCount: Int
+  followersCount: Int
   intro: StoryUpdateOneInput
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
@@ -6949,6 +7048,9 @@ input UserUpdateWithoutMeetingsDataInput {
   connections: UserUpdateManyWithoutConnectionsInput
   following: UserUpdateManyWithoutFollowingInput
   followers: UserUpdateManyWithoutFollowersInput
+  connectionsCount: Int
+  followingCount: Int
+  followersCount: Int
   intro: StoryUpdateOneInput
   projects: StoryUpdateManyInput
   roles: UserUpdaterolesInput
@@ -6987,6 +7089,9 @@ input UserUpdateWithoutNotificationsDataInput {
   connections: UserUpdateManyWithoutConnectionsInput
   following: UserUpdateManyWithoutFollowingInput
   followers: UserUpdateManyWithoutFollowersInput
+  connectionsCount: Int
+  followingCount: Int
+  followersCount: Int
   intro: StoryUpdateOneInput
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
@@ -7024,6 +7129,9 @@ input UserUpdateWithoutPostsDataInput {
   connections: UserUpdateManyWithoutConnectionsInput
   following: UserUpdateManyWithoutFollowingInput
   followers: UserUpdateManyWithoutFollowersInput
+  connectionsCount: Int
+  followingCount: Int
+  followersCount: Int
   intro: StoryUpdateOneInput
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
@@ -7062,6 +7170,9 @@ input UserUpdateWithoutSkillsDataInput {
   connections: UserUpdateManyWithoutConnectionsInput
   following: UserUpdateManyWithoutFollowingInput
   followers: UserUpdateManyWithoutFollowersInput
+  connectionsCount: Int
+  followingCount: Int
+  followersCount: Int
   intro: StoryUpdateOneInput
   projects: StoryUpdateManyInput
   meetings: MeetingUpdateManyWithoutUsersInput
@@ -7428,6 +7539,30 @@ input UserWhereInput {
   followers_every: UserWhereInput
   followers_some: UserWhereInput
   followers_none: UserWhereInput
+  connectionsCount: Int
+  connectionsCount_not: Int
+  connectionsCount_in: [Int!]
+  connectionsCount_not_in: [Int!]
+  connectionsCount_lt: Int
+  connectionsCount_lte: Int
+  connectionsCount_gt: Int
+  connectionsCount_gte: Int
+  followingCount: Int
+  followingCount_not: Int
+  followingCount_in: [Int!]
+  followingCount_not_in: [Int!]
+  followingCount_lt: Int
+  followingCount_lte: Int
+  followingCount_gt: Int
+  followingCount_gte: Int
+  followersCount: Int
+  followersCount_not: Int
+  followersCount_in: [Int!]
+  followersCount_not_in: [Int!]
+  followersCount_lt: Int
+  followersCount_lte: Int
+  followersCount_gt: Int
+  followersCount_gte: Int
   intro: StoryWhereInput
   projects_every: StoryWhereInput
   projects_some: StoryWhereInput

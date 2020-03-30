@@ -724,6 +724,12 @@ export type UserOrderByInput =
   | "bio_DESC"
   | "about_ASC"
   | "about_DESC"
+  | "connectionsCount_ASC"
+  | "connectionsCount_DESC"
+  | "followingCount_ASC"
+  | "followingCount_DESC"
+  | "followersCount_ASC"
+  | "followersCount_DESC"
   | "unReadMessagesCount_ASC"
   | "unReadMessagesCount_DESC";
 
@@ -953,6 +959,9 @@ export interface UserUpdateWithoutPostsDataInput {
   connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
   following?: Maybe<UserUpdateManyWithoutFollowingInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
   intro?: Maybe<StoryUpdateOneInput>;
   projects?: Maybe<StoryUpdateManyInput>;
   meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
@@ -2226,6 +2235,9 @@ export interface UserUpdateInput {
   connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
   following?: Maybe<UserUpdateManyWithoutFollowingInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
   intro?: Maybe<StoryUpdateOneInput>;
   projects?: Maybe<StoryUpdateManyInput>;
   meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
@@ -2579,6 +2591,9 @@ export interface UserUpdateWithoutSkillsDataInput {
   connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
   following?: Maybe<UserUpdateManyWithoutFollowingInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
   intro?: Maybe<StoryUpdateOneInput>;
   projects?: Maybe<StoryUpdateManyInput>;
   meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
@@ -2652,6 +2667,9 @@ export interface UserCreateWithoutSkillsInput {
   connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
   following?: Maybe<UserCreateManyWithoutFollowingInput>;
   followers?: Maybe<UserCreateManyWithoutFollowersInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
   intro?: Maybe<StoryCreateOneInput>;
   projects?: Maybe<StoryCreateManyInput>;
   meetings?: Maybe<MeetingCreateManyWithoutUsersInput>;
@@ -2905,6 +2923,9 @@ export interface UserUpdateWithoutConnectionsDataInput {
   posts?: Maybe<PostUpdateManyWithoutOwnerInput>;
   following?: Maybe<UserUpdateManyWithoutFollowingInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
   intro?: Maybe<StoryUpdateOneInput>;
   projects?: Maybe<StoryUpdateManyInput>;
   meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
@@ -2989,6 +3010,9 @@ export interface UserCreateWithoutMeetingsInput {
   connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
   following?: Maybe<UserCreateManyWithoutFollowingInput>;
   followers?: Maybe<UserCreateManyWithoutFollowersInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
   intro?: Maybe<StoryCreateOneInput>;
   projects?: Maybe<StoryCreateManyInput>;
   roles?: Maybe<UserCreaterolesInput>;
@@ -3038,6 +3062,9 @@ export interface UserUpdateWithoutFollowingDataInput {
   posts?: Maybe<PostUpdateManyWithoutOwnerInput>;
   connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
   intro?: Maybe<StoryUpdateOneInput>;
   projects?: Maybe<StoryUpdateManyInput>;
   meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
@@ -3119,6 +3146,9 @@ export interface UserUpdateWithoutFollowersDataInput {
   posts?: Maybe<PostUpdateManyWithoutOwnerInput>;
   connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
   following?: Maybe<UserUpdateManyWithoutFollowingInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
   intro?: Maybe<StoryUpdateOneInput>;
   projects?: Maybe<StoryUpdateManyInput>;
   meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
@@ -3217,6 +3247,9 @@ export interface UserCreateInput {
   connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
   following?: Maybe<UserCreateManyWithoutFollowingInput>;
   followers?: Maybe<UserCreateManyWithoutFollowersInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
   intro?: Maybe<StoryCreateOneInput>;
   projects?: Maybe<StoryCreateManyInput>;
   meetings?: Maybe<MeetingCreateManyWithoutUsersInput>;
@@ -3664,6 +3697,9 @@ export interface UserCreateWithoutPostsInput {
   connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
   following?: Maybe<UserCreateManyWithoutFollowingInput>;
   followers?: Maybe<UserCreateManyWithoutFollowersInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
   intro?: Maybe<StoryCreateOneInput>;
   projects?: Maybe<StoryCreateManyInput>;
   meetings?: Maybe<MeetingCreateManyWithoutUsersInput>;
@@ -3708,6 +3744,9 @@ export interface UserCreateWithoutConnectionsInput {
   posts?: Maybe<PostCreateManyWithoutOwnerInput>;
   following?: Maybe<UserCreateManyWithoutFollowingInput>;
   followers?: Maybe<UserCreateManyWithoutFollowersInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
   intro?: Maybe<StoryCreateOneInput>;
   projects?: Maybe<StoryCreateManyInput>;
   meetings?: Maybe<MeetingCreateManyWithoutUsersInput>;
@@ -3751,6 +3790,9 @@ export interface UserCreateWithoutFollowingInput {
   posts?: Maybe<PostCreateManyWithoutOwnerInput>;
   connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
   followers?: Maybe<UserCreateManyWithoutFollowersInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
   intro?: Maybe<StoryCreateOneInput>;
   projects?: Maybe<StoryCreateManyInput>;
   meetings?: Maybe<MeetingCreateManyWithoutUsersInput>;
@@ -3813,6 +3855,9 @@ export interface UserCreateWithoutFollowersInput {
   posts?: Maybe<PostCreateManyWithoutOwnerInput>;
   connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
   following?: Maybe<UserCreateManyWithoutFollowingInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
   intro?: Maybe<StoryCreateOneInput>;
   projects?: Maybe<StoryCreateManyInput>;
   meetings?: Maybe<MeetingCreateManyWithoutUsersInput>;
@@ -4356,6 +4401,30 @@ export interface UserScalarWhereInput {
   about_not_starts_with?: Maybe<String>;
   about_ends_with?: Maybe<String>;
   about_not_ends_with?: Maybe<String>;
+  connectionsCount?: Maybe<Int>;
+  connectionsCount_not?: Maybe<Int>;
+  connectionsCount_in?: Maybe<Int[] | Int>;
+  connectionsCount_not_in?: Maybe<Int[] | Int>;
+  connectionsCount_lt?: Maybe<Int>;
+  connectionsCount_lte?: Maybe<Int>;
+  connectionsCount_gt?: Maybe<Int>;
+  connectionsCount_gte?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followingCount_not?: Maybe<Int>;
+  followingCount_in?: Maybe<Int[] | Int>;
+  followingCount_not_in?: Maybe<Int[] | Int>;
+  followingCount_lt?: Maybe<Int>;
+  followingCount_lte?: Maybe<Int>;
+  followingCount_gt?: Maybe<Int>;
+  followingCount_gte?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
+  followersCount_not?: Maybe<Int>;
+  followersCount_in?: Maybe<Int[] | Int>;
+  followersCount_not_in?: Maybe<Int[] | Int>;
+  followersCount_lt?: Maybe<Int>;
+  followersCount_lte?: Maybe<Int>;
+  followersCount_gt?: Maybe<Int>;
+  followersCount_gte?: Maybe<Int>;
   unReadMessagesCount?: Maybe<Int>;
   unReadMessagesCount_not?: Maybe<Int>;
   unReadMessagesCount_in?: Maybe<Int[] | Int>;
@@ -4400,6 +4469,9 @@ export interface UserUpdateManyDataInput {
   website?: Maybe<String>;
   bio?: Maybe<String>;
   about?: Maybe<String>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
   roles?: Maybe<UserUpdaterolesInput>;
   unReadMessagesCount?: Maybe<Int>;
 }
@@ -4599,6 +4671,9 @@ export interface UserUpdateDataInput {
   connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
   following?: Maybe<UserUpdateManyWithoutFollowingInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
   intro?: Maybe<StoryUpdateOneInput>;
   projects?: Maybe<StoryUpdateManyInput>;
   meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
@@ -4688,6 +4763,9 @@ export interface UserUpdateWithoutGroupsDataInput {
   connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
   following?: Maybe<UserUpdateManyWithoutFollowingInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
   intro?: Maybe<StoryUpdateOneInput>;
   projects?: Maybe<StoryUpdateManyInput>;
   meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
@@ -5234,6 +5312,9 @@ export interface UserUpdateManyMutationInput {
   website?: Maybe<String>;
   bio?: Maybe<String>;
   about?: Maybe<String>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
   roles?: Maybe<UserUpdaterolesInput>;
   unReadMessagesCount?: Maybe<Int>;
 }
@@ -5455,6 +5536,9 @@ export interface UserUpdateWithoutNotificationsDataInput {
   connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
   following?: Maybe<UserUpdateManyWithoutFollowingInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
   intro?: Maybe<StoryUpdateOneInput>;
   projects?: Maybe<StoryUpdateManyInput>;
   meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
@@ -6293,6 +6377,30 @@ export interface UserWhereInput {
   followers_every?: Maybe<UserWhereInput>;
   followers_some?: Maybe<UserWhereInput>;
   followers_none?: Maybe<UserWhereInput>;
+  connectionsCount?: Maybe<Int>;
+  connectionsCount_not?: Maybe<Int>;
+  connectionsCount_in?: Maybe<Int[] | Int>;
+  connectionsCount_not_in?: Maybe<Int[] | Int>;
+  connectionsCount_lt?: Maybe<Int>;
+  connectionsCount_lte?: Maybe<Int>;
+  connectionsCount_gt?: Maybe<Int>;
+  connectionsCount_gte?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followingCount_not?: Maybe<Int>;
+  followingCount_in?: Maybe<Int[] | Int>;
+  followingCount_not_in?: Maybe<Int[] | Int>;
+  followingCount_lt?: Maybe<Int>;
+  followingCount_lte?: Maybe<Int>;
+  followingCount_gt?: Maybe<Int>;
+  followingCount_gte?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
+  followersCount_not?: Maybe<Int>;
+  followersCount_in?: Maybe<Int[] | Int>;
+  followersCount_not_in?: Maybe<Int[] | Int>;
+  followersCount_lt?: Maybe<Int>;
+  followersCount_lte?: Maybe<Int>;
+  followersCount_gt?: Maybe<Int>;
+  followersCount_gte?: Maybe<Int>;
   intro?: Maybe<StoryWhereInput>;
   projects_every?: Maybe<StoryWhereInput>;
   projects_some?: Maybe<StoryWhereInput>;
@@ -6572,6 +6680,9 @@ export interface UserUpdateWithoutMeetingsDataInput {
   connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
   following?: Maybe<UserUpdateManyWithoutFollowingInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
   intro?: Maybe<StoryUpdateOneInput>;
   projects?: Maybe<StoryUpdateManyInput>;
   roles?: Maybe<UserUpdaterolesInput>;
@@ -7149,6 +7260,9 @@ export interface UserCreateWithoutEducationInput {
   connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
   following?: Maybe<UserCreateManyWithoutFollowingInput>;
   followers?: Maybe<UserCreateManyWithoutFollowersInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
   intro?: Maybe<StoryCreateOneInput>;
   projects?: Maybe<StoryCreateManyInput>;
   meetings?: Maybe<MeetingCreateManyWithoutUsersInput>;
@@ -7239,6 +7353,9 @@ export interface UserUpdateWithoutEducationDataInput {
   connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
   following?: Maybe<UserUpdateManyWithoutFollowingInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
   intro?: Maybe<StoryUpdateOneInput>;
   projects?: Maybe<StoryUpdateManyInput>;
   meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
@@ -7338,6 +7455,9 @@ export interface UserCreateWithoutGroupsInput {
   connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
   following?: Maybe<UserCreateManyWithoutFollowingInput>;
   followers?: Maybe<UserCreateManyWithoutFollowersInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
   intro?: Maybe<StoryCreateOneInput>;
   projects?: Maybe<StoryCreateManyInput>;
   meetings?: Maybe<MeetingCreateManyWithoutUsersInput>;
@@ -7388,6 +7508,9 @@ export interface UserCreateWithoutExperienceInput {
   connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
   following?: Maybe<UserCreateManyWithoutFollowingInput>;
   followers?: Maybe<UserCreateManyWithoutFollowersInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
   intro?: Maybe<StoryCreateOneInput>;
   projects?: Maybe<StoryCreateManyInput>;
   meetings?: Maybe<MeetingCreateManyWithoutUsersInput>;
@@ -7475,6 +7598,9 @@ export interface UserUpdateWithoutExperienceDataInput {
   connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
   following?: Maybe<UserUpdateManyWithoutFollowingInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
   intro?: Maybe<StoryUpdateOneInput>;
   projects?: Maybe<StoryUpdateManyInput>;
   meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
@@ -7560,6 +7686,9 @@ export interface UserCreateWithoutNotificationsInput {
   connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
   following?: Maybe<UserCreateManyWithoutFollowingInput>;
   followers?: Maybe<UserCreateManyWithoutFollowersInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
   intro?: Maybe<StoryCreateOneInput>;
   projects?: Maybe<StoryCreateManyInput>;
   meetings?: Maybe<MeetingCreateManyWithoutUsersInput>;
@@ -7591,6 +7720,9 @@ export interface UserPreviousValues {
   website?: String;
   bio?: String;
   about?: String;
+  connectionsCount?: Int;
+  followingCount?: Int;
+  followersCount?: Int;
   roles: Role[];
   unReadMessagesCount?: Int;
 }
@@ -7615,6 +7747,9 @@ export interface UserPreviousValuesPromise
   website: () => Promise<String>;
   bio: () => Promise<String>;
   about: () => Promise<String>;
+  connectionsCount: () => Promise<Int>;
+  followingCount: () => Promise<Int>;
+  followersCount: () => Promise<Int>;
   roles: () => Promise<Role[]>;
   unReadMessagesCount: () => Promise<Int>;
 }
@@ -7639,6 +7774,9 @@ export interface UserPreviousValuesSubscription
   website: () => Promise<AsyncIterator<String>>;
   bio: () => Promise<AsyncIterator<String>>;
   about: () => Promise<AsyncIterator<String>>;
+  connectionsCount: () => Promise<AsyncIterator<Int>>;
+  followingCount: () => Promise<AsyncIterator<Int>>;
+  followersCount: () => Promise<AsyncIterator<Int>>;
   roles: () => Promise<AsyncIterator<Role[]>>;
   unReadMessagesCount: () => Promise<AsyncIterator<Int>>;
 }
@@ -8403,6 +8541,9 @@ export interface User {
   website?: String;
   bio?: String;
   about?: String;
+  connectionsCount?: Int;
+  followingCount?: Int;
+  followersCount?: Int;
   roles: Role[];
   unReadMessagesCount?: Int;
 }
@@ -8542,6 +8683,9 @@ export interface UserPromise extends Promise<User>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  connectionsCount: () => Promise<Int>;
+  followingCount: () => Promise<Int>;
+  followersCount: () => Promise<Int>;
   intro: <T = StoryPromise>() => T;
   projects: <T = FragmentableArray<Story>>(args?: {
     where?: StoryWhereInput;
@@ -8729,6 +8873,9 @@ export interface UserSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  connectionsCount: () => Promise<AsyncIterator<Int>>;
+  followingCount: () => Promise<AsyncIterator<Int>>;
+  followersCount: () => Promise<AsyncIterator<Int>>;
   intro: <T = StorySubscription>() => T;
   projects: <T = Promise<AsyncIterator<StorySubscription>>>(args?: {
     where?: StoryWhereInput;
@@ -8916,6 +9063,9 @@ export interface UserNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
+  connectionsCount: () => Promise<Int>;
+  followingCount: () => Promise<Int>;
+  followersCount: () => Promise<Int>;
   intro: <T = StoryPromise>() => T;
   projects: <T = FragmentableArray<Story>>(args?: {
     where?: StoryWhereInput;
