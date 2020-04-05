@@ -51,16 +51,16 @@ const MyInfoForConnections = gql`
   }
 `;
 
-// const MyNetworkFragment = gql`
-//   fragment MyNetworkFragment on User {
-//     following {
-//       id
-//     }
-//     connections {
-//       id
-//     }
-//   }
-// `;
+const MyNetworkFragment = gql`
+  fragment MyNetworkFragment on User {
+    following {
+      id
+    }
+    connections {
+      id
+    }
+  }
+`;
 
 const MinimalUser = gql`
   fragment MinimalUser on User {
@@ -259,7 +259,30 @@ const LoggedInUser = gql`
   }
 `;
 
-
+const UserForYouPostsFragment = gql`
+  fragment UserForYouPostsFragment on User {
+    id
+    location
+    locationID
+    locationLat
+    locationLon
+    topicsFocus {
+      topicID
+    }
+    topicsInterest {
+      topicID
+    }
+    topicsFreelance {
+      topicID
+    }
+    topicsInvest {
+      topicID
+    }
+    topicsMentor {
+      topicID
+    }
+  }
+`;
 
 const UpdateFragment = gql`
   fragment UpdateFragment on Update {
@@ -329,7 +352,6 @@ const BasicPost = gql`
     images
     video
     pitch
-    isPrivate
     likesCount
     likedByMe
     commentsCount
@@ -387,7 +409,6 @@ const DetailPost = gql`
     images
     video
     pitch
-    isPrivate
     likesCount
     likedByMe
     commentsCount
@@ -662,6 +683,7 @@ module.exports = {
   UserIDFragment,
   FollowersFragment,
   LoggedInUser,
+  UserForYouPostsFragment,
   MyInfoForConnections,
   MyNetworkFragment,
   BasicPost,

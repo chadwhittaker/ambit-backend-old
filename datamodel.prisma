@@ -8,6 +8,13 @@ enum Role {
   SUSPENDED
 }
 
+enum StoryType {
+  INTRO
+  STORY
+  PROJECT
+  TOPICSTORY
+}
+
 enum NotificationStyle {
   LIKE_GOAL
   LIKES_GOAL
@@ -74,6 +81,7 @@ type User {
   followingCount: Int @default(value: 0)
   followersCount: Int @default(value: 0)
   intro: Story @relation(name: "MyIntro")
+  story: Story @relation(name: "MyStory")
   projects: [Story] @relation(name: "MyProjects")
   meetings: [Meeting]
   roles: [Role] @scalarList(strategy: RELATION)
@@ -98,18 +106,26 @@ type Notification {
 
 type Story {
   id: ID! @id
+  owner: User @relation(name: "StoryByUser")
   title: String!
+  type: StoryType!
+  topics: [Topic]! @relation(name: "TopicsToStory")
   items: [StoryItem!]! @relation(name: "StoryToStoryItem" onDelete: CASCADE)
+  preview: String
+  lastUpdated: DateTime!
 }
 
 type StoryItem {
   id: ID! @id
+  createdAt: DateTime! @createdAt
+  owner: User! @relation(name: "StoryItemByUser")
   story: Story! @relation(name: "StoryToStoryItem")
   type: String!
   url: String!
   link: String
   text: String
   duration: Float
+  topics: [Topic]! @relation(name: "TopicsToStoryItem")
 }
 
 type Skill {

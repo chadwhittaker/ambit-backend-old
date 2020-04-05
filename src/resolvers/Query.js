@@ -1,7 +1,7 @@
 // import { PostOrderByInput } from "../generated/prisma-client/prisma-schema.js";
 // const { PostOrderByInput } = require('../generated/prisma-client/prisma-schema.js')
 const { rad2Deg, deg2Rad } = require('../utils')
-const { MyInfoForConnections, DetailPost, MyNetworkFragment } = require('../_fragments.js')
+const { MyInfoForConnections, DetailPost, UserForYouPostsFragment } = require('../_fragments.js')
 const { getUsersMatchingManyGoals, getUsersMatchingGoal, getUsersMatchingTopicsFocus, getActiveGoalsOfUser, getAllMessageConnections } = require('./functions')
 
 const Query = {
@@ -43,11 +43,7 @@ const Query = {
     return user;
   },
 
-  async postsNetwork(parent, { after, first = 6 }, context) {
-
-    // get an array of IDs in my network
-    const me = await context.prisma.user({ id: context.request.userId }).$fragment(MyNetworkFragment);
-
+  async postsNetwork(parent, { after, first = 6, network = [] }, context) {
 
     const posts = await context.prisma.postsConnection(
       {
@@ -55,49 +51,120 @@ const Query = {
         after,
         where: {
           owner: {
-
+            id_in: [...network, context.request.userId],
           }
-         },
+        },
         orderBy: 'lastUpdated_DESC'
       }
     );
 
-    // console.log(posts)
-
     return posts
   },
 
-  async postsLocal(parent, { lat, lon, radius, after }, context) {
+  async postsForYou(parent, { after, first = 20 }, context) {
 
-    // console.log(lat, lon,)
+    // get current user data
+    const me = await context.prisma.user({ id: context.request.userId }).$fragment(UserForYouPostsFragment);
 
-    const EARTH_RADIUS_MI = 3959;
+    const { topicsFocus, topicsInterest, topicsInvest, topicsFreelance, topicsMentor } = me;
 
-    const distance = radius || 10;
+    const myTopics = [...topicsFocus, ...topicsInterest];
+    const myTopicIDs = myTopics.map(top => top.topicID);
 
-    const maxLat = lat + rad2Deg(distance / EARTH_RADIUS_MI);
-    const minLat = lat - rad2Deg(distance / EARTH_RADIUS_MI);
+    const getInvestPosts = () => {
+      // if not an investor, return dumb query
+      if (!topicsInvest || topicsInvest.length === 0) {
+        return { id: 'haha' }
+      }
 
-    const maxLon = lon + rad2Deg(distance / EARTH_RADIUS_MI / Math.cos(deg2Rad(lat)));
-    const minLon = lon - rad2Deg(distance / EARTH_RADIUS_MI / Math.cos(deg2Rad(lat)));
+      const myInvestTopicIDs = topicsInvest.map(top => top.topicID);
 
-    // console.log(minLat, maxLat)
-    // console.log(minLon, maxLon)
+      return {
+        AND: [
+          {
+            goal: 'Find Investors',
+          },
+          {
+            subField: {
+              topicID_in: myInvestTopicIDs,
+            }
+          }
+        ]
+      }
+    }
 
+    const getFreelancePosts = () => {
+      // if not a freelancer, return dumb query
+      if (!topicsFreelance || topicsFreelance.length === 0) {
+        return { id: 'haha' }
+      }
+
+      const myFreelanceTopicIDs = topicsFreelance.map(top => top.topicID);
+
+      return {
+        AND: [
+          {
+            goal: 'Find Freelancers',
+          },
+          {
+            subField: {
+              topicID_in: myFreelanceTopicIDs,
+            }
+          }
+        ]
+      }
+    }
+
+    const getMentorPosts = () => {
+      // if not a freelancer, return dumb query
+      if (!topicsMentor || topicsMentor.length === 0) {
+        return { id: 'haha' }
+      }
+
+      const myMentorTopicIDs = topicsMentor.map(top => top.topicID);
+
+      return {
+        AND: [
+          {
+            goal: 'Find Mentors',
+          },
+          {
+            subField: {
+              topicID_in: myMentorTopicIDs,
+            }
+          }
+        ]
+      }
+    }
 
     const posts = await context.prisma.postsConnection(
       {
+        first,
+        after,
         where: {
           AND: [
-            { isPrivate: false },
-            { locationLat_gte: minLat },
-            { locationLat_lte: maxLat },
-            { locationLon_gte: minLon },
-            { locationLon_lte: maxLon },
-          ],
+            // not me
+            {
+              owner: {
+                id_not: me.id,
+              }
+            },
+            {
+              OR: [
+                // post from my topics
+                {
+                  topics_some: {
+                    topicID_in: myTopicIDs,
+                  }
+                },
+                getInvestPosts(),
+                getFreelancePosts(),
+                getMentorPosts(),
+              ]
+            }
+          ]
+
         },
-        first: 30,
-        after,
         orderBy: 'lastUpdated_DESC'
       }
     );
@@ -105,9 +172,45 @@ const Query = {
     return posts
   },
 
+  // async postsLocal(parent, { lat, lon, radius, after }, context) {
+
+  //   // console.log(lat, lon,)
+
+  //   const EARTH_RADIUS_MI = 3959;
+
+  //   const distance = radius || 10;
+
+  //   const maxLat = lat + rad2Deg(distance / EARTH_RADIUS_MI);
+  //   const minLat = lat - rad2Deg(distance / EARTH_RADIUS_MI);
+
+  //   const maxLon = lon + rad2Deg(distance / EARTH_RADIUS_MI / Math.cos(deg2Rad(lat)));
+  //   const minLon = lon - rad2Deg(distance / EARTH_RADIUS_MI / Math.cos(deg2Rad(lat)));
+
+  //   // console.log(minLat, maxLat)
+  //   // console.log(minLon, maxLon)
+
+
+  //   const posts = await context.prisma.postsConnection(
+  //     {
+  //       where: {
+  //         AND: [
+  //           { locationLat_gte: minLat },
+  //           { locationLat_lte: maxLat },
+  //           { locationLon_gte: minLon },
+  //           { locationLon_lte: maxLon },
+  //         ],
+  //       },
+  //       first: 30,
+  //       after,
+  //       orderBy: 'lastUpdated_DESC'
+  //     }
+  //   );
+
+  //   return posts
+  // },
+
   async postsTopic(parent, { after, topicID }, context) {
-    let where = { isPrivate: false, topics_some: { topicID_contains: topicID } }
-    // if (topic === 'Trending') where = { isPrivate: false }
+    let where = { topics_some: { topicID_contains: topicID } }
 
     const posts = await context.prisma.postsConnection(
       {
@@ -223,7 +326,6 @@ const Query = {
         {
           where: {
             AND: [
-              { isPrivate: false },
               {
                 owner: { id: args.id }
               }
@@ -330,7 +432,7 @@ const Query = {
 
     const messages = await context.prisma.messagesConnection(
       {
-        where: { to: { id: groupID }},
+        where: { to: { id: groupID } },
         first: first || 30,
         after,
         orderBy: 'createdAt_DESC'
@@ -344,14 +446,14 @@ const Query = {
     if (!context.request.userId) {
       return null
     }
-    
+
     // get an array of all my group chats
     const groups = await context.prisma.user({ id: context.request.userId }).groups()
 
     try {
       const messageConnectionsArray = await getAllMessageConnections(groups, context, 30); // returns [MessageConnection]
       return messageConnectionsArray;
-    } catch(e) {
+    } catch (e) {
       console.error(e)
       return null;
     }

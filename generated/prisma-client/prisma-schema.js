@@ -3027,7 +3027,6 @@ type Post {
   images: [String!]!
   video: String
   pitch: String
-  isPrivate: Boolean!
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   updates(where: UpdateWhereInput, orderBy: UpdateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Update!]
   likes: [String!]!
@@ -3064,7 +3063,6 @@ input PostCreateInput {
   images: PostCreateimagesInput
   video: String
   pitch: String
-  isPrivate: Boolean
   comments: CommentCreateManyWithoutParentPostInput
   updates: UpdateCreateManyWithoutParentPostInput
   likes: PostCreatelikesInput
@@ -3115,7 +3113,6 @@ input PostCreateWithoutCommentsInput {
   images: PostCreateimagesInput
   video: String
   pitch: String
-  isPrivate: Boolean
   updates: UpdateCreateManyWithoutParentPostInput
   likes: PostCreatelikesInput
   likesCount: Int
@@ -3141,7 +3138,6 @@ input PostCreateWithoutNotificationsInput {
   images: PostCreateimagesInput
   video: String
   pitch: String
-  isPrivate: Boolean
   comments: CommentCreateManyWithoutParentPostInput
   updates: UpdateCreateManyWithoutParentPostInput
   likes: PostCreatelikesInput
@@ -3166,7 +3162,6 @@ input PostCreateWithoutOwnerInput {
   images: PostCreateimagesInput
   video: String
   pitch: String
-  isPrivate: Boolean
   comments: CommentCreateManyWithoutParentPostInput
   updates: UpdateCreateManyWithoutParentPostInput
   likes: PostCreatelikesInput
@@ -3193,7 +3188,6 @@ input PostCreateWithoutUpdatesInput {
   images: PostCreateimagesInput
   video: String
   pitch: String
-  isPrivate: Boolean
   comments: CommentCreateManyWithoutParentPostInput
   likes: PostCreatelikesInput
   likesCount: Int
@@ -3233,8 +3227,6 @@ enum PostOrderByInput {
   video_DESC
   pitch_ASC
   pitch_DESC
-  isPrivate_ASC
-  isPrivate_DESC
   likesCount_ASC
   likesCount_DESC
   likedByMe_ASC
@@ -3259,7 +3251,6 @@ type PostPreviousValues {
   images: [String!]!
   video: String
   pitch: String
-  isPrivate: Boolean!
   likes: [String!]!
   likesCount: Int
   likedByMe: Boolean
@@ -3400,8 +3391,6 @@ input PostScalarWhereInput {
   pitch_not_starts_with: String
   pitch_ends_with: String
   pitch_not_ends_with: String
-  isPrivate: Boolean
-  isPrivate_not: Boolean
   likesCount: Int
   likesCount_not: Int
   likesCount_in: [Int!]
@@ -3470,7 +3459,6 @@ input PostUpdateInput {
   images: PostUpdateimagesInput
   video: String
   pitch: String
-  isPrivate: Boolean
   comments: CommentUpdateManyWithoutParentPostInput
   updates: UpdateUpdateManyWithoutParentPostInput
   likes: PostUpdatelikesInput
@@ -3497,7 +3485,6 @@ input PostUpdateManyDataInput {
   images: PostUpdateimagesInput
   video: String
   pitch: String
-  isPrivate: Boolean
   likes: PostUpdatelikesInput
   likesCount: Int
   likedByMe: Boolean
@@ -3517,7 +3504,6 @@ input PostUpdateManyMutationInput {
   images: PostUpdateimagesInput
   video: String
   pitch: String
-  isPrivate: Boolean
   likes: PostUpdatelikesInput
   likesCount: Int
   likedByMe: Boolean
@@ -3582,7 +3568,6 @@ input PostUpdateWithoutCommentsDataInput {
   images: PostUpdateimagesInput
   video: String
   pitch: String
-  isPrivate: Boolean
   updates: UpdateUpdateManyWithoutParentPostInput
   likes: PostUpdatelikesInput
   likesCount: Int
@@ -3607,7 +3592,6 @@ input PostUpdateWithoutNotificationsDataInput {
   images: PostUpdateimagesInput
   video: String
   pitch: String
-  isPrivate: Boolean
   comments: CommentUpdateManyWithoutParentPostInput
   updates: UpdateUpdateManyWithoutParentPostInput
   likes: PostUpdatelikesInput
@@ -3631,7 +3615,6 @@ input PostUpdateWithoutOwnerDataInput {
   images: PostUpdateimagesInput
   video: String
   pitch: String
-  isPrivate: Boolean
   comments: CommentUpdateManyWithoutParentPostInput
   updates: UpdateUpdateManyWithoutParentPostInput
   likes: PostUpdatelikesInput
@@ -3657,7 +3640,6 @@ input PostUpdateWithoutUpdatesDataInput {
   images: PostUpdateimagesInput
   video: String
   pitch: String
-  isPrivate: Boolean
   comments: CommentUpdateManyWithoutParentPostInput
   likes: PostUpdatelikesInput
   likesCount: Int
@@ -3831,8 +3813,6 @@ input PostWhereInput {
   pitch_not_starts_with: String
   pitch_ends_with: String
   pitch_not_ends_with: String
-  isPrivate: Boolean
-  isPrivate_not: Boolean
   comments_every: CommentWhereInput
   comments_some: CommentWhereInput
   comments_none: CommentWhereInput

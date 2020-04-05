@@ -902,8 +902,6 @@ export type PostOrderByInput =
   | "video_DESC"
   | "pitch_ASC"
   | "pitch_DESC"
-  | "isPrivate_ASC"
-  | "isPrivate_DESC"
   | "likesCount_ASC"
   | "likesCount_DESC"
   | "likedByMe_ASC"
@@ -1460,8 +1458,6 @@ export interface PostWhereInput {
   pitch_not_starts_with?: Maybe<String>;
   pitch_ends_with?: Maybe<String>;
   pitch_not_ends_with?: Maybe<String>;
-  isPrivate?: Maybe<Boolean>;
-  isPrivate_not?: Maybe<Boolean>;
   comments_every?: Maybe<CommentWhereInput>;
   comments_some?: Maybe<CommentWhereInput>;
   comments_none?: Maybe<CommentWhereInput>;
@@ -2520,7 +2516,6 @@ export interface PostUpdateWithoutOwnerDataInput {
   images?: Maybe<PostUpdateimagesInput>;
   video?: Maybe<String>;
   pitch?: Maybe<String>;
-  isPrivate?: Maybe<Boolean>;
   comments?: Maybe<CommentUpdateManyWithoutParentPostInput>;
   updates?: Maybe<UpdateUpdateManyWithoutParentPostInput>;
   likes?: Maybe<PostUpdatelikesInput>;
@@ -2722,7 +2717,6 @@ export interface PostUpdateManyMutationInput {
   images?: Maybe<PostUpdateimagesInput>;
   video?: Maybe<String>;
   pitch?: Maybe<String>;
-  isPrivate?: Maybe<Boolean>;
   likes?: Maybe<PostUpdatelikesInput>;
   likesCount?: Maybe<Int>;
   likedByMe?: Maybe<Boolean>;
@@ -2758,7 +2752,6 @@ export interface PostCreateInput {
   images?: Maybe<PostCreateimagesInput>;
   video?: Maybe<String>;
   pitch?: Maybe<String>;
-  isPrivate?: Maybe<Boolean>;
   comments?: Maybe<CommentCreateManyWithoutParentPostInput>;
   updates?: Maybe<UpdateCreateManyWithoutParentPostInput>;
   likes?: Maybe<PostCreatelikesInput>;
@@ -2796,7 +2789,6 @@ export interface PostUpdateWithoutUpdatesDataInput {
   images?: Maybe<PostUpdateimagesInput>;
   video?: Maybe<String>;
   pitch?: Maybe<String>;
-  isPrivate?: Maybe<Boolean>;
   comments?: Maybe<CommentUpdateManyWithoutParentPostInput>;
   likes?: Maybe<PostUpdatelikesInput>;
   likesCount?: Maybe<Int>;
@@ -3529,7 +3521,6 @@ export interface PostCreateWithoutOwnerInput {
   images?: Maybe<PostCreateimagesInput>;
   video?: Maybe<String>;
   pitch?: Maybe<String>;
-  isPrivate?: Maybe<Boolean>;
   comments?: Maybe<CommentCreateManyWithoutParentPostInput>;
   updates?: Maybe<UpdateCreateManyWithoutParentPostInput>;
   likes?: Maybe<PostCreatelikesInput>;
@@ -3624,7 +3615,6 @@ export interface PostCreateWithoutUpdatesInput {
   images?: Maybe<PostCreateimagesInput>;
   video?: Maybe<String>;
   pitch?: Maybe<String>;
-  isPrivate?: Maybe<Boolean>;
   comments?: Maybe<CommentCreateManyWithoutParentPostInput>;
   likes?: Maybe<PostCreatelikesInput>;
   likesCount?: Maybe<Int>;
@@ -4155,7 +4145,6 @@ export interface PostCreateWithoutCommentsInput {
   images?: Maybe<PostCreateimagesInput>;
   video?: Maybe<String>;
   pitch?: Maybe<String>;
-  isPrivate?: Maybe<Boolean>;
   updates?: Maybe<UpdateCreateManyWithoutParentPostInput>;
   likes?: Maybe<PostCreatelikesInput>;
   likesCount?: Maybe<Int>;
@@ -5134,7 +5123,6 @@ export interface PostUpdateWithoutNotificationsDataInput {
   images?: Maybe<PostUpdateimagesInput>;
   video?: Maybe<String>;
   pitch?: Maybe<String>;
-  isPrivate?: Maybe<Boolean>;
   comments?: Maybe<CommentUpdateManyWithoutParentPostInput>;
   updates?: Maybe<UpdateUpdateManyWithoutParentPostInput>;
   likes?: Maybe<PostUpdatelikesInput>;
@@ -5418,7 +5406,6 @@ export interface PostUpdateWithoutCommentsDataInput {
   images?: Maybe<PostUpdateimagesInput>;
   video?: Maybe<String>;
   pitch?: Maybe<String>;
-  isPrivate?: Maybe<Boolean>;
   updates?: Maybe<UpdateUpdateManyWithoutParentPostInput>;
   likes?: Maybe<PostUpdatelikesInput>;
   likesCount?: Maybe<Int>;
@@ -6837,7 +6824,6 @@ export interface PostCreateWithoutNotificationsInput {
   images?: Maybe<PostCreateimagesInput>;
   video?: Maybe<String>;
   pitch?: Maybe<String>;
-  isPrivate?: Maybe<Boolean>;
   comments?: Maybe<CommentCreateManyWithoutParentPostInput>;
   updates?: Maybe<UpdateCreateManyWithoutParentPostInput>;
   likes?: Maybe<PostCreatelikesInput>;
@@ -7074,8 +7060,6 @@ export interface PostScalarWhereInput {
   pitch_not_starts_with?: Maybe<String>;
   pitch_ends_with?: Maybe<String>;
   pitch_not_ends_with?: Maybe<String>;
-  isPrivate?: Maybe<Boolean>;
-  isPrivate_not?: Maybe<Boolean>;
   likesCount?: Maybe<Int>;
   likesCount_not?: Maybe<Int>;
   likesCount_in?: Maybe<Int[] | Int>;
@@ -7136,7 +7120,6 @@ export interface PostUpdateManyDataInput {
   images?: Maybe<PostUpdateimagesInput>;
   video?: Maybe<String>;
   pitch?: Maybe<String>;
-  isPrivate?: Maybe<Boolean>;
   likes?: Maybe<PostUpdatelikesInput>;
   likesCount?: Maybe<Int>;
   likedByMe?: Maybe<Boolean>;
@@ -7640,7 +7623,6 @@ export interface PostUpdateInput {
   images?: Maybe<PostUpdateimagesInput>;
   video?: Maybe<String>;
   pitch?: Maybe<String>;
-  isPrivate?: Maybe<Boolean>;
   comments?: Maybe<CommentUpdateManyWithoutParentPostInput>;
   updates?: Maybe<UpdateUpdateManyWithoutParentPostInput>;
   likes?: Maybe<PostUpdatelikesInput>;
@@ -9546,7 +9528,6 @@ export interface Post {
   images: String[];
   video?: String;
   pitch?: String;
-  isPrivate: Boolean;
   likes: String[];
   likesCount?: Int;
   likedByMe?: Boolean;
@@ -9579,7 +9560,6 @@ export interface PostPromise extends Promise<Post>, Fragmentable {
   images: () => Promise<String[]>;
   video: () => Promise<String>;
   pitch: () => Promise<String>;
-  isPrivate: () => Promise<Boolean>;
   comments: <T = FragmentableArray<Comment>>(args?: {
     where?: CommentWhereInput;
     orderBy?: CommentOrderByInput;
@@ -9641,7 +9621,6 @@ export interface PostSubscription
   images: () => Promise<AsyncIterator<String[]>>;
   video: () => Promise<AsyncIterator<String>>;
   pitch: () => Promise<AsyncIterator<String>>;
-  isPrivate: () => Promise<AsyncIterator<Boolean>>;
   comments: <T = Promise<AsyncIterator<CommentSubscription>>>(args?: {
     where?: CommentWhereInput;
     orderBy?: CommentOrderByInput;
@@ -9703,7 +9682,6 @@ export interface PostNullablePromise
   images: () => Promise<String[]>;
   video: () => Promise<String>;
   pitch: () => Promise<String>;
-  isPrivate: () => Promise<Boolean>;
   comments: <T = FragmentableArray<Comment>>(args?: {
     where?: CommentWhereInput;
     orderBy?: CommentOrderByInput;
@@ -10423,7 +10401,6 @@ export interface PostPreviousValues {
   images: String[];
   video?: String;
   pitch?: String;
-  isPrivate: Boolean;
   likes: String[];
   likesCount?: Int;
   likedByMe?: Boolean;
@@ -10447,7 +10424,6 @@ export interface PostPreviousValuesPromise
   images: () => Promise<String[]>;
   video: () => Promise<String>;
   pitch: () => Promise<String>;
-  isPrivate: () => Promise<Boolean>;
   likes: () => Promise<String[]>;
   likesCount: () => Promise<Int>;
   likedByMe: () => Promise<Boolean>;
@@ -10471,7 +10447,6 @@ export interface PostPreviousValuesSubscription
   images: () => Promise<AsyncIterator<String[]>>;
   video: () => Promise<AsyncIterator<String>>;
   pitch: () => Promise<AsyncIterator<String>>;
-  isPrivate: () => Promise<AsyncIterator<Boolean>>;
   likes: () => Promise<AsyncIterator<String[]>>;
   likesCount: () => Promise<AsyncIterator<Int>>;
   likedByMe: () => Promise<AsyncIterator<Boolean>>;
