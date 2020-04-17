@@ -15,6 +15,11 @@ enum StoryType {
   TOPICSTORY
 }
 
+enum StoryItemType {
+  IMAGE
+  VIDEO
+}
+
 enum NotificationStyle {
   LIKE_GOAL
   LIKES_GOAL
@@ -82,7 +87,7 @@ type User {
   followersCount: Int @default(value: 0)
   intro: Story @relation(name: "MyIntro")
   story: Story @relation(name: "MyStory")
-  projects: [Story] @relation(name: "MyProjects")
+  projects: [Story]! @relation(name: "StoriesByUser")
   meetings: [Meeting]
   roles: [Role] @scalarList(strategy: RELATION)
   groups: [Group] @relation(name: "GroupsOfUser")
@@ -106,22 +111,23 @@ type Notification {
 
 type Story {
   id: ID! @id
-  owner: User @relation(name: "StoryByUser")
+  owner: User @relation(name: "StoriesByUser")
   title: String!
   type: StoryType!
-  topics: [Topic]! @relation(name: "TopicsToStory")
-  items: [StoryItem!]! @relation(name: "StoryToStoryItem" onDelete: CASCADE)
+  topic: Topic @relation(name: "TopicToStoryRelation" link: INLINE)
+  projectTopics: [Topic] @relation(name: "ProjectTopicsToStory")
+  items: [StoryItem!]! @relation(name: "StoryToStoryItem")
   preview: String
-  lastUpdated: DateTime!
 }
 
 type StoryItem {
   id: ID! @id
   createdAt: DateTime! @createdAt
   owner: User! @relation(name: "StoryItemByUser")
-  story: Story! @relation(name: "StoryToStoryItem")
-  type: String!
+  story: [Story]! @relation(name: "StoryToStoryItem")
+  type: StoryItemType!
   url: String!
+  preview: String!
   link: String
   text: String
   duration: Float
@@ -251,7 +257,10 @@ type Topic {
   parentTopic: Topic @relation(name: "TopicToTopicRelation")
   children: [Topic]! @relation(name: "TopicToTopicRelation" onDelete: CASCADE)
   icon: String
+  color: String
+  image: String
   order: Int
+  topicStory: Story @relation(name: "TopicToStoryRelation")
 }
 
 type Group {

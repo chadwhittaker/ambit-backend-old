@@ -51,6 +51,23 @@ const MyInfoForConnections = gql`
   }
 `;
 
+const MyInfoForStories = gql`
+  fragment MyInfoForStories on User {
+    topicsFocus {
+      topicID
+    }
+    topicsInterest {
+      topicID
+    }
+    connections {
+      id
+    }
+    following {
+      id
+    }
+  }
+`;
+
 const MyNetworkFragment = gql`
   fragment MyNetworkFragment on User {
     following {
@@ -685,6 +702,7 @@ module.exports = {
   LoggedInUser,
   UserForYouPostsFragment,
   MyInfoForConnections,
+  MyInfoForStories,
   MyNetworkFragment,
   BasicPost,
   DetailPost,

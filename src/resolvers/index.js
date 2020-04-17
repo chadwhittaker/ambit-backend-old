@@ -6,6 +6,7 @@ const { Post } = require('./Post')
 const { Comment } = require('./Comment')
 const { Update } = require('./Update')
 const { Story } = require('./Story')
+const { StoryItem } = require('./StoryItem')
 const { Topic } = require('./Topic')
 const { Group } = require('./Group')
 const { Message } = require('./Message')
@@ -20,6 +21,7 @@ const resolvers = {
   Comment,
   Update,
   Story,
+  StoryItem,
   Topic,
   Group,
   Message,

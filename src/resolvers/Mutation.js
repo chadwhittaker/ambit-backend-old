@@ -27,6 +27,12 @@ const Mutation = {
         name: `${firstName} ${lastName}`,
         email: emailLower,
         password: hashedPassword,
+        story: {
+          create: {
+            title: "My Story",
+            type: STORY,
+          }
+        }
       }
     )
     // 4. create JWT token
@@ -330,7 +336,7 @@ const Mutation = {
     // if they say yes then we can delete the old Intro
     const oldIntroID = oldIntro ? oldIntro.id : null
 
-    // 4. update intro (if one already exists) or create intro (if one doesnt exist) - autoamtically linked to user
+    // 4. create a new intro and link it to the user
     const user = await context.prisma.updateUser(
       {
         where: { id: userId },
@@ -338,6 +344,9 @@ const Mutation = {
           intro: {
             create: {
               title: args.title,
+              type: 'INTRO',
+              // lastUpdated: new Date(),
+              owner: { connect: { id: userId }},
               items: {
                 create: [...args.items]
               }
@@ -349,7 +358,6 @@ const Mutation = {
 
     // if there was an existing intro...delete it
     if (oldIntroID) await context.prisma.deleteStory({ id: oldIntroID })
-
 
     return user;
   },
@@ -915,8 +923,67 @@ const Mutation = {
     );
 
     return updatedNotifications;
-  }
+  },
 
+  /////////////////////////
+  // STORIES
+  /////////////////////////
+  async addToStory(parent, { storyItem }, context) {
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      return null
+    }
+
+    const user = await context.prisma.updateUser({
+      where: { id: context.request.userId },
+      data: {
+        story: {
+          upsert: {
+            update: {
+              title: 'My Story',
+              type: 'STORY',
+              items: {
+                create: [storyItem]
+              }
+            },
+            create: {
+              title: 'My Story',
+              type: 'STORY',
+              owner: { connect: { id: context.request.userId }},
+              items: {
+                create: [storyItem]
+              }
+            }
+          }
+        }
+      }
+    })
+
+    return user
+  },
+
+  // need to create story item and connect it to stories (stories must already exist)
+  async createStoryItem(parent, { storyItem }, context) {
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      return null
+    }
+
+    const storyItemReturned = await context.prisma.createStoryItem({...storyItem})
+
+    return storyItemReturned
+  },
+
+  async createStory(parent, { story }, context) {
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      return null
+    }
+
+    const storyReturned = await context.prisma.createStory({...story})
+
+    return storyReturned
+  },
 }
 
 module.exports = {

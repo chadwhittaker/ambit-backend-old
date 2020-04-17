@@ -40,6 +40,14 @@ const User = {
     return context.prisma.user({ id: parent.id }).intro()
   },
 
+  async story(parent, args, context) {
+    return context.prisma.user({ id: parent.id }).story()
+  },
+
+  async projects(parent, args, context) {
+    return context.prisma.user({ id: parent.id }).projects({ where: { type: "PROJECT" }});
+  },
+
   async groups(parent, args, context) {
     return context.prisma.user({ id: parent.id }).groups({ orderBy: "updatedAt_DESC" })
   },

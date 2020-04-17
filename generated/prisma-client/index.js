@@ -9,6 +9,14 @@ var models = [
     embedded: false
   },
   {
+    name: "StoryType",
+    embedded: false
+  },
+  {
+    name: "StoryItemType",
+    embedded: false
+  },
+  {
     name: "NotificationStyle",
     embedded: false
   },

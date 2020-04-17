@@ -33,6 +33,10 @@ type Query {
 
   # notifications
   myNotifications: [Notification]!
+
+  # stories
+  storiesHome: [Story]!
+  storiesTopic(topicID: String!): [Story]!
 }
 
 type Mutation {
@@ -85,6 +89,11 @@ type Mutation {
 
   # notifications
   clearMyNotifications: [Notification]!
+
+  # stories
+  addToStory(storyItem: StoryItemCreateWithoutStoryInput!): User!
+  createStoryItem(storyItem: StoryItemCreateInput!): StoryItem
+  createStory(story: StoryCreateInput!): Story!
 }
 
 type AuthPayload {

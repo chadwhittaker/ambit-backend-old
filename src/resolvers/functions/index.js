@@ -623,6 +623,24 @@ const updateFollowersAndVerify = async (followers, userID, context) => {
     }
 }
 
+const getTopicIDsFromUser = usr => {
+  if (!usr) {
+    return [];
+  }
+  const topicFocusIDs = usr.topicsFocus ? usr.topicsFocus.map(t => t.topicID) : [];
+  const topicInterestIDs = usr.topicsInterest ? usr.topicsInterest.map(t => t.topicID) : [];
+  return [...topicFocusIDs, ...topicInterestIDs];
+};
+
+const getNetworkIDsFromUser = usr => {
+  if (!usr) {
+    return [];
+  }
+  const followingIDs = usr.following ? usr.following.map(u => u.id) : [];
+  const connectionIDs = usr.connection ? usr.connections.map(u => u.id) : [];
+  return [...followingIDs, ...connectionIDs];
+};
+
 
 
 module.exports = {
@@ -635,4 +653,6 @@ module.exports = {
   getMessageConnection,
   addMessageToUnread,
   updateFollowersAndVerify,
+  getTopicIDsFromUser,
+  getNetworkIDsFromUser
 }
