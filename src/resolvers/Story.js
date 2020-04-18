@@ -4,12 +4,8 @@ const Story = {
     return context.prisma.story({ id: parent.id }).owner()
   },
 
-  async topic(parent, args, context) {
-    return context.prisma.story({ id: parent.id }).topic()
-  },
-
-  async projectTopics(parent, args, context) {
-    return context.prisma.story({ id: parent.id }).projectTopics()
+  async topics(parent, args, context) {
+    return context.prisma.story({ id: parent.id }).topics()
   },
 
   async items(parent, args, context) {

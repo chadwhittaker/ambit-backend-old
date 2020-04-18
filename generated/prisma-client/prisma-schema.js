@@ -4111,13 +4111,14 @@ input SkillWhereUniqueInput {
 
 type Story {
   id: ID!
-  owner: User
-  title: String!
+  owner: User!
+  title: String
   type: StoryType!
-  topic: Topic
-  projectTopics(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic!]
+  topics(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic!]
   items(where: StoryItemWhereInput, orderBy: StoryItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StoryItem!]
   preview: String
+  showcase: Boolean
+  save: Boolean
 }
 
 type StoryConnection {
@@ -4128,13 +4129,14 @@ type StoryConnection {
 
 input StoryCreateInput {
   id: ID
-  owner: UserCreateOneWithoutProjectsInput
-  title: String!
+  owner: UserCreateOneWithoutStoriesInput!
+  title: String
   type: StoryType!
-  topic: TopicCreateOneWithoutTopicStoryInput
-  projectTopics: TopicCreateManyInput
-  items: StoryItemCreateManyWithoutStoryInput
+  topics: TopicCreateManyInput
+  items: StoryItemCreateManyWithoutStoriesInput
   preview: String
+  showcase: Boolean
+  save: Boolean
 }
 
 input StoryCreateManyWithoutItemsInput {
@@ -4152,39 +4154,26 @@ input StoryCreateOneInput {
   connect: StoryWhereUniqueInput
 }
 
-input StoryCreateOneWithoutTopicInput {
-  create: StoryCreateWithoutTopicInput
-  connect: StoryWhereUniqueInput
-}
-
 input StoryCreateWithoutItemsInput {
   id: ID
-  owner: UserCreateOneWithoutProjectsInput
-  title: String!
+  owner: UserCreateOneWithoutStoriesInput!
+  title: String
   type: StoryType!
-  topic: TopicCreateOneWithoutTopicStoryInput
-  projectTopics: TopicCreateManyInput
+  topics: TopicCreateManyInput
   preview: String
+  showcase: Boolean
+  save: Boolean
 }
 
 input StoryCreateWithoutOwnerInput {
   id: ID
-  title: String!
+  title: String
   type: StoryType!
-  topic: TopicCreateOneWithoutTopicStoryInput
-  projectTopics: TopicCreateManyInput
-  items: StoryItemCreateManyWithoutStoryInput
+  topics: TopicCreateManyInput
+  items: StoryItemCreateManyWithoutStoriesInput
   preview: String
-}
-
-input StoryCreateWithoutTopicInput {
-  id: ID
-  owner: UserCreateOneWithoutProjectsInput
-  title: String!
-  type: StoryType!
-  projectTopics: TopicCreateManyInput
-  items: StoryItemCreateManyWithoutStoryInput
-  preview: String
+  showcase: Boolean
+  save: Boolean
 }
 
 type StoryEdge {
@@ -4196,14 +4185,17 @@ type StoryItem {
   id: ID!
   createdAt: DateTime!
   owner: User!
-  story(where: StoryWhereInput, orderBy: StoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Story!]
+  stories(where: StoryWhereInput, orderBy: StoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Story!]
   type: StoryItemType!
   url: String!
   preview: String!
   link: String
-  text: String
+  text: [String!]!
   duration: Float
-  topics(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic!]
+  inProject: Boolean
+  likes: [String!]!
+  likesCount: Int
+  likedByMe: Boolean
 }
 
 type StoryItemConnection {
@@ -4215,31 +4207,45 @@ type StoryItemConnection {
 input StoryItemCreateInput {
   id: ID
   owner: UserCreateOneInput!
-  story: StoryCreateManyWithoutItemsInput
+  stories: StoryCreateManyWithoutItemsInput
   type: StoryItemType!
   url: String!
   preview: String!
   link: String
-  text: String
+  text: StoryItemCreatetextInput
   duration: Float
-  topics: TopicCreateManyInput
+  inProject: Boolean
+  likes: StoryItemCreatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
 }
 
-input StoryItemCreateManyWithoutStoryInput {
-  create: [StoryItemCreateWithoutStoryInput!]
+input StoryItemCreatelikesInput {
+  set: [String!]
+}
+
+input StoryItemCreateManyWithoutStoriesInput {
+  create: [StoryItemCreateWithoutStoriesInput!]
   connect: [StoryItemWhereUniqueInput!]
 }
 
-input StoryItemCreateWithoutStoryInput {
+input StoryItemCreatetextInput {
+  set: [String!]
+}
+
+input StoryItemCreateWithoutStoriesInput {
   id: ID
   owner: UserCreateOneInput!
   type: StoryItemType!
   url: String!
   preview: String!
   link: String
-  text: String
+  text: StoryItemCreatetextInput
   duration: Float
-  topics: TopicCreateManyInput
+  inProject: Boolean
+  likes: StoryItemCreatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
 }
 
 type StoryItemEdge {
@@ -4260,10 +4266,14 @@ enum StoryItemOrderByInput {
   preview_DESC
   link_ASC
   link_DESC
-  text_ASC
-  text_DESC
   duration_ASC
   duration_DESC
+  inProject_ASC
+  inProject_DESC
+  likesCount_ASC
+  likesCount_DESC
+  likedByMe_ASC
+  likedByMe_DESC
 }
 
 type StoryItemPreviousValues {
@@ -4273,8 +4283,12 @@ type StoryItemPreviousValues {
   url: String!
   preview: String!
   link: String
-  text: String
+  text: [String!]!
   duration: Float
+  inProject: Boolean
+  likes: [String!]!
+  likesCount: Int
+  likedByMe: Boolean
 }
 
 input StoryItemScalarWhereInput {
@@ -4346,20 +4360,6 @@ input StoryItemScalarWhereInput {
   link_not_starts_with: String
   link_ends_with: String
   link_not_ends_with: String
-  text: String
-  text_not: String
-  text_in: [String!]
-  text_not_in: [String!]
-  text_lt: String
-  text_lte: String
-  text_gt: String
-  text_gte: String
-  text_contains: String
-  text_not_contains: String
-  text_starts_with: String
-  text_not_starts_with: String
-  text_ends_with: String
-  text_not_ends_with: String
   duration: Float
   duration_not: Float
   duration_in: [Float!]
@@ -4368,6 +4368,18 @@ input StoryItemScalarWhereInput {
   duration_lte: Float
   duration_gt: Float
   duration_gte: Float
+  inProject: Boolean
+  inProject_not: Boolean
+  likesCount: Int
+  likesCount_not: Int
+  likesCount_in: [Int!]
+  likesCount_not_in: [Int!]
+  likesCount_lt: Int
+  likesCount_lte: Int
+  likesCount_gt: Int
+  likesCount_gte: Int
+  likedByMe: Boolean
+  likedByMe_not: Boolean
   AND: [StoryItemScalarWhereInput!]
   OR: [StoryItemScalarWhereInput!]
   NOT: [StoryItemScalarWhereInput!]
@@ -4398,14 +4410,21 @@ enum StoryItemType {
 
 input StoryItemUpdateInput {
   owner: UserUpdateOneRequiredInput
-  story: StoryUpdateManyWithoutItemsInput
+  stories: StoryUpdateManyWithoutItemsInput
   type: StoryItemType
   url: String
   preview: String
   link: String
-  text: String
+  text: StoryItemUpdatetextInput
   duration: Float
-  topics: TopicUpdateManyInput
+  inProject: Boolean
+  likes: StoryItemUpdatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
+}
+
+input StoryItemUpdatelikesInput {
+  set: [String!]
 }
 
 input StoryItemUpdateManyDataInput {
@@ -4413,8 +4432,12 @@ input StoryItemUpdateManyDataInput {
   url: String
   preview: String
   link: String
-  text: String
+  text: StoryItemUpdatetextInput
   duration: Float
+  inProject: Boolean
+  likes: StoryItemUpdatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
 }
 
 input StoryItemUpdateManyMutationInput {
@@ -4422,18 +4445,22 @@ input StoryItemUpdateManyMutationInput {
   url: String
   preview: String
   link: String
-  text: String
+  text: StoryItemUpdatetextInput
   duration: Float
+  inProject: Boolean
+  likes: StoryItemUpdatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
 }
 
-input StoryItemUpdateManyWithoutStoryInput {
-  create: [StoryItemCreateWithoutStoryInput!]
+input StoryItemUpdateManyWithoutStoriesInput {
+  create: [StoryItemCreateWithoutStoriesInput!]
   delete: [StoryItemWhereUniqueInput!]
   connect: [StoryItemWhereUniqueInput!]
   set: [StoryItemWhereUniqueInput!]
   disconnect: [StoryItemWhereUniqueInput!]
-  update: [StoryItemUpdateWithWhereUniqueWithoutStoryInput!]
-  upsert: [StoryItemUpsertWithWhereUniqueWithoutStoryInput!]
+  update: [StoryItemUpdateWithWhereUniqueWithoutStoriesInput!]
+  upsert: [StoryItemUpsertWithWhereUniqueWithoutStoriesInput!]
   deleteMany: [StoryItemScalarWhereInput!]
   updateMany: [StoryItemUpdateManyWithWhereNestedInput!]
 }
@@ -4443,26 +4470,33 @@ input StoryItemUpdateManyWithWhereNestedInput {
   data: StoryItemUpdateManyDataInput!
 }
 
-input StoryItemUpdateWithoutStoryDataInput {
+input StoryItemUpdatetextInput {
+  set: [String!]
+}
+
+input StoryItemUpdateWithoutStoriesDataInput {
   owner: UserUpdateOneRequiredInput
   type: StoryItemType
   url: String
   preview: String
   link: String
-  text: String
+  text: StoryItemUpdatetextInput
   duration: Float
-  topics: TopicUpdateManyInput
+  inProject: Boolean
+  likes: StoryItemUpdatelikesInput
+  likesCount: Int
+  likedByMe: Boolean
 }
 
-input StoryItemUpdateWithWhereUniqueWithoutStoryInput {
+input StoryItemUpdateWithWhereUniqueWithoutStoriesInput {
   where: StoryItemWhereUniqueInput!
-  data: StoryItemUpdateWithoutStoryDataInput!
+  data: StoryItemUpdateWithoutStoriesDataInput!
 }
 
-input StoryItemUpsertWithWhereUniqueWithoutStoryInput {
+input StoryItemUpsertWithWhereUniqueWithoutStoriesInput {
   where: StoryItemWhereUniqueInput!
-  update: StoryItemUpdateWithoutStoryDataInput!
-  create: StoryItemCreateWithoutStoryInput!
+  update: StoryItemUpdateWithoutStoriesDataInput!
+  create: StoryItemCreateWithoutStoriesInput!
 }
 
 input StoryItemWhereInput {
@@ -4489,9 +4523,9 @@ input StoryItemWhereInput {
   createdAt_gt: DateTime
   createdAt_gte: DateTime
   owner: UserWhereInput
-  story_every: StoryWhereInput
-  story_some: StoryWhereInput
-  story_none: StoryWhereInput
+  stories_every: StoryWhereInput
+  stories_some: StoryWhereInput
+  stories_none: StoryWhereInput
   type: StoryItemType
   type_not: StoryItemType
   type_in: [StoryItemType!]
@@ -4538,20 +4572,6 @@ input StoryItemWhereInput {
   link_not_starts_with: String
   link_ends_with: String
   link_not_ends_with: String
-  text: String
-  text_not: String
-  text_in: [String!]
-  text_not_in: [String!]
-  text_lt: String
-  text_lte: String
-  text_gt: String
-  text_gte: String
-  text_contains: String
-  text_not_contains: String
-  text_starts_with: String
-  text_not_starts_with: String
-  text_ends_with: String
-  text_not_ends_with: String
   duration: Float
   duration_not: Float
   duration_in: [Float!]
@@ -4560,9 +4580,18 @@ input StoryItemWhereInput {
   duration_lte: Float
   duration_gt: Float
   duration_gte: Float
-  topics_every: TopicWhereInput
-  topics_some: TopicWhereInput
-  topics_none: TopicWhereInput
+  inProject: Boolean
+  inProject_not: Boolean
+  likesCount: Int
+  likesCount_not: Int
+  likesCount_in: [Int!]
+  likesCount_not_in: [Int!]
+  likesCount_lt: Int
+  likesCount_lte: Int
+  likesCount_gt: Int
+  likesCount_gte: Int
+  likedByMe: Boolean
+  likedByMe_not: Boolean
   AND: [StoryItemWhereInput!]
   OR: [StoryItemWhereInput!]
   NOT: [StoryItemWhereInput!]
@@ -4581,13 +4610,19 @@ enum StoryOrderByInput {
   type_DESC
   preview_ASC
   preview_DESC
+  showcase_ASC
+  showcase_DESC
+  save_ASC
+  save_DESC
 }
 
 type StoryPreviousValues {
   id: ID!
-  title: String!
+  title: String
   type: StoryType!
   preview: String
+  showcase: Boolean
+  save: Boolean
 }
 
 input StoryScalarWhereInput {
@@ -4637,6 +4672,10 @@ input StoryScalarWhereInput {
   preview_not_starts_with: String
   preview_ends_with: String
   preview_not_ends_with: String
+  showcase: Boolean
+  showcase_not: Boolean
+  save: Boolean
+  save_not: Boolean
   AND: [StoryScalarWhereInput!]
   OR: [StoryScalarWhereInput!]
   NOT: [StoryScalarWhereInput!]
@@ -4662,41 +4701,47 @@ input StorySubscriptionWhereInput {
 
 enum StoryType {
   INTRO
-  STORY
+  MYSTORY
   PROJECT
-  TOPICSTORY
+  SOLO
 }
 
 input StoryUpdateDataInput {
-  owner: UserUpdateOneWithoutProjectsInput
+  owner: UserUpdateOneRequiredWithoutStoriesInput
   title: String
   type: StoryType
-  topic: TopicUpdateOneWithoutTopicStoryInput
-  projectTopics: TopicUpdateManyInput
-  items: StoryItemUpdateManyWithoutStoryInput
+  topics: TopicUpdateManyInput
+  items: StoryItemUpdateManyWithoutStoriesInput
   preview: String
+  showcase: Boolean
+  save: Boolean
 }
 
 input StoryUpdateInput {
-  owner: UserUpdateOneWithoutProjectsInput
+  owner: UserUpdateOneRequiredWithoutStoriesInput
   title: String
   type: StoryType
-  topic: TopicUpdateOneWithoutTopicStoryInput
-  projectTopics: TopicUpdateManyInput
-  items: StoryItemUpdateManyWithoutStoryInput
+  topics: TopicUpdateManyInput
+  items: StoryItemUpdateManyWithoutStoriesInput
   preview: String
+  showcase: Boolean
+  save: Boolean
 }
 
 input StoryUpdateManyDataInput {
   title: String
   type: StoryType
   preview: String
+  showcase: Boolean
+  save: Boolean
 }
 
 input StoryUpdateManyMutationInput {
   title: String
   type: StoryType
   preview: String
+  showcase: Boolean
+  save: Boolean
 }
 
 input StoryUpdateManyWithoutItemsInput {
@@ -4737,40 +4782,24 @@ input StoryUpdateOneInput {
   connect: StoryWhereUniqueInput
 }
 
-input StoryUpdateOneWithoutTopicInput {
-  create: StoryCreateWithoutTopicInput
-  update: StoryUpdateWithoutTopicDataInput
-  upsert: StoryUpsertWithoutTopicInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: StoryWhereUniqueInput
-}
-
 input StoryUpdateWithoutItemsDataInput {
-  owner: UserUpdateOneWithoutProjectsInput
+  owner: UserUpdateOneRequiredWithoutStoriesInput
   title: String
   type: StoryType
-  topic: TopicUpdateOneWithoutTopicStoryInput
-  projectTopics: TopicUpdateManyInput
+  topics: TopicUpdateManyInput
   preview: String
+  showcase: Boolean
+  save: Boolean
 }
 
 input StoryUpdateWithoutOwnerDataInput {
   title: String
   type: StoryType
-  topic: TopicUpdateOneWithoutTopicStoryInput
-  projectTopics: TopicUpdateManyInput
-  items: StoryItemUpdateManyWithoutStoryInput
+  topics: TopicUpdateManyInput
+  items: StoryItemUpdateManyWithoutStoriesInput
   preview: String
-}
-
-input StoryUpdateWithoutTopicDataInput {
-  owner: UserUpdateOneWithoutProjectsInput
-  title: String
-  type: StoryType
-  projectTopics: TopicUpdateManyInput
-  items: StoryItemUpdateManyWithoutStoryInput
-  preview: String
+  showcase: Boolean
+  save: Boolean
 }
 
 input StoryUpdateWithWhereUniqueWithoutItemsInput {
@@ -4786,11 +4815,6 @@ input StoryUpdateWithWhereUniqueWithoutOwnerInput {
 input StoryUpsertNestedInput {
   update: StoryUpdateDataInput!
   create: StoryCreateInput!
-}
-
-input StoryUpsertWithoutTopicInput {
-  update: StoryUpdateWithoutTopicDataInput!
-  create: StoryCreateWithoutTopicInput!
 }
 
 input StoryUpsertWithWhereUniqueWithoutItemsInput {
@@ -4839,10 +4863,9 @@ input StoryWhereInput {
   type_not: StoryType
   type_in: [StoryType!]
   type_not_in: [StoryType!]
-  topic: TopicWhereInput
-  projectTopics_every: TopicWhereInput
-  projectTopics_some: TopicWhereInput
-  projectTopics_none: TopicWhereInput
+  topics_every: TopicWhereInput
+  topics_some: TopicWhereInput
+  topics_none: TopicWhereInput
   items_every: StoryItemWhereInput
   items_some: StoryItemWhereInput
   items_none: StoryItemWhereInput
@@ -4860,6 +4883,10 @@ input StoryWhereInput {
   preview_not_starts_with: String
   preview_ends_with: String
   preview_not_ends_with: String
+  showcase: Boolean
+  showcase_not: Boolean
+  save: Boolean
+  save_not: Boolean
   AND: [StoryWhereInput!]
   OR: [StoryWhereInput!]
   NOT: [StoryWhereInput!]
@@ -4898,7 +4925,6 @@ type Topic {
   color: String
   image: String
   order: Int
-  topicStory: Story
 }
 
 type TopicConnection {
@@ -4918,7 +4944,6 @@ input TopicCreateInput {
   color: String
   image: String
   order: Int
-  topicStory: StoryCreateOneWithoutTopicInput
 }
 
 input TopicCreateManyInput {
@@ -4946,11 +4971,6 @@ input TopicCreateOneWithoutChildrenInput {
   connect: TopicWhereUniqueInput
 }
 
-input TopicCreateOneWithoutTopicStoryInput {
-  create: TopicCreateWithoutTopicStoryInput
-  connect: TopicWhereUniqueInput
-}
-
 input TopicCreateWithoutChildrenInput {
   id: ID
   topicID: String!
@@ -4961,7 +4981,6 @@ input TopicCreateWithoutChildrenInput {
   color: String
   image: String
   order: Int
-  topicStory: StoryCreateOneWithoutTopicInput
 }
 
 input TopicCreateWithoutParentListInput {
@@ -4974,7 +4993,6 @@ input TopicCreateWithoutParentListInput {
   color: String
   image: String
   order: Int
-  topicStory: StoryCreateOneWithoutTopicInput
 }
 
 input TopicCreateWithoutParentTopicInput {
@@ -4982,20 +5000,6 @@ input TopicCreateWithoutParentTopicInput {
   topicID: String!
   name: String!
   parentList: ListCreateOneWithoutMainTopicsInput
-  children: TopicCreateManyWithoutParentTopicInput
-  icon: String
-  color: String
-  image: String
-  order: Int
-  topicStory: StoryCreateOneWithoutTopicInput
-}
-
-input TopicCreateWithoutTopicStoryInput {
-  id: ID
-  topicID: String!
-  name: String!
-  parentList: ListCreateOneWithoutMainTopicsInput
-  parentTopic: TopicCreateOneWithoutChildrenInput
   children: TopicCreateManyWithoutParentTopicInput
   icon: String
   color: String
@@ -5161,7 +5165,6 @@ input TopicUpdateDataInput {
   color: String
   image: String
   order: Int
-  topicStory: StoryUpdateOneWithoutTopicInput
 }
 
 input TopicUpdateInput {
@@ -5174,7 +5177,6 @@ input TopicUpdateInput {
   color: String
   image: String
   order: Int
-  topicStory: StoryUpdateOneWithoutTopicInput
 }
 
 input TopicUpdateManyDataInput {
@@ -5254,15 +5256,6 @@ input TopicUpdateOneWithoutChildrenInput {
   connect: TopicWhereUniqueInput
 }
 
-input TopicUpdateOneWithoutTopicStoryInput {
-  create: TopicCreateWithoutTopicStoryInput
-  update: TopicUpdateWithoutTopicStoryDataInput
-  upsert: TopicUpsertWithoutTopicStoryInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: TopicWhereUniqueInput
-}
-
 input TopicUpdateWithoutChildrenDataInput {
   topicID: String
   name: String
@@ -5272,7 +5265,6 @@ input TopicUpdateWithoutChildrenDataInput {
   color: String
   image: String
   order: Int
-  topicStory: StoryUpdateOneWithoutTopicInput
 }
 
 input TopicUpdateWithoutParentListDataInput {
@@ -5284,26 +5276,12 @@ input TopicUpdateWithoutParentListDataInput {
   color: String
   image: String
   order: Int
-  topicStory: StoryUpdateOneWithoutTopicInput
 }
 
 input TopicUpdateWithoutParentTopicDataInput {
   topicID: String
   name: String
   parentList: ListUpdateOneWithoutMainTopicsInput
-  children: TopicUpdateManyWithoutParentTopicInput
-  icon: String
-  color: String
-  image: String
-  order: Int
-  topicStory: StoryUpdateOneWithoutTopicInput
-}
-
-input TopicUpdateWithoutTopicStoryDataInput {
-  topicID: String
-  name: String
-  parentList: ListUpdateOneWithoutMainTopicsInput
-  parentTopic: TopicUpdateOneWithoutChildrenInput
   children: TopicUpdateManyWithoutParentTopicInput
   icon: String
   color: String
@@ -5334,11 +5312,6 @@ input TopicUpsertNestedInput {
 input TopicUpsertWithoutChildrenInput {
   update: TopicUpdateWithoutChildrenDataInput!
   create: TopicCreateWithoutChildrenInput!
-}
-
-input TopicUpsertWithoutTopicStoryInput {
-  update: TopicUpdateWithoutTopicStoryDataInput!
-  create: TopicCreateWithoutTopicStoryInput!
 }
 
 input TopicUpsertWithWhereUniqueNestedInput {
@@ -5457,7 +5430,6 @@ input TopicWhereInput {
   order_lte: Int
   order_gt: Int
   order_gte: Int
-  topicStory: StoryWhereInput
   AND: [TopicWhereInput!]
   OR: [TopicWhereInput!]
   NOT: [TopicWhereInput!]
@@ -5954,8 +5926,8 @@ type User {
   followingCount: Int
   followersCount: Int
   intro: Story
-  story: Story
-  projects(where: StoryWhereInput, orderBy: StoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Story!]
+  myStory: Story
+  stories(where: StoryWhereInput, orderBy: StoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Story!]
   meetings(where: MeetingWhereInput, orderBy: MeetingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Meeting!]
   roles: [Role!]!
   groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group!]
@@ -6004,8 +5976,8 @@ input UserCreateInput {
   followingCount: Int
   followersCount: Int
   intro: StoryCreateOneInput
-  story: StoryCreateOneInput
-  projects: StoryCreateManyWithoutOwnerInput
+  myStory: StoryCreateOneInput
+  stories: StoryCreateManyWithoutOwnerInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
   groups: GroupCreateManyWithoutUsersInput
@@ -6069,13 +6041,13 @@ input UserCreateOneWithoutPostsInput {
   connect: UserWhereUniqueInput
 }
 
-input UserCreateOneWithoutProjectsInput {
-  create: UserCreateWithoutProjectsInput
+input UserCreateOneWithoutSkillsInput {
+  create: UserCreateWithoutSkillsInput
   connect: UserWhereUniqueInput
 }
 
-input UserCreateOneWithoutSkillsInput {
-  create: UserCreateWithoutSkillsInput
+input UserCreateOneWithoutStoriesInput {
+  create: UserCreateWithoutStoriesInput
   connect: UserWhereUniqueInput
 }
 
@@ -6116,8 +6088,8 @@ input UserCreateWithoutConnectionsInput {
   followingCount: Int
   followersCount: Int
   intro: StoryCreateOneInput
-  story: StoryCreateOneInput
-  projects: StoryCreateManyWithoutOwnerInput
+  myStory: StoryCreateOneInput
+  stories: StoryCreateManyWithoutOwnerInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
   groups: GroupCreateManyWithoutUsersInput
@@ -6159,8 +6131,8 @@ input UserCreateWithoutEducationInput {
   followingCount: Int
   followersCount: Int
   intro: StoryCreateOneInput
-  story: StoryCreateOneInput
-  projects: StoryCreateManyWithoutOwnerInput
+  myStory: StoryCreateOneInput
+  stories: StoryCreateManyWithoutOwnerInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
   groups: GroupCreateManyWithoutUsersInput
@@ -6202,8 +6174,8 @@ input UserCreateWithoutExperienceInput {
   followingCount: Int
   followersCount: Int
   intro: StoryCreateOneInput
-  story: StoryCreateOneInput
-  projects: StoryCreateManyWithoutOwnerInput
+  myStory: StoryCreateOneInput
+  stories: StoryCreateManyWithoutOwnerInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
   groups: GroupCreateManyWithoutUsersInput
@@ -6245,8 +6217,8 @@ input UserCreateWithoutFollowersInput {
   followingCount: Int
   followersCount: Int
   intro: StoryCreateOneInput
-  story: StoryCreateOneInput
-  projects: StoryCreateManyWithoutOwnerInput
+  myStory: StoryCreateOneInput
+  stories: StoryCreateManyWithoutOwnerInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
   groups: GroupCreateManyWithoutUsersInput
@@ -6288,8 +6260,8 @@ input UserCreateWithoutFollowingInput {
   followingCount: Int
   followersCount: Int
   intro: StoryCreateOneInput
-  story: StoryCreateOneInput
-  projects: StoryCreateManyWithoutOwnerInput
+  myStory: StoryCreateOneInput
+  stories: StoryCreateManyWithoutOwnerInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
   groups: GroupCreateManyWithoutUsersInput
@@ -6332,8 +6304,8 @@ input UserCreateWithoutGroupsInput {
   followingCount: Int
   followersCount: Int
   intro: StoryCreateOneInput
-  story: StoryCreateOneInput
-  projects: StoryCreateManyWithoutOwnerInput
+  myStory: StoryCreateOneInput
+  stories: StoryCreateManyWithoutOwnerInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
   notifications: NotificationCreateManyWithoutTargetInput
@@ -6375,8 +6347,8 @@ input UserCreateWithoutMeetingsInput {
   followingCount: Int
   followersCount: Int
   intro: StoryCreateOneInput
-  story: StoryCreateOneInput
-  projects: StoryCreateManyWithoutOwnerInput
+  myStory: StoryCreateOneInput
+  stories: StoryCreateManyWithoutOwnerInput
   roles: UserCreaterolesInput
   groups: GroupCreateManyWithoutUsersInput
   notifications: NotificationCreateManyWithoutTargetInput
@@ -6418,8 +6390,8 @@ input UserCreateWithoutNotificationsInput {
   followingCount: Int
   followersCount: Int
   intro: StoryCreateOneInput
-  story: StoryCreateOneInput
-  projects: StoryCreateManyWithoutOwnerInput
+  myStory: StoryCreateOneInput
+  stories: StoryCreateManyWithoutOwnerInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
   groups: GroupCreateManyWithoutUsersInput
@@ -6460,51 +6432,8 @@ input UserCreateWithoutPostsInput {
   followingCount: Int
   followersCount: Int
   intro: StoryCreateOneInput
-  story: StoryCreateOneInput
-  projects: StoryCreateManyWithoutOwnerInput
-  meetings: MeetingCreateManyWithoutUsersInput
-  roles: UserCreaterolesInput
-  groups: GroupCreateManyWithoutUsersInput
-  notifications: NotificationCreateManyWithoutTargetInput
-  unReadMessages: MessageCreateManyInput
-  unReadMessagesCount: Int
-}
-
-input UserCreateWithoutProjectsInput {
-  id: ID
-  name: String!
-  firstName: String!
-  lastName: String!
-  email: String!
-  password: String!
-  profilePic: String
-  bannerPic: String
-  location: String
-  locationID: String
-  locationLat: Float
-  locationLon: Float
-  headline: String
-  website: String
-  bio: String
-  about: String
-  topicsMentor: TopicCreateManyInput
-  topicsFreelance: TopicCreateManyInput
-  topicsInvest: TopicCreateManyInput
-  topicsAgency: TopicCreateManyInput
-  topicsFocus: TopicCreateManyInput
-  topicsInterest: TopicCreateManyInput
-  skills: SkillCreateManyWithoutOwnerInput
-  experience: ExperienceCreateManyWithoutOwnerInput
-  education: EducationCreateManyWithoutOwnerInput
-  posts: PostCreateManyWithoutOwnerInput
-  connections: UserCreateManyWithoutConnectionsInput
-  following: UserCreateManyWithoutFollowingInput
-  followers: UserCreateManyWithoutFollowersInput
-  connectionsCount: Int
-  followingCount: Int
-  followersCount: Int
-  intro: StoryCreateOneInput
-  story: StoryCreateOneInput
+  myStory: StoryCreateOneInput
+  stories: StoryCreateManyWithoutOwnerInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
   groups: GroupCreateManyWithoutUsersInput
@@ -6546,8 +6475,51 @@ input UserCreateWithoutSkillsInput {
   followingCount: Int
   followersCount: Int
   intro: StoryCreateOneInput
-  story: StoryCreateOneInput
-  projects: StoryCreateManyWithoutOwnerInput
+  myStory: StoryCreateOneInput
+  stories: StoryCreateManyWithoutOwnerInput
+  meetings: MeetingCreateManyWithoutUsersInput
+  roles: UserCreaterolesInput
+  groups: GroupCreateManyWithoutUsersInput
+  notifications: NotificationCreateManyWithoutTargetInput
+  unReadMessages: MessageCreateManyInput
+  unReadMessagesCount: Int
+}
+
+input UserCreateWithoutStoriesInput {
+  id: ID
+  name: String!
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  profilePic: String
+  bannerPic: String
+  location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
+  headline: String
+  website: String
+  bio: String
+  about: String
+  topicsMentor: TopicCreateManyInput
+  topicsFreelance: TopicCreateManyInput
+  topicsInvest: TopicCreateManyInput
+  topicsAgency: TopicCreateManyInput
+  topicsFocus: TopicCreateManyInput
+  topicsInterest: TopicCreateManyInput
+  skills: SkillCreateManyWithoutOwnerInput
+  experience: ExperienceCreateManyWithoutOwnerInput
+  education: EducationCreateManyWithoutOwnerInput
+  posts: PostCreateManyWithoutOwnerInput
+  connections: UserCreateManyWithoutConnectionsInput
+  following: UserCreateManyWithoutFollowingInput
+  followers: UserCreateManyWithoutFollowersInput
+  connectionsCount: Int
+  followingCount: Int
+  followersCount: Int
+  intro: StoryCreateOneInput
+  myStory: StoryCreateOneInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
   groups: GroupCreateManyWithoutUsersInput
@@ -6940,8 +6912,8 @@ input UserUpdateDataInput {
   followingCount: Int
   followersCount: Int
   intro: StoryUpdateOneInput
-  story: StoryUpdateOneInput
-  projects: StoryUpdateManyWithoutOwnerInput
+  myStory: StoryUpdateOneInput
+  stories: StoryUpdateManyWithoutOwnerInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
   groups: GroupUpdateManyWithoutUsersInput
@@ -6983,8 +6955,8 @@ input UserUpdateInput {
   followingCount: Int
   followersCount: Int
   intro: StoryUpdateOneInput
-  story: StoryUpdateOneInput
-  projects: StoryUpdateManyWithoutOwnerInput
+  myStory: StoryUpdateOneInput
+  stories: StoryUpdateManyWithoutOwnerInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
   groups: GroupUpdateManyWithoutUsersInput
@@ -7167,12 +7139,10 @@ input UserUpdateOneRequiredWithoutSkillsInput {
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateOneWithoutProjectsInput {
-  create: UserCreateWithoutProjectsInput
-  update: UserUpdateWithoutProjectsDataInput
-  upsert: UserUpsertWithoutProjectsInput
-  delete: Boolean
-  disconnect: Boolean
+input UserUpdateOneRequiredWithoutStoriesInput {
+  create: UserCreateWithoutStoriesInput
+  update: UserUpdateWithoutStoriesDataInput
+  upsert: UserUpsertWithoutStoriesInput
   connect: UserWhereUniqueInput
 }
 
@@ -7212,8 +7182,8 @@ input UserUpdateWithoutConnectionsDataInput {
   followingCount: Int
   followersCount: Int
   intro: StoryUpdateOneInput
-  story: StoryUpdateOneInput
-  projects: StoryUpdateManyWithoutOwnerInput
+  myStory: StoryUpdateOneInput
+  stories: StoryUpdateManyWithoutOwnerInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
   groups: GroupUpdateManyWithoutUsersInput
@@ -7254,8 +7224,8 @@ input UserUpdateWithoutEducationDataInput {
   followingCount: Int
   followersCount: Int
   intro: StoryUpdateOneInput
-  story: StoryUpdateOneInput
-  projects: StoryUpdateManyWithoutOwnerInput
+  myStory: StoryUpdateOneInput
+  stories: StoryUpdateManyWithoutOwnerInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
   groups: GroupUpdateManyWithoutUsersInput
@@ -7296,8 +7266,8 @@ input UserUpdateWithoutExperienceDataInput {
   followingCount: Int
   followersCount: Int
   intro: StoryUpdateOneInput
-  story: StoryUpdateOneInput
-  projects: StoryUpdateManyWithoutOwnerInput
+  myStory: StoryUpdateOneInput
+  stories: StoryUpdateManyWithoutOwnerInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
   groups: GroupUpdateManyWithoutUsersInput
@@ -7338,8 +7308,8 @@ input UserUpdateWithoutFollowersDataInput {
   followingCount: Int
   followersCount: Int
   intro: StoryUpdateOneInput
-  story: StoryUpdateOneInput
-  projects: StoryUpdateManyWithoutOwnerInput
+  myStory: StoryUpdateOneInput
+  stories: StoryUpdateManyWithoutOwnerInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
   groups: GroupUpdateManyWithoutUsersInput
@@ -7380,8 +7350,8 @@ input UserUpdateWithoutFollowingDataInput {
   followingCount: Int
   followersCount: Int
   intro: StoryUpdateOneInput
-  story: StoryUpdateOneInput
-  projects: StoryUpdateManyWithoutOwnerInput
+  myStory: StoryUpdateOneInput
+  stories: StoryUpdateManyWithoutOwnerInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
   groups: GroupUpdateManyWithoutUsersInput
@@ -7423,8 +7393,8 @@ input UserUpdateWithoutGroupsDataInput {
   followingCount: Int
   followersCount: Int
   intro: StoryUpdateOneInput
-  story: StoryUpdateOneInput
-  projects: StoryUpdateManyWithoutOwnerInput
+  myStory: StoryUpdateOneInput
+  stories: StoryUpdateManyWithoutOwnerInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
   notifications: NotificationUpdateManyWithoutTargetInput
@@ -7465,8 +7435,8 @@ input UserUpdateWithoutMeetingsDataInput {
   followingCount: Int
   followersCount: Int
   intro: StoryUpdateOneInput
-  story: StoryUpdateOneInput
-  projects: StoryUpdateManyWithoutOwnerInput
+  myStory: StoryUpdateOneInput
+  stories: StoryUpdateManyWithoutOwnerInput
   roles: UserUpdaterolesInput
   groups: GroupUpdateManyWithoutUsersInput
   notifications: NotificationUpdateManyWithoutTargetInput
@@ -7507,8 +7477,8 @@ input UserUpdateWithoutNotificationsDataInput {
   followingCount: Int
   followersCount: Int
   intro: StoryUpdateOneInput
-  story: StoryUpdateOneInput
-  projects: StoryUpdateManyWithoutOwnerInput
+  myStory: StoryUpdateOneInput
+  stories: StoryUpdateManyWithoutOwnerInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
   groups: GroupUpdateManyWithoutUsersInput
@@ -7548,50 +7518,8 @@ input UserUpdateWithoutPostsDataInput {
   followingCount: Int
   followersCount: Int
   intro: StoryUpdateOneInput
-  story: StoryUpdateOneInput
-  projects: StoryUpdateManyWithoutOwnerInput
-  meetings: MeetingUpdateManyWithoutUsersInput
-  roles: UserUpdaterolesInput
-  groups: GroupUpdateManyWithoutUsersInput
-  notifications: NotificationUpdateManyWithoutTargetInput
-  unReadMessages: MessageUpdateManyInput
-  unReadMessagesCount: Int
-}
-
-input UserUpdateWithoutProjectsDataInput {
-  name: String
-  firstName: String
-  lastName: String
-  email: String
-  password: String
-  profilePic: String
-  bannerPic: String
-  location: String
-  locationID: String
-  locationLat: Float
-  locationLon: Float
-  headline: String
-  website: String
-  bio: String
-  about: String
-  topicsMentor: TopicUpdateManyInput
-  topicsFreelance: TopicUpdateManyInput
-  topicsInvest: TopicUpdateManyInput
-  topicsAgency: TopicUpdateManyInput
-  topicsFocus: TopicUpdateManyInput
-  topicsInterest: TopicUpdateManyInput
-  skills: SkillUpdateManyWithoutOwnerInput
-  experience: ExperienceUpdateManyWithoutOwnerInput
-  education: EducationUpdateManyWithoutOwnerInput
-  posts: PostUpdateManyWithoutOwnerInput
-  connections: UserUpdateManyWithoutConnectionsInput
-  following: UserUpdateManyWithoutFollowingInput
-  followers: UserUpdateManyWithoutFollowersInput
-  connectionsCount: Int
-  followingCount: Int
-  followersCount: Int
-  intro: StoryUpdateOneInput
-  story: StoryUpdateOneInput
+  myStory: StoryUpdateOneInput
+  stories: StoryUpdateManyWithoutOwnerInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
   groups: GroupUpdateManyWithoutUsersInput
@@ -7632,8 +7560,50 @@ input UserUpdateWithoutSkillsDataInput {
   followingCount: Int
   followersCount: Int
   intro: StoryUpdateOneInput
-  story: StoryUpdateOneInput
-  projects: StoryUpdateManyWithoutOwnerInput
+  myStory: StoryUpdateOneInput
+  stories: StoryUpdateManyWithoutOwnerInput
+  meetings: MeetingUpdateManyWithoutUsersInput
+  roles: UserUpdaterolesInput
+  groups: GroupUpdateManyWithoutUsersInput
+  notifications: NotificationUpdateManyWithoutTargetInput
+  unReadMessages: MessageUpdateManyInput
+  unReadMessagesCount: Int
+}
+
+input UserUpdateWithoutStoriesDataInput {
+  name: String
+  firstName: String
+  lastName: String
+  email: String
+  password: String
+  profilePic: String
+  bannerPic: String
+  location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
+  headline: String
+  website: String
+  bio: String
+  about: String
+  topicsMentor: TopicUpdateManyInput
+  topicsFreelance: TopicUpdateManyInput
+  topicsInvest: TopicUpdateManyInput
+  topicsAgency: TopicUpdateManyInput
+  topicsFocus: TopicUpdateManyInput
+  topicsInterest: TopicUpdateManyInput
+  skills: SkillUpdateManyWithoutOwnerInput
+  experience: ExperienceUpdateManyWithoutOwnerInput
+  education: EducationUpdateManyWithoutOwnerInput
+  posts: PostUpdateManyWithoutOwnerInput
+  connections: UserUpdateManyWithoutConnectionsInput
+  following: UserUpdateManyWithoutFollowingInput
+  followers: UserUpdateManyWithoutFollowersInput
+  connectionsCount: Int
+  followingCount: Int
+  followersCount: Int
+  intro: StoryUpdateOneInput
+  myStory: StoryUpdateOneInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
   groups: GroupUpdateManyWithoutUsersInput
@@ -7697,14 +7667,14 @@ input UserUpsertWithoutPostsInput {
   create: UserCreateWithoutPostsInput!
 }
 
-input UserUpsertWithoutProjectsInput {
-  update: UserUpdateWithoutProjectsDataInput!
-  create: UserCreateWithoutProjectsInput!
-}
-
 input UserUpsertWithoutSkillsInput {
   update: UserUpdateWithoutSkillsDataInput!
   create: UserCreateWithoutSkillsInput!
+}
+
+input UserUpsertWithoutStoriesInput {
+  update: UserUpdateWithoutStoriesDataInput!
+  create: UserCreateWithoutStoriesInput!
 }
 
 input UserUpsertWithWhereUniqueNestedInput {
@@ -8028,10 +7998,10 @@ input UserWhereInput {
   followersCount_gt: Int
   followersCount_gte: Int
   intro: StoryWhereInput
-  story: StoryWhereInput
-  projects_every: StoryWhereInput
-  projects_some: StoryWhereInput
-  projects_none: StoryWhereInput
+  myStory: StoryWhereInput
+  stories_every: StoryWhereInput
+  stories_some: StoryWhereInput
+  stories_none: StoryWhereInput
   meetings_every: MeetingWhereInput
   meetings_some: MeetingWhereInput
   meetings_none: MeetingWhereInput

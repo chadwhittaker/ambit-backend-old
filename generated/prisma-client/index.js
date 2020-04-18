@@ -84,6 +84,6 @@ var models = [
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
   typeDefs,
   models,
-  endpoint: `https://eu1.prisma.sh/ambit-workspace-3/ambit-service/dev`
+  endpoint: `https://eu1.prisma.sh/ambit-workspace-3/ambit-service-2/dev`
 });
 exports.prisma = new exports.Prisma();

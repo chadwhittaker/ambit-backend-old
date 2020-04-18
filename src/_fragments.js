@@ -166,6 +166,9 @@ const LoggedInUser = gql`
       topicID
       name
     }
+    stories {
+      id
+    }
     intro {
       id
       title

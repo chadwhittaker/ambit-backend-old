@@ -11,11 +11,6 @@ const Topic = {
   async children(parent, args, context) {
     return context.prisma.topic({ id: parent.id }).children()
   },
-
-  async topicStory(parent, args, context) {
-    return context.prisma.topic({ id: parent.id }).topicStory()
-  },
-
   
 }
 

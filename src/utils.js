@@ -36,6 +36,7 @@ function deg2Rad(degrees) {
 
 const CHAT_CHANNEL = 'CHAT_CHANNEL'
 
+
 module.exports = {
   getUserId,
   rad2Deg,

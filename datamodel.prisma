@@ -10,9 +10,9 @@ enum Role {
 
 enum StoryType {
   INTRO
-  STORY
+  MYSTORY
   PROJECT
-  TOPICSTORY
+  SOLO
 }
 
 enum StoryItemType {
@@ -86,8 +86,8 @@ type User {
   followingCount: Int @default(value: 0)
   followersCount: Int @default(value: 0)
   intro: Story @relation(name: "MyIntro")
-  story: Story @relation(name: "MyStory")
-  projects: [Story]! @relation(name: "StoriesByUser")
+  myStory: Story @relation(name: "MyStory")
+  stories: [Story]! @relation(name: "StoriesByUser")
   meetings: [Meeting]
   roles: [Role] @scalarList(strategy: RELATION)
   groups: [Group] @relation(name: "GroupsOfUser")
@@ -111,27 +111,31 @@ type Notification {
 
 type Story {
   id: ID! @id
-  owner: User @relation(name: "StoriesByUser")
-  title: String!
+  owner: User! @relation(name: "StoriesByUser")
+  title: String
   type: StoryType!
-  topic: Topic @relation(name: "TopicToStoryRelation" link: INLINE)
-  projectTopics: [Topic] @relation(name: "ProjectTopicsToStory")
-  items: [StoryItem!]! @relation(name: "StoryToStoryItem")
+  topics: [Topic] @relation(name: "ProjectTopicsToStory")
+  items: [StoryItem!]! @relation(name: "StoryToStoryItemRelation")
   preview: String
+  showcase: Boolean @default(value: false)
+  save: Boolean @default(value: false)
 }
 
 type StoryItem {
   id: ID! @id
   createdAt: DateTime! @createdAt
   owner: User! @relation(name: "StoryItemByUser")
-  story: [Story]! @relation(name: "StoryToStoryItem")
+  stories: [Story]! @relation(name: "StoryToStoryItemRelation")
   type: StoryItemType!
   url: String!
   preview: String!
   link: String
-  text: String
+  text: [String]! @scalarList(strategy: RELATION)
   duration: Float
-  topics: [Topic]! @relation(name: "TopicsToStoryItem")
+  inProject: Boolean @default(value: false)
+  likes: [String]! @scalarList(strategy: RELATION)
+  likesCount: Int
+  likedByMe: Boolean @default(value: false)
 }
 
 type Skill {
@@ -260,7 +264,6 @@ type Topic {
   color: String
   image: String
   order: Int
-  topicStory: Story @relation(name: "TopicToStoryRelation")
 }
 
 type Group {

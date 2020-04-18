@@ -1,4 +1,5 @@
-endpoint: https://eu1.prisma.sh/ambit-workspace-3/ambit-service/dev
+#endpoint: https://eu1.prisma.sh/ambit-workspace-3/ambit-service/dev
+endpoint: https://eu1.prisma.sh/ambit-workspace-3/ambit-service-2/dev
 datamodel: datamodel.prisma
 
 generate:

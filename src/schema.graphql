@@ -80,7 +80,7 @@ type Mutation {
   deleteComment(ownerID: ID!, id: ID!): Comment
 
   # intro
-  editIntro(userId: ID!, title: String, items: [StoryItemCreateWithoutStoryInput!]): User!
+  editIntro(userId: ID!, title: String, items: [StoryItemCreateInput!]): User!
 
   # group chats
   createGroup(users: [UserWhereUniqueInput]!): Group!
@@ -91,8 +91,7 @@ type Mutation {
   clearMyNotifications: [Notification]!
 
   # stories
-  addToStory(storyItem: StoryItemCreateWithoutStoryInput!): User!
-  createStoryItem(storyItem: StoryItemCreateInput!): StoryItem
+  createStoryItem(storyItem: StoryItemCreateInput!): StoryItem!
   createStory(story: StoryCreateInput!): Story!
 }
 
