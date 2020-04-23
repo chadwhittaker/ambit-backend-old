@@ -3019,10 +3019,10 @@ type Post {
   goal: String
   subField: Topic
   topics(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic!]
-  location: String!
-  locationID: String!
-  locationLat: Float!
-  locationLon: Float!
+  location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
   content: String!
   images: [String!]!
   video: String
@@ -3055,10 +3055,10 @@ input PostCreateInput {
   goal: String
   subField: TopicCreateOneInput
   topics: TopicCreateManyInput
-  location: String!
-  locationID: String!
-  locationLat: Float!
-  locationLon: Float!
+  location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
   content: String!
   images: PostCreateimagesInput
   video: String
@@ -3105,10 +3105,10 @@ input PostCreateWithoutCommentsInput {
   goal: String
   subField: TopicCreateOneInput
   topics: TopicCreateManyInput
-  location: String!
-  locationID: String!
-  locationLat: Float!
-  locationLon: Float!
+  location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
   content: String!
   images: PostCreateimagesInput
   video: String
@@ -3130,10 +3130,10 @@ input PostCreateWithoutNotificationsInput {
   goal: String
   subField: TopicCreateOneInput
   topics: TopicCreateManyInput
-  location: String!
-  locationID: String!
-  locationLat: Float!
-  locationLon: Float!
+  location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
   content: String!
   images: PostCreateimagesInput
   video: String
@@ -3154,10 +3154,10 @@ input PostCreateWithoutOwnerInput {
   goal: String
   subField: TopicCreateOneInput
   topics: TopicCreateManyInput
-  location: String!
-  locationID: String!
-  locationLat: Float!
-  locationLon: Float!
+  location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
   content: String!
   images: PostCreateimagesInput
   video: String
@@ -3180,10 +3180,10 @@ input PostCreateWithoutUpdatesInput {
   goal: String
   subField: TopicCreateOneInput
   topics: TopicCreateManyInput
-  location: String!
-  locationID: String!
-  locationLat: Float!
-  locationLon: Float!
+  location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
   content: String!
   images: PostCreateimagesInput
   video: String
@@ -3243,10 +3243,10 @@ type PostPreviousValues {
   lastUpdated: DateTime!
   isGoal: Boolean!
   goal: String
-  location: String!
-  locationID: String!
-  locationLat: Float!
-  locationLon: Float!
+  location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
   content: String!
   images: [String!]!
   video: String

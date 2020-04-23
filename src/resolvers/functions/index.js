@@ -573,54 +573,54 @@ const addMessageToUnread = async (message, context) => {
 }
 
 const updateFollowersAndVerify = async (followers, userID, context) => {
-    // 3. update followers of userID
-    const userFollowers = await context.prisma.updateUser(
-      {
-        where: { id: userID },
-        data: {
-          followers
-        }
-      },
-    ).$fragment(FollowersFragment)
-
-    // 4. update # of followers of userID
-    const followersCount = userFollowers.followers.length;
-    // console.log('followers', followersCount);
-    await context.prisma.updateUser(
-      {
-        where: { id: userID },
-        data: {
-          followersCount,
-        }
-      },
-    );
-
-    // 5. do a verificatoin to make sure all followers are connected
-
-    // search the database for everyone that follows the userID
-    const usersThatFollow = await context.prisma.users({
-      where: {
-        following_some: { id: userID }
+  // 3. update followers of userID
+  const userFollowers = await context.prisma.updateUser(
+    {
+      where: { id: userID },
+      data: {
+        followers
       }
-    }).$fragment(UserIDFragment)
+    },
+  ).$fragment(FollowersFragment)
 
-    const usersThatNeedAddedToFollowers = [];
-    // verify they are all connected to userID
-    usersThatFollow.forEach(user => {
-      const check = userFollowers.followers.find(u => u.id === user.id);
-
-      if (!check) {
-        // add it to a list of users that need added to followers
-        console.log('user that needs added to followers', user);
-        usersThatNeedAddedToFollowers.push(user);
+  // 4. update # of followers of userID
+  const followersCount = userFollowers.followers.length;
+  // console.log('followers', followersCount);
+  await context.prisma.updateUser(
+    {
+      where: { id: userID },
+      data: {
+        followersCount,
       }
-    })
+    },
+  );
 
-    if (usersThatNeedAddedToFollowers.length === 0) {
-      console.log('all followers accounted for!')
-    } else {
-      console.log('all followers not accounted for!')
+  // 5. do a verificatoin to make sure all followers are connected
+
+  // search the database for everyone that follows the userID
+  const usersThatFollow = await context.prisma.users({
+    where: {
+      following_some: { id: userID }
     }
+  }).$fragment(UserIDFragment)
+
+  const usersThatNeedAddedToFollowers = [];
+  // verify they are all connected to userID
+  usersThatFollow.forEach(user => {
+    const check = userFollowers.followers.find(u => u.id === user.id);
+
+    if (!check) {
+      // add it to a list of users that need added to followers
+      console.log('user that needs added to followers', user);
+      usersThatNeedAddedToFollowers.push(user);
+    }
+  })
+
+  if (usersThatNeedAddedToFollowers.length === 0) {
+    console.log('all followers accounted for!')
+  } else {
+    console.log('all followers not accounted for!')
+  }
 }
 
 const getTopicIDsFromUser = usr => {
@@ -654,5 +654,5 @@ module.exports = {
   addMessageToUnread,
   updateFollowersAndVerify,
   getTopicIDsFromUser,
-  getNetworkIDsFromUser
+  getNetworkIDsFromUser,
 }

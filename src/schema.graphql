@@ -93,6 +93,8 @@ type Mutation {
   # stories
   createStoryItem(storyItem: StoryItemCreateInput!): StoryItem!
   createStory(story: StoryCreateInput!): Story!
+  updateStory(id: ID!, story: StoryUpdateInput!): Story!
+  deleteStory(id: ID!): Story
 }
 
 type AuthPayload {

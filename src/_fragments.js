@@ -698,6 +698,22 @@ const CommentFragment = gql`
   }
 `;
 
+const StoryFragment = gql`
+  fragment StoryFragment on Story {
+    id
+    type
+    items {
+      id
+      createdAt
+      stories {
+        id
+        type
+      }
+    }
+    save
+  }
+`;
+
 
 module.exports = {
   UserIDFragment,
@@ -712,4 +728,5 @@ module.exports = {
   MessageFragment,
   UpdateFragment,
   CommentFragment,
+  StoryFragment
 }

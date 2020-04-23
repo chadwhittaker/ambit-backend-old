@@ -186,10 +186,10 @@ type Post {
   goal: String
   subField: Topic @relation(name: "SubFieldOnPost")
   topics: [Topic] @relation(name: "TopicsOnPost")
-  location: String!
-  locationID: String!
-  locationLat: Float!
-  locationLon: Float!
+  location: String
+  locationID: String
+  locationLat: Float
+  locationLon: Float
   content: String!
   images: [String]! @scalarList(strategy: RELATION)
   video: String

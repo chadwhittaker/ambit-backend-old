@@ -964,6 +964,31 @@ const Mutation = {
 
     return storyReturned
   },
+
+  async updateStory(parent, { id, story }, context) {
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      return null
+    }
+
+    const storyReturned = await context.prisma.updateStory({
+      where: { id },
+      data: { ...story },
+    })
+
+    return storyReturned
+  },
+
+  async deleteStory(parent, { id }, context) {
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      return null
+    }
+
+    const storyReturned = await context.prisma.deleteStory({ id });
+
+  return storyReturned
+},
 }
 
 module.exports = {
