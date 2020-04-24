@@ -47,13 +47,13 @@ const Query = {
         }
       }
 
-      let i;
-      for (i = 0; i < investList.length; i++) {
+      let j;
+      for (j = 0; j < investList.length; j++) {
         try {
           const topic = await context.prisma.createTopic({
-            topicID: investList[i].topicID,
-            name: investList[i].name,
-            icon: investList[i].icon,
+            topicID: investList[j].topicID,
+            name: investList[j].name,
+            icon: investList[j].icon,
             parentList: { connect: { listName: "investList" } }, // must create this list first in DB
           })
 
@@ -63,20 +63,20 @@ const Query = {
         }
       }
 
-      let i;
-      for (i = 0; i < freelanceList.length; i++) {
+      let k;
+      for (k = 0; k < freelanceList.length; k++) {
         try {
           const topic = await context.prisma.createTopic({
-            topicID: freelanceList[i].topicID,
-            name: freelanceList[i].name,
-            icon: freelanceList[i].icon,
+            topicID: freelanceList[k].topicID,
+            name: freelanceList[k].name,
+            icon: freelanceList[k].icon,
             parentList: { connect: { listName: "freelanceList" } }, // must create this list first in DB
             children: {
-              create: freelanceList[i].children.map(child => {
+              create: freelanceList[k].children.map(child => {
                 return {
                   topicID: child.topicID,
                   name: child.name,
-                  icon: freelanceList[i].icon,
+                  icon: freelanceList[k].icon,
                 }
               })
             }
