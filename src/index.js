@@ -39,7 +39,7 @@ server.express.use((req, res, next) => {
 server.start((deets) => {
   console.log(`Server is running on http://localhost:${deets.port}`)
 
-  console.log(process.env.LOAD_TOPICS === "yes");
+  console.log(`load topics? --> ${process.env.LOAD_TOPICS === "yes"}`);
 
   // start cron jobs
   // cleanupStories(prisma)

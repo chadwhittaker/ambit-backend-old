@@ -44,14 +44,16 @@ const getActiveGoalsOfUser = async (user, context) => {
 
 const getUsersMatchingTopicsFocus = async (me, context, excludeIDs = []) => {
   try {
+    // commented the "where" so that all users would appear here
     const usersMatchingTopicsFocus = await context.prisma.users({
-      first: 3,
-      where: {
-        AND: [
-          { topicsFocus_some: { OR: me.topicsFocus } },
-          { id_not_in: [me.id, ...excludeIDs] },
-        ]
-      }
+      // first: 3,
+      where: { id_not: me.id },
+      // where: {
+      //   AND: [
+      //     { topicsFocus_some: { OR: me.topicsFocus } },
+      //     { id_not_in: [me.id, ...excludeIDs] },
+      //   ]
+      // }
     });
 
     // add reason
