@@ -19,123 +19,109 @@ const Query = {
     // 2. if there is a user, query user in database and return data to client
     const user = await context.prisma.user({ id: context.request.userId });
 
-    // make topics
-    // let i;
-    // for (i = 0; i < topicsList.length; i++) {
-    //   try {
-    //     const topic = await context.prisma.createTopic({
-    //       topicID: topicsList[i].topicID,
-    //       name: topicsList[i].name,
-    //       icon: topicsList[i].icon,
-    //       parentList: { connect: { listName: "topicsList" } }, // must create this list first in DB
-    //       children: {
-    //         create: topicsList[i].children.map(child => {
-    //           return {
-    //             topicID: child.topicID,
-    //             name: child.name,
-    //             icon: child.icon,
-    //           }
-    //         })
-    //       }
-    //     })
+    // make topics (base this off an ENV variable)
+    if (process.env.LOAD_TOPICS === "yes") {
+      console.log("LOADING INITIAL TOPICS...")
+      let i;
+      for (i = 0; i < topicsList.length; i++) {
+        try {
+          const topic = await context.prisma.createTopic({
+            topicID: topicsList[i].topicID,
+            name: topicsList[i].name,
+            icon: topicsList[i].icon,
+            parentList: { connect: { listName: "topicsList" } }, // must create this list first in DB
+            children: {
+              create: topicsList[i].children.map(child => {
+                return {
+                  topicID: child.topicID,
+                  name: child.name,
+                  icon: child.icon,
+                }
+              })
+            }
+          })
 
-    //     console.log(topic)
-    //   } catch (e) {
-    //     console.log(e)
-    //   }
-    // }
+          // console.log(topic)
+        } catch (e) {
+          console.log(e)
+        }
+      }
 
-    // let i;
-    // for (i = 0; i < investList.length; i++) {
-    //   try {
-    //     const topic = await context.prisma.createTopic({
-    //       topicID: investList[i].topicID,
-    //       name: investList[i].name,
-    //       icon: investList[i].icon,
-    //       parentList: { connect: { listName: "investList" } }, // must create this list first in DB
-    //     })
+      let i;
+      for (i = 0; i < investList.length; i++) {
+        try {
+          const topic = await context.prisma.createTopic({
+            topicID: investList[i].topicID,
+            name: investList[i].name,
+            icon: investList[i].icon,
+            parentList: { connect: { listName: "investList" } }, // must create this list first in DB
+          })
 
-    //     console.log(topic)
-    //   } catch (e) {
-    //     console.log(e)
-    //   }
-    // }
+          // console.log(topic)
+        } catch (e) {
+          console.log(e)
+        }
+      }
 
-    //     let i;
-    // for (i = 0; i < freelanceList.length; i++) {
-    //   try {
-    //     const topic = await context.prisma.createTopic({
-    //       topicID: freelanceList[i].topicID,
-    //       name: freelanceList[i].name,
-    //       icon: freelanceList[i].icon,
-    //       parentList: { connect: { listName: "freelanceList" } }, // must create this list first in DB
-    //       children: {
-    //         create: freelanceList[i].children.map(child => {
-    //           return {
-    //             topicID: child.topicID,
-    //             name: child.name,
-    //             icon: freelanceList[i].icon,
-    //           }
-    //         })
-    //       }
-    //     })
+      let i;
+      for (i = 0; i < freelanceList.length; i++) {
+        try {
+          const topic = await context.prisma.createTopic({
+            topicID: freelanceList[i].topicID,
+            name: freelanceList[i].name,
+            icon: freelanceList[i].icon,
+            parentList: { connect: { listName: "freelanceList" } }, // must create this list first in DB
+            children: {
+              create: freelanceList[i].children.map(child => {
+                return {
+                  topicID: child.topicID,
+                  name: child.name,
+                  icon: freelanceList[i].icon,
+                }
+              })
+            }
+          })
 
-    //     console.log(topic)
-    //   } catch (e) {
-    //     console.log(e)
-    //   }
-    // }
+          // console.log(topic)
+        } catch (e) {
+          console.log(e)
+        }
+      }
 
+      // make user stories & intros
+      //   const users = await context.prisma.users();
 
-    // make topic stories
-    // const topics = await context.prisma.topics({ where: { topicID_starts_with: "topics" }});
+      //   let i;
+      //   for (i = 0; i < users.length; i++) {
+      //     try {
+      //       const user = await context.prisma.updateUser({
+      //         where: { email: users[i].email },
+      //         data: {
+      //           myStory: {
+      //             create: {
+      //               title: "My Story",
+      //               type: "MYSTORY",
+      //               owner: { connect: { email: users[i].email }}
+      //             }
+      //           },
+      //           intro: {
+      //             create: {
+      //               title: "My Intro",
+      //               type: "INTRO",
+      //               owner: { connect: { email: users[i].email }}
+      //             }
+      //           }
+      //         }
+      //       })
 
-    // let i;
-    // for (i = 0; i < topics.length; i++) {
-    //   try {
-    //     const story = await context.prisma.createStory({
-    //       type: "TOPICSTORY",
-    //       title: topics[i].name,
-    //       topic: { connect: { topicID: topics[i].topicID } },
-    //     })
+      //       console.log(user)
+      //   } catch (e) {
+      //     console.log(e)
+      //   }
+      // }
+      console.log("...FINISHED LOADING INITIAL TOPICS")
+    }
 
-    //     console.log(story)
-    //   } catch (e) {
-    //     console.log(e)
-    //   }
-    // }
-
-    // make user storie & intros
-    //   const users = await context.prisma.users();
-
-    //   let i;
-    //   for (i = 0; i < users.length; i++) {
-    //     try {
-    //       const user = await context.prisma.updateUser({
-    //         where: { email: users[i].email },
-    //         data: {
-    //           myStory: {
-    //             create: {
-    //               title: "My Story",
-    //               type: "MYSTORY",
-    //               owner: { connect: { email: users[i].email }}
-    //             }
-    //           },
-    //           intro: {
-    //             create: {
-    //               title: "My Intro",
-    //               type: "INTRO",
-    //               owner: { connect: { email: users[i].email }}
-    //             }
-    //           }
-    //         }
-    //       })
-
-    //       console.log(user)
-    //   } catch (e) {
-    //     console.log(e)
-    //   }
-    // }
 
     return user;
   },

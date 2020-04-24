@@ -39,6 +39,8 @@ server.express.use((req, res, next) => {
 server.start((deets) => {
   console.log(`Server is running on http://localhost:${deets.port}`)
 
+  console.log(process.env.LOAD_TOPICS === "yes");
+
   // start cron jobs
   // cleanupStories(prisma)
   setInterval(() => cleanupStories(prisma), 600000); // 600,000 ms = 10 minutes

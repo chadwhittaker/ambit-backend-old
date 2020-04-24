@@ -84,6 +84,6 @@ var models = [
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
   typeDefs,
   models,
-  endpoint: `https://eu1.prisma.sh/ambit-workspace-3/ambit-service-2/dev`
+  endpoint: `https://ambit-prisma-server-58c72079f5.herokuapp.com/ambit-production-service/prod`
 });
 exports.prisma = new exports.Prisma();
