@@ -561,7 +561,6 @@ const addMessageToUnread = async (message, context) => {
         await context.prisma.updateUser({
           where: { id: user.id },
           data: {
-            about: 'lolll',
             unReadMessages: {
               connect: [{ id: message.id }],
             }
