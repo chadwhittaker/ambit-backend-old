@@ -24,7 +24,7 @@ const server = new GraphQLServer({
 // 2. convert to userId
 // 3. place userId in request
 server.express.use((req, res, next) => {
-  console.log(req)
+  console.log(req.headers)
   const userId = getUserId(req);
   req.userId = userId
   next();
