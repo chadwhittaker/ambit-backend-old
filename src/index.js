@@ -24,7 +24,7 @@ const server = new GraphQLServer({
 // 2. convert to userId
 // 3. place userId in request
 server.express.use((req, res, next) => {
-  // console.log(req)
+  console.log(req)
   const userId = getUserId(req);
   req.userId = userId
   next();
@@ -43,5 +43,5 @@ server.start((deets) => {
 
   // start cron jobs
   // cleanupStories(prisma)
-  setInterval(() => cleanupStories(prisma), 600000); // 600,000 ms = 10 minutes
+  setInterval(() => cleanupStories(prisma), 1800000); // 600,000 ms = 10 minutes, 1,800,000 ms = 30 minutes
 });
