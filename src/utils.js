@@ -151,10 +151,18 @@ const cleanupStories = async prisma => {
   console.log('/*--------------------------------------------------------*/')
 }
 
+const pingServer = async prisma => {
+  console.log('/*--------------------------------------------------------*/')
+  console.log('starting clean up of all stories');
+
+  await prisma.users()
+}
+
 module.exports = {
   getUserId,
   rad2Deg,
   deg2Rad,
   CHAT_CHANNEL,
-  cleanupStories
+  cleanupStories,
+  pingServer
 };

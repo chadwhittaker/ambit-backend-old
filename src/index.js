@@ -4,7 +4,7 @@ const { GraphQLServer, PubSub } = require('graphql-yoga');
 const { prisma } = require('../generated/prisma-client');
 
 const { resolvers } = require('./resolvers');
-const { getUserId, cleanupStories } = require('./utils');
+const { getUserId, cleanupStories, pingServer } = require('./utils');
 
 // const pubsub = new PubSub()
 const server = new GraphQLServer({
@@ -24,7 +24,7 @@ const server = new GraphQLServer({
 // 2. convert to userId
 // 3. place userId in request
 server.express.use((req, res, next) => {
-  console.log(req.headers)
+  // console.log(req.headers)
   const userId = getUserId(req);
   req.userId = userId
   next();
@@ -43,5 +43,6 @@ server.start((deets) => {
 
   // start cron jobs
   // cleanupStories(prisma)
+  setInterval(() => pingServer(prisma), 30000); // 30,000 = 30s
   setInterval(() => cleanupStories(prisma), 1800000); // 600,000 ms = 10 minutes, 1,800,000 ms = 30 minutes
 });
