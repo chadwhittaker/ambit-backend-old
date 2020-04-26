@@ -153,8 +153,8 @@ const cleanupStories = async prisma => {
 
 const pingServer = async prisma => {
   console.log('/*--------------------------------------------------------*/')
-  console.log('starting clean up of all stories');
-
+  console.log('pinging server');
+  console.log('/*--------------------------------------------------------*/')
   await prisma.users()
 }
 

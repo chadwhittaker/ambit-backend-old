@@ -43,6 +43,6 @@ server.start((deets) => {
 
   // start cron jobs
   // cleanupStories(prisma)
-  setInterval(() => pingServer(prisma), 30000); // 30,000 = 30s
+  // setInterval(() => pingServer(prisma), 30000); // 30,000 = 30s
   setInterval(() => cleanupStories(prisma), 1800000); // 600,000 ms = 10 minutes, 1,800,000 ms = 30 minutes
 });
