@@ -777,6 +777,18 @@ const Mutation = {
           commentID: commentCreated.id,
         })
       }
+
+      // if this is a subcomment, also notify the parent comment owner
+      if (!!commentCreated.parentComment) {
+        createNotification({
+          context,
+          style: 'COMMENT_COMMENT',
+          targetID: commentCreated.parentComment.owner.id,
+          userID: context.request.userId,
+          commentID: commentCreated.id,
+        })
+      }
+
     }
 
     return commentCreated;
@@ -987,8 +999,8 @@ const Mutation = {
 
     const storyReturned = await context.prisma.deleteStory({ id });
 
-  return storyReturned
-},
+    return storyReturned
+  },
 }
 
 module.exports = {
