@@ -518,6 +518,21 @@ const createNotification = async ({ context, style, targetID, userID, userIDs, p
         console.error(e)
       }
       break;
+    
+    case 'COMMENT_COMMENT':
+      try {
+        await context.prisma.createNotification(
+          {
+            style: 'COMMENT_COMMENT',
+            target: { connect: { id: targetID } },
+            user: { connect: { id: userID } },
+            comment: { connect: { id: commentID } },
+          }
+        )
+      } catch (e) {
+        console.error(e)
+      }
+      break;
 
     default:
       break;
