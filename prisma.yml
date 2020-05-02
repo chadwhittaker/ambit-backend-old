@@ -1,6 +1,6 @@
 #endpoint: https://eu1.prisma.sh/ambit-workspace-3/ambit-service/dev
-#endpoint: https://eu1.prisma.sh/ambit-workspace-3/ambit-service-2/dev
-endpoint: https://ambit-prisma-server-58c72079f5.herokuapp.com/ambit-production-service/prod
+endpoint: https://eu1.prisma.sh/ambit-workspace-3/ambit-service-2/dev
+# endpoint: https://ambit-prisma-server-58c72079f5.herokuapp.com/ambit-production-service/prod
 datamodel: datamodel.prisma
 
 generate:
