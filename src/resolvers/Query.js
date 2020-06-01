@@ -645,7 +645,7 @@ const Query = {
                   type_in: ['SOLO'],
                 },
                 {
-                  topics_some: { topicID }
+                  topics_some: { topicID_starts_with: topicID }
                 },
               ]
             },
@@ -656,7 +656,7 @@ const Query = {
                   type: 'PROJECT',
                 },
                 {
-                  topics_some: { topicID }
+                  topics_some: { topicID_starts_with: topicID }
                 },
               ]
             }
