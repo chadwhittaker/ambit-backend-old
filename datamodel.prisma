@@ -203,6 +203,7 @@ type Post {
   commentsCount: Int
   sharesCount: Int
   notifications: [Notification] @relation(name: "NotificationToPost" onDelete: CASCADE)
+  _deleted: Boolean @default(value: false)
 }
 
 type Update {

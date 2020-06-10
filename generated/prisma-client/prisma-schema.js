@@ -3036,6 +3036,7 @@ type Post {
   commentsCount: Int
   sharesCount: Int
   notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification!]
+  _deleted: Boolean
 }
 
 type PostConnection {
@@ -3072,6 +3073,7 @@ input PostCreateInput {
   commentsCount: Int
   sharesCount: Int
   notifications: NotificationCreateManyWithoutPostInput
+  _deleted: Boolean
 }
 
 input PostCreatelikesInput {
@@ -3121,6 +3123,7 @@ input PostCreateWithoutCommentsInput {
   commentsCount: Int
   sharesCount: Int
   notifications: NotificationCreateManyWithoutPostInput
+  _deleted: Boolean
 }
 
 input PostCreateWithoutNotificationsInput {
@@ -3146,6 +3149,7 @@ input PostCreateWithoutNotificationsInput {
   likedByMe: Boolean
   commentsCount: Int
   sharesCount: Int
+  _deleted: Boolean
 }
 
 input PostCreateWithoutOwnerInput {
@@ -3171,6 +3175,7 @@ input PostCreateWithoutOwnerInput {
   commentsCount: Int
   sharesCount: Int
   notifications: NotificationCreateManyWithoutPostInput
+  _deleted: Boolean
 }
 
 input PostCreateWithoutUpdatesInput {
@@ -3196,6 +3201,7 @@ input PostCreateWithoutUpdatesInput {
   commentsCount: Int
   sharesCount: Int
   notifications: NotificationCreateManyWithoutPostInput
+  _deleted: Boolean
 }
 
 type PostEdge {
@@ -3236,6 +3242,8 @@ enum PostOrderByInput {
   commentsCount_DESC
   sharesCount_ASC
   sharesCount_DESC
+  _deleted_ASC
+  _deleted_DESC
 }
 
 type PostPreviousValues {
@@ -3257,6 +3265,7 @@ type PostPreviousValues {
   likedByMe: Boolean
   commentsCount: Int
   sharesCount: Int
+  _deleted: Boolean
 }
 
 input PostScalarWhereInput {
@@ -3418,6 +3427,8 @@ input PostScalarWhereInput {
   sharesCount_lte: Int
   sharesCount_gt: Int
   sharesCount_gte: Int
+  _deleted: Boolean
+  _deleted_not: Boolean
   AND: [PostScalarWhereInput!]
   OR: [PostScalarWhereInput!]
   NOT: [PostScalarWhereInput!]
@@ -3468,6 +3479,7 @@ input PostUpdateInput {
   commentsCount: Int
   sharesCount: Int
   notifications: NotificationUpdateManyWithoutPostInput
+  _deleted: Boolean
 }
 
 input PostUpdatelikesInput {
@@ -3491,6 +3503,7 @@ input PostUpdateManyDataInput {
   likedByMe: Boolean
   commentsCount: Int
   sharesCount: Int
+  _deleted: Boolean
 }
 
 input PostUpdateManyMutationInput {
@@ -3510,6 +3523,7 @@ input PostUpdateManyMutationInput {
   likedByMe: Boolean
   commentsCount: Int
   sharesCount: Int
+  _deleted: Boolean
 }
 
 input PostUpdateManyWithoutOwnerInput {
@@ -3576,6 +3590,7 @@ input PostUpdateWithoutCommentsDataInput {
   commentsCount: Int
   sharesCount: Int
   notifications: NotificationUpdateManyWithoutPostInput
+  _deleted: Boolean
 }
 
 input PostUpdateWithoutNotificationsDataInput {
@@ -3600,6 +3615,7 @@ input PostUpdateWithoutNotificationsDataInput {
   likedByMe: Boolean
   commentsCount: Int
   sharesCount: Int
+  _deleted: Boolean
 }
 
 input PostUpdateWithoutOwnerDataInput {
@@ -3624,6 +3640,7 @@ input PostUpdateWithoutOwnerDataInput {
   commentsCount: Int
   sharesCount: Int
   notifications: NotificationUpdateManyWithoutPostInput
+  _deleted: Boolean
 }
 
 input PostUpdateWithoutUpdatesDataInput {
@@ -3648,6 +3665,7 @@ input PostUpdateWithoutUpdatesDataInput {
   commentsCount: Int
   sharesCount: Int
   notifications: NotificationUpdateManyWithoutPostInput
+  _deleted: Boolean
 }
 
 input PostUpdateWithWhereUniqueWithoutOwnerInput {
@@ -3849,6 +3867,8 @@ input PostWhereInput {
   notifications_every: NotificationWhereInput
   notifications_some: NotificationWhereInput
   notifications_none: NotificationWhereInput
+  _deleted: Boolean
+  _deleted_not: Boolean
   AND: [PostWhereInput!]
   OR: [PostWhereInput!]
   NOT: [PostWhereInput!]

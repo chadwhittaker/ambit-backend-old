@@ -824,7 +824,9 @@ export type PostOrderByInput =
   | "commentsCount_ASC"
   | "commentsCount_DESC"
   | "sharesCount_ASC"
-  | "sharesCount_DESC";
+  | "sharesCount_DESC"
+  | "_deleted_ASC"
+  | "_deleted_DESC";
 
 export type StoryItemOrderByInput =
   | "id_ASC"
@@ -1514,6 +1516,8 @@ export interface PostWhereInput {
   notifications_every?: Maybe<NotificationWhereInput>;
   notifications_some?: Maybe<NotificationWhereInput>;
   notifications_none?: Maybe<NotificationWhereInput>;
+  _deleted?: Maybe<Boolean>;
+  _deleted_not?: Maybe<Boolean>;
   AND?: Maybe<PostWhereInput[] | PostWhereInput>;
   OR?: Maybe<PostWhereInput[] | PostWhereInput>;
   NOT?: Maybe<PostWhereInput[] | PostWhereInput>;
@@ -2460,6 +2464,7 @@ export interface PostUpdateWithoutOwnerDataInput {
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
   notifications?: Maybe<NotificationUpdateManyWithoutPostInput>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface StoryCreateWithoutItemsInput {
@@ -2643,6 +2648,7 @@ export interface PostUpdateInput {
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
   notifications?: Maybe<NotificationUpdateManyWithoutPostInput>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface PostUpdateWithoutUpdatesDataInput {
@@ -2667,6 +2673,7 @@ export interface PostUpdateWithoutUpdatesDataInput {
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
   notifications?: Maybe<NotificationUpdateManyWithoutPostInput>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface PostCreateInput {
@@ -2693,6 +2700,7 @@ export interface PostCreateInput {
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
   notifications?: Maybe<NotificationCreateManyWithoutPostInput>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface UserUpdateOneRequiredWithoutPostsInput {
@@ -3614,6 +3622,7 @@ export interface PostCreateWithoutOwnerInput {
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
   notifications?: Maybe<NotificationCreateManyWithoutPostInput>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface MeetingUpdateManyDataInput {
@@ -3703,6 +3712,7 @@ export interface PostCreateWithoutUpdatesInput {
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
   notifications?: Maybe<NotificationCreateManyWithoutPostInput>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface GroupUpdateWithoutUsersDataInput {
@@ -4517,6 +4527,7 @@ export interface PostCreateWithoutNotificationsInput {
   likedByMe?: Maybe<Boolean>;
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface UserUpdateManyWithoutGroupsInput {
@@ -5318,6 +5329,7 @@ export interface PostUpdateWithoutNotificationsDataInput {
   likedByMe?: Maybe<Boolean>;
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface UpdateSubscriptionWhereInput {
@@ -5647,6 +5659,7 @@ export interface PostUpdateWithoutCommentsDataInput {
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
   notifications?: Maybe<NotificationUpdateManyWithoutPostInput>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export type MeetingWhereUniqueInput = AtLeastOne<{
@@ -6661,6 +6674,7 @@ export interface PostUpdateManyMutationInput {
   likedByMe?: Maybe<Boolean>;
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface UpdateUpdateManyDataInput {
@@ -6859,6 +6873,7 @@ export interface PostCreateWithoutCommentsInput {
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
   notifications?: Maybe<NotificationCreateManyWithoutPostInput>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface UserUpsertWithWhereUniqueWithoutConnectionsInput {
@@ -7138,6 +7153,8 @@ export interface PostScalarWhereInput {
   sharesCount_lte?: Maybe<Int>;
   sharesCount_gt?: Maybe<Int>;
   sharesCount_gte?: Maybe<Int>;
+  _deleted?: Maybe<Boolean>;
+  _deleted_not?: Maybe<Boolean>;
   AND?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
   OR?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
   NOT?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
@@ -7185,6 +7202,7 @@ export interface PostUpdateManyDataInput {
   likedByMe?: Maybe<Boolean>;
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface NotificationUpdateManyMutationInput {
@@ -9970,6 +9988,7 @@ export interface Post {
   likedByMe?: Boolean;
   commentsCount?: Int;
   sharesCount?: Int;
+  _deleted?: Boolean;
 }
 
 export interface PostPromise extends Promise<Post>, Fragmentable {
@@ -10029,6 +10048,7 @@ export interface PostPromise extends Promise<Post>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  _deleted: () => Promise<Boolean>;
 }
 
 export interface PostSubscription
@@ -10090,6 +10110,7 @@ export interface PostSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  _deleted: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface PostNullablePromise
@@ -10151,6 +10172,7 @@ export interface PostNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
+  _deleted: () => Promise<Boolean>;
 }
 
 export interface ListPreviousValues {
@@ -10894,6 +10916,7 @@ export interface PostPreviousValues {
   likedByMe?: Boolean;
   commentsCount?: Int;
   sharesCount?: Int;
+  _deleted?: Boolean;
 }
 
 export interface PostPreviousValuesPromise
@@ -10917,6 +10940,7 @@ export interface PostPreviousValuesPromise
   likedByMe: () => Promise<Boolean>;
   commentsCount: () => Promise<Int>;
   sharesCount: () => Promise<Int>;
+  _deleted: () => Promise<Boolean>;
 }
 
 export interface PostPreviousValuesSubscription
@@ -10940,6 +10964,7 @@ export interface PostPreviousValuesSubscription
   likedByMe: () => Promise<AsyncIterator<Boolean>>;
   commentsCount: () => Promise<AsyncIterator<Int>>;
   sharesCount: () => Promise<AsyncIterator<Int>>;
+  _deleted: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface AggregateGroup {
