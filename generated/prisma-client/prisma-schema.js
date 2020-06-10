@@ -82,6 +82,7 @@ type Comment {
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   commentsCount: Int
   notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification!]
+  _deleted: Boolean
 }
 
 type CommentConnection {
@@ -104,6 +105,7 @@ input CommentCreateInput {
   comments: CommentCreateManyWithoutParentCommentInput
   commentsCount: Int
   notifications: NotificationCreateManyWithoutCommentInput
+  _deleted: Boolean
 }
 
 input CommentCreatelikesInput {
@@ -148,6 +150,7 @@ input CommentCreateWithoutCommentsInput {
   likedByMe: Boolean
   commentsCount: Int
   notifications: NotificationCreateManyWithoutCommentInput
+  _deleted: Boolean
 }
 
 input CommentCreateWithoutNotificationsInput {
@@ -163,6 +166,7 @@ input CommentCreateWithoutNotificationsInput {
   likedByMe: Boolean
   comments: CommentCreateManyWithoutParentCommentInput
   commentsCount: Int
+  _deleted: Boolean
 }
 
 input CommentCreateWithoutParentCommentInput {
@@ -178,6 +182,7 @@ input CommentCreateWithoutParentCommentInput {
   comments: CommentCreateManyWithoutParentCommentInput
   commentsCount: Int
   notifications: NotificationCreateManyWithoutCommentInput
+  _deleted: Boolean
 }
 
 input CommentCreateWithoutParentPostInput {
@@ -193,6 +198,7 @@ input CommentCreateWithoutParentPostInput {
   comments: CommentCreateManyWithoutParentCommentInput
   commentsCount: Int
   notifications: NotificationCreateManyWithoutCommentInput
+  _deleted: Boolean
 }
 
 input CommentCreateWithoutParentUpdateInput {
@@ -208,6 +214,7 @@ input CommentCreateWithoutParentUpdateInput {
   comments: CommentCreateManyWithoutParentCommentInput
   commentsCount: Int
   notifications: NotificationCreateManyWithoutCommentInput
+  _deleted: Boolean
 }
 
 type CommentEdge {
@@ -230,6 +237,8 @@ enum CommentOrderByInput {
   likedByMe_DESC
   commentsCount_ASC
   commentsCount_DESC
+  _deleted_ASC
+  _deleted_DESC
 }
 
 type CommentPreviousValues {
@@ -241,6 +250,7 @@ type CommentPreviousValues {
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
+  _deleted: Boolean
 }
 
 input CommentScalarWhereInput {
@@ -312,6 +322,8 @@ input CommentScalarWhereInput {
   commentsCount_lte: Int
   commentsCount_gt: Int
   commentsCount_gte: Int
+  _deleted: Boolean
+  _deleted_not: Boolean
   AND: [CommentScalarWhereInput!]
   OR: [CommentScalarWhereInput!]
   NOT: [CommentScalarWhereInput!]
@@ -348,6 +360,7 @@ input CommentUpdateInput {
   comments: CommentUpdateManyWithoutParentCommentInput
   commentsCount: Int
   notifications: NotificationUpdateManyWithoutCommentInput
+  _deleted: Boolean
 }
 
 input CommentUpdatelikesInput {
@@ -361,6 +374,7 @@ input CommentUpdateManyDataInput {
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
+  _deleted: Boolean
 }
 
 input CommentUpdateManyMutationInput {
@@ -370,6 +384,7 @@ input CommentUpdateManyMutationInput {
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
+  _deleted: Boolean
 }
 
 input CommentUpdateManyWithoutParentCommentInput {
@@ -443,6 +458,7 @@ input CommentUpdateWithoutCommentsDataInput {
   likedByMe: Boolean
   commentsCount: Int
   notifications: NotificationUpdateManyWithoutCommentInput
+  _deleted: Boolean
 }
 
 input CommentUpdateWithoutNotificationsDataInput {
@@ -457,6 +473,7 @@ input CommentUpdateWithoutNotificationsDataInput {
   likedByMe: Boolean
   comments: CommentUpdateManyWithoutParentCommentInput
   commentsCount: Int
+  _deleted: Boolean
 }
 
 input CommentUpdateWithoutParentCommentDataInput {
@@ -471,6 +488,7 @@ input CommentUpdateWithoutParentCommentDataInput {
   comments: CommentUpdateManyWithoutParentCommentInput
   commentsCount: Int
   notifications: NotificationUpdateManyWithoutCommentInput
+  _deleted: Boolean
 }
 
 input CommentUpdateWithoutParentPostDataInput {
@@ -485,6 +503,7 @@ input CommentUpdateWithoutParentPostDataInput {
   comments: CommentUpdateManyWithoutParentCommentInput
   commentsCount: Int
   notifications: NotificationUpdateManyWithoutCommentInput
+  _deleted: Boolean
 }
 
 input CommentUpdateWithoutParentUpdateDataInput {
@@ -499,6 +518,7 @@ input CommentUpdateWithoutParentUpdateDataInput {
   comments: CommentUpdateManyWithoutParentCommentInput
   commentsCount: Int
   notifications: NotificationUpdateManyWithoutCommentInput
+  _deleted: Boolean
 }
 
 input CommentUpdateWithWhereUniqueWithoutParentCommentInput {
@@ -623,6 +643,8 @@ input CommentWhereInput {
   notifications_every: NotificationWhereInput
   notifications_some: NotificationWhereInput
   notifications_none: NotificationWhereInput
+  _deleted: Boolean
+  _deleted_not: Boolean
   AND: [CommentWhereInput!]
   OR: [CommentWhereInput!]
   NOT: [CommentWhereInput!]
@@ -5474,6 +5496,7 @@ type Update {
   commentsCount: Int
   sharesCount: Int
   notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification!]
+  _deleted: Boolean
 }
 
 type UpdateConnection {
@@ -5494,6 +5517,7 @@ input UpdateCreateInput {
   commentsCount: Int
   sharesCount: Int
   notifications: NotificationCreateManyWithoutUpdateInput
+  _deleted: Boolean
 }
 
 input UpdateCreatelikesInput {
@@ -5526,6 +5550,7 @@ input UpdateCreateWithoutCommentsInput {
   commentsCount: Int
   sharesCount: Int
   notifications: NotificationCreateManyWithoutUpdateInput
+  _deleted: Boolean
 }
 
 input UpdateCreateWithoutNotificationsInput {
@@ -5539,6 +5564,7 @@ input UpdateCreateWithoutNotificationsInput {
   comments: CommentCreateManyWithoutParentUpdateInput
   commentsCount: Int
   sharesCount: Int
+  _deleted: Boolean
 }
 
 input UpdateCreateWithoutParentPostInput {
@@ -5552,6 +5578,7 @@ input UpdateCreateWithoutParentPostInput {
   commentsCount: Int
   sharesCount: Int
   notifications: NotificationCreateManyWithoutUpdateInput
+  _deleted: Boolean
 }
 
 type UpdateEdge {
@@ -5576,6 +5603,8 @@ enum UpdateOrderByInput {
   commentsCount_DESC
   sharesCount_ASC
   sharesCount_DESC
+  _deleted_ASC
+  _deleted_DESC
 }
 
 type UpdatePreviousValues {
@@ -5588,6 +5617,7 @@ type UpdatePreviousValues {
   likedByMe: Boolean
   commentsCount: Int
   sharesCount: Int
+  _deleted: Boolean
 }
 
 input UpdateScalarWhereInput {
@@ -5667,6 +5697,8 @@ input UpdateScalarWhereInput {
   sharesCount_lte: Int
   sharesCount_gt: Int
   sharesCount_gte: Int
+  _deleted: Boolean
+  _deleted_not: Boolean
   AND: [UpdateScalarWhereInput!]
   OR: [UpdateScalarWhereInput!]
   NOT: [UpdateScalarWhereInput!]
@@ -5701,6 +5733,7 @@ input UpdateUpdateInput {
   commentsCount: Int
   sharesCount: Int
   notifications: NotificationUpdateManyWithoutUpdateInput
+  _deleted: Boolean
 }
 
 input UpdateUpdatelikesInput {
@@ -5715,6 +5748,7 @@ input UpdateUpdateManyDataInput {
   likedByMe: Boolean
   commentsCount: Int
   sharesCount: Int
+  _deleted: Boolean
 }
 
 input UpdateUpdateManyMutationInput {
@@ -5725,6 +5759,7 @@ input UpdateUpdateManyMutationInput {
   likedByMe: Boolean
   commentsCount: Int
   sharesCount: Int
+  _deleted: Boolean
 }
 
 input UpdateUpdateManyWithoutParentPostInput {
@@ -5772,6 +5807,7 @@ input UpdateUpdateWithoutCommentsDataInput {
   commentsCount: Int
   sharesCount: Int
   notifications: NotificationUpdateManyWithoutUpdateInput
+  _deleted: Boolean
 }
 
 input UpdateUpdateWithoutNotificationsDataInput {
@@ -5784,6 +5820,7 @@ input UpdateUpdateWithoutNotificationsDataInput {
   comments: CommentUpdateManyWithoutParentUpdateInput
   commentsCount: Int
   sharesCount: Int
+  _deleted: Boolean
 }
 
 input UpdateUpdateWithoutParentPostDataInput {
@@ -5796,6 +5833,7 @@ input UpdateUpdateWithoutParentPostDataInput {
   commentsCount: Int
   sharesCount: Int
   notifications: NotificationUpdateManyWithoutUpdateInput
+  _deleted: Boolean
 }
 
 input UpdateUpdateWithWhereUniqueWithoutParentPostInput {
@@ -5903,6 +5941,8 @@ input UpdateWhereInput {
   notifications_every: NotificationWhereInput
   notifications_some: NotificationWhereInput
   notifications_none: NotificationWhereInput
+  _deleted: Boolean
+  _deleted_not: Boolean
   AND: [UpdateWhereInput!]
   OR: [UpdateWhereInput!]
   NOT: [UpdateWhereInput!]

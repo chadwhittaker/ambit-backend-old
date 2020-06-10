@@ -756,7 +756,9 @@ export type UpdateOrderByInput =
   | "commentsCount_ASC"
   | "commentsCount_DESC"
   | "sharesCount_ASC"
-  | "sharesCount_DESC";
+  | "sharesCount_DESC"
+  | "_deleted_ASC"
+  | "_deleted_DESC";
 
 export type GroupOrderByInput =
   | "id_ASC"
@@ -778,7 +780,9 @@ export type CommentOrderByInput =
   | "likedByMe_ASC"
   | "likedByMe_DESC"
   | "commentsCount_ASC"
-  | "commentsCount_DESC";
+  | "commentsCount_DESC"
+  | "_deleted_ASC"
+  | "_deleted_DESC";
 
 export type MeetingOrderByInput =
   | "id_ASC"
@@ -1146,6 +1150,8 @@ export interface UpdateWhereInput {
   notifications_every?: Maybe<NotificationWhereInput>;
   notifications_some?: Maybe<NotificationWhereInput>;
   notifications_none?: Maybe<NotificationWhereInput>;
+  _deleted?: Maybe<Boolean>;
+  _deleted_not?: Maybe<Boolean>;
   AND?: Maybe<UpdateWhereInput[] | UpdateWhereInput>;
   OR?: Maybe<UpdateWhereInput[] | UpdateWhereInput>;
   NOT?: Maybe<UpdateWhereInput[] | UpdateWhereInput>;
@@ -1272,6 +1278,8 @@ export interface CommentWhereInput {
   notifications_every?: Maybe<NotificationWhereInput>;
   notifications_some?: Maybe<NotificationWhereInput>;
   notifications_none?: Maybe<NotificationWhereInput>;
+  _deleted?: Maybe<Boolean>;
+  _deleted_not?: Maybe<Boolean>;
   AND?: Maybe<CommentWhereInput[] | CommentWhereInput>;
   OR?: Maybe<CommentWhereInput[] | CommentWhereInput>;
   NOT?: Maybe<CommentWhereInput[] | CommentWhereInput>;
@@ -2227,6 +2235,7 @@ export interface UpdateCreateInput {
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
   notifications?: Maybe<NotificationCreateManyWithoutUpdateInput>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface EducationScalarWhereInput {
@@ -2577,6 +2586,7 @@ export interface CommentUpdateWithoutParentPostDataInput {
   comments?: Maybe<CommentUpdateManyWithoutParentCommentInput>;
   commentsCount?: Maybe<Int>;
   notifications?: Maybe<NotificationUpdateManyWithoutCommentInput>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface SkillUpdateInput {
@@ -2609,6 +2619,7 @@ export interface UpdateUpdateWithoutCommentsDataInput {
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
   notifications?: Maybe<NotificationUpdateManyWithoutUpdateInput>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface SkillCreateInput {
@@ -3102,6 +3113,7 @@ export interface CommentCreateInput {
   comments?: Maybe<CommentCreateManyWithoutParentCommentInput>;
   commentsCount?: Maybe<Int>;
   notifications?: Maybe<NotificationCreateManyWithoutCommentInput>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface StoryWhereInput {
@@ -3652,6 +3664,7 @@ export interface CommentCreateWithoutParentPostInput {
   comments?: Maybe<CommentCreateManyWithoutParentCommentInput>;
   commentsCount?: Maybe<Int>;
   notifications?: Maybe<NotificationCreateManyWithoutCommentInput>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface GroupUpdateManyWithoutUsersInput {
@@ -3682,6 +3695,7 @@ export interface UpdateCreateWithoutCommentsInput {
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
   notifications?: Maybe<NotificationCreateManyWithoutUpdateInput>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface GroupUpdateWithWhereUniqueWithoutUsersInput {
@@ -4561,6 +4575,7 @@ export interface UpdateCreateWithoutParentPostInput {
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
   notifications?: Maybe<NotificationCreateManyWithoutUpdateInput>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface UserUpdateWithWhereUniqueWithoutGroupsInput {
@@ -4815,6 +4830,7 @@ export interface CommentCreateWithoutParentCommentInput {
   comments?: Maybe<CommentCreateManyWithoutParentCommentInput>;
   commentsCount?: Maybe<Int>;
   notifications?: Maybe<NotificationCreateManyWithoutCommentInput>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface StoryItemScalarWhereInput {
@@ -5495,6 +5511,7 @@ export interface UpdateUpdateWithoutParentPostDataInput {
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
   notifications?: Maybe<NotificationUpdateManyWithoutUpdateInput>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface GroupSubscriptionWhereInput {
@@ -5570,6 +5587,7 @@ export interface UpdateUpdateInput {
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
   notifications?: Maybe<NotificationUpdateManyWithoutUpdateInput>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface CommentUpdateWithWhereUniqueWithoutParentUpdateInput {
@@ -5601,6 +5619,7 @@ export interface CommentUpdateWithoutParentUpdateDataInput {
   comments?: Maybe<CommentUpdateManyWithoutParentCommentInput>;
   commentsCount?: Maybe<Int>;
   notifications?: Maybe<NotificationUpdateManyWithoutCommentInput>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface StoryUpdateWithoutItemsDataInput {
@@ -5867,6 +5886,7 @@ export interface UpdateUpdateWithoutNotificationsDataInput {
   comments?: Maybe<CommentUpdateManyWithoutParentUpdateInput>;
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface SkillCreateManyWithoutOwnerInput {
@@ -5912,6 +5932,7 @@ export interface CommentUpdateWithoutNotificationsDataInput {
   likedByMe?: Maybe<Boolean>;
   comments?: Maybe<CommentUpdateManyWithoutParentCommentInput>;
   commentsCount?: Maybe<Int>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface UpdateCreateOneWithoutCommentsInput {
@@ -5945,6 +5966,7 @@ export interface CommentUpdateWithoutCommentsDataInput {
   likedByMe?: Maybe<Boolean>;
   commentsCount?: Maybe<Int>;
   notifications?: Maybe<NotificationUpdateManyWithoutCommentInput>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface UserCreateManyWithoutFollowingInput {
@@ -6124,6 +6146,7 @@ export interface CommentCreateWithoutParentUpdateInput {
   comments?: Maybe<CommentCreateManyWithoutParentCommentInput>;
   commentsCount?: Maybe<Int>;
   notifications?: Maybe<NotificationCreateManyWithoutCommentInput>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface CommentUpdateManyWithoutParentCommentInput {
@@ -6181,6 +6204,7 @@ export interface CommentUpdateWithoutParentCommentDataInput {
   comments?: Maybe<CommentUpdateManyWithoutParentCommentInput>;
   commentsCount?: Maybe<Int>;
   notifications?: Maybe<NotificationUpdateManyWithoutCommentInput>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface CommentCreateWithoutNotificationsInput {
@@ -6196,6 +6220,7 @@ export interface CommentCreateWithoutNotificationsInput {
   likedByMe?: Maybe<Boolean>;
   comments?: Maybe<CommentCreateManyWithoutParentCommentInput>;
   commentsCount?: Maybe<Int>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface CommentUpsertWithWhereUniqueWithoutParentCommentInput {
@@ -6283,6 +6308,8 @@ export interface CommentScalarWhereInput {
   commentsCount_lte?: Maybe<Int>;
   commentsCount_gt?: Maybe<Int>;
   commentsCount_gte?: Maybe<Int>;
+  _deleted?: Maybe<Boolean>;
+  _deleted_not?: Maybe<Boolean>;
   AND?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
   OR?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
   NOT?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
@@ -6353,6 +6380,7 @@ export interface CommentUpdateManyDataInput {
   likesCount?: Maybe<Int>;
   likedByMe?: Maybe<Boolean>;
   commentsCount?: Maybe<Int>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface ListUpdateOneWithoutMainTopicsInput {
@@ -6503,6 +6531,7 @@ export interface UpdateUpdateManyMutationInput {
   likedByMe?: Maybe<Boolean>;
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface NotificationUpsertWithWhereUniqueWithoutUpdateInput {
@@ -6605,6 +6634,8 @@ export interface UpdateScalarWhereInput {
   sharesCount_lte?: Maybe<Int>;
   sharesCount_gt?: Maybe<Int>;
   sharesCount_gte?: Maybe<Int>;
+  _deleted?: Maybe<Boolean>;
+  _deleted_not?: Maybe<Boolean>;
   AND?: Maybe<UpdateScalarWhereInput[] | UpdateScalarWhereInput>;
   OR?: Maybe<UpdateScalarWhereInput[] | UpdateScalarWhereInput>;
   NOT?: Maybe<UpdateScalarWhereInput[] | UpdateScalarWhereInput>;
@@ -6685,6 +6716,7 @@ export interface UpdateUpdateManyDataInput {
   likedByMe?: Maybe<Boolean>;
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface MessageUpdateManyMutationInput {
@@ -6893,6 +6925,7 @@ export interface UpdateCreateWithoutNotificationsInput {
   comments?: Maybe<CommentCreateManyWithoutParentUpdateInput>;
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface UserUpsertWithoutPostsInput {
@@ -7217,6 +7250,7 @@ export interface CommentUpdateManyMutationInput {
   likesCount?: Maybe<Int>;
   likedByMe?: Maybe<Boolean>;
   commentsCount?: Maybe<Int>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface UserCreateManyWithoutMeetingsInput {
@@ -7357,6 +7391,7 @@ export interface CommentUpdateInput {
   comments?: Maybe<CommentUpdateManyWithoutParentCommentInput>;
   commentsCount?: Maybe<Int>;
   notifications?: Maybe<NotificationUpdateManyWithoutCommentInput>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface UserUpdateOneRequiredWithoutEducationInput {
@@ -8124,6 +8159,7 @@ export interface CommentCreateWithoutCommentsInput {
   likedByMe?: Maybe<Boolean>;
   commentsCount?: Maybe<Int>;
   notifications?: Maybe<NotificationCreateManyWithoutCommentInput>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface NodeNode {
@@ -8547,6 +8583,7 @@ export interface Comment {
   likesCount?: Int;
   likedByMe?: Boolean;
   commentsCount?: Int;
+  _deleted?: Boolean;
 }
 
 export interface CommentPromise extends Promise<Comment>, Fragmentable {
@@ -8580,6 +8617,7 @@ export interface CommentPromise extends Promise<Comment>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  _deleted: () => Promise<Boolean>;
 }
 
 export interface CommentSubscription
@@ -8615,6 +8653,7 @@ export interface CommentSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  _deleted: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface CommentNullablePromise
@@ -8650,6 +8689,7 @@ export interface CommentNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
+  _deleted: () => Promise<Boolean>;
 }
 
 export interface TopicEdge {
@@ -8719,6 +8759,7 @@ export interface CommentPreviousValues {
   likesCount?: Int;
   likedByMe?: Boolean;
   commentsCount?: Int;
+  _deleted?: Boolean;
 }
 
 export interface CommentPreviousValuesPromise
@@ -8732,6 +8773,7 @@ export interface CommentPreviousValuesPromise
   likesCount: () => Promise<Int>;
   likedByMe: () => Promise<Boolean>;
   commentsCount: () => Promise<Int>;
+  _deleted: () => Promise<Boolean>;
 }
 
 export interface CommentPreviousValuesSubscription
@@ -8745,6 +8787,7 @@ export interface CommentPreviousValuesSubscription
   likesCount: () => Promise<AsyncIterator<Int>>;
   likedByMe: () => Promise<AsyncIterator<Boolean>>;
   commentsCount: () => Promise<AsyncIterator<Int>>;
+  _deleted: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface StoryItemConnection {
@@ -9897,6 +9940,7 @@ export interface UpdatePreviousValues {
   likedByMe?: Boolean;
   commentsCount?: Int;
   sharesCount?: Int;
+  _deleted?: Boolean;
 }
 
 export interface UpdatePreviousValuesPromise
@@ -9911,6 +9955,7 @@ export interface UpdatePreviousValuesPromise
   likedByMe: () => Promise<Boolean>;
   commentsCount: () => Promise<Int>;
   sharesCount: () => Promise<Int>;
+  _deleted: () => Promise<Boolean>;
 }
 
 export interface UpdatePreviousValuesSubscription
@@ -9925,6 +9970,7 @@ export interface UpdatePreviousValuesSubscription
   likedByMe: () => Promise<AsyncIterator<Boolean>>;
   commentsCount: () => Promise<AsyncIterator<Int>>;
   sharesCount: () => Promise<AsyncIterator<Int>>;
+  _deleted: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface ListEdge {
@@ -10736,6 +10782,7 @@ export interface Update {
   likedByMe?: Boolean;
   commentsCount?: Int;
   sharesCount?: Int;
+  _deleted?: Boolean;
 }
 
 export interface UpdatePromise extends Promise<Update>, Fragmentable {
@@ -10767,6 +10814,7 @@ export interface UpdatePromise extends Promise<Update>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  _deleted: () => Promise<Boolean>;
 }
 
 export interface UpdateSubscription
@@ -10800,6 +10848,7 @@ export interface UpdateSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  _deleted: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface UpdateNullablePromise
@@ -10833,6 +10882,7 @@ export interface UpdateNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
+  _deleted: () => Promise<Boolean>;
 }
 
 export interface MessageConnection {
