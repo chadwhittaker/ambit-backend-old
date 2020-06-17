@@ -168,6 +168,37 @@ const Query = {
     return posts
   },
 
+  async postsMyGoals(parent, { after, first = 6 }, context) {
+
+    if (!context.request.userId) {
+      // don't throw an error, just return nothing. It is ok to not be logged in.
+      return [];
+    }
+
+    const posts = await context.prisma.postsConnection(
+      {
+        first,
+        after,
+        where: {
+          AND: [
+            {
+              owner: {
+                id: context.request.userId,
+              }
+            },
+            {
+              isGoal: true,
+            }
+          ]
+
+        },
+        orderBy: 'lastUpdated_DESC'
+      }
+    );
+
+    return posts
+  },
+
   async postsForYou(parent, { after, first = 20 }, context) {
 
     // get current user data

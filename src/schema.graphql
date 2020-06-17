@@ -18,6 +18,7 @@ type Query {
   # posts
   postsNetwork(after: String, first: Int, network: [ID]): PostConnection!
   postsForYou(after: String, first: Int): PostConnection!
+  postsMyGoals(after: String, first: Int): PostConnection!
   postsTopic(topicID: String!, after: String): PostConnection!
   postsSearch(text: String, goal: String, topicID: String, lat: Float, lon: Float, after: String): PostConnection!
   postsUser(id: ID!): [Post]!
