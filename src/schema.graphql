@@ -69,6 +69,7 @@ type Mutation {
   createPost(owner: ID!, post: PostCreateInput!): Post
   deletePost(ownerID: ID!, id: ID!): Post
   likePost(postId: ID!): Post!
+  editGoalStatus(ownerID: ID!, id: ID!, goalStatus: String!): Post!
 
   #update
   createUpdate(postId: ID!, update: UpdateCreateWithoutParentPostInput!): Post

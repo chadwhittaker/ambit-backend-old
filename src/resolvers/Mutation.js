@@ -638,6 +638,31 @@ const Mutation = {
     return post
   },
 
+  async editGoalStatus(parent, { ownerID, id, goalStatus }, context) {
+
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      throw new Error(`You must be logged in to do that`)
+    }
+
+    // 2. check if user on the request owns the post
+    if (context.request.userId !== ownerID) {
+      throw new Error(`You cannot edit a post that is not your own`)
+    }
+
+    // 3. create experience & connect to owner
+    const post = await context.prisma.updatePost({
+      data: {
+        goalStatus,
+      },
+      where: {
+        id,
+      }
+    })
+
+    return post
+  },
+
   // ================
   // UPDATES
   // ================
