@@ -807,6 +807,8 @@ export type PostOrderByInput =
   | "isGoal_DESC"
   | "goal_ASC"
   | "goal_DESC"
+  | "goalStatus_ASC"
+  | "goalStatus_DESC"
   | "location_ASC"
   | "location_DESC"
   | "locationID_ASC"
@@ -1399,6 +1401,20 @@ export interface PostWhereInput {
   goal_not_starts_with?: Maybe<String>;
   goal_ends_with?: Maybe<String>;
   goal_not_ends_with?: Maybe<String>;
+  goalStatus?: Maybe<String>;
+  goalStatus_not?: Maybe<String>;
+  goalStatus_in?: Maybe<String[] | String>;
+  goalStatus_not_in?: Maybe<String[] | String>;
+  goalStatus_lt?: Maybe<String>;
+  goalStatus_lte?: Maybe<String>;
+  goalStatus_gt?: Maybe<String>;
+  goalStatus_gte?: Maybe<String>;
+  goalStatus_contains?: Maybe<String>;
+  goalStatus_not_contains?: Maybe<String>;
+  goalStatus_starts_with?: Maybe<String>;
+  goalStatus_not_starts_with?: Maybe<String>;
+  goalStatus_ends_with?: Maybe<String>;
+  goalStatus_not_ends_with?: Maybe<String>;
   subField?: Maybe<TopicWhereInput>;
   topics_every?: Maybe<TopicWhereInput>;
   topics_some?: Maybe<TopicWhereInput>;
@@ -2455,6 +2471,7 @@ export interface PostUpdateWithoutOwnerDataInput {
   lastUpdated?: Maybe<DateTimeInput>;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
+  goalStatus?: Maybe<String>;
   subField?: Maybe<TopicUpdateOneInput>;
   topics?: Maybe<TopicUpdateManyInput>;
   location?: Maybe<String>;
@@ -2641,6 +2658,7 @@ export interface PostUpdateInput {
   owner?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
+  goalStatus?: Maybe<String>;
   subField?: Maybe<TopicUpdateOneInput>;
   topics?: Maybe<TopicUpdateManyInput>;
   location?: Maybe<String>;
@@ -2667,6 +2685,7 @@ export interface PostUpdateWithoutUpdatesDataInput {
   owner?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
+  goalStatus?: Maybe<String>;
   subField?: Maybe<TopicUpdateOneInput>;
   topics?: Maybe<TopicUpdateManyInput>;
   location?: Maybe<String>;
@@ -2693,6 +2712,7 @@ export interface PostCreateInput {
   owner: UserCreateOneWithoutPostsInput;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
+  goalStatus?: Maybe<String>;
   subField?: Maybe<TopicCreateOneInput>;
   topics?: Maybe<TopicCreateManyInput>;
   location?: Maybe<String>;
@@ -3616,6 +3636,7 @@ export interface PostCreateWithoutOwnerInput {
   lastUpdated: DateTimeInput;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
+  goalStatus?: Maybe<String>;
   subField?: Maybe<TopicCreateOneInput>;
   topics?: Maybe<TopicCreateManyInput>;
   location?: Maybe<String>;
@@ -3709,6 +3730,7 @@ export interface PostCreateWithoutUpdatesInput {
   owner: UserCreateOneWithoutPostsInput;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
+  goalStatus?: Maybe<String>;
   subField?: Maybe<TopicCreateOneInput>;
   topics?: Maybe<TopicCreateManyInput>;
   location?: Maybe<String>;
@@ -4524,6 +4546,7 @@ export interface PostCreateWithoutNotificationsInput {
   owner: UserCreateOneWithoutPostsInput;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
+  goalStatus?: Maybe<String>;
   subField?: Maybe<TopicCreateOneInput>;
   topics?: Maybe<TopicCreateManyInput>;
   location?: Maybe<String>;
@@ -5328,6 +5351,7 @@ export interface PostUpdateWithoutNotificationsDataInput {
   owner?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
+  goalStatus?: Maybe<String>;
   subField?: Maybe<TopicUpdateOneInput>;
   topics?: Maybe<TopicUpdateManyInput>;
   location?: Maybe<String>;
@@ -5661,6 +5685,7 @@ export interface PostUpdateWithoutCommentsDataInput {
   owner?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
+  goalStatus?: Maybe<String>;
   subField?: Maybe<TopicUpdateOneInput>;
   topics?: Maybe<TopicUpdateManyInput>;
   location?: Maybe<String>;
@@ -6692,6 +6717,7 @@ export interface PostUpdateManyMutationInput {
   lastUpdated?: Maybe<DateTimeInput>;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
+  goalStatus?: Maybe<String>;
   location?: Maybe<String>;
   locationID?: Maybe<String>;
   locationLat?: Maybe<Float>;
@@ -6888,6 +6914,7 @@ export interface PostCreateWithoutCommentsInput {
   owner: UserCreateOneWithoutPostsInput;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
+  goalStatus?: Maybe<String>;
   subField?: Maybe<TopicCreateOneInput>;
   topics?: Maybe<TopicCreateManyInput>;
   location?: Maybe<String>;
@@ -7074,6 +7101,20 @@ export interface PostScalarWhereInput {
   goal_not_starts_with?: Maybe<String>;
   goal_ends_with?: Maybe<String>;
   goal_not_ends_with?: Maybe<String>;
+  goalStatus?: Maybe<String>;
+  goalStatus_not?: Maybe<String>;
+  goalStatus_in?: Maybe<String[] | String>;
+  goalStatus_not_in?: Maybe<String[] | String>;
+  goalStatus_lt?: Maybe<String>;
+  goalStatus_lte?: Maybe<String>;
+  goalStatus_gt?: Maybe<String>;
+  goalStatus_gte?: Maybe<String>;
+  goalStatus_contains?: Maybe<String>;
+  goalStatus_not_contains?: Maybe<String>;
+  goalStatus_starts_with?: Maybe<String>;
+  goalStatus_not_starts_with?: Maybe<String>;
+  goalStatus_ends_with?: Maybe<String>;
+  goalStatus_not_ends_with?: Maybe<String>;
   location?: Maybe<String>;
   location_not?: Maybe<String>;
   location_in?: Maybe<String[] | String>;
@@ -7222,6 +7263,7 @@ export interface PostUpdateManyDataInput {
   lastUpdated?: Maybe<DateTimeInput>;
   isGoal?: Maybe<Boolean>;
   goal?: Maybe<String>;
+  goalStatus?: Maybe<String>;
   location?: Maybe<String>;
   locationID?: Maybe<String>;
   locationLat?: Maybe<Float>;
@@ -10021,6 +10063,7 @@ export interface Post {
   lastUpdated: DateTimeOutput;
   isGoal: Boolean;
   goal?: String;
+  goalStatus?: String;
   location?: String;
   locationID?: String;
   locationLat?: Float;
@@ -10044,6 +10087,7 @@ export interface PostPromise extends Promise<Post>, Fragmentable {
   owner: <T = UserPromise>() => T;
   isGoal: () => Promise<Boolean>;
   goal: () => Promise<String>;
+  goalStatus: () => Promise<String>;
   subField: <T = TopicPromise>() => T;
   topics: <T = FragmentableArray<Topic>>(args?: {
     where?: TopicWhereInput;
@@ -10106,6 +10150,7 @@ export interface PostSubscription
   owner: <T = UserSubscription>() => T;
   isGoal: () => Promise<AsyncIterator<Boolean>>;
   goal: () => Promise<AsyncIterator<String>>;
+  goalStatus: () => Promise<AsyncIterator<String>>;
   subField: <T = TopicSubscription>() => T;
   topics: <T = Promise<AsyncIterator<TopicSubscription>>>(args?: {
     where?: TopicWhereInput;
@@ -10168,6 +10213,7 @@ export interface PostNullablePromise
   owner: <T = UserPromise>() => T;
   isGoal: () => Promise<Boolean>;
   goal: () => Promise<String>;
+  goalStatus: () => Promise<String>;
   subField: <T = TopicPromise>() => T;
   topics: <T = FragmentableArray<Topic>>(args?: {
     where?: TopicWhereInput;
@@ -10953,6 +10999,7 @@ export interface PostPreviousValues {
   lastUpdated: DateTimeOutput;
   isGoal: Boolean;
   goal?: String;
+  goalStatus?: String;
   location?: String;
   locationID?: String;
   locationLat?: Float;
@@ -10977,6 +11024,7 @@ export interface PostPreviousValuesPromise
   lastUpdated: () => Promise<DateTimeOutput>;
   isGoal: () => Promise<Boolean>;
   goal: () => Promise<String>;
+  goalStatus: () => Promise<String>;
   location: () => Promise<String>;
   locationID: () => Promise<String>;
   locationLat: () => Promise<Float>;
@@ -11001,6 +11049,7 @@ export interface PostPreviousValuesSubscription
   lastUpdated: () => Promise<AsyncIterator<DateTimeOutput>>;
   isGoal: () => Promise<AsyncIterator<Boolean>>;
   goal: () => Promise<AsyncIterator<String>>;
+  goalStatus: () => Promise<AsyncIterator<String>>;
   location: () => Promise<AsyncIterator<String>>;
   locationID: () => Promise<AsyncIterator<String>>;
   locationLat: () => Promise<AsyncIterator<Float>>;

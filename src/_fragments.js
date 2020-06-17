@@ -352,6 +352,7 @@ const BasicPost = gql`
     }
     isGoal
     goal
+    goalStatus
     subField {
       id
       name
@@ -408,6 +409,7 @@ const DetailPost = gql`
     }
     isGoal
     goal
+    goalStatus
     subField {
       id
       name
@@ -637,6 +639,7 @@ const CommentFragment = gql`
         id
       }
       goal
+      goalStatus
     }
     parentComment {
       id

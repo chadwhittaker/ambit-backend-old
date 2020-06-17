@@ -3040,6 +3040,7 @@ type Post {
   owner: User!
   isGoal: Boolean!
   goal: String
+  goalStatus: String
   subField: Topic
   topics(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic!]
   location: String
@@ -3077,6 +3078,7 @@ input PostCreateInput {
   owner: UserCreateOneWithoutPostsInput!
   isGoal: Boolean
   goal: String
+  goalStatus: String
   subField: TopicCreateOneInput
   topics: TopicCreateManyInput
   location: String
@@ -3128,6 +3130,7 @@ input PostCreateWithoutCommentsInput {
   owner: UserCreateOneWithoutPostsInput!
   isGoal: Boolean
   goal: String
+  goalStatus: String
   subField: TopicCreateOneInput
   topics: TopicCreateManyInput
   location: String
@@ -3154,6 +3157,7 @@ input PostCreateWithoutNotificationsInput {
   owner: UserCreateOneWithoutPostsInput!
   isGoal: Boolean
   goal: String
+  goalStatus: String
   subField: TopicCreateOneInput
   topics: TopicCreateManyInput
   location: String
@@ -3179,6 +3183,7 @@ input PostCreateWithoutOwnerInput {
   lastUpdated: DateTime!
   isGoal: Boolean
   goal: String
+  goalStatus: String
   subField: TopicCreateOneInput
   topics: TopicCreateManyInput
   location: String
@@ -3206,6 +3211,7 @@ input PostCreateWithoutUpdatesInput {
   owner: UserCreateOneWithoutPostsInput!
   isGoal: Boolean
   goal: String
+  goalStatus: String
   subField: TopicCreateOneInput
   topics: TopicCreateManyInput
   location: String
@@ -3242,6 +3248,8 @@ enum PostOrderByInput {
   isGoal_DESC
   goal_ASC
   goal_DESC
+  goalStatus_ASC
+  goalStatus_DESC
   location_ASC
   location_DESC
   locationID_ASC
@@ -3274,6 +3282,7 @@ type PostPreviousValues {
   lastUpdated: DateTime!
   isGoal: Boolean!
   goal: String
+  goalStatus: String
   location: String
   locationID: String
   locationLat: Float
@@ -3337,6 +3346,20 @@ input PostScalarWhereInput {
   goal_not_starts_with: String
   goal_ends_with: String
   goal_not_ends_with: String
+  goalStatus: String
+  goalStatus_not: String
+  goalStatus_in: [String!]
+  goalStatus_not_in: [String!]
+  goalStatus_lt: String
+  goalStatus_lte: String
+  goalStatus_gt: String
+  goalStatus_gte: String
+  goalStatus_contains: String
+  goalStatus_not_contains: String
+  goalStatus_starts_with: String
+  goalStatus_not_starts_with: String
+  goalStatus_ends_with: String
+  goalStatus_not_ends_with: String
   location: String
   location_not: String
   location_in: [String!]
@@ -3483,6 +3506,7 @@ input PostUpdateInput {
   owner: UserUpdateOneRequiredWithoutPostsInput
   isGoal: Boolean
   goal: String
+  goalStatus: String
   subField: TopicUpdateOneInput
   topics: TopicUpdateManyInput
   location: String
@@ -3512,6 +3536,7 @@ input PostUpdateManyDataInput {
   lastUpdated: DateTime
   isGoal: Boolean
   goal: String
+  goalStatus: String
   location: String
   locationID: String
   locationLat: Float
@@ -3532,6 +3557,7 @@ input PostUpdateManyMutationInput {
   lastUpdated: DateTime
   isGoal: Boolean
   goal: String
+  goalStatus: String
   location: String
   locationID: String
   locationLat: Float
@@ -3595,6 +3621,7 @@ input PostUpdateWithoutCommentsDataInput {
   owner: UserUpdateOneRequiredWithoutPostsInput
   isGoal: Boolean
   goal: String
+  goalStatus: String
   subField: TopicUpdateOneInput
   topics: TopicUpdateManyInput
   location: String
@@ -3620,6 +3647,7 @@ input PostUpdateWithoutNotificationsDataInput {
   owner: UserUpdateOneRequiredWithoutPostsInput
   isGoal: Boolean
   goal: String
+  goalStatus: String
   subField: TopicUpdateOneInput
   topics: TopicUpdateManyInput
   location: String
@@ -3644,6 +3672,7 @@ input PostUpdateWithoutOwnerDataInput {
   lastUpdated: DateTime
   isGoal: Boolean
   goal: String
+  goalStatus: String
   subField: TopicUpdateOneInput
   topics: TopicUpdateManyInput
   location: String
@@ -3670,6 +3699,7 @@ input PostUpdateWithoutUpdatesDataInput {
   owner: UserUpdateOneRequiredWithoutPostsInput
   isGoal: Boolean
   goal: String
+  goalStatus: String
   subField: TopicUpdateOneInput
   topics: TopicUpdateManyInput
   location: String
@@ -3764,6 +3794,20 @@ input PostWhereInput {
   goal_not_starts_with: String
   goal_ends_with: String
   goal_not_ends_with: String
+  goalStatus: String
+  goalStatus_not: String
+  goalStatus_in: [String!]
+  goalStatus_not_in: [String!]
+  goalStatus_lt: String
+  goalStatus_lte: String
+  goalStatus_gt: String
+  goalStatus_gte: String
+  goalStatus_contains: String
+  goalStatus_not_contains: String
+  goalStatus_starts_with: String
+  goalStatus_not_starts_with: String
+  goalStatus_ends_with: String
+  goalStatus_not_ends_with: String
   subField: TopicWhereInput
   topics_every: TopicWhereInput
   topics_some: TopicWhereInput

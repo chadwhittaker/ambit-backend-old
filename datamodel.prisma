@@ -185,6 +185,7 @@ type Post {
   owner: User! @relation(name: "PostsByUser")
   isGoal: Boolean! @default(value: false)
   goal: String
+  goalStatus: String
   subField: Topic @relation(name: "SubFieldOnPost")
   topics: [Topic] @relation(name: "TopicsOnPost")
   location: String
