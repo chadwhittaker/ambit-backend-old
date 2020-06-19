@@ -570,6 +570,33 @@ const Mutation = {
     return post
   },
 
+  async updatePost(parent, { owner, postID, post }, context) {
+    const id = owner
+
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      throw new Error(`You must be logged in to do that`)
+    }
+
+    // 2. check if user on the request owns the profile
+    if (context.request.userId !== id) {
+      throw new Error(`You cannot edit a profile that is not your own`)
+    }
+
+    const post = await context.prisma.updatePost(
+      {
+        where: {
+          id: postID,
+        },
+        data: {
+          ...args.post,
+        }
+      }
+    )
+
+    return post
+  },
+
   async deletePost(parent, { id, ownerID }, context) {
 
     // 1. check if user is logged in
@@ -693,11 +720,14 @@ const Mutation = {
             create: {
               ...update
             }
-          }
+          },
+          goalStatus: 'Active',
         }
 
       }
     )
+
+    // if Update was created, 
 
     return post
   },
