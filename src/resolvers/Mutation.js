@@ -583,18 +583,18 @@ const Mutation = {
       throw new Error(`You cannot edit a profile that is not your own`)
     }
 
-    const post = await context.prisma.updatePost(
+    const updatedPost = await context.prisma.updatePost(
       {
         where: {
           id: postID,
         },
         data: {
-          ...args.post,
+          ...post,
         }
       }
     )
 
-    return post
+    return updatedPost
   },
 
   async deletePost(parent, { id, ownerID }, context) {
