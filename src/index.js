@@ -4,7 +4,7 @@ const { GraphQLServer } = require('graphql-yoga');
 const { prisma } = require('../generated/prisma-client');
 
 const { resolvers } = require('./resolvers');
-const { getUserId, cleanupStories, pingServer } = require('./utils');
+const { getUserId, cleanupStories, setInactiveGoals, pingServer } = require('./utils');
 
 // const pubsub = new PubSub()
 const server = new GraphQLServer({
@@ -37,12 +37,12 @@ server.express.use((req, res, next) => {
 // })
 
 server.start((deets) => {
-  console.log(`Server is running on http://localhost:${deets.port}`)
+  console.log(`Server is running on http://localhost:${deets.port}`);
 
   console.log(`load topics? --> ${process.env.LOAD_TOPICS === "yes"}`);
 
   // start cron jobs
-  // cleanupStories(prisma)
-  // setInterval(() => pingServer(prisma), 30000); // 30,000 = 30s
+  setInterval(() => pingServer(prisma), 600000); // 700,000 ms = 10 minutes, 1,800,000 ms = 30 minutes
   setInterval(() => cleanupStories(prisma), 600000); // 600,000 ms = 10 minutes, 1,800,000 ms = 30 minutes
+  setInterval(() => setInactiveGoals(prisma), 43200000); // 43200000 = 12 hours
 });

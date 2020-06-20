@@ -681,6 +681,7 @@ const Mutation = {
     const post = await context.prisma.updatePost({
       data: {
         goalStatus,
+        lastUpdated: new Date(),
       },
       where: {
         id,
