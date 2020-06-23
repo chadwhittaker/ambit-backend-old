@@ -275,6 +275,16 @@ const Query = {
       }
     }
 
+    // get all the posts from my topics of focus & interest
+    const getTopicsPosts = () => {
+      // return an array of PostWhereInputs, one for each of my topics
+      return myTopicIDs.map(topicID => {
+        return {
+          topics_some: { topicID_starts_with: topicID }
+        }
+      })
+    }
+
     const posts = await context.prisma.postsConnection(
       {
         first,
@@ -289,12 +299,7 @@ const Query = {
             },
             {
               OR: [
-                // post from my topics
-                {
-                  topics_some: {
-                    topicID_in: myTopicIDs,
-                  }
-                },
+                ...getTopicsPosts(),
                 getInvestPosts(),
                 getFreelancePosts(),
                 getMentorPosts(),
@@ -669,7 +674,6 @@ const Query = {
       {
         where: {
           OR: [
-            // STORIES OR PROJECTS FROM USERS I FOLLOW (OR ME)
             {
               AND: [
                 {
