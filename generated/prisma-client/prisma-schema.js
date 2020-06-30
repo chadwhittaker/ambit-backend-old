@@ -5008,9 +5008,6 @@ type Topic {
   parentList: List
   parentTopic: Topic
   children(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic!]
-  icon: String
-  color: String
-  image: String
   order: Int
 }
 
@@ -5027,9 +5024,6 @@ input TopicCreateInput {
   parentList: ListCreateOneWithoutMainTopicsInput
   parentTopic: TopicCreateOneWithoutChildrenInput
   children: TopicCreateManyWithoutParentTopicInput
-  icon: String
-  color: String
-  image: String
   order: Int
 }
 
@@ -5064,9 +5058,6 @@ input TopicCreateWithoutChildrenInput {
   name: String!
   parentList: ListCreateOneWithoutMainTopicsInput
   parentTopic: TopicCreateOneWithoutChildrenInput
-  icon: String
-  color: String
-  image: String
   order: Int
 }
 
@@ -5076,9 +5067,6 @@ input TopicCreateWithoutParentListInput {
   name: String!
   parentTopic: TopicCreateOneWithoutChildrenInput
   children: TopicCreateManyWithoutParentTopicInput
-  icon: String
-  color: String
-  image: String
   order: Int
 }
 
@@ -5088,9 +5076,6 @@ input TopicCreateWithoutParentTopicInput {
   name: String!
   parentList: ListCreateOneWithoutMainTopicsInput
   children: TopicCreateManyWithoutParentTopicInput
-  icon: String
-  color: String
-  image: String
   order: Int
 }
 
@@ -5106,12 +5091,6 @@ enum TopicOrderByInput {
   topicID_DESC
   name_ASC
   name_DESC
-  icon_ASC
-  icon_DESC
-  color_ASC
-  color_DESC
-  image_ASC
-  image_DESC
   order_ASC
   order_DESC
 }
@@ -5120,9 +5099,6 @@ type TopicPreviousValues {
   id: ID!
   topicID: String!
   name: String!
-  icon: String
-  color: String
-  image: String
   order: Int
 }
 
@@ -5169,48 +5145,6 @@ input TopicScalarWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
-  icon: String
-  icon_not: String
-  icon_in: [String!]
-  icon_not_in: [String!]
-  icon_lt: String
-  icon_lte: String
-  icon_gt: String
-  icon_gte: String
-  icon_contains: String
-  icon_not_contains: String
-  icon_starts_with: String
-  icon_not_starts_with: String
-  icon_ends_with: String
-  icon_not_ends_with: String
-  color: String
-  color_not: String
-  color_in: [String!]
-  color_not_in: [String!]
-  color_lt: String
-  color_lte: String
-  color_gt: String
-  color_gte: String
-  color_contains: String
-  color_not_contains: String
-  color_starts_with: String
-  color_not_starts_with: String
-  color_ends_with: String
-  color_not_ends_with: String
-  image: String
-  image_not: String
-  image_in: [String!]
-  image_not_in: [String!]
-  image_lt: String
-  image_lte: String
-  image_gt: String
-  image_gte: String
-  image_contains: String
-  image_not_contains: String
-  image_starts_with: String
-  image_not_starts_with: String
-  image_ends_with: String
-  image_not_ends_with: String
   order: Int
   order_not: Int
   order_in: [Int!]
@@ -5248,9 +5182,6 @@ input TopicUpdateDataInput {
   parentList: ListUpdateOneWithoutMainTopicsInput
   parentTopic: TopicUpdateOneWithoutChildrenInput
   children: TopicUpdateManyWithoutParentTopicInput
-  icon: String
-  color: String
-  image: String
   order: Int
 }
 
@@ -5260,18 +5191,12 @@ input TopicUpdateInput {
   parentList: ListUpdateOneWithoutMainTopicsInput
   parentTopic: TopicUpdateOneWithoutChildrenInput
   children: TopicUpdateManyWithoutParentTopicInput
-  icon: String
-  color: String
-  image: String
   order: Int
 }
 
 input TopicUpdateManyDataInput {
   topicID: String
   name: String
-  icon: String
-  color: String
-  image: String
   order: Int
 }
 
@@ -5290,9 +5215,6 @@ input TopicUpdateManyInput {
 input TopicUpdateManyMutationInput {
   topicID: String
   name: String
-  icon: String
-  color: String
-  image: String
   order: Int
 }
 
@@ -5348,9 +5270,6 @@ input TopicUpdateWithoutChildrenDataInput {
   name: String
   parentList: ListUpdateOneWithoutMainTopicsInput
   parentTopic: TopicUpdateOneWithoutChildrenInput
-  icon: String
-  color: String
-  image: String
   order: Int
 }
 
@@ -5359,9 +5278,6 @@ input TopicUpdateWithoutParentListDataInput {
   name: String
   parentTopic: TopicUpdateOneWithoutChildrenInput
   children: TopicUpdateManyWithoutParentTopicInput
-  icon: String
-  color: String
-  image: String
   order: Int
 }
 
@@ -5370,9 +5286,6 @@ input TopicUpdateWithoutParentTopicDataInput {
   name: String
   parentList: ListUpdateOneWithoutMainTopicsInput
   children: TopicUpdateManyWithoutParentTopicInput
-  icon: String
-  color: String
-  image: String
   order: Int
 }
 
@@ -5467,48 +5380,6 @@ input TopicWhereInput {
   children_every: TopicWhereInput
   children_some: TopicWhereInput
   children_none: TopicWhereInput
-  icon: String
-  icon_not: String
-  icon_in: [String!]
-  icon_not_in: [String!]
-  icon_lt: String
-  icon_lte: String
-  icon_gt: String
-  icon_gte: String
-  icon_contains: String
-  icon_not_contains: String
-  icon_starts_with: String
-  icon_not_starts_with: String
-  icon_ends_with: String
-  icon_not_ends_with: String
-  color: String
-  color_not: String
-  color_in: [String!]
-  color_not_in: [String!]
-  color_lt: String
-  color_lte: String
-  color_gt: String
-  color_gte: String
-  color_contains: String
-  color_not_contains: String
-  color_starts_with: String
-  color_not_starts_with: String
-  color_ends_with: String
-  color_not_ends_with: String
-  image: String
-  image_not: String
-  image_in: [String!]
-  image_not_in: [String!]
-  image_lt: String
-  image_lte: String
-  image_gt: String
-  image_gte: String
-  image_contains: String
-  image_not_contains: String
-  image_starts_with: String
-  image_not_starts_with: String
-  image_ends_with: String
-  image_not_ends_with: String
   order: Int
   order_not: Int
   order_in: [Int!]

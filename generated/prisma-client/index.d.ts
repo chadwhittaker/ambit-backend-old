@@ -937,12 +937,6 @@ export type TopicOrderByInput =
   | "topicID_DESC"
   | "name_ASC"
   | "name_DESC"
-  | "icon_ASC"
-  | "icon_DESC"
-  | "color_ASC"
-  | "color_DESC"
-  | "image_ASC"
-  | "image_DESC"
   | "order_ASC"
   | "order_DESC";
 
@@ -3104,9 +3098,6 @@ export interface TopicUpdateWithoutParentListDataInput {
   name?: Maybe<String>;
   parentTopic?: Maybe<TopicUpdateOneWithoutChildrenInput>;
   children?: Maybe<TopicUpdateManyWithoutParentTopicInput>;
-  icon?: Maybe<String>;
-  color?: Maybe<String>;
-  image?: Maybe<String>;
   order?: Maybe<Int>;
 }
 
@@ -3348,9 +3339,6 @@ export interface TopicCreateInput {
   parentList?: Maybe<ListCreateOneWithoutMainTopicsInput>;
   parentTopic?: Maybe<TopicCreateOneWithoutChildrenInput>;
   children?: Maybe<TopicCreateManyWithoutParentTopicInput>;
-  icon?: Maybe<String>;
-  color?: Maybe<String>;
-  image?: Maybe<String>;
   order?: Maybe<Int>;
 }
 
@@ -3474,9 +3462,6 @@ export interface TopicCreateWithoutChildrenInput {
   name: String;
   parentList?: Maybe<ListCreateOneWithoutMainTopicsInput>;
   parentTopic?: Maybe<TopicCreateOneWithoutChildrenInput>;
-  icon?: Maybe<String>;
-  color?: Maybe<String>;
-  image?: Maybe<String>;
   order?: Maybe<Int>;
 }
 
@@ -3508,9 +3493,6 @@ export interface TopicCreateWithoutParentTopicInput {
   name: String;
   parentList?: Maybe<ListCreateOneWithoutMainTopicsInput>;
   children?: Maybe<TopicCreateManyWithoutParentTopicInput>;
-  icon?: Maybe<String>;
-  color?: Maybe<String>;
-  image?: Maybe<String>;
   order?: Maybe<Int>;
 }
 
@@ -3532,9 +3514,6 @@ export interface TopicCreateWithoutParentListInput {
   name: String;
   parentTopic?: Maybe<TopicCreateOneWithoutChildrenInput>;
   children?: Maybe<TopicCreateManyWithoutParentTopicInput>;
-  icon?: Maybe<String>;
-  color?: Maybe<String>;
-  image?: Maybe<String>;
   order?: Maybe<Int>;
 }
 
@@ -5018,9 +4997,6 @@ export interface TopicUpdateDataInput {
   parentList?: Maybe<ListUpdateOneWithoutMainTopicsInput>;
   parentTopic?: Maybe<TopicUpdateOneWithoutChildrenInput>;
   children?: Maybe<TopicUpdateManyWithoutParentTopicInput>;
-  icon?: Maybe<String>;
-  color?: Maybe<String>;
-  image?: Maybe<String>;
   order?: Maybe<Int>;
 }
 
@@ -5470,48 +5446,6 @@ export interface TopicWhereInput {
   children_every?: Maybe<TopicWhereInput>;
   children_some?: Maybe<TopicWhereInput>;
   children_none?: Maybe<TopicWhereInput>;
-  icon?: Maybe<String>;
-  icon_not?: Maybe<String>;
-  icon_in?: Maybe<String[] | String>;
-  icon_not_in?: Maybe<String[] | String>;
-  icon_lt?: Maybe<String>;
-  icon_lte?: Maybe<String>;
-  icon_gt?: Maybe<String>;
-  icon_gte?: Maybe<String>;
-  icon_contains?: Maybe<String>;
-  icon_not_contains?: Maybe<String>;
-  icon_starts_with?: Maybe<String>;
-  icon_not_starts_with?: Maybe<String>;
-  icon_ends_with?: Maybe<String>;
-  icon_not_ends_with?: Maybe<String>;
-  color?: Maybe<String>;
-  color_not?: Maybe<String>;
-  color_in?: Maybe<String[] | String>;
-  color_not_in?: Maybe<String[] | String>;
-  color_lt?: Maybe<String>;
-  color_lte?: Maybe<String>;
-  color_gt?: Maybe<String>;
-  color_gte?: Maybe<String>;
-  color_contains?: Maybe<String>;
-  color_not_contains?: Maybe<String>;
-  color_starts_with?: Maybe<String>;
-  color_not_starts_with?: Maybe<String>;
-  color_ends_with?: Maybe<String>;
-  color_not_ends_with?: Maybe<String>;
-  image?: Maybe<String>;
-  image_not?: Maybe<String>;
-  image_in?: Maybe<String[] | String>;
-  image_not_in?: Maybe<String[] | String>;
-  image_lt?: Maybe<String>;
-  image_lte?: Maybe<String>;
-  image_gt?: Maybe<String>;
-  image_gte?: Maybe<String>;
-  image_contains?: Maybe<String>;
-  image_not_contains?: Maybe<String>;
-  image_starts_with?: Maybe<String>;
-  image_not_starts_with?: Maybe<String>;
-  image_ends_with?: Maybe<String>;
-  image_not_ends_with?: Maybe<String>;
   order?: Maybe<Int>;
   order_not?: Maybe<Int>;
   order_in?: Maybe<Int[] | Int>;
@@ -5625,9 +5559,6 @@ export interface TopicUpdateInput {
   parentList?: Maybe<ListUpdateOneWithoutMainTopicsInput>;
   parentTopic?: Maybe<TopicUpdateOneWithoutChildrenInput>;
   children?: Maybe<TopicUpdateManyWithoutParentTopicInput>;
-  icon?: Maybe<String>;
-  color?: Maybe<String>;
-  image?: Maybe<String>;
   order?: Maybe<Int>;
 }
 
@@ -6427,9 +6358,6 @@ export interface TopicUpdateWithoutChildrenDataInput {
   name?: Maybe<String>;
   parentList?: Maybe<ListUpdateOneWithoutMainTopicsInput>;
   parentTopic?: Maybe<TopicUpdateOneWithoutChildrenInput>;
-  icon?: Maybe<String>;
-  color?: Maybe<String>;
-  image?: Maybe<String>;
   order?: Maybe<Int>;
 }
 
@@ -6444,9 +6372,6 @@ export interface TopicUpdateWithoutParentTopicDataInput {
   name?: Maybe<String>;
   parentList?: Maybe<ListUpdateOneWithoutMainTopicsInput>;
   children?: Maybe<TopicUpdateManyWithoutParentTopicInput>;
-  icon?: Maybe<String>;
-  color?: Maybe<String>;
-  image?: Maybe<String>;
   order?: Maybe<Int>;
 }
 
@@ -6458,9 +6383,6 @@ export interface PostUpsertWithoutCommentsInput {
 export interface TopicUpdateManyDataInput {
   topicID?: Maybe<String>;
   name?: Maybe<String>;
-  icon?: Maybe<String>;
-  color?: Maybe<String>;
-  image?: Maybe<String>;
   order?: Maybe<Int>;
 }
 
@@ -7237,9 +7159,6 @@ export interface PostScalarWhereInput {
 export interface TopicUpdateManyMutationInput {
   topicID?: Maybe<String>;
   name?: Maybe<String>;
-  icon?: Maybe<String>;
-  color?: Maybe<String>;
-  image?: Maybe<String>;
   order?: Maybe<Int>;
 }
 
@@ -7486,48 +7405,6 @@ export interface TopicScalarWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
-  icon?: Maybe<String>;
-  icon_not?: Maybe<String>;
-  icon_in?: Maybe<String[] | String>;
-  icon_not_in?: Maybe<String[] | String>;
-  icon_lt?: Maybe<String>;
-  icon_lte?: Maybe<String>;
-  icon_gt?: Maybe<String>;
-  icon_gte?: Maybe<String>;
-  icon_contains?: Maybe<String>;
-  icon_not_contains?: Maybe<String>;
-  icon_starts_with?: Maybe<String>;
-  icon_not_starts_with?: Maybe<String>;
-  icon_ends_with?: Maybe<String>;
-  icon_not_ends_with?: Maybe<String>;
-  color?: Maybe<String>;
-  color_not?: Maybe<String>;
-  color_in?: Maybe<String[] | String>;
-  color_not_in?: Maybe<String[] | String>;
-  color_lt?: Maybe<String>;
-  color_lte?: Maybe<String>;
-  color_gt?: Maybe<String>;
-  color_gte?: Maybe<String>;
-  color_contains?: Maybe<String>;
-  color_not_contains?: Maybe<String>;
-  color_starts_with?: Maybe<String>;
-  color_not_starts_with?: Maybe<String>;
-  color_ends_with?: Maybe<String>;
-  color_not_ends_with?: Maybe<String>;
-  image?: Maybe<String>;
-  image_not?: Maybe<String>;
-  image_in?: Maybe<String[] | String>;
-  image_not_in?: Maybe<String[] | String>;
-  image_lt?: Maybe<String>;
-  image_lte?: Maybe<String>;
-  image_gt?: Maybe<String>;
-  image_gte?: Maybe<String>;
-  image_contains?: Maybe<String>;
-  image_not_contains?: Maybe<String>;
-  image_starts_with?: Maybe<String>;
-  image_not_starts_with?: Maybe<String>;
-  image_ends_with?: Maybe<String>;
-  image_not_ends_with?: Maybe<String>;
   order?: Maybe<Int>;
   order_not?: Maybe<Int>;
   order_in?: Maybe<Int[] | Int>;
@@ -8307,9 +8184,6 @@ export interface TopicPreviousValues {
   id: ID_Output;
   topicID: String;
   name: String;
-  icon?: String;
-  color?: String;
-  image?: String;
   order?: Int;
 }
 
@@ -8319,9 +8193,6 @@ export interface TopicPreviousValuesPromise
   id: () => Promise<ID_Output>;
   topicID: () => Promise<String>;
   name: () => Promise<String>;
-  icon: () => Promise<String>;
-  color: () => Promise<String>;
-  image: () => Promise<String>;
   order: () => Promise<Int>;
 }
 
@@ -8331,9 +8202,6 @@ export interface TopicPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   topicID: () => Promise<AsyncIterator<String>>;
   name: () => Promise<AsyncIterator<String>>;
-  icon: () => Promise<AsyncIterator<String>>;
-  color: () => Promise<AsyncIterator<String>>;
-  image: () => Promise<AsyncIterator<String>>;
   order: () => Promise<AsyncIterator<Int>>;
 }
 
@@ -11286,9 +11154,6 @@ export interface Topic {
   id: ID_Output;
   topicID: String;
   name: String;
-  icon?: String;
-  color?: String;
-  image?: String;
   order?: Int;
 }
 
@@ -11307,9 +11172,6 @@ export interface TopicPromise extends Promise<Topic>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
-  icon: () => Promise<String>;
-  color: () => Promise<String>;
-  image: () => Promise<String>;
   order: () => Promise<Int>;
 }
 
@@ -11330,9 +11192,6 @@ export interface TopicSubscription
     first?: Int;
     last?: Int;
   }) => T;
-  icon: () => Promise<AsyncIterator<String>>;
-  color: () => Promise<AsyncIterator<String>>;
-  image: () => Promise<AsyncIterator<String>>;
   order: () => Promise<AsyncIterator<Int>>;
 }
 
@@ -11353,9 +11212,6 @@ export interface TopicNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
-  icon: () => Promise<String>;
-  color: () => Promise<String>;
-  image: () => Promise<String>;
   order: () => Promise<Int>;
 }
 

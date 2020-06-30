@@ -5,105 +5,120 @@ const topicsList = [
         name: 'Software',
         topicID: 'topics_technology_software',
         icon: 'bolt',
-        topicStory: {
-          id: 'ck8u9l5ihzb4h0a78jh4zhg07',
-        },
+        color: 'yellow',
+        image: 'https://unsplash.com/photos/466ENaLuhLY'
+      },
+      {
+        name: 'Game Dev',
+        topicID: 'topics_technology_gamedev',
+        icon: 'bolt',
+        color: 'yellow',
+        image: 'https://unsplash.com/photos/XC3fq-ffXRI'
+      },
+      {
+        name: 'Web Dev',
+        topicID: 'topics_technology_webdev',
+        icon: 'bolt',
+        color: 'yellow',
+        image: 'https://unsplash.com/photos/OqtafYT5kTw'
+      },
+      {
+        name: 'Mobile Dev',
+        topicID: 'topics_technology_mobiledev',
+        icon: 'bolt',
+        color: 'yellow',
+        image: 'https://unsplash.com/photos/89xuP-XmyrA'
+      },
+      {
+        name: 'Backend Dev',
+        topicID: 'topics_technology_backenddev',
+        icon: 'bolt',
+        color: 'yellow',
+        image: 'https://unsplash.com/photos/1K6IQsQbizI'
+      },
+      {
+        name: 'Electronics',
+        topicID: 'topics_technology_electronics',
+        icon: 'bolt',
+        color: 'yellow',
+        image: 'https://unsplash.com/photos/SYTO3xs06fU' ,
       },
       {
         name: 'Hardware',
         topicID: 'topics_technology_hardware',
         icon: 'bolt',
-        topicStory: {
-          id: 'ck8u9l5txwnqg0a87o4n8no3o',
-        },
+        color: 'yellow',
+        image: 'https://unsplash.com/photos/ogxlyCA1BQc' ,
       },
       {
         name: 'Semiconductors',
         topicID: 'topics_technology_semiconductors',
         icon: 'bolt',
-        topicStory: {
-          id: 'ck8u9l670wnqs0a87i31bklaz',
-        },
+        color: 'yellow',
+        image: 'https://unsplash.com/photos/c3ZWXOv1Ndc' ,
       },
       {
         name: 'Cloud Computing',
         topicID: 'topics_technology_cloudcomputing',
         icon: 'bolt',
-        topicStory: {
-          id: 'ck8u9l6mrwnr70a877ifh7bk2',
-        },
-      },
-      {
-        name: 'Gaming',
-        topicID: 'topics_technology_gaming',
-        icon: 'bolt',
-        topicStory: {
-          id: 'ck8u9l75uwnrm0a87ejrpxz7j',
-        },
+        color: 'yellow',
+        image: 'https://unsplash.com/photos/aWslrFhs1w4' ,
       },
       {
         name: 'VR/AR',
         topicID: 'topics_technology_vrar',
         icon: 'bolt',
-        topicStory: {
-          id: 'ck8u9l7nkzb5t0a7803p5815l',
-        },
+        color: 'yellow',
+        image: 'https://unsplash.com/photos/IMUwe-p1yqs' ,
       },
       {
         name: 'Crypto',
         topicID: 'topics_technology_crypto',
         icon: 'bolt',
-        topicStory: {
-          id: 'ck8u9l863wnsd0a87rqmwqtb2',
-        },
+        color: 'yellow',
+        image: 'https://unsplash.com/photos/aX1hN4uNd-I' ,
       },
       {
         name: 'AI',
         topicID: 'topics_technology_ai',
         icon: 'bolt',
-        topicStory: {
-          id: 'ck8u9l8rmwnsv0a87zwp7agct',
-        },
+        color: 'yellow',
+        image: 'https://unsplash.com/photos/U3sOwViXhkY' ,
       },
       {
         name: 'Automation',
         topicID: 'topics_technology_automation',
         icon: 'bolt',
-        topicStory: {
-          id: 'ck8u9l95uwnt70a87j24u3e73',
-        },
+        color: 'yellow',
+        image: 'https://unsplash.com/photos/GpNOhig3LSU' ,
       },
       {
         name: 'IT & Networking',
         topicID: 'topics_technology_itnetworking',
         icon: 'bolt',
-        topicStory: {
-          id: 'ck8u9l9plzb710a78nnver5lt',
-        },
+        color: 'yellow',
+        image: 'https://unsplash.com/photos/zFYUsLk_50Y' ,
       },
       {
         name: 'Aerospace & Aviation',
         topicID: 'topics_technology_aerospaceaviation',
         icon: 'bolt',
-        topicStory: {
-          id: 'ck8u9la4yzb7g0a78mgr151gj',
-        },
+        color: 'yellow',
+        image: 'https://unsplash.com/photos/Ptd-iTdrCJM' ,
       },
       {
         name: 'Automotive',
         topicID: 'topics_technology_automotive',
         icon: 'bolt',
-        topicStory: {
-          id: 'ck8u9laigzb7o0a78chuz0143',
-        },
+        color: 'yellow',
+        image: 'https://unsplash.com/photos/Lz53HpZkt_Q' ,
       },
     ],
     name: 'Technology',
-    icon: 'bolt',
     topicID: 'topics_technology',
-    topicStory: {
-      id: 'ck8u9l53bzb430a78fn8zbxip',
-    },
+    icon: 'bolt',
+    color: 'yellow',
+    image: 'https://unsplash.com/photos/iar-afB0QQw' ,
   },
   {
     children: [
@@ -111,65 +126,57 @@ const topicsList = [
         name: 'Physics',
         topicID: 'topics_science_physics',
         icon: 'atom',
-        topicStory: {
-          id: 'ck8u9lbevwnul0a874zyuerof',
-        },
+        color: 'purple',
+        image: 'https://unsplash.com/photos/Y31Z6Mf7rys' ,
       },
       {
         name: 'Biotechnology',
         topicID: 'topics_science_biotechnology',
         icon: 'atom',
-        topicStory: {
-          id: 'ck8u9lc1yzb8s0a782e9dfnch',
-        },
+        color: 'purple',
+        image: 'https://unsplash.com/photos/L7en7Lb-Ovc' ,
       },
       {
         name: 'Astrophysics',
         topicID: 'topics_science_astrophysics',
         icon: 'atom',
-        topicStory: {
-          id: 'ck8u9lcr4wnvh0a874znkvovd',
-        },
+        color: 'purple',
+        image: 'https://unsplash.com/photos/n00dm9FBwrs' ,
       },
       {
         name: 'Chemistry',
         topicID: 'topics_science_chemistry',
         icon: 'atom',
-        topicStory: {
-          id: 'ck8u9ld4ozb9h0a78hjkry9cp',
-        },
+        color: 'purple',
+        image: 'https://unsplash.com/photos/yS3XM9qx3hQ' ,
       },
       {
         name: 'Biology',
         topicID: 'topics_science_biology',
         icon: 'atom',
-        topicStory: {
-          id: 'ck8u9ldopzb9u0a78zs6xo1i7',
-        },
+        color: 'purple',
+        image: 'https://unsplash.com/photos/biVuafyC8oI' ,
       },
       {
         name: 'Anthropology',
         topicID: 'topics_science_anthropology',
         icon: 'atom',
-        topicStory: {
-          id: 'ck8u9le4uzbaa0a78t6j5ator',
-        },
+        color: 'purple',
+        image: 'https://unsplash.com/photos/ZZV1FOGaQ8s' ,
       },
       {
         name: 'Renewable Energy',
         topicID: 'topics_science_renewableenergy',
         icon: 'atom',
-        topicStory: {
-          id: 'ck8u9lem0wnwn0a87ni3mnpl8',
-        },
+        color: 'purple',
+        image: 'https://unsplash.com/photos/eIBTh5DXW9w' ,
       },
     ],
     name: 'Science',
-    icon: 'atom',
     topicID: 'topics_science',
-    topicStory: {
-      id: 'ck8u9lb2rzb840a788zexyngq',
-    },
+    icon: 'atom',
+    color: 'purple',
+    image: 'https://unsplash.com/photos/OgvqXGL7XO4' ,
   },
   {
     children: [
@@ -177,57 +184,50 @@ const topicsList = [
         name: 'Photography',
         topicID: 'topics_creatives_photography',
         icon: 'palette',
-        topicStory: {
-          id: 'ck8u9lfpwwnxh0a878aemxcg9',
-        },
+        color: 'green',
+        image: 'https://unsplash.com/photos/2Wv9VnwzeeI' ,
       },
       {
         name: 'Videography',
         topicID: 'topics_creatives_videography',
         icon: 'palette',
-        topicStory: {
-          id: 'ck8u9lg43wnxt0a87d6r2c1eu',
-        },
+        color: 'green',
+        image: 'https://unsplash.com/photos/hlKw49XvyRU' ,
       },
       {
         name: 'UI/UX',
         topicID: 'topics_creatives_uiux',
         icon: 'palette',
-        topicStory: {
-          id: 'ck8u9lgqzzbc00a78sikmhb4e',
-        },
+        color: 'green',
+        image: 'https://unsplash.com/photos/cZr2sgaxy3Q' ,
       },
       {
         name: 'Graphic Design',
         topicID: 'topics_creatives_graphicdesign',
         icon: 'palette',
-        topicStory: {
-          id: 'ck8u9lhdlwnyv0a873uw2oz5j',
-        },
+        color: 'green',
+        image: 'https://unsplash.com/photos/muOHbrFGEQY' ,
       },
       {
         name: 'Visual Art',
         topicID: 'topics_creatives_visualart',
         icon: 'palette',
-        topicStory: {
-          id: 'ck8u9li0uwnzf0a87ofmbk509',
-        },
+        color: 'green',
+        image: 'https://unsplash.com/photos/MigkcNowxQk' ,
       },
       {
         name: 'Fashion & Apparel',
         topicID: 'topics_creatives_fashionapparel',
         icon: 'palette',
-        topicStory: {
-          id: 'ck8u9liegzbd70a786ay9uove',
-        },
+        color: 'green',
+        image: '',
       },
     ],
     name: 'Creatives',
-    icon: 'palette',
     topicID: 'topics_creatives',
-    topicStory: {
-      id: 'ck8u9lf4azbav0a78u2vxmihg',
-    },
+    icon: 'palette',
+    color: 'green',
+    image: 'https://unsplash.com/photos/5E5N49RWtbA' ,
   },
   {
     children: [
@@ -235,49 +235,50 @@ const topicsList = [
         name: 'Music',
         topicID: 'topics_entertainment_music',
         icon: 'film',
-        topicStory: {
-          id: 'ck8u9ljluwo0c0a878k4kds1g',
-        },
+        color: 'orange',
+        image: 'https://unsplash.com/photos/1oKxSKSOowE' ,
       },
       {
         name: 'Acting',
         topicID: 'topics_entertainment_acting',
         icon: 'film',
-        topicStory: {
-          id: 'ck8u9lk0bzbeb0a78zvcih915',
-        },
+        color: 'orange',
+        image: 'https://unsplash.com/photos/Hn3S90f6aak' ,
       },
       {
         name: 'Comedy',
         topicID: 'topics_entertainment_comedy',
         icon: 'film',
-        topicStory: {
-          id: 'ck8u9lkn5wo140a87i72tn0lr',
-        },
+        color: 'orange',
+        image: 'https://unsplash.com/photos/9oFQ_CCCBa0' ,
       },
       {
         name: 'Motion Picture',
         topicID: 'topics_entertainment_motionpicture',
         icon: 'film',
-        topicStory: {
-          id: 'ck8u9ll91wo1k0a8792i00fy3',
-        },
+        color: 'orange',
+        image: 'https://unsplash.com/photos/j6PStH6cuRY' ,
       },
       {
         name: 'Writing',
         topicID: 'topics_entertainment_writing',
         icon: 'film',
-        topicStory: {
-          id: 'ck8u9lln7wo220a87xik2mcqv',
-        },
+        color: 'orange',
+        image: 'https://unsplash.com/photos/y02jEX_B0O0' ,
+      },
+      {
+        name: 'Gaming',
+        topicID: 'topics_entertainment_gaming',
+        icon: 'film',
+        color: 'orange',
+        image: 'https://unsplash.com/photos/m3hn2Kn5Bns' ,
       },
     ],
     name: 'Entertainment',
-    icon: 'film',
     topicID: 'topics_entertainment',
-    topicStory: {
-      id: 'ck8u9lj1wzbdp0a78yhrahgsz',
-    },
+    icon: 'film',
+    color: 'orange',
+    image: 'https://unsplash.com/photos/9lTUAlNB87M' ,
   },
   {
     children: [
@@ -285,97 +286,85 @@ const topicsList = [
         name: 'Entrepreneurship',
         topicID: 'topics_business_entrepreneurship',
         icon: 'user-tie',
-        topicStory: {
-          id: 'ck8u9lmfjwo2o0a87p7ftpys8',
-        },
+        color: 'black',
+        image: 'https://unsplash.com/photos/jw3GOzxiSkw' ,
       },
       {
         name: 'Small Business',
         topicID: 'topics_business_smallbusiness',
         icon: 'user-tie',
-        topicStory: {
-          id: 'ck8u9lmxzzbg80a78r7k92mo9',
-        },
+        color: 'black',
+        image: 'https://unsplash.com/photos/qvWnGmoTbik' ,
       },
       {
         name: 'Large Business',
         topicID: 'topics_business_largebusiness',
         icon: 'user-tie',
-        topicStory: {
-          id: 'ck8u9lnl0zbgr0a78heh6d5ue',
-        },
+        color: 'black',
+        image: 'https://unsplash.com/photos/Iboom5tbfvs' ,
       },
       {
         name: 'Startups',
         topicID: 'topics_business_startups',
         icon: 'user-tie',
-        topicStory: {
-          id: 'ck8u9lnxqwo3o0a870ln7aq96',
-        },
+        color: 'black',
+        image: 'https://unsplash.com/photos/Y_LgXwQEx2c' ,
       },
       {
         name: 'HR',
         topicID: 'topics_business_hr',
         icon: 'user-tie',
-        topicStory: {
-          id: 'ck8u9log8wo430a8703l9k77v',
-        },
+        color: 'black',
+        image: 'https://unsplash.com/photos/kOuCX7fh50U' ,
       },
       {
         name: 'Accounting',
         topicID: 'topics_business_accounting',
         icon: 'user-tie',
-        topicStory: {
-          id: 'ck8u9loyowo4o0a87movdh5x2',
-        },
+        color: 'black',
+        image: 'https://unsplash.com/photos/kAJLRQwt5yY' ,
       },
       {
         name: 'Logistics',
         topicID: 'topics_business_logistics',
         icon: 'user-tie',
-        topicStory: {
-          id: 'ck8u9lpcuzbhz0a78mrutbvb4',
-        },
+        color: 'black',
+        image: 'https://unsplash.com/photos/uBe2mknURG4' ,
       },
       {
         name: 'Manufacturing',
         topicID: 'topics_business_manufacturing',
         icon: 'user-tie',
-        topicStory: {
-          id: 'ck8u9lpr1wo5b0a87gp3c127j',
-        },
+        color: 'black',
+        image: 'https://unsplash.com/photos/xoxnfVIE7Qw' ,
       },
       {
         name: 'Sales',
         topicID: 'topics_business_sales',
         icon: 'user-tie',
-        topicStory: {
-          id: 'ck8u9lq5izbio0a78zv9qouec',
-        },
+        color: 'black',
+        image: 'https://unsplash.com/photos/VrJnsLH2nOY' ,
       },
       {
         name: 'Operations',
         topicID: 'topics_business_operations',
         icon: 'user-tie',
-        topicStory: {
-          id: 'ck8u9lquyzbj70a78tdh16nq6',
-        },
+        color: 'black',
+        image: 'https://unsplash.com/photos/gcsNOsPEXfs' ,
       },
       {
         name: 'Management',
         topicID: 'topics_business_management',
         icon: 'user-tie',
-        topicStory: {
-          id: 'ck8u9lreuzbjf0a78gam9y79u',
-        },
+        color: 'black',
+        image: 'https://unsplash.com/photos/5aiRb5f464A' ,
       },
     ],
     name: 'Business',
-    icon: 'user-tie',
     topicID: 'topics_business',
-    topicStory: {
-      id: 'ck8u9lm15zbfk0a78i7btnzb2',
-    },
+    icon: 'user-tie',
+    color: 'black',
+    image: 'https://unsplash.com/photos/ZGjbiukp_-A' ,
   },
   {
     children: [
@@ -383,49 +372,43 @@ const topicsList = [
         name: 'Stock Market',
         topicID: 'topics_finance_stockmarket',
         icon: 'chart-line',
-        topicStory: {
-          id: 'ck8u9lsedwo6q0a87duwrdpqo',
-        },
+        color: 'green',
+        image: 'https://unsplash.com/photos/9lI7KVWXVX0' ,
       },
       {
         name: 'Day Trading',
         topicID: 'topics_finance_daytrading',
         icon: 'chart-line',
-        topicStory: {
-          id: 'ck8u9lsp3zbjw0a78ew98q41o',
-        },
+        color: 'green',
+        image: 'https://unsplash.com/photos/N__BnvQ_w18' ,
       },
       {
         name: 'Wealth Management',
         topicID: 'topics_finance_wealthmanagement',
         icon: 'chart-line',
-        topicStory: {
-          id: 'ck8u9lt2awo6z0a87stfvothd',
-        },
+        color: 'green',
+        image: 'https://unsplash.com/photos/cEukkv42O40' ,
       },
       {
         name: 'Banking',
         topicID: 'topics_finance_banking',
         icon: 'chart-line',
-        topicStory: {
-          id: 'ck8u9lth1zbk70a78w033yio0',
-        },
+        color: 'green',
+        image: 'https://unsplash.com/photos/lhltMGdohc8' ,
       },
       {
         name: 'Insurance',
         topicID: 'topics_finance_insurance',
         icon: 'chart-line',
-        topicStory: {
-          id: 'ck8u9ltvqwo7e0a8723xqmwcl',
-        },
+        color: 'green',
+        image: 'https://unsplash.com/photos/oRYOOjvPq8E' ,
       },
     ],
     name: 'Finance & Markets',
-    icon: 'chart-line',
     topicID: 'topics_finance',
-    topicStory: {
-      id: 'ck8u9ls1nwo6g0a87t2si5ygd',
-    },
+    icon: 'chart-line',
+    color: 'green',
+    image: 'https://unsplash.com/photos/1M4wYTqVD4o' ,
   },
   {
     children: [
@@ -433,33 +416,29 @@ const topicsList = [
         name: 'Social Media Marketing',
         topicID: 'topics_marketing_socialmediamarketing',
         icon: 'hashtag',
-        topicStory: {
-          id: 'ck8u9lut1zbkn0a78ujfksu1b',
-        },
+        color: 'twitterBlue',
+        image: 'https://unsplash.com/photos/xv7-GlvBLFw' ,
       },
       {
         name: 'Advertising',
         topicID: 'topics_marketing_advertising',
         icon: 'hashtag',
-        topicStory: {
-          id: 'ck8u9lv79zbkx0a78uw8fg2vu',
-        },
+        color: 'twitterBlue',
+        image: 'https://unsplash.com/photos/5r5554u-mHo' ,
       },
       {
         name: 'Branding',
         topicID: 'topics_marketing_branding',
         icon: 'hashtag',
-        topicStory: {
-          id: 'ck8u9lvkhwo830a870wvxwacu',
-        },
+        color: 'twitterBlue',
+        image: 'https://unsplash.com/photos/wwqRpSNBPq4' ,
       },
     ],
     name: 'Marketing',
-    icon: 'hashtag',
     topicID: 'topics_marketing',
-    topicStory: {
-      id: 'ck8u9luezwo7n0a87xy2ud5w6',
-    },
+    icon: 'hashtag',
+    color: 'twitterBlue',
+    image: 'https://unsplash.com/photos/bLY5JqP_Ldw' ,
   },
   {
     children: [
@@ -467,41 +446,57 @@ const topicsList = [
         name: 'Fitness',
         topicID: 'topics_health_fitness',
         icon: 'heartbeat',
-        topicStory: {
-          id: 'ck8u9lwu8wo8j0a87fttcsj6g',
-        },
+        color: 'red',
+        image: 'https://unsplash.com/photos/lTkF2Tdx9uI' ,
       },
       {
         name: 'Nutrition',
         topicID: 'topics_health_nutrition',
         icon: 'heartbeat',
-        topicStory: {
-          id: 'ck8u9lx6jwo8t0a87qb1ur9m5',
-        },
+        color: 'red',
+        image: 'https://unsplash.com/photos/4_jhDO54BYg' ,
+      },
+      {
+        name: 'Running',
+        topicID: 'topics_health_running',
+        icon: 'heartbeat',
+        color: 'red',
+        image: 'https://unsplash.com/photos/QVD3Xht9txA' ,
+      },
+      {
+        name: 'Crossfit',
+        topicID: 'topics_health_crossfit',
+        icon: 'heartbeat',
+        color: 'red',
+        image: 'https://unsplash.com/photos/WIPIAJW2-P8' ,
+      },
+      {
+        name: 'Weight Lifting',
+        topicID: 'topics_health_weightlifting',
+        icon: 'heartbeat',
+        color: 'red',
+        image: 'https://unsplash.com/photos/79nVN_Cmj3o' ,
       },
       {
         name: 'Medicine',
         topicID: 'topics_health_medicine',
         icon: 'heartbeat',
-        topicStory: {
-          id: 'ck8u9lxp1zblq0a78vnovqvzh',
-        },
+        color: 'red',
+        image: 'https://unsplash.com/photos/kfJkpeI6Lgc' ,
       },
       {
         name: 'Physical Therapy',
         topicID: 'topics_health_physicaltherapy',
         icon: 'heartbeat',
-        topicStory: {
-          id: 'ck8u9ly89wo980a87323tc3vt',
-        },
+        color: 'red',
+        image: 'https://unsplash.com/photos/o6jUolZ7QJk' ,
       },
     ],
     name: 'Health & Wellness',
-    icon: 'heartbeat',
     topicID: 'topics_health',
-    topicStory: {
-      id: 'ck8u9lwb7zbla0a78lj1rcqqv',
-    },
+    icon: 'heartbeat',
+    color: 'red',
+    image: 'https://unsplash.com/photos/vnpTRdmtQ30' ,
   },
   {
     children: [
@@ -509,49 +504,43 @@ const topicsList = [
         name: 'Social Media',
         topicID: 'topics_content_socialmedia',
         icon: 'thumbs-up',
-        topicStory: {
-          id: 'ck8u9lz5pwo9l0a8761vi3g9x',
-        },
+        color: 'blue',
+        image: 'https://unsplash.com/photos/CNbRsQj8mHQ' ,
       },
       {
         name: 'Blogging',
         topicID: 'topics_content_blogging',
         icon: 'thumbs-up',
-        topicStory: {
-          id: 'ck8u9lzjazbmj0a78lgiwsokr',
-        },
+        color: 'blue',
+        image: 'https://unsplash.com/photos/3GZNPBLImWc' ,
       },
       {
         name: 'Podcasting',
         topicID: 'topics_content_podcasting',
         icon: 'thumbs-up',
-        topicStory: {
-          id: 'ck8u9lzybwoa00a874t5m4ytw',
-        },
+        color: 'blue',
+        image: 'https://unsplash.com/photos/OaPksPcVp50' ,
       },
       {
         name: 'YouTube',
         topicID: 'topics_content_youtube',
         icon: 'thumbs-up',
-        topicStory: {
-          id: 'ck8u9m0c3zbmw0a783ddtrpi5',
-        },
+        color: 'blue',
+        image: 'https://unsplash.com/photos/7y-Fr59_MmI' ,
       },
       {
         name: 'Streaming',
         topicID: 'topics_content_streaming',
         icon: 'thumbs-up',
-        topicStory: {
-          id: 'ck8u9m0tvzbn40a78bhy40g3u',
-        },
+        color: 'blue',
+        image: 'https://unsplash.com/photos/dvrh7Hpuyp4' ,
       },
     ],
     name: 'Content Creators',
-    icon: 'thumbs-up',
     topicID: 'topics_content',
-    topicStory: {
-      id: 'ck8u9lyjkzbm40a78ltoak8b6',
-    },
+    icon: 'thumbs-up',
+    color: 'blue',
+    image: 'https://unsplash.com/photos/0eo4e1eh13I' ,
   },
   {
     children: [
@@ -559,33 +548,29 @@ const topicsList = [
         name: 'Politics',
         topicID: 'topics_news_politics',
         icon: 'newspaper',
-        topicStory: {
-          id: 'ck8u9m1tfwoax0a876obiy6aq',
-        },
+        color: 'gray100',
+        image: 'https://unsplash.com/photos/v0OWc_skg0g' ,
       },
       {
         name: 'Journalism',
         topicID: 'topics_news_journalism',
         icon: 'newspaper',
-        topicStory: {
-          id: 'ck8u9m29uzbno0a78vzspvldl',
-        },
+        color: 'gray100',
+        image: 'https://unsplash.com/photos/zAi2Is48-MA' ,
       },
       {
         name: 'Law & Policy',
         topicID: 'topics_news_lawpolicy',
         icon: 'newspaper',
-        topicStory: {
-          id: 'ck8u9m2xvwobh0a87b4lhzwz4',
-        },
+        color: 'gray100',
+        image: 'https://unsplash.com/photos/L4YGuSg0fxs' ,
       },
     ],
     name: 'News & Politics',
-    icon: 'newspaper',
     topicID: 'topics_news',
-    topicStory: {
-      id: 'ck8u9m1iuwoao0a87tms9z3b6',
-    },
+    icon: 'newspaper',
+    color: 'gray100',
+    image: 'https://unsplash.com/photos/Mwuod2cm8g4' ,
   },
   {
     children: [
@@ -593,17 +578,78 @@ const topicsList = [
         name: 'Esports',
         topicID: 'topics_sports_esports',
         icon: 'football-ball',
-        topicStory: {
-          id: 'ck8u9m7rkwoe20a87oz6ytvf2',
-        },
+        color: 'orange',
+        image: 'https://unsplash.com/photos/tBG35b1ju2U' ,
+      },
+      {
+        name: 'Football',
+        topicID: 'topics_sports_football',
+        icon: 'football-ball',
+        color: 'orange',
+        image: 'https://unsplash.com/photos/-nATH0CrkMU' ,
+      },
+      {
+        name: 'Basketball',
+        topicID: 'topics_sports_basketball',
+        icon: 'football-ball',
+        color: 'orange',
+        image: 'https://unsplash.com/photos/nM2WEy42Npg' ,
+      },
+      {
+        name: 'Baseball',
+        topicID: 'topics_sports_baseball',
+        icon: 'football-ball',
+        color: 'orange',
+        image: 'https://unsplash.com/photos/FobzAZJGM9M' ,
+      },
+      {
+        name: 'Softball',
+        topicID: 'topics_sports_softball',
+        icon: 'football-ball',
+        color: 'orange',
+        image: 'https://unsplash.com/photos/zoWzrCPCa5U' ,
+      },
+      {
+        name: 'Lacrosse',
+        topicID: 'topics_sports_lacrosse',
+        icon: 'football-ball',
+        color: 'orange',
+        image: 'https://unsplash.com/photos/O8-sO2GdTMo' ,
+      },
+      {
+        name: 'Auto Racing',
+        topicID: 'topics_sports_autoracing',
+        icon: 'football-ball',
+        color: 'orange',
+        image: 'https://unsplash.com/photos/bbYQYZ0Xt_M' ,
+      },
+      {
+        name: 'Hockey',
+        topicID: 'topics_sports_hockey',
+        icon: 'football-ball',
+        color: 'orange',
+        image: 'https://unsplash.com/photos/5oZ9uVx7buc' ,
+      },
+      {
+        name: 'Golf',
+        topicID: 'topics_sports_golf',
+        icon: 'football-ball',
+        color: 'orange',
+        image: 'https://unsplash.com/photos/wn35CKouahQ' ,
+      },
+      {
+        name: 'MMA',
+        topicID: 'topics_sports_mma',
+        icon: 'football-ball',
+        color: 'orange',
+        image: 'https://unsplash.com/photos/I6xpuYm_byM' ,
       },
     ],
     name: 'Sports',
-    icon: 'football-ball',
     topicID: 'topics_sports',
-    topicStory: {
-      id: 'ck8u9m3cjwobr0a87dq33jq5l',
-    },
+    icon: 'football-ball',
+    color: 'orange',
+    image: 'https://unsplash.com/photos/zmN2bVDFvQ0' ,
   },
   {
     children: [
@@ -611,49 +657,43 @@ const topicsList = [
         name: 'House Flipping',
         topicID: 'topics_realestate_houseflipping',
         icon: 'home',
-        topicStory: {
-          id: 'ck8u9m8eizbqb0a78cj7hyp3f',
-        },
+        color: 'blue',
+        image: 'https://unsplash.com/photos/rgJ1J8SDEAY' ,
       },
       {
         name: 'Commercial',
         topicID: 'topics_realestate_commercial',
         icon: 'home',
-        topicStory: {
-          id: 'ck8u9m90xwoeq0a879h2c09je',
-        },
+        color: 'blue',
+        image: 'https://unsplash.com/photos/PQUOhz2MOWw' ,
       },
       {
         name: 'Multifamily',
         topicID: 'topics_realestate_multifamily',
         icon: 'home',
-        topicStory: {
-          id: 'ck8u9m9i0zbqr0a78x7qrvvwl',
-        },
+        color: 'blue',
+        image: 'https://unsplash.com/photos/WCgioEcEVNc' ,
       },
       {
         name: 'Single Family',
         topicID: 'topics_realestate_singlefamily',
         icon: 'home',
-        topicStory: {
-          id: 'ck8u9ma6xwof30a870fo81z4i',
-        },
+        color: 'blue',
+        image: 'https://unsplash.com/photos/561igiTyvSk' ,
       },
       {
         name: 'Realtor',
         topicID: 'topics_realestate_realtor',
         icon: 'home',
-        topicStory: {
-          id: 'ck8u9malpzbrp0a78le0qu2xo',
-        },
+        color: 'blue',
+        image: 'https://unsplash.com/photos/tPX992SVljo' ,
       },
     ],
     name: 'Real Estate',
-    icon: 'home',
     topicID: 'topics_realestate',
-    topicStory: {
-      id: 'ck8u9m3uxwoc30a87j9zfzjpw',
-    },
+    icon: 'home',
+    color: 'blue',
+    image: 'https://unsplash.com/photos/QHDFm084RNk' ,
   },
   {
     children: [
@@ -661,65 +701,57 @@ const topicsList = [
         name: 'Pre-school',
         topicID: 'topics_education_preschool',
         icon: 'graduation-cap',
-        topicStory: {
-          id: 'ck8u9mb4mwofg0a873mhglidc',
-        },
+        color: 'black',
+        image: 'https://unsplash.com/photos/YZOVz5f3SBo' ,
       },
       {
         name: 'Elementary',
         topicID: 'topics_education_elementary',
         icon: 'graduation-cap',
-        topicStory: {
-          id: 'ck8u9mbnozbs00a784iksnpke',
-        },
+        color: 'black',
+        image: 'https://unsplash.com/photos/WE_Kv_ZB1l0' ,
       },
       {
         name: 'Middle School',
         topicID: 'topics_education_middleschool',
         icon: 'graduation-cap',
-        topicStory: {
-          id: 'ck8u9mcd0zbs70a78druvl6va',
-        },
+        color: 'black',
+        image: 'https://unsplash.com/photos/7DMkvNblkpw' ,
       },
       {
         name: 'High School',
         topicID: 'topics_education_highschool',
         icon: 'graduation-cap',
-        topicStory: {
-          id: 'ck8u9mczpzbse0a78ch6k18zi',
-        },
+        color: 'black',
+        image: 'https://unsplash.com/photos/JkA4jNmx7mY' ,
       },
       {
         name: 'Undergraduate',
         topicID: 'topics_education_undergraduate',
         icon: 'graduation-cap',
-        topicStory: {
-          id: 'ck8u9me5kwofw0a87y4x9uazb',
-        },
+        color: 'black',
+        image: 'https://unsplash.com/photos/yL6CrMggt8g' ,
       },
       {
         name: 'Graduate',
         topicID: 'topics_education_graduate',
         icon: 'graduation-cap',
-        topicStory: {
-          id: 'ck8u9meqrzbsl0a7868bg8kh0',
-        },
+        color: 'black',
+        image: 'https://unsplash.com/photos/0oa1jhDLevQ' ,
       },
       {
         name: 'Doctoral Studies',
         topicID: 'topics_education_doctoralstudies',
         icon: 'graduation-cap',
-        topicStory: {
-          id: 'ck8u9mgguwog70a87r9i28sc0',
-        },
+        color: 'black',
+        image: 'https://unsplash.com/photos/s9CC2SKySJM' ,
       },
     ],
     name: 'Education',
-    icon: 'graduation-cap',
     topicID: 'topics_education',
-    topicStory: {
-      id: 'ck8u9m4gzwock0a87u4wwt4c6',
-    },
+    icon: 'graduation-cap',
+    color: 'black',
+    image: 'https://unsplash.com/photos/HH4WBGNyltc' ,
   },
   {
     children: [
@@ -727,49 +759,43 @@ const topicsList = [
         name: 'Food & Bev',
         topicID: 'topics_industry_foodbev',
         icon: 'cogs',
-        topicStory: {
-          id: 'ck8u9m5cywod30a873vb9uj11',
-        },
+        color: 'purple',
+        image: 'https://unsplash.com/photos/wrPxb-FDp1c' ,
       },
       {
         name: 'E-commerce & Retail',
         topicID: 'topics_industry_ecommerceretail',
         icon: 'cogs',
-        topicStory: {
-          id: 'ck8u9m5o3zbp80a78n44pygmi',
-        },
+        color: 'purple',
+        image: 'https://unsplash.com/photos/F1I4IN86NiE' ,
       },
       {
         name: 'Construction',
         topicID: 'topics_industry_construction',
         icon: 'cogs',
-        topicStory: {
-          id: 'ck8u9m6a7zbpi0a78890wcsqq',
-        },
+        color: 'purple',
+        image: 'https://unsplash.com/photos/ESZRBtkQ_f8' ,
       },
       {
         name: 'Non-profit',
         topicID: 'topics_industry_nonprofit',
         icon: 'cogs',
-        topicStory: {
-          id: 'ck8u9m6u9wodp0a87dlan12e7',
-        },
+        color: 'purple',
+        image: 'https://unsplash.com/photos/uXvUpHY5o_4' ,
       },
       {
         name: 'Travel & Hospitality',
         topicID: 'topics_industry_travelhospitality',
         icon: 'cogs',
-        topicStory: {
-          id: 'ck8u9m77nzbpt0a78no2ads61',
-        },
+        color: 'purple',
+        image: 'https://unsplash.com/photos/uE2T1tCFsn8' ,
       },
     ],
     name: 'Industry',
-    icon: 'cogs',
     topicID: 'topics_industry',
-    topicStory: {
-      id: 'ck8u9m4uizboq0a789fed87gl',
-    },
+    icon: 'cogs',
+    color: 'purple',
+    image: 'https://unsplash.com/photos/-fGqsewtsJY' ,
   },
 ];
 

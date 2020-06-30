@@ -28,14 +28,18 @@ const Query = {
           const topic = await context.prisma.createTopic({
             topicID: topicsList[i].topicID,
             name: topicsList[i].name,
-            icon: topicsList[i].icon,
+            // icon: topicsList[i].icon,
+            // color: topicsList[i].color,
+            // image: topicsList[i].image,
             parentList: { connect: { listName: "topicsList" } }, // must create this list first in DB
             children: {
               create: topicsList[i].children.map(child => {
                 return {
                   topicID: child.topicID,
                   name: child.name,
-                  icon: child.icon,
+                  // icon: child.icon,
+                  // color: child.color,
+                  // image: child.image,
                 }
               })
             }
@@ -53,7 +57,8 @@ const Query = {
           const topic = await context.prisma.createTopic({
             topicID: investList[j].topicID,
             name: investList[j].name,
-            icon: investList[j].icon,
+            // icon: investList[j].icon,
+            // color: investList[j].color,
             parentList: { connect: { listName: "investList" } }, // must create this list first in DB
           })
 
@@ -69,14 +74,15 @@ const Query = {
           const topic = await context.prisma.createTopic({
             topicID: freelanceList[k].topicID,
             name: freelanceList[k].name,
-            icon: freelanceList[k].icon,
+            // icon: freelanceList[k].icon,
+            // color: freelanceList[k].color,
             parentList: { connect: { listName: "freelanceList" } }, // must create this list first in DB
             children: {
               create: freelanceList[k].children.map(child => {
                 return {
                   topicID: child.topicID,
                   name: child.name,
-                  icon: freelanceList[k].icon,
+                  // icon: freelanceList[k].icon,
                 }
               })
             }
@@ -88,38 +94,38 @@ const Query = {
         }
       }
 
-      // make user stories & intros
-      //   const users = await context.prisma.users();
+      //   // make user stories & intros
+      //   //   const users = await context.prisma.users();
 
-      //   let i;
-      //   for (i = 0; i < users.length; i++) {
-      //     try {
-      //       const user = await context.prisma.updateUser({
-      //         where: { email: users[i].email },
-      //         data: {
-      //           myStory: {
-      //             create: {
-      //               title: "My Story",
-      //               type: "MYSTORY",
-      //               owner: { connect: { email: users[i].email }}
-      //             }
-      //           },
-      //           intro: {
-      //             create: {
-      //               title: "My Intro",
-      //               type: "INTRO",
-      //               owner: { connect: { email: users[i].email }}
-      //             }
-      //           }
-      //         }
-      //       })
+      //   //   let i;
+      //   //   for (i = 0; i < users.length; i++) {
+      //   //     try {
+      //   //       const user = await context.prisma.updateUser({
+      //   //         where: { email: users[i].email },
+      //   //         data: {
+      //   //           myStory: {
+      //   //             create: {
+      //   //               title: "My Story",
+      //   //               type: "MYSTORY",
+      //   //               owner: { connect: { email: users[i].email }}
+      //   //             }
+      //   //           },
+      //   //           intro: {
+      //   //             create: {
+      //   //               title: "My Intro",
+      //   //               type: "INTRO",
+      //   //               owner: { connect: { email: users[i].email }}
+      //   //             }
+      //   //           }
+      //   //         }
+      //   //       })
 
-      //       console.log(user)
-      //   } catch (e) {
-      //     console.log(e)
-      //   }
-      // }
-      console.log("...FINISHED LOADING INITIAL TOPICS")
+      //   //       console.log(user)
+      //   //   } catch (e) {
+      //   //     console.log(e)
+      //   //   }
+      //   // }
+        console.log("...FINISHED LOADING INITIAL TOPICS")
     }
 
 
@@ -703,7 +709,6 @@ const Query = {
 
     return stories
   },
-
 };
 
 module.exports = {

@@ -265,9 +265,6 @@ type Topic {
   parentList: List @relation(name: "ListToTopicRelation")
   parentTopic: Topic @relation(name: "TopicToTopicRelation")
   children: [Topic]! @relation(name: "TopicToTopicRelation" onDelete: CASCADE)
-  icon: String
-  color: String
-  image: String
   order: Int
 }
 
