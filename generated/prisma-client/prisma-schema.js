@@ -4283,6 +4283,7 @@ type StoryItem {
   likes: [String!]!
   likesCount: Int
   likedByMe: Boolean
+  views(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
 }
 
 type StoryItemConnection {
@@ -4305,6 +4306,7 @@ input StoryItemCreateInput {
   likes: StoryItemCreatelikesInput
   likesCount: Int
   likedByMe: Boolean
+  views: UserCreateManyInput
 }
 
 input StoryItemCreatelikesInput {
@@ -4333,6 +4335,7 @@ input StoryItemCreateWithoutStoriesInput {
   likes: StoryItemCreatelikesInput
   likesCount: Int
   likedByMe: Boolean
+  views: UserCreateManyInput
 }
 
 type StoryItemEdge {
@@ -4508,6 +4511,7 @@ input StoryItemUpdateInput {
   likes: StoryItemUpdatelikesInput
   likesCount: Int
   likedByMe: Boolean
+  views: UserUpdateManyInput
 }
 
 input StoryItemUpdatelikesInput {
@@ -4573,6 +4577,7 @@ input StoryItemUpdateWithoutStoriesDataInput {
   likes: StoryItemUpdatelikesInput
   likesCount: Int
   likedByMe: Boolean
+  views: UserUpdateManyInput
 }
 
 input StoryItemUpdateWithWhereUniqueWithoutStoriesInput {
@@ -4679,6 +4684,9 @@ input StoryItemWhereInput {
   likesCount_gte: Int
   likedByMe: Boolean
   likedByMe_not: Boolean
+  views_every: UserWhereInput
+  views_some: UserWhereInput
+  views_none: UserWhereInput
   AND: [StoryItemWhereInput!]
   OR: [StoryItemWhereInput!]
   NOT: [StoryItemWhereInput!]

@@ -2521,6 +2521,7 @@ export interface StoryItemCreateInput {
   likes?: Maybe<StoryItemCreatelikesInput>;
   likesCount?: Maybe<Int>;
   likedByMe?: Maybe<Boolean>;
+  views?: Maybe<UserCreateManyInput>;
 }
 
 export interface TopicUpsertNestedInput {
@@ -3327,6 +3328,9 @@ export interface StoryItemWhereInput {
   likesCount_gte?: Maybe<Int>;
   likedByMe?: Maybe<Boolean>;
   likedByMe_not?: Maybe<Boolean>;
+  views_every?: Maybe<UserWhereInput>;
+  views_some?: Maybe<UserWhereInput>;
+  views_none?: Maybe<UserWhereInput>;
   AND?: Maybe<StoryItemWhereInput[] | StoryItemWhereInput>;
   OR?: Maybe<StoryItemWhereInput[] | StoryItemWhereInput>;
   NOT?: Maybe<StoryItemWhereInput[] | StoryItemWhereInput>;
@@ -4482,6 +4486,7 @@ export interface StoryItemCreateWithoutStoriesInput {
   likes?: Maybe<StoryItemCreatelikesInput>;
   likesCount?: Maybe<Int>;
   likedByMe?: Maybe<Boolean>;
+  views?: Maybe<UserCreateManyInput>;
 }
 
 export interface MessageUpdateDataInput {
@@ -4783,6 +4788,7 @@ export interface StoryItemUpdateWithoutStoriesDataInput {
   likes?: Maybe<StoryItemUpdatelikesInput>;
   likesCount?: Maybe<Int>;
   likedByMe?: Maybe<Boolean>;
+  views?: Maybe<UserUpdateManyInput>;
 }
 
 export interface CommentCreateOneWithoutCommentsInput {
@@ -5609,6 +5615,7 @@ export interface StoryItemUpdateInput {
   likes?: Maybe<StoryItemUpdatelikesInput>;
   likesCount?: Maybe<Int>;
   likedByMe?: Maybe<Boolean>;
+  views?: Maybe<UserUpdateManyInput>;
 }
 
 export interface PostUpdateWithoutCommentsDataInput {
@@ -10524,6 +10531,15 @@ export interface StoryItemPromise extends Promise<StoryItem>, Fragmentable {
   likes: () => Promise<String[]>;
   likesCount: () => Promise<Int>;
   likedByMe: () => Promise<Boolean>;
+  views: <T = FragmentableArray<User>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface StoryItemSubscription
@@ -10551,6 +10567,15 @@ export interface StoryItemSubscription
   likes: () => Promise<AsyncIterator<String[]>>;
   likesCount: () => Promise<AsyncIterator<Int>>;
   likedByMe: () => Promise<AsyncIterator<Boolean>>;
+  views: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface StoryItemNullablePromise
@@ -10578,6 +10603,15 @@ export interface StoryItemNullablePromise
   likes: () => Promise<String[]>;
   likesCount: () => Promise<Int>;
   likedByMe: () => Promise<Boolean>;
+  views: <T = FragmentableArray<User>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface StoryConnection {

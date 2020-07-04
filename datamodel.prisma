@@ -138,6 +138,7 @@ type StoryItem {
   likes: [String]! @scalarList(strategy: RELATION)
   likesCount: Int
   likedByMe: Boolean @default(value: false)
+  views: [User!]! @relation(name: "StoryItemViewedByUser")
 }
 
 type Skill {

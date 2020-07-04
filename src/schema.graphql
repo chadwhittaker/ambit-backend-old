@@ -98,6 +98,7 @@ type Mutation {
   createStory(story: StoryCreateInput!): Story!
   updateStory(id: ID!, story: StoryUpdateInput!): Story!
   deleteStory(id: ID!): Story
+  viewedStoryItem(storyItemID: ID!): StoryItem!
 }
 
 type AuthPayload {

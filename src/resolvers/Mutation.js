@@ -1057,6 +1057,24 @@ const Mutation = {
 
     return storyReturned
   },
+
+  async viewedStoryItem(parent, { storyItemID }, context) {
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      return null
+    }
+
+    const storyItemReturned = await context.prisma.updateStoryItem({
+      where: { id: storyItemID },
+      data: {
+        views: {
+          connect: [{ id: context.request.userId }]
+        }
+      },
+    })
+
+    return storyItemReturned
+  },
 }
 
 module.exports = {
