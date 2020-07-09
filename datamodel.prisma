@@ -139,6 +139,7 @@ type StoryItem {
   likesCount: Int
   likedByMe: Boolean @default(value: false)
   views: [User!]! @relation(name: "StoryItemViewedByUser")
+  plays: Int! @default(value: 0)
 }
 
 type Skill {

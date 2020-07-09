@@ -1064,14 +1064,25 @@ const Mutation = {
       return null
     }
 
+    const storyItem = await context.prisma.storyItem({ id: storyItemID })
+
     const storyItemReturned = await context.prisma.updateStoryItem({
       where: { id: storyItemID },
       data: {
         views: {
           connect: [{ id: context.request.userId }]
-        }
+        },
+        plays: storyItem.plays + 1
       },
     })
+
+    // add a play
+    // await context.prisma.updateStoryItem({
+    //   where: { id: storyItemID },
+    //   data: {
+    //     plays: storyItemReturned.plays + 1
+    //   },
+    // })
 
     return storyItemReturned
   },

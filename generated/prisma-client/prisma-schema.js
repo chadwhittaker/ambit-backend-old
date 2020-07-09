@@ -4284,6 +4284,7 @@ type StoryItem {
   likesCount: Int
   likedByMe: Boolean
   views(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  plays: Int!
 }
 
 type StoryItemConnection {
@@ -4307,6 +4308,7 @@ input StoryItemCreateInput {
   likesCount: Int
   likedByMe: Boolean
   views: UserCreateManyInput
+  plays: Int
 }
 
 input StoryItemCreatelikesInput {
@@ -4336,6 +4338,7 @@ input StoryItemCreateWithoutStoriesInput {
   likesCount: Int
   likedByMe: Boolean
   views: UserCreateManyInput
+  plays: Int
 }
 
 type StoryItemEdge {
@@ -4364,6 +4367,8 @@ enum StoryItemOrderByInput {
   likesCount_DESC
   likedByMe_ASC
   likedByMe_DESC
+  plays_ASC
+  plays_DESC
 }
 
 type StoryItemPreviousValues {
@@ -4379,6 +4384,7 @@ type StoryItemPreviousValues {
   likes: [String!]!
   likesCount: Int
   likedByMe: Boolean
+  plays: Int!
 }
 
 input StoryItemScalarWhereInput {
@@ -4470,6 +4476,14 @@ input StoryItemScalarWhereInput {
   likesCount_gte: Int
   likedByMe: Boolean
   likedByMe_not: Boolean
+  plays: Int
+  plays_not: Int
+  plays_in: [Int!]
+  plays_not_in: [Int!]
+  plays_lt: Int
+  plays_lte: Int
+  plays_gt: Int
+  plays_gte: Int
   AND: [StoryItemScalarWhereInput!]
   OR: [StoryItemScalarWhereInput!]
   NOT: [StoryItemScalarWhereInput!]
@@ -4512,6 +4526,7 @@ input StoryItemUpdateInput {
   likesCount: Int
   likedByMe: Boolean
   views: UserUpdateManyInput
+  plays: Int
 }
 
 input StoryItemUpdatelikesInput {
@@ -4529,6 +4544,7 @@ input StoryItemUpdateManyDataInput {
   likes: StoryItemUpdatelikesInput
   likesCount: Int
   likedByMe: Boolean
+  plays: Int
 }
 
 input StoryItemUpdateManyMutationInput {
@@ -4542,6 +4558,7 @@ input StoryItemUpdateManyMutationInput {
   likes: StoryItemUpdatelikesInput
   likesCount: Int
   likedByMe: Boolean
+  plays: Int
 }
 
 input StoryItemUpdateManyWithoutStoriesInput {
@@ -4578,6 +4595,7 @@ input StoryItemUpdateWithoutStoriesDataInput {
   likesCount: Int
   likedByMe: Boolean
   views: UserUpdateManyInput
+  plays: Int
 }
 
 input StoryItemUpdateWithWhereUniqueWithoutStoriesInput {
@@ -4687,6 +4705,14 @@ input StoryItemWhereInput {
   views_every: UserWhereInput
   views_some: UserWhereInput
   views_none: UserWhereInput
+  plays: Int
+  plays_not: Int
+  plays_in: [Int!]
+  plays_not_in: [Int!]
+  plays_lt: Int
+  plays_lte: Int
+  plays_gt: Int
+  plays_gte: Int
   AND: [StoryItemWhereInput!]
   OR: [StoryItemWhereInput!]
   NOT: [StoryItemWhereInput!]

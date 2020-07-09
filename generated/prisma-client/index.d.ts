@@ -854,7 +854,9 @@ export type StoryItemOrderByInput =
   | "likesCount_ASC"
   | "likesCount_DESC"
   | "likedByMe_ASC"
-  | "likedByMe_DESC";
+  | "likedByMe_DESC"
+  | "plays_ASC"
+  | "plays_DESC";
 
 export type EducationOrderByInput =
   | "id_ASC"
@@ -2406,6 +2408,7 @@ export interface StoryItemUpdateManyMutationInput {
   likes?: Maybe<StoryItemUpdatelikesInput>;
   likesCount?: Maybe<Int>;
   likedByMe?: Maybe<Boolean>;
+  plays?: Maybe<Int>;
 }
 
 export interface EducationUpdateManyDataInput {
@@ -2522,6 +2525,7 @@ export interface StoryItemCreateInput {
   likesCount?: Maybe<Int>;
   likedByMe?: Maybe<Boolean>;
   views?: Maybe<UserCreateManyInput>;
+  plays?: Maybe<Int>;
 }
 
 export interface TopicUpsertNestedInput {
@@ -3331,6 +3335,14 @@ export interface StoryItemWhereInput {
   views_every?: Maybe<UserWhereInput>;
   views_some?: Maybe<UserWhereInput>;
   views_none?: Maybe<UserWhereInput>;
+  plays?: Maybe<Int>;
+  plays_not?: Maybe<Int>;
+  plays_in?: Maybe<Int[] | Int>;
+  plays_not_in?: Maybe<Int[] | Int>;
+  plays_lt?: Maybe<Int>;
+  plays_lte?: Maybe<Int>;
+  plays_gt?: Maybe<Int>;
+  plays_gte?: Maybe<Int>;
   AND?: Maybe<StoryItemWhereInput[] | StoryItemWhereInput>;
   OR?: Maybe<StoryItemWhereInput[] | StoryItemWhereInput>;
   NOT?: Maybe<StoryItemWhereInput[] | StoryItemWhereInput>;
@@ -4487,6 +4499,7 @@ export interface StoryItemCreateWithoutStoriesInput {
   likesCount?: Maybe<Int>;
   likedByMe?: Maybe<Boolean>;
   views?: Maybe<UserCreateManyInput>;
+  plays?: Maybe<Int>;
 }
 
 export interface MessageUpdateDataInput {
@@ -4789,6 +4802,7 @@ export interface StoryItemUpdateWithoutStoriesDataInput {
   likesCount?: Maybe<Int>;
   likedByMe?: Maybe<Boolean>;
   views?: Maybe<UserUpdateManyInput>;
+  plays?: Maybe<Int>;
 }
 
 export interface CommentCreateOneWithoutCommentsInput {
@@ -4930,6 +4944,14 @@ export interface StoryItemScalarWhereInput {
   likesCount_gte?: Maybe<Int>;
   likedByMe?: Maybe<Boolean>;
   likedByMe_not?: Maybe<Boolean>;
+  plays?: Maybe<Int>;
+  plays_not?: Maybe<Int>;
+  plays_in?: Maybe<Int[] | Int>;
+  plays_not_in?: Maybe<Int[] | Int>;
+  plays_lt?: Maybe<Int>;
+  plays_lte?: Maybe<Int>;
+  plays_gt?: Maybe<Int>;
+  plays_gte?: Maybe<Int>;
   AND?: Maybe<StoryItemScalarWhereInput[] | StoryItemScalarWhereInput>;
   OR?: Maybe<StoryItemScalarWhereInput[] | StoryItemScalarWhereInput>;
   NOT?: Maybe<StoryItemScalarWhereInput[] | StoryItemScalarWhereInput>;
@@ -4969,6 +4991,7 @@ export interface StoryItemUpdateManyDataInput {
   likes?: Maybe<StoryItemUpdatelikesInput>;
   likesCount?: Maybe<Int>;
   likedByMe?: Maybe<Boolean>;
+  plays?: Maybe<Int>;
 }
 
 export interface TopicUpdateManyInput {
@@ -5616,6 +5639,7 @@ export interface StoryItemUpdateInput {
   likesCount?: Maybe<Int>;
   likedByMe?: Maybe<Boolean>;
   views?: Maybe<UserUpdateManyInput>;
+  plays?: Maybe<Int>;
 }
 
 export interface PostUpdateWithoutCommentsDataInput {
@@ -10506,6 +10530,7 @@ export interface StoryItem {
   likes: String[];
   likesCount?: Int;
   likedByMe?: Boolean;
+  plays: Int;
 }
 
 export interface StoryItemPromise extends Promise<StoryItem>, Fragmentable {
@@ -10540,6 +10565,7 @@ export interface StoryItemPromise extends Promise<StoryItem>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  plays: () => Promise<Int>;
 }
 
 export interface StoryItemSubscription
@@ -10576,6 +10602,7 @@ export interface StoryItemSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  plays: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface StoryItemNullablePromise
@@ -10612,6 +10639,7 @@ export interface StoryItemNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
+  plays: () => Promise<Int>;
 }
 
 export interface StoryConnection {
@@ -11611,6 +11639,7 @@ export interface StoryItemPreviousValues {
   likes: String[];
   likesCount?: Int;
   likedByMe?: Boolean;
+  plays: Int;
 }
 
 export interface StoryItemPreviousValuesPromise
@@ -11628,6 +11657,7 @@ export interface StoryItemPreviousValuesPromise
   likes: () => Promise<String[]>;
   likesCount: () => Promise<Int>;
   likedByMe: () => Promise<Boolean>;
+  plays: () => Promise<Int>;
 }
 
 export interface StoryItemPreviousValuesSubscription
@@ -11645,6 +11675,7 @@ export interface StoryItemPreviousValuesSubscription
   likes: () => Promise<AsyncIterator<String[]>>;
   likesCount: () => Promise<AsyncIterator<Int>>;
   likedByMe: () => Promise<AsyncIterator<Boolean>>;
+  plays: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface StoryItemSubscriptionPayload {
