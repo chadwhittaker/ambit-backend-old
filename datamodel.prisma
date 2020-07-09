@@ -207,6 +207,7 @@ type Post {
   commentsCount: Int
   sharesCount: Int
   notifications: [Notification] @relation(name: "NotificationToPost" onDelete: CASCADE)
+  views: [User!]! @relation(name: "PostViewedByUser")
   _deleted: Boolean @default(value: false)
 }
 

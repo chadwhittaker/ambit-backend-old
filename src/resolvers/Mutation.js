@@ -691,6 +691,26 @@ const Mutation = {
     return post
   },
 
+  async viewedPost(parent, { postId }, context) {
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      return null
+    }
+
+    const post = await context.prisma.post({ id: postId })
+
+    const postReturned = await context.prisma.updatePost({
+      where: { id: postId },
+      data: {
+        views: {
+          connect: [{ id: context.request.userId }]
+        },
+      },
+    })
+
+    return postReturned
+  },
+
   // ================
   // UPDATES
   // ================
@@ -1075,14 +1095,6 @@ const Mutation = {
         plays: storyItem.plays + 1
       },
     })
-
-    // add a play
-    // await context.prisma.updateStoryItem({
-    //   where: { id: storyItemID },
-    //   data: {
-    //     plays: storyItemReturned.plays + 1
-    //   },
-    // })
 
     return storyItemReturned
   },

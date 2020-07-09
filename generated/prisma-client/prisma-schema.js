@@ -3059,6 +3059,7 @@ type Post {
   commentsCount: Int
   sharesCount: Int
   notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification!]
+  views(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   _deleted: Boolean
 }
 
@@ -3097,6 +3098,7 @@ input PostCreateInput {
   commentsCount: Int
   sharesCount: Int
   notifications: NotificationCreateManyWithoutPostInput
+  views: UserCreateManyInput
   _deleted: Boolean
 }
 
@@ -3148,6 +3150,7 @@ input PostCreateWithoutCommentsInput {
   commentsCount: Int
   sharesCount: Int
   notifications: NotificationCreateManyWithoutPostInput
+  views: UserCreateManyInput
   _deleted: Boolean
 }
 
@@ -3175,6 +3178,7 @@ input PostCreateWithoutNotificationsInput {
   likedByMe: Boolean
   commentsCount: Int
   sharesCount: Int
+  views: UserCreateManyInput
   _deleted: Boolean
 }
 
@@ -3202,6 +3206,7 @@ input PostCreateWithoutOwnerInput {
   commentsCount: Int
   sharesCount: Int
   notifications: NotificationCreateManyWithoutPostInput
+  views: UserCreateManyInput
   _deleted: Boolean
 }
 
@@ -3229,6 +3234,7 @@ input PostCreateWithoutUpdatesInput {
   commentsCount: Int
   sharesCount: Int
   notifications: NotificationCreateManyWithoutPostInput
+  views: UserCreateManyInput
   _deleted: Boolean
 }
 
@@ -3525,6 +3531,7 @@ input PostUpdateInput {
   commentsCount: Int
   sharesCount: Int
   notifications: NotificationUpdateManyWithoutPostInput
+  views: UserUpdateManyInput
   _deleted: Boolean
 }
 
@@ -3639,6 +3646,7 @@ input PostUpdateWithoutCommentsDataInput {
   commentsCount: Int
   sharesCount: Int
   notifications: NotificationUpdateManyWithoutPostInput
+  views: UserUpdateManyInput
   _deleted: Boolean
 }
 
@@ -3665,6 +3673,7 @@ input PostUpdateWithoutNotificationsDataInput {
   likedByMe: Boolean
   commentsCount: Int
   sharesCount: Int
+  views: UserUpdateManyInput
   _deleted: Boolean
 }
 
@@ -3691,6 +3700,7 @@ input PostUpdateWithoutOwnerDataInput {
   commentsCount: Int
   sharesCount: Int
   notifications: NotificationUpdateManyWithoutPostInput
+  views: UserUpdateManyInput
   _deleted: Boolean
 }
 
@@ -3717,6 +3727,7 @@ input PostUpdateWithoutUpdatesDataInput {
   commentsCount: Int
   sharesCount: Int
   notifications: NotificationUpdateManyWithoutPostInput
+  views: UserUpdateManyInput
   _deleted: Boolean
 }
 
@@ -3933,6 +3944,9 @@ input PostWhereInput {
   notifications_every: NotificationWhereInput
   notifications_some: NotificationWhereInput
   notifications_none: NotificationWhereInput
+  views_every: UserWhereInput
+  views_some: UserWhereInput
+  views_none: UserWhereInput
   _deleted: Boolean
   _deleted_not: Boolean
   AND: [PostWhereInput!]

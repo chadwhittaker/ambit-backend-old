@@ -205,7 +205,7 @@ const Query = {
     return posts
   },
 
-  async postsForYou(parent, { after, first = 20 }, context) {
+  async postsForYou(parent, { after, first = 20, network }, context) {
 
     // get current user data
     const me = await context.prisma.user({ id: context.request.userId }).$fragment(UserForYouPostsFragment);
@@ -297,10 +297,10 @@ const Query = {
         after,
         where: {
           AND: [
-            // not me
+            // not from followers (that appears in NetworkPosts)
             {
               owner: {
-                id_not: me.id,
+                id_not_in: [...network, context.request.userId],
               }
             },
             {

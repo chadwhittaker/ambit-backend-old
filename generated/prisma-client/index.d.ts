@@ -1536,6 +1536,9 @@ export interface PostWhereInput {
   notifications_every?: Maybe<NotificationWhereInput>;
   notifications_some?: Maybe<NotificationWhereInput>;
   notifications_none?: Maybe<NotificationWhereInput>;
+  views_every?: Maybe<UserWhereInput>;
+  views_some?: Maybe<UserWhereInput>;
+  views_none?: Maybe<UserWhereInput>;
   _deleted?: Maybe<Boolean>;
   _deleted_not?: Maybe<Boolean>;
   AND?: Maybe<PostWhereInput[] | PostWhereInput>;
@@ -2487,6 +2490,7 @@ export interface PostUpdateWithoutOwnerDataInput {
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
   notifications?: Maybe<NotificationUpdateManyWithoutPostInput>;
+  views?: Maybe<UserUpdateManyInput>;
   _deleted?: Maybe<Boolean>;
 }
 
@@ -2676,6 +2680,7 @@ export interface PostUpdateInput {
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
   notifications?: Maybe<NotificationUpdateManyWithoutPostInput>;
+  views?: Maybe<UserUpdateManyInput>;
   _deleted?: Maybe<Boolean>;
 }
 
@@ -2702,6 +2707,7 @@ export interface PostUpdateWithoutUpdatesDataInput {
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
   notifications?: Maybe<NotificationUpdateManyWithoutPostInput>;
+  views?: Maybe<UserUpdateManyInput>;
   _deleted?: Maybe<Boolean>;
 }
 
@@ -2730,6 +2736,7 @@ export interface PostCreateInput {
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
   notifications?: Maybe<NotificationCreateManyWithoutPostInput>;
+  views?: Maybe<UserCreateManyInput>;
   _deleted?: Maybe<Boolean>;
 }
 
@@ -3650,6 +3657,7 @@ export interface PostCreateWithoutOwnerInput {
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
   notifications?: Maybe<NotificationCreateManyWithoutPostInput>;
+  views?: Maybe<UserCreateManyInput>;
   _deleted?: Maybe<Boolean>;
 }
 
@@ -3743,6 +3751,7 @@ export interface PostCreateWithoutUpdatesInput {
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
   notifications?: Maybe<NotificationCreateManyWithoutPostInput>;
+  views?: Maybe<UserCreateManyInput>;
   _deleted?: Maybe<Boolean>;
 }
 
@@ -4561,6 +4570,7 @@ export interface PostCreateWithoutNotificationsInput {
   likedByMe?: Maybe<Boolean>;
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
+  views?: Maybe<UserCreateManyInput>;
   _deleted?: Maybe<Boolean>;
 }
 
@@ -5374,6 +5384,7 @@ export interface PostUpdateWithoutNotificationsDataInput {
   likedByMe?: Maybe<Boolean>;
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
+  views?: Maybe<UserUpdateManyInput>;
   _deleted?: Maybe<Boolean>;
 }
 
@@ -5665,6 +5676,7 @@ export interface PostUpdateWithoutCommentsDataInput {
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
   notifications?: Maybe<NotificationUpdateManyWithoutPostInput>;
+  views?: Maybe<UserUpdateManyInput>;
   _deleted?: Maybe<Boolean>;
 }
 
@@ -6885,6 +6897,7 @@ export interface PostCreateWithoutCommentsInput {
   commentsCount?: Maybe<Int>;
   sharesCount?: Maybe<Int>;
   notifications?: Maybe<NotificationCreateManyWithoutPostInput>;
+  views?: Maybe<UserCreateManyInput>;
   _deleted?: Maybe<Boolean>;
 }
 
@@ -10037,6 +10050,15 @@ export interface PostPromise extends Promise<Post>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  views: <T = FragmentableArray<User>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   _deleted: () => Promise<Boolean>;
 }
 
@@ -10100,6 +10122,15 @@ export interface PostSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  views: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   _deleted: () => Promise<AsyncIterator<Boolean>>;
 }
 
@@ -10157,6 +10188,15 @@ export interface PostNullablePromise
   notifications: <T = FragmentableArray<Notification>>(args?: {
     where?: NotificationWhereInput;
     orderBy?: NotificationOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  views: <T = FragmentableArray<User>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;

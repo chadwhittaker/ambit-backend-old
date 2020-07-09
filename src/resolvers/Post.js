@@ -60,6 +60,10 @@ const Post = {
     return comments.length
   },
 
+  async views(parent, args, context) {
+    return context.prisma.post({ id: parent.id }).views()
+  },
+
 }
 
 module.exports = {
