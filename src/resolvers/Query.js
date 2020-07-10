@@ -10,6 +10,18 @@ const { getUsersMatchingManyGoals, getUsersMatchingGoal, getUsersMatchingTopicsF
 const Query = {
 
   // USERS
+  async myTopics(parent, args, context) {
+    // 1. check if there is a user on the request
+    if (!context.request.userId) {
+      // don't throw an error, just return nothing. It is ok to not be logged in.
+      return null;
+    }
+
+    const user = await context.prisma.user({ id: context.request.userId });
+
+    return user;
+  },
+
   async userLoggedIn(parent, args, context) {
     // 1. check if there is a user on the request
     if (!context.request.userId) {
@@ -125,7 +137,7 @@ const Query = {
       //   //     console.log(e)
       //   //   }
       //   // }
-        console.log("...FINISHED LOADING INITIAL TOPICS")
+      console.log("...FINISHED LOADING INITIAL TOPICS")
     }
 
 

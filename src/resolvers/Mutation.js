@@ -157,7 +157,7 @@ const Mutation = {
     return user;
   },
 
-  async editTopicsFocus(parent, { id, topics }, context) {
+  async editTopicsFocus(parent, { topics }, context) {
 
     // 1. check if user is logged in
     if (!context.request.userId) {
@@ -165,14 +165,14 @@ const Mutation = {
     }
 
     // 2. check if user on the request owns the profile
-    if (context.request.userId !== id) {
-      throw new Error(`You cannot edit a profile that is not your own`)
-    }
+    // if (context.request.userId !== id) {
+    //   throw new Error(`You cannot edit a profile that is not your own`)
+    // }
 
     // 3. make mutation
     const user = await context.prisma.updateUser(
       {
-        where: { id },
+        where: { id: context.request.userId },
         data: {
           topicsFocus: {
             set: topics,
@@ -184,22 +184,17 @@ const Mutation = {
     return user;
   },
 
-  async editTopicsInterest(parent, { id, topics }, context) {
+  async editTopicsInterest(parent, { topics }, context) {
 
     // 1. check if user is logged in
     if (!context.request.userId) {
       throw new Error(`You must be logged in to do that`)
     }
 
-    // 2. check if user on the request owns the profile
-    if (context.request.userId !== id) {
-      throw new Error(`You cannot edit a profile that is not your own`)
-    }
-
     // 3. make mutation
     const user = await context.prisma.updateUser(
       {
-        where: { id },
+        where: { id: context.request.userId },
         data: {
           topicsInterest: {
             set: topics,
@@ -211,22 +206,17 @@ const Mutation = {
     return user;
   },
 
-  async editTopicsFreelance(parent, { id, topics }, context) {
+  async editTopicsFreelance(parent, { topics }, context) {
 
     // 1. check if user is logged in
     if (!context.request.userId) {
       throw new Error(`You must be logged in to do that`)
     }
 
-    // 2. check if user on the request owns the profile
-    if (context.request.userId !== id) {
-      throw new Error(`You cannot edit a profile that is not your own`)
-    }
-
     // 3. make mutation
     const user = await context.prisma.updateUser(
       {
-        where: { id },
+        where: { id: context.request.userId },
         data: {
           topicsFreelance: {
             set: topics,
@@ -238,22 +228,17 @@ const Mutation = {
     return user;
   },
 
-  async editTopicsInvest(parent, { id, topics }, context) {
+  async editTopicsInvest(parent, { topics }, context) {
 
     // 1. check if user is logged in
     if (!context.request.userId) {
       throw new Error(`You must be logged in to do that`)
     }
 
-    // 2. check if user on the request owns the profile
-    if (context.request.userId !== id) {
-      throw new Error(`You cannot edit a profile that is not your own`)
-    }
-
     // 3. make mutation
     const user = await context.prisma.updateUser(
       {
-        where: { id },
+        where: { id: context.request.userId },
         data: {
           topicsInvest: {
             set: topics,
@@ -265,22 +250,17 @@ const Mutation = {
     return user;
   },
 
-  async editTopicsMentor(parent, { id, topics }, context) {
+  async editTopicsMentor(parent, { topics }, context) {
 
     // 1. check if user is logged in
     if (!context.request.userId) {
       throw new Error(`You must be logged in to do that`)
     }
 
-    // 2. check if user on the request owns the profile
-    if (context.request.userId !== id) {
-      throw new Error(`You cannot edit a profile that is not your own`)
-    }
-
     // 3. make mutation
     const user = await context.prisma.updateUser(
       {
-        where: { id },
+        where: { id: context.request.userId },
         data: {
           topicsMentor: {
             set: topics,

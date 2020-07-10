@@ -14,6 +14,7 @@ type Query {
   users: [User]!
   allConnections: AllConnections
   unReadMessagesCount: User
+  myTopics: User
 
   # posts
   postsNetwork(after: String, first: Int, network: [ID]): PostConnection!
@@ -49,11 +50,11 @@ type Mutation {
   # profile
   editBio(id: ID!, data: UserUpdateInput!): User!
   editSkills(id: ID!, skills: [SkillCreateWithoutOwnerInput!]): User!
-  editTopicsFocus(id: ID!, topics: [TopicWhereUniqueInput]!): User!
-  editTopicsInterest(id: ID!, topics: [TopicWhereUniqueInput]!): User!
-  editTopicsFreelance(id: ID!, topics: [TopicWhereUniqueInput]!): User!
-  editTopicsInvest(id: ID!, topics: [TopicWhereUniqueInput]!): User!
-  editTopicsMentor(id: ID!, topics: [TopicWhereUniqueInput]!): User!
+  editTopicsFocus(topics: [TopicWhereUniqueInput]!): User!
+  editTopicsInterest(topics: [TopicWhereUniqueInput]!): User!
+  editTopicsFreelance(topics: [TopicWhereUniqueInput]!): User!
+  editTopicsInvest(topics: [TopicWhereUniqueInput]!): User!
+  editTopicsMentor(topics: [TopicWhereUniqueInput]!): User!
 
   #experience
   createExperience(owner: ID!, experience: ExperienceCreateWithoutOwnerInput!): User!
