@@ -28,21 +28,34 @@ const Mutation = {
         email: emailLower,
         password: hashedPassword,
         stories: {
-          create: [{
+          create: [
+          {
             title: "My Story",
             type: "MYSTORY",
+          },
+          {
+            title: "My Intro",
+            type: "INTRO",
           }]
         }
       }
     ).$fragment(LoggedInUser)
 
-    // connect mystory to user
+    const introIndex = user.stories.findIndex(story => story.type === "INTRO");
+    const storyIndex = user.stories.findIndex(story => story.type === "MYSTORY");
+
+    // connect mystory and intro to user
     const userFinal = await context.prisma.updateUser({
       where: { id: user.id },
       data: {
         myStory: {
           connect: {
-            id: user.stories[0].id,
+            id: user.stories[storyIndex].id,
+          }
+        },
+        intro: {
+          connect: {
+            id: user.stories[introIndex].id,
           }
         }
       }
