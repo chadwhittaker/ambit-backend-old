@@ -168,6 +168,7 @@ const LoggedInUser = gql`
     }
     stories {
       id
+      type
     }
     intro {
       id

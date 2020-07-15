@@ -87,9 +87,9 @@ type User {
   connectionsCount: Int @default(value: 0)
   followingCount: Int @default(value: 0)
   followersCount: Int @default(value: 0)
-  intro: Story @relation(name: "MyIntro")
-  myStory: Story @relation(name: "MyStory")
-  stories: [Story]! @relation(name: "StoriesByUser")
+  intro: Story @relation(name: "MyIntro" onDelete: CASCADE)
+  myStory: Story @relation(name: "MyStory" onDelete: CASCADE)
+  stories: [Story]! @relation(name: "StoriesByUser" onDelete: CASCADE)
   meetings: [Meeting]
   roles: [Role] @scalarList(strategy: RELATION)
   groups: [Group] @relation(name: "GroupsOfUser")
