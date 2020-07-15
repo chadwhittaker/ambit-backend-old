@@ -4285,7 +4285,6 @@ type StoryEdge {
 type StoryItem {
   id: ID!
   createdAt: DateTime!
-  owner: User!
   stories(where: StoryWhereInput, orderBy: StoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Story!]
   type: StoryItemType!
   url: String!
@@ -4309,7 +4308,6 @@ type StoryItemConnection {
 
 input StoryItemCreateInput {
   id: ID
-  owner: UserCreateOneInput!
   stories: StoryCreateManyWithoutItemsInput
   type: StoryItemType!
   url: String!
@@ -4340,7 +4338,6 @@ input StoryItemCreatetextInput {
 
 input StoryItemCreateWithoutStoriesInput {
   id: ID
-  owner: UserCreateOneInput!
   type: StoryItemType!
   url: String!
   preview: String!
@@ -4527,7 +4524,6 @@ enum StoryItemType {
 }
 
 input StoryItemUpdateInput {
-  owner: UserUpdateOneRequiredInput
   stories: StoryUpdateManyWithoutItemsInput
   type: StoryItemType
   url: String
@@ -4597,7 +4593,6 @@ input StoryItemUpdatetextInput {
 }
 
 input StoryItemUpdateWithoutStoriesDataInput {
-  owner: UserUpdateOneRequiredInput
   type: StoryItemType
   url: String
   preview: String
@@ -4646,7 +4641,6 @@ input StoryItemWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
-  owner: UserWhereInput
   stories_every: StoryWhereInput
   stories_some: StoryWhereInput
   stories_none: StoryWhereInput

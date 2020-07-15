@@ -2516,7 +2516,6 @@ export interface TopicUpdateOneInput {
 
 export interface StoryItemCreateInput {
   id?: Maybe<ID_Input>;
-  owner: UserCreateOneInput;
   stories?: Maybe<StoryCreateManyWithoutItemsInput>;
   type: StoryItemType;
   url: String;
@@ -3269,7 +3268,6 @@ export interface StoryItemWhereInput {
   createdAt_lte?: Maybe<DateTimeInput>;
   createdAt_gt?: Maybe<DateTimeInput>;
   createdAt_gte?: Maybe<DateTimeInput>;
-  owner?: Maybe<UserWhereInput>;
   stories_every?: Maybe<StoryWhereInput>;
   stories_some?: Maybe<StoryWhereInput>;
   stories_none?: Maybe<StoryWhereInput>;
@@ -4496,7 +4494,6 @@ export interface MessageUpdateOneInput {
 
 export interface StoryItemCreateWithoutStoriesInput {
   id?: Maybe<ID_Input>;
-  owner: UserCreateOneInput;
   type: StoryItemType;
   url: String;
   preview: String;
@@ -4800,7 +4797,6 @@ export interface CommentCreateOneWithoutNotificationsInput {
 }
 
 export interface StoryItemUpdateWithoutStoriesDataInput {
-  owner?: Maybe<UserUpdateOneRequiredInput>;
   type?: Maybe<StoryItemType>;
   url?: Maybe<String>;
   preview?: Maybe<String>;
@@ -5637,7 +5633,6 @@ export interface PostUpdateOneWithoutCommentsInput {
 }
 
 export interface StoryItemUpdateInput {
-  owner?: Maybe<UserUpdateOneRequiredInput>;
   stories?: Maybe<StoryUpdateManyWithoutItemsInput>;
   type?: Maybe<StoryItemType>;
   url?: Maybe<String>;
@@ -10576,7 +10571,6 @@ export interface StoryItem {
 export interface StoryItemPromise extends Promise<StoryItem>, Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
-  owner: <T = UserPromise>() => T;
   stories: <T = FragmentableArray<Story>>(args?: {
     where?: StoryWhereInput;
     orderBy?: StoryOrderByInput;
@@ -10613,7 +10607,6 @@ export interface StoryItemSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  owner: <T = UserSubscription>() => T;
   stories: <T = Promise<AsyncIterator<StorySubscription>>>(args?: {
     where?: StoryWhereInput;
     orderBy?: StoryOrderByInput;
@@ -10650,7 +10643,6 @@ export interface StoryItemNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
-  owner: <T = UserPromise>() => T;
   stories: <T = FragmentableArray<Story>>(args?: {
     where?: StoryWhereInput;
     orderBy?: StoryOrderByInput;

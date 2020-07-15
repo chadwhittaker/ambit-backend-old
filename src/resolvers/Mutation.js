@@ -308,52 +308,72 @@ const Mutation = {
     return user;
   },
 
-  async editIntro(parent, args, context) {
-    const userId = args.userId
-    // delete args.id
-
+  async updateIntro(parent, { id, updateItems, createItems, deleteItems }, context) {
     // 1. check if user is logged in
     if (!context.request.userId) {
-      throw new Error(`You must be logged in to do that`)
+      return null
     }
 
-    // 2. check if user on the request owns the profile
-    if (context.request.userId !== userId) {
-      throw new Error(`You cannot edit a profile that is not your own`)
-    }
-
-    // 3. find the ID of the current Intro so we can delete it later
-    const oldIntro = await context.prisma.user({ id: userId }).intro();
-    // future upgrade:
-    // could ask the user if they want to keep their changes...or they say no, revert back to old Intro
-    // if they say yes then we can delete the old Intro
-    const oldIntroID = oldIntro ? oldIntro.id : null
-
-    // 4. create a new intro and link it to the user
-    const user = await context.prisma.updateUser(
-      {
-        where: { id: userId },
-        data: {
-          intro: {
-            create: {
-              title: args.title,
-              type: 'INTRO',
-              // lastUpdated: new Date(),
-              owner: { connect: { id: userId } },
-              items: {
-                create: [...args.items]
-              }
-            },
-          }
+    const storyReturned = await context.prisma.updateStory({
+      where: { id },
+      data: {
+        items: {
+          update: updateItems,
+          create: createItems,
+          delete: deleteItems,
         },
-      },
-    )
+      }
+    })
 
-    // if there was an existing intro...delete it
-    if (oldIntroID) await context.prisma.deleteStory({ id: oldIntroID })
-
-    return user;
+    return storyReturned
   },
+
+  // async editIntro(parent, args, context) {
+  //   const userId = args.userId
+  //   // delete args.id
+
+  //   // 1. check if user is logged in
+  //   if (!context.request.userId) {
+  //     throw new Error(`You must be logged in to do that`)
+  //   }
+
+  //   // 2. check if user on the request owns the profile
+  //   if (context.request.userId !== userId) {
+  //     throw new Error(`You cannot edit a profile that is not your own`)
+  //   }
+
+  //   // 3. find the ID of the current Intro so we can delete it later
+  //   const oldIntro = await context.prisma.user({ id: userId }).intro();
+  //   // future upgrade:
+  //   // could ask the user if they want to keep their changes...or they say no, revert back to old Intro
+  //   // if they say yes then we can delete the old Intro
+  //   const oldIntroID = oldIntro ? oldIntro.id : null
+
+  //   // 4. create a new intro and link it to the user
+  //   const user = await context.prisma.updateUser(
+  //     {
+  //       where: { id: userId },
+  //       data: {
+  //         intro: {
+  //           create: {
+  //             title: args.title,
+  //             type: 'INTRO',
+  //             // lastUpdated: new Date(),
+  //             owner: { connect: { id: userId } },
+  //             items: {
+  //               create: [...args.items]
+  //             }
+  //           },
+  //         }
+  //       },
+  //     },
+  //   )
+
+  //   // if there was an existing intro...delete it
+  //   if (oldIntroID) await context.prisma.deleteStory({ id: oldIntroID })
+
+  //   return user;
+  // },
 
   // ================
   // EXPERIENCE

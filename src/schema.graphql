@@ -86,7 +86,12 @@ type Mutation {
   deleteComment(ownerID: ID!, id: ID!): Comment
 
   # intro
-  editIntro(userId: ID!, title: String, items: [StoryItemCreateInput!]): User!
+  updateIntro(
+    id: ID!, 
+    updateItems: [StoryItemUpdateWithWhereUniqueWithoutStoriesInput], 
+    createItems: [StoryItemCreateWithoutStoriesInput], 
+    deleteItems: [StoryItemWhereUniqueInput]
+  ): Story!
 
   # group chats
   createGroup(users: [UserWhereUniqueInput]!): Group!

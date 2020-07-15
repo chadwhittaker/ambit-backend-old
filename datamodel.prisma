@@ -126,7 +126,6 @@ type Story {
 type StoryItem {
   id: ID! @id
   createdAt: DateTime! @createdAt
-  owner: User! @relation(name: "StoryItemByUser")
   stories: [Story]! @relation(name: "StoryToStoryItemRelation")
   type: StoryItemType!
   url: String!
