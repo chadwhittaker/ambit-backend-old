@@ -131,7 +131,7 @@ type StoryItem {
   url: String!
   preview: String!
   link: String
-  text: [String]! @scalarList(strategy: RELATION)
+  text: String
   duration: Float
   inProject: Boolean @default(value: false)
   likes: [String]! @scalarList(strategy: RELATION)

@@ -670,7 +670,7 @@ const Query = {
             {
               AND: [
                 {
-                  type_in: ['MYSTORY'],
+                  type_in: ['MYSTORY', 'PROJECT'],
                 },
                 {
                   owner: { id_in: [...network, context.request.userId] }
@@ -692,16 +692,16 @@ const Query = {
       {
         where: {
           OR: [
-            {
-              AND: [
-                {
-                  type_in: ['SOLO'],
-                },
-                {
-                  topics_some: { topicID_starts_with: topicID }
-                },
-              ]
-            },
+            // {
+            //   AND: [
+            //     {
+            //       type_in: ['SOLO'],
+            //     },
+            //     {
+            //       topics_some: { topicID_starts_with: topicID }
+            //     },
+            //   ]
+            // },
             // TOPIC-STORIES FROM MYTOPICS
             {
               AND: [

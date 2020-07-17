@@ -46,7 +46,7 @@ const cleanupStories = async prisma => {
   console.log('starting clean up of all stories');
 
   // subtract 24 hours from the current time
-  const oneDayAgo = sub(new Date(), { hours: 24 })
+  const oneDayAgo = sub(new Date(), { hours: 24 * 7 })
 
   // Query all Stories with items that are > 24 hours old and in MYSTORY
   try {

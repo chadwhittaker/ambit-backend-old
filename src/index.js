@@ -44,6 +44,6 @@ server.start((deets) => {
 
   // start cron jobs
   // setInterval(() => pingServer(prisma), 600000); // 700,000 ms = 10 minutes, 1,800,000 ms = 30 minutes
-  // setInterval(() => cleanupStories(prisma), 600000); // 600,000 ms = 10 minutes, 1,800,000 ms = 30 minutes
+  setInterval(() => cleanupStories(prisma), 600000); // 600,000 ms = 10 minutes, 1,800,000 ms = 30 minutes
   setInterval(() => setInactiveGoals(prisma), 43200000); // 43200000 = 12 hours
 });

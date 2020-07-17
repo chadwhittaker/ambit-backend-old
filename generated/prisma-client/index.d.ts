@@ -847,6 +847,8 @@ export type StoryItemOrderByInput =
   | "preview_DESC"
   | "link_ASC"
   | "link_DESC"
+  | "text_ASC"
+  | "text_DESC"
   | "duration_ASC"
   | "duration_DESC"
   | "inProject_ASC"
@@ -2405,7 +2407,7 @@ export interface StoryItemUpdateManyMutationInput {
   url?: Maybe<String>;
   preview?: Maybe<String>;
   link?: Maybe<String>;
-  text?: Maybe<StoryItemUpdatetextInput>;
+  text?: Maybe<String>;
   duration?: Maybe<Float>;
   inProject?: Maybe<Boolean>;
   likes?: Maybe<StoryItemUpdatelikesInput>;
@@ -2521,7 +2523,7 @@ export interface StoryItemCreateInput {
   url: String;
   preview: String;
   link?: Maybe<String>;
-  text?: Maybe<StoryItemCreatetextInput>;
+  text?: Maybe<String>;
   duration?: Maybe<Float>;
   inProject?: Maybe<Boolean>;
   likes?: Maybe<StoryItemCreatelikesInput>;
@@ -3317,6 +3319,20 @@ export interface StoryItemWhereInput {
   link_not_starts_with?: Maybe<String>;
   link_ends_with?: Maybe<String>;
   link_not_ends_with?: Maybe<String>;
+  text?: Maybe<String>;
+  text_not?: Maybe<String>;
+  text_in?: Maybe<String[] | String>;
+  text_not_in?: Maybe<String[] | String>;
+  text_lt?: Maybe<String>;
+  text_lte?: Maybe<String>;
+  text_gt?: Maybe<String>;
+  text_gte?: Maybe<String>;
+  text_contains?: Maybe<String>;
+  text_not_contains?: Maybe<String>;
+  text_starts_with?: Maybe<String>;
+  text_not_starts_with?: Maybe<String>;
+  text_ends_with?: Maybe<String>;
+  text_not_ends_with?: Maybe<String>;
   duration?: Maybe<Float>;
   duration_not?: Maybe<Float>;
   duration_in?: Maybe<Float[] | Float>;
@@ -4498,7 +4514,7 @@ export interface StoryItemCreateWithoutStoriesInput {
   url: String;
   preview: String;
   link?: Maybe<String>;
-  text?: Maybe<StoryItemCreatetextInput>;
+  text?: Maybe<String>;
   duration?: Maybe<Float>;
   inProject?: Maybe<Boolean>;
   likes?: Maybe<StoryItemCreatelikesInput>;
@@ -4515,8 +4531,14 @@ export interface MessageUpdateDataInput {
   hidden?: Maybe<UserUpdateManyInput>;
 }
 
-export interface StoryItemCreatelikesInput {
-  set?: Maybe<String[] | String>;
+export interface NotificationCreateManyWithoutTargetInput {
+  create?: Maybe<
+    | NotificationCreateWithoutTargetInput[]
+    | NotificationCreateWithoutTargetInput
+  >;
+  connect?: Maybe<
+    NotificationWhereUniqueInput[] | NotificationWhereUniqueInput
+  >;
 }
 
 export interface GroupUpdateOneRequiredWithoutMessagesInput {
@@ -4526,15 +4548,9 @@ export interface GroupUpdateOneRequiredWithoutMessagesInput {
   connect?: Maybe<GroupWhereUniqueInput>;
 }
 
-export interface NotificationCreateWithoutTargetInput {
-  id?: Maybe<ID_Input>;
-  style: NotificationStyle;
-  user?: Maybe<UserCreateOneInput>;
-  users?: Maybe<UserCreateManyInput>;
-  post?: Maybe<PostCreateOneWithoutNotificationsInput>;
-  update?: Maybe<UpdateCreateOneWithoutNotificationsInput>;
-  comment?: Maybe<CommentCreateOneWithoutNotificationsInput>;
-  seen?: Maybe<Boolean>;
+export interface PostCreateOneWithoutNotificationsInput {
+  create?: Maybe<PostCreateWithoutNotificationsInput>;
+  connect?: Maybe<PostWhereUniqueInput>;
 }
 
 export interface GroupUpdateWithoutMessagesDataInput {
@@ -4543,32 +4559,11 @@ export interface GroupUpdateWithoutMessagesDataInput {
   hidden?: Maybe<UserUpdateManyInput>;
 }
 
-export interface PostCreateWithoutNotificationsInput {
-  id?: Maybe<ID_Input>;
-  lastUpdated: DateTimeInput;
-  owner: UserCreateOneWithoutPostsInput;
-  isGoal?: Maybe<Boolean>;
-  goal?: Maybe<String>;
-  goalStatus?: Maybe<String>;
-  subField?: Maybe<TopicCreateOneInput>;
-  topics?: Maybe<TopicCreateManyInput>;
-  location?: Maybe<String>;
-  locationID?: Maybe<String>;
-  locationLat?: Maybe<Float>;
-  locationLon?: Maybe<Float>;
-  content: String;
-  images?: Maybe<PostCreateimagesInput>;
-  video?: Maybe<String>;
-  pitch?: Maybe<String>;
-  comments?: Maybe<CommentCreateManyWithoutParentPostInput>;
-  updates?: Maybe<UpdateCreateManyWithoutParentPostInput>;
-  likes?: Maybe<PostCreatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  commentsCount?: Maybe<Int>;
-  sharesCount?: Maybe<Int>;
-  views?: Maybe<UserCreateManyInput>;
-  _deleted?: Maybe<Boolean>;
+export interface UpdateCreateManyWithoutParentPostInput {
+  create?: Maybe<
+    UpdateCreateWithoutParentPostInput[] | UpdateCreateWithoutParentPostInput
+  >;
+  connect?: Maybe<UpdateWhereUniqueInput[] | UpdateWhereUniqueInput>;
 }
 
 export interface UserUpdateManyWithoutGroupsInput {
@@ -4591,18 +4586,8 @@ export interface UserUpdateManyWithoutGroupsInput {
   >;
 }
 
-export interface UpdateCreateWithoutParentPostInput {
-  id?: Maybe<ID_Input>;
-  content: String;
-  image?: Maybe<String>;
-  likes?: Maybe<UpdateCreatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  comments?: Maybe<CommentCreateManyWithoutParentUpdateInput>;
-  commentsCount?: Maybe<Int>;
-  sharesCount?: Maybe<Int>;
-  notifications?: Maybe<NotificationCreateManyWithoutUpdateInput>;
-  _deleted?: Maybe<Boolean>;
+export interface UpdateCreatelikesInput {
+  set?: Maybe<String[] | String>;
 }
 
 export interface UserUpdateWithWhereUniqueWithoutGroupsInput {
@@ -4610,12 +4595,20 @@ export interface UserUpdateWithWhereUniqueWithoutGroupsInput {
   data: UserUpdateWithoutGroupsDataInput;
 }
 
-export interface CommentCreateManyWithoutParentUpdateInput {
-  create?: Maybe<
-    | CommentCreateWithoutParentUpdateInput[]
-    | CommentCreateWithoutParentUpdateInput
-  >;
-  connect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
+export interface CommentCreateWithoutParentUpdateInput {
+  id?: Maybe<ID_Input>;
+  owner: UserCreateOneInput;
+  parentPost?: Maybe<PostCreateOneWithoutCommentsInput>;
+  parentComment?: Maybe<CommentCreateOneWithoutCommentsInput>;
+  content?: Maybe<String>;
+  image?: Maybe<String>;
+  likes?: Maybe<CommentCreatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  comments?: Maybe<CommentCreateManyWithoutParentCommentInput>;
+  commentsCount?: Maybe<Int>;
+  notifications?: Maybe<NotificationCreateManyWithoutCommentInput>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface UserUpdateWithoutGroupsDataInput {
@@ -4660,9 +4653,32 @@ export interface UserUpdateWithoutGroupsDataInput {
   unReadMessagesCount?: Maybe<Int>;
 }
 
-export interface PostCreateOneWithoutCommentsInput {
-  create?: Maybe<PostCreateWithoutCommentsInput>;
-  connect?: Maybe<PostWhereUniqueInput>;
+export interface PostCreateWithoutCommentsInput {
+  id?: Maybe<ID_Input>;
+  lastUpdated: DateTimeInput;
+  owner: UserCreateOneWithoutPostsInput;
+  isGoal?: Maybe<Boolean>;
+  goal?: Maybe<String>;
+  goalStatus?: Maybe<String>;
+  subField?: Maybe<TopicCreateOneInput>;
+  topics?: Maybe<TopicCreateManyInput>;
+  location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  content: String;
+  images?: Maybe<PostCreateimagesInput>;
+  video?: Maybe<String>;
+  pitch?: Maybe<String>;
+  updates?: Maybe<UpdateCreateManyWithoutParentPostInput>;
+  likes?: Maybe<PostCreatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  commentsCount?: Maybe<Int>;
+  sharesCount?: Maybe<Int>;
+  notifications?: Maybe<NotificationCreateManyWithoutPostInput>;
+  views?: Maybe<UserCreateManyInput>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface StoryUpdateManyWithoutOwnerInput {
@@ -4685,8 +4701,13 @@ export interface StoryUpdateManyWithoutOwnerInput {
   >;
 }
 
-export interface PostCreatelikesInput {
-  set?: Maybe<String[] | String>;
+export interface NotificationCreateManyWithoutPostInput {
+  create?: Maybe<
+    NotificationCreateWithoutPostInput[] | NotificationCreateWithoutPostInput
+  >;
+  connect?: Maybe<
+    NotificationWhereUniqueInput[] | NotificationWhereUniqueInput
+  >;
 }
 
 export interface StoryUpdateWithWhereUniqueWithoutOwnerInput {
@@ -4694,15 +4715,9 @@ export interface StoryUpdateWithWhereUniqueWithoutOwnerInput {
   data: StoryUpdateWithoutOwnerDataInput;
 }
 
-export interface NotificationCreateWithoutPostInput {
-  id?: Maybe<ID_Input>;
-  target: UserCreateOneWithoutNotificationsInput;
-  style: NotificationStyle;
-  user?: Maybe<UserCreateOneInput>;
-  users?: Maybe<UserCreateManyInput>;
-  update?: Maybe<UpdateCreateOneWithoutNotificationsInput>;
-  comment?: Maybe<CommentCreateOneWithoutNotificationsInput>;
-  seen?: Maybe<Boolean>;
+export interface UserCreateOneWithoutNotificationsInput {
+  create?: Maybe<UserCreateWithoutNotificationsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
 }
 
 export interface StoryUpdateWithoutOwnerDataInput {
@@ -4715,47 +4730,9 @@ export interface StoryUpdateWithoutOwnerDataInput {
   save?: Maybe<Boolean>;
 }
 
-export interface UserCreateWithoutNotificationsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  firstName: String;
-  lastName: String;
-  email: String;
-  password: String;
-  profilePic?: Maybe<String>;
-  bannerPic?: Maybe<String>;
-  location?: Maybe<String>;
-  locationID?: Maybe<String>;
-  locationLat?: Maybe<Float>;
-  locationLon?: Maybe<Float>;
-  headline?: Maybe<String>;
-  website?: Maybe<String>;
-  bio?: Maybe<String>;
-  about?: Maybe<String>;
-  topicsMentor?: Maybe<TopicCreateManyInput>;
-  topicsFreelance?: Maybe<TopicCreateManyInput>;
-  topicsInvest?: Maybe<TopicCreateManyInput>;
-  topicsAgency?: Maybe<TopicCreateManyInput>;
-  topicsFocus?: Maybe<TopicCreateManyInput>;
-  topicsInterest?: Maybe<TopicCreateManyInput>;
-  skills?: Maybe<SkillCreateManyWithoutOwnerInput>;
-  experience?: Maybe<ExperienceCreateManyWithoutOwnerInput>;
-  education?: Maybe<EducationCreateManyWithoutOwnerInput>;
-  posts?: Maybe<PostCreateManyWithoutOwnerInput>;
-  connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
-  following?: Maybe<UserCreateManyWithoutFollowingInput>;
-  followers?: Maybe<UserCreateManyWithoutFollowersInput>;
-  connectionsCount?: Maybe<Int>;
-  followingCount?: Maybe<Int>;
-  followersCount?: Maybe<Int>;
-  intro?: Maybe<StoryCreateOneInput>;
-  myStory?: Maybe<StoryCreateOneInput>;
-  stories?: Maybe<StoryCreateManyWithoutOwnerInput>;
-  meetings?: Maybe<MeetingCreateManyWithoutUsersInput>;
-  roles?: Maybe<UserCreaterolesInput>;
-  groups?: Maybe<GroupCreateManyWithoutUsersInput>;
-  unReadMessages?: Maybe<MessageCreateManyInput>;
-  unReadMessagesCount?: Maybe<Int>;
+export interface MessageCreateManyInput {
+  create?: Maybe<MessageCreateInput[] | MessageCreateInput>;
+  connect?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
 }
 
 export interface StoryItemUpdateManyWithoutStoriesInput {
@@ -4781,9 +4758,18 @@ export interface StoryItemUpdateManyWithoutStoriesInput {
   >;
 }
 
-export interface UpdateCreateOneWithoutNotificationsInput {
-  create?: Maybe<UpdateCreateWithoutNotificationsInput>;
-  connect?: Maybe<UpdateWhereUniqueInput>;
+export interface UpdateCreateWithoutNotificationsInput {
+  id?: Maybe<ID_Input>;
+  parentPost: PostCreateOneWithoutUpdatesInput;
+  content: String;
+  image?: Maybe<String>;
+  likes?: Maybe<UpdateCreatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  comments?: Maybe<CommentCreateManyWithoutParentUpdateInput>;
+  commentsCount?: Maybe<Int>;
+  sharesCount?: Maybe<Int>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface StoryItemUpdateWithWhereUniqueWithoutStoriesInput {
@@ -4791,9 +4777,20 @@ export interface StoryItemUpdateWithWhereUniqueWithoutStoriesInput {
   data: StoryItemUpdateWithoutStoriesDataInput;
 }
 
-export interface CommentCreateOneWithoutNotificationsInput {
-  create?: Maybe<CommentCreateWithoutNotificationsInput>;
-  connect?: Maybe<CommentWhereUniqueInput>;
+export interface CommentCreateWithoutNotificationsInput {
+  id?: Maybe<ID_Input>;
+  owner: UserCreateOneInput;
+  parentPost?: Maybe<PostCreateOneWithoutCommentsInput>;
+  parentUpdate?: Maybe<UpdateCreateOneWithoutCommentsInput>;
+  parentComment?: Maybe<CommentCreateOneWithoutCommentsInput>;
+  content?: Maybe<String>;
+  image?: Maybe<String>;
+  likes?: Maybe<CommentCreatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  comments?: Maybe<CommentCreateManyWithoutParentCommentInput>;
+  commentsCount?: Maybe<Int>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface StoryItemUpdateWithoutStoriesDataInput {
@@ -4801,7 +4798,7 @@ export interface StoryItemUpdateWithoutStoriesDataInput {
   url?: Maybe<String>;
   preview?: Maybe<String>;
   link?: Maybe<String>;
-  text?: Maybe<StoryItemUpdatetextInput>;
+  text?: Maybe<String>;
   duration?: Maybe<Float>;
   inProject?: Maybe<Boolean>;
   likes?: Maybe<StoryItemUpdatelikesInput>;
@@ -4811,32 +4808,34 @@ export interface StoryItemUpdateWithoutStoriesDataInput {
   plays?: Maybe<Int>;
 }
 
-export interface CommentCreateOneWithoutCommentsInput {
-  create?: Maybe<CommentCreateWithoutCommentsInput>;
-  connect?: Maybe<CommentWhereUniqueInput>;
-}
-
-export interface StoryItemUpdatetextInput {
-  set?: Maybe<String[] | String>;
-}
-
-export interface CommentCreatelikesInput {
-  set?: Maybe<String[] | String>;
+export interface CommentCreateWithoutCommentsInput {
+  id?: Maybe<ID_Input>;
+  owner: UserCreateOneInput;
+  parentPost?: Maybe<PostCreateOneWithoutCommentsInput>;
+  parentUpdate?: Maybe<UpdateCreateOneWithoutCommentsInput>;
+  parentComment?: Maybe<CommentCreateOneWithoutCommentsInput>;
+  content?: Maybe<String>;
+  image?: Maybe<String>;
+  likes?: Maybe<CommentCreatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  commentsCount?: Maybe<Int>;
+  notifications?: Maybe<NotificationCreateManyWithoutCommentInput>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface StoryItemUpdatelikesInput {
   set?: Maybe<String[] | String>;
 }
 
-export interface NotificationCreateWithoutCommentInput {
-  id?: Maybe<ID_Input>;
-  target: UserCreateOneWithoutNotificationsInput;
-  style: NotificationStyle;
-  user?: Maybe<UserCreateOneInput>;
-  users?: Maybe<UserCreateManyInput>;
-  post?: Maybe<PostCreateOneWithoutNotificationsInput>;
-  update?: Maybe<UpdateCreateOneWithoutNotificationsInput>;
-  seen?: Maybe<Boolean>;
+export interface NotificationCreateManyWithoutCommentInput {
+  create?: Maybe<
+    | NotificationCreateWithoutCommentInput[]
+    | NotificationCreateWithoutCommentInput
+  >;
+  connect?: Maybe<
+    NotificationWhereUniqueInput[] | NotificationWhereUniqueInput
+  >;
 }
 
 export interface StoryItemUpsertWithWhereUniqueWithoutStoriesInput {
@@ -4845,20 +4844,12 @@ export interface StoryItemUpsertWithWhereUniqueWithoutStoriesInput {
   create: StoryItemCreateWithoutStoriesInput;
 }
 
-export interface CommentCreateWithoutParentCommentInput {
-  id?: Maybe<ID_Input>;
-  owner: UserCreateOneInput;
-  parentPost?: Maybe<PostCreateOneWithoutCommentsInput>;
-  parentUpdate?: Maybe<UpdateCreateOneWithoutCommentsInput>;
-  content?: Maybe<String>;
-  image?: Maybe<String>;
-  likes?: Maybe<CommentCreatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  comments?: Maybe<CommentCreateManyWithoutParentCommentInput>;
-  commentsCount?: Maybe<Int>;
-  notifications?: Maybe<NotificationCreateManyWithoutCommentInput>;
-  _deleted?: Maybe<Boolean>;
+export interface CommentCreateManyWithoutParentCommentInput {
+  create?: Maybe<
+    | CommentCreateWithoutParentCommentInput[]
+    | CommentCreateWithoutParentCommentInput
+  >;
+  connect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
 }
 
 export interface StoryItemScalarWhereInput {
@@ -4930,6 +4921,20 @@ export interface StoryItemScalarWhereInput {
   link_not_starts_with?: Maybe<String>;
   link_ends_with?: Maybe<String>;
   link_not_ends_with?: Maybe<String>;
+  text?: Maybe<String>;
+  text_not?: Maybe<String>;
+  text_in?: Maybe<String[] | String>;
+  text_not_in?: Maybe<String[] | String>;
+  text_lt?: Maybe<String>;
+  text_lte?: Maybe<String>;
+  text_gt?: Maybe<String>;
+  text_gte?: Maybe<String>;
+  text_contains?: Maybe<String>;
+  text_not_contains?: Maybe<String>;
+  text_starts_with?: Maybe<String>;
+  text_not_starts_with?: Maybe<String>;
+  text_ends_with?: Maybe<String>;
+  text_not_ends_with?: Maybe<String>;
   duration?: Maybe<Float>;
   duration_not?: Maybe<Float>;
   duration_in?: Maybe<Float[] | Float>;
@@ -4963,15 +4968,14 @@ export interface StoryItemScalarWhereInput {
   NOT?: Maybe<StoryItemScalarWhereInput[] | StoryItemScalarWhereInput>;
 }
 
-export interface NotificationCreateWithoutUpdateInput {
-  id?: Maybe<ID_Input>;
-  target: UserCreateOneWithoutNotificationsInput;
-  style: NotificationStyle;
-  user?: Maybe<UserCreateOneInput>;
-  users?: Maybe<UserCreateManyInput>;
-  post?: Maybe<PostCreateOneWithoutNotificationsInput>;
-  comment?: Maybe<CommentCreateOneWithoutNotificationsInput>;
-  seen?: Maybe<Boolean>;
+export interface NotificationCreateManyWithoutUpdateInput {
+  create?: Maybe<
+    | NotificationCreateWithoutUpdateInput[]
+    | NotificationCreateWithoutUpdateInput
+  >;
+  connect?: Maybe<
+    NotificationWhereUniqueInput[] | NotificationWhereUniqueInput
+  >;
 }
 
 export interface StoryItemUpdateManyWithWhereNestedInput {
@@ -4979,11 +4983,20 @@ export interface StoryItemUpdateManyWithWhereNestedInput {
   data: StoryItemUpdateManyDataInput;
 }
 
-export interface UserUpdateOneRequiredInput {
-  create?: Maybe<UserCreateInput>;
-  update?: Maybe<UserUpdateDataInput>;
-  upsert?: Maybe<UserUpsertNestedInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
+export interface CommentUpdateInput {
+  owner?: Maybe<UserUpdateOneRequiredInput>;
+  parentPost?: Maybe<PostUpdateOneWithoutCommentsInput>;
+  parentUpdate?: Maybe<UpdateUpdateOneWithoutCommentsInput>;
+  parentComment?: Maybe<CommentUpdateOneWithoutCommentsInput>;
+  content?: Maybe<String>;
+  image?: Maybe<String>;
+  likes?: Maybe<CommentUpdatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  comments?: Maybe<CommentUpdateManyWithoutParentCommentInput>;
+  commentsCount?: Maybe<Int>;
+  notifications?: Maybe<NotificationUpdateManyWithoutCommentInput>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface StoryItemUpdateManyDataInput {
@@ -4991,7 +5004,7 @@ export interface StoryItemUpdateManyDataInput {
   url?: Maybe<String>;
   preview?: Maybe<String>;
   link?: Maybe<String>;
-  text?: Maybe<StoryItemUpdatetextInput>;
+  text?: Maybe<String>;
   duration?: Maybe<Float>;
   inProject?: Maybe<Boolean>;
   likes?: Maybe<StoryItemUpdatelikesInput>;
@@ -5000,24 +5013,47 @@ export interface StoryItemUpdateManyDataInput {
   plays?: Maybe<Int>;
 }
 
-export interface TopicUpdateManyInput {
-  create?: Maybe<TopicCreateInput[] | TopicCreateInput>;
-  update?: Maybe<
-    | TopicUpdateWithWhereUniqueNestedInput[]
-    | TopicUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | TopicUpsertWithWhereUniqueNestedInput[]
-    | TopicUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  connect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  set?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  disconnect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-  deleteMany?: Maybe<TopicScalarWhereInput[] | TopicScalarWhereInput>;
-  updateMany?: Maybe<
-    TopicUpdateManyWithWhereNestedInput[] | TopicUpdateManyWithWhereNestedInput
-  >;
+export interface UserUpdateDataInput {
+  name?: Maybe<String>;
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  profilePic?: Maybe<String>;
+  bannerPic?: Maybe<String>;
+  location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  headline?: Maybe<String>;
+  website?: Maybe<String>;
+  bio?: Maybe<String>;
+  about?: Maybe<String>;
+  topicsMentor?: Maybe<TopicUpdateManyInput>;
+  topicsFreelance?: Maybe<TopicUpdateManyInput>;
+  topicsInvest?: Maybe<TopicUpdateManyInput>;
+  topicsAgency?: Maybe<TopicUpdateManyInput>;
+  topicsFocus?: Maybe<TopicUpdateManyInput>;
+  topicsInterest?: Maybe<TopicUpdateManyInput>;
+  skills?: Maybe<SkillUpdateManyWithoutOwnerInput>;
+  experience?: Maybe<ExperienceUpdateManyWithoutOwnerInput>;
+  education?: Maybe<EducationUpdateManyWithoutOwnerInput>;
+  posts?: Maybe<PostUpdateManyWithoutOwnerInput>;
+  connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
+  following?: Maybe<UserUpdateManyWithoutFollowingInput>;
+  followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
+  intro?: Maybe<StoryUpdateOneInput>;
+  myStory?: Maybe<StoryUpdateOneInput>;
+  stories?: Maybe<StoryUpdateManyWithoutOwnerInput>;
+  meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
+  roles?: Maybe<UserUpdaterolesInput>;
+  groups?: Maybe<GroupUpdateManyWithoutUsersInput>;
+  notifications?: Maybe<NotificationUpdateManyWithoutTargetInput>;
+  unReadMessages?: Maybe<MessageUpdateManyInput>;
+  unReadMessagesCount?: Maybe<Int>;
 }
 
 export interface StoryUpsertWithWhereUniqueWithoutOwnerInput {
@@ -5026,13 +5062,9 @@ export interface StoryUpsertWithWhereUniqueWithoutOwnerInput {
   create: StoryCreateWithoutOwnerInput;
 }
 
-export interface TopicUpdateDataInput {
-  topicID?: Maybe<String>;
-  name?: Maybe<String>;
-  parentList?: Maybe<ListUpdateOneWithoutMainTopicsInput>;
-  parentTopic?: Maybe<TopicUpdateOneWithoutChildrenInput>;
-  children?: Maybe<TopicUpdateManyWithoutParentTopicInput>;
-  order?: Maybe<Int>;
+export interface TopicUpdateWithWhereUniqueNestedInput {
+  where: TopicWhereUniqueInput;
+  data: TopicUpdateDataInput;
 }
 
 export interface StoryScalarWhereInput {
@@ -5091,9 +5123,13 @@ export interface StoryScalarWhereInput {
   NOT?: Maybe<StoryScalarWhereInput[] | StoryScalarWhereInput>;
 }
 
-export interface ListUpdateWithoutMainTopicsDataInput {
-  listName?: Maybe<String>;
-  icon?: Maybe<String>;
+export interface ListUpdateOneWithoutMainTopicsInput {
+  create?: Maybe<ListCreateWithoutMainTopicsInput>;
+  update?: Maybe<ListUpdateWithoutMainTopicsDataInput>;
+  upsert?: Maybe<ListUpsertWithoutMainTopicsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<ListWhereUniqueInput>;
 }
 
 export interface StoryUpdateManyWithWhereNestedInput {
@@ -5101,13 +5137,9 @@ export interface StoryUpdateManyWithWhereNestedInput {
   data: StoryUpdateManyDataInput;
 }
 
-export interface TopicUpdateOneWithoutChildrenInput {
-  create?: Maybe<TopicCreateWithoutChildrenInput>;
-  update?: Maybe<TopicUpdateWithoutChildrenDataInput>;
-  upsert?: Maybe<TopicUpsertWithoutChildrenInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<TopicWhereUniqueInput>;
+export interface ListUpsertWithoutMainTopicsInput {
+  update: ListUpdateWithoutMainTopicsDataInput;
+  create: ListCreateWithoutMainTopicsInput;
 }
 
 export interface StoryUpdateManyDataInput {
@@ -5118,9 +5150,12 @@ export interface StoryUpdateManyDataInput {
   save?: Maybe<Boolean>;
 }
 
-export interface TopicUpsertWithoutChildrenInput {
-  update: TopicUpdateWithoutChildrenDataInput;
-  create: TopicCreateWithoutChildrenInput;
+export interface TopicUpdateWithoutChildrenDataInput {
+  topicID?: Maybe<String>;
+  name?: Maybe<String>;
+  parentList?: Maybe<ListUpdateOneWithoutMainTopicsInput>;
+  parentTopic?: Maybe<TopicUpdateOneWithoutChildrenInput>;
+  order?: Maybe<Int>;
 }
 
 export interface NotificationUpdateManyWithoutTargetInput {
@@ -5153,1797 +5188,6 @@ export interface NotificationUpdateManyWithoutTargetInput {
   >;
 }
 
-export interface TopicUpdateWithWhereUniqueWithoutParentTopicInput {
-  where: TopicWhereUniqueInput;
-  data: TopicUpdateWithoutParentTopicDataInput;
-}
-
-export interface NotificationUpdateWithWhereUniqueWithoutTargetInput {
-  where: NotificationWhereUniqueInput;
-  data: NotificationUpdateWithoutTargetDataInput;
-}
-
-export interface TopicUpsertWithWhereUniqueWithoutParentTopicInput {
-  where: TopicWhereUniqueInput;
-  update: TopicUpdateWithoutParentTopicDataInput;
-  create: TopicCreateWithoutParentTopicInput;
-}
-
-export interface NotificationUpdateWithoutTargetDataInput {
-  style?: Maybe<NotificationStyle>;
-  user?: Maybe<UserUpdateOneInput>;
-  users?: Maybe<UserUpdateManyInput>;
-  post?: Maybe<PostUpdateOneWithoutNotificationsInput>;
-  update?: Maybe<UpdateUpdateOneWithoutNotificationsInput>;
-  comment?: Maybe<CommentUpdateOneWithoutNotificationsInput>;
-  seen?: Maybe<Boolean>;
-}
-
-export interface TopicUpdateManyWithWhereNestedInput {
-  where: TopicScalarWhereInput;
-  data: TopicUpdateManyDataInput;
-}
-
-export interface UserUpdateOneInput {
-  create?: Maybe<UserCreateInput>;
-  update?: Maybe<UserUpdateDataInput>;
-  upsert?: Maybe<UserUpsertNestedInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface TopicUpsertWithWhereUniqueNestedInput {
-  where: TopicWhereUniqueInput;
-  update: TopicUpdateDataInput;
-  create: TopicCreateInput;
-}
-
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
-}
-
-export interface SkillUpdateWithWhereUniqueWithoutOwnerInput {
-  where: SkillWhereUniqueInput;
-  data: SkillUpdateWithoutOwnerDataInput;
-}
-
-export interface PostUpdateOneWithoutNotificationsInput {
-  create?: Maybe<PostCreateWithoutNotificationsInput>;
-  update?: Maybe<PostUpdateWithoutNotificationsDataInput>;
-  upsert?: Maybe<PostUpsertWithoutNotificationsInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<PostWhereUniqueInput>;
-}
-
-export interface ExperienceWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  owner?: Maybe<UserWhereInput>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  subText?: Maybe<String>;
-  subText_not?: Maybe<String>;
-  subText_in?: Maybe<String[] | String>;
-  subText_not_in?: Maybe<String[] | String>;
-  subText_lt?: Maybe<String>;
-  subText_lte?: Maybe<String>;
-  subText_gt?: Maybe<String>;
-  subText_gte?: Maybe<String>;
-  subText_contains?: Maybe<String>;
-  subText_not_contains?: Maybe<String>;
-  subText_starts_with?: Maybe<String>;
-  subText_not_starts_with?: Maybe<String>;
-  subText_ends_with?: Maybe<String>;
-  subText_not_ends_with?: Maybe<String>;
-  startDateMonth?: Maybe<String>;
-  startDateMonth_not?: Maybe<String>;
-  startDateMonth_in?: Maybe<String[] | String>;
-  startDateMonth_not_in?: Maybe<String[] | String>;
-  startDateMonth_lt?: Maybe<String>;
-  startDateMonth_lte?: Maybe<String>;
-  startDateMonth_gt?: Maybe<String>;
-  startDateMonth_gte?: Maybe<String>;
-  startDateMonth_contains?: Maybe<String>;
-  startDateMonth_not_contains?: Maybe<String>;
-  startDateMonth_starts_with?: Maybe<String>;
-  startDateMonth_not_starts_with?: Maybe<String>;
-  startDateMonth_ends_with?: Maybe<String>;
-  startDateMonth_not_ends_with?: Maybe<String>;
-  startDateYear?: Maybe<Int>;
-  startDateYear_not?: Maybe<Int>;
-  startDateYear_in?: Maybe<Int[] | Int>;
-  startDateYear_not_in?: Maybe<Int[] | Int>;
-  startDateYear_lt?: Maybe<Int>;
-  startDateYear_lte?: Maybe<Int>;
-  startDateYear_gt?: Maybe<Int>;
-  startDateYear_gte?: Maybe<Int>;
-  endDateMonth?: Maybe<String>;
-  endDateMonth_not?: Maybe<String>;
-  endDateMonth_in?: Maybe<String[] | String>;
-  endDateMonth_not_in?: Maybe<String[] | String>;
-  endDateMonth_lt?: Maybe<String>;
-  endDateMonth_lte?: Maybe<String>;
-  endDateMonth_gt?: Maybe<String>;
-  endDateMonth_gte?: Maybe<String>;
-  endDateMonth_contains?: Maybe<String>;
-  endDateMonth_not_contains?: Maybe<String>;
-  endDateMonth_starts_with?: Maybe<String>;
-  endDateMonth_not_starts_with?: Maybe<String>;
-  endDateMonth_ends_with?: Maybe<String>;
-  endDateMonth_not_ends_with?: Maybe<String>;
-  endDateYear?: Maybe<Int>;
-  endDateYear_not?: Maybe<Int>;
-  endDateYear_in?: Maybe<Int[] | Int>;
-  endDateYear_not_in?: Maybe<Int[] | Int>;
-  endDateYear_lt?: Maybe<Int>;
-  endDateYear_lte?: Maybe<Int>;
-  endDateYear_gt?: Maybe<Int>;
-  endDateYear_gte?: Maybe<Int>;
-  location?: Maybe<String>;
-  location_not?: Maybe<String>;
-  location_in?: Maybe<String[] | String>;
-  location_not_in?: Maybe<String[] | String>;
-  location_lt?: Maybe<String>;
-  location_lte?: Maybe<String>;
-  location_gt?: Maybe<String>;
-  location_gte?: Maybe<String>;
-  location_contains?: Maybe<String>;
-  location_not_contains?: Maybe<String>;
-  location_starts_with?: Maybe<String>;
-  location_not_starts_with?: Maybe<String>;
-  location_ends_with?: Maybe<String>;
-  location_not_ends_with?: Maybe<String>;
-  locationID?: Maybe<String>;
-  locationID_not?: Maybe<String>;
-  locationID_in?: Maybe<String[] | String>;
-  locationID_not_in?: Maybe<String[] | String>;
-  locationID_lt?: Maybe<String>;
-  locationID_lte?: Maybe<String>;
-  locationID_gt?: Maybe<String>;
-  locationID_gte?: Maybe<String>;
-  locationID_contains?: Maybe<String>;
-  locationID_not_contains?: Maybe<String>;
-  locationID_starts_with?: Maybe<String>;
-  locationID_not_starts_with?: Maybe<String>;
-  locationID_ends_with?: Maybe<String>;
-  locationID_not_ends_with?: Maybe<String>;
-  locationLat?: Maybe<Float>;
-  locationLat_not?: Maybe<Float>;
-  locationLat_in?: Maybe<Float[] | Float>;
-  locationLat_not_in?: Maybe<Float[] | Float>;
-  locationLat_lt?: Maybe<Float>;
-  locationLat_lte?: Maybe<Float>;
-  locationLat_gt?: Maybe<Float>;
-  locationLat_gte?: Maybe<Float>;
-  locationLon?: Maybe<Float>;
-  locationLon_not?: Maybe<Float>;
-  locationLon_in?: Maybe<Float[] | Float>;
-  locationLon_not_in?: Maybe<Float[] | Float>;
-  locationLon_lt?: Maybe<Float>;
-  locationLon_lte?: Maybe<Float>;
-  locationLon_gt?: Maybe<Float>;
-  locationLon_gte?: Maybe<Float>;
-  currentRole?: Maybe<Boolean>;
-  currentRole_not?: Maybe<Boolean>;
-  AND?: Maybe<ExperienceWhereInput[] | ExperienceWhereInput>;
-  OR?: Maybe<ExperienceWhereInput[] | ExperienceWhereInput>;
-  NOT?: Maybe<ExperienceWhereInput[] | ExperienceWhereInput>;
-}
-
-export interface PostUpdateWithoutNotificationsDataInput {
-  lastUpdated?: Maybe<DateTimeInput>;
-  owner?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
-  isGoal?: Maybe<Boolean>;
-  goal?: Maybe<String>;
-  goalStatus?: Maybe<String>;
-  subField?: Maybe<TopicUpdateOneInput>;
-  topics?: Maybe<TopicUpdateManyInput>;
-  location?: Maybe<String>;
-  locationID?: Maybe<String>;
-  locationLat?: Maybe<Float>;
-  locationLon?: Maybe<Float>;
-  content?: Maybe<String>;
-  images?: Maybe<PostUpdateimagesInput>;
-  video?: Maybe<String>;
-  pitch?: Maybe<String>;
-  comments?: Maybe<CommentUpdateManyWithoutParentPostInput>;
-  updates?: Maybe<UpdateUpdateManyWithoutParentPostInput>;
-  likes?: Maybe<PostUpdatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  commentsCount?: Maybe<Int>;
-  sharesCount?: Maybe<Int>;
-  views?: Maybe<UserUpdateManyInput>;
-  _deleted?: Maybe<Boolean>;
-}
-
-export interface UpdateSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UpdateWhereInput>;
-  AND?: Maybe<UpdateSubscriptionWhereInput[] | UpdateSubscriptionWhereInput>;
-  OR?: Maybe<UpdateSubscriptionWhereInput[] | UpdateSubscriptionWhereInput>;
-  NOT?: Maybe<UpdateSubscriptionWhereInput[] | UpdateSubscriptionWhereInput>;
-}
-
-export interface UpdateUpdateManyWithoutParentPostInput {
-  create?: Maybe<
-    UpdateCreateWithoutParentPostInput[] | UpdateCreateWithoutParentPostInput
-  >;
-  delete?: Maybe<UpdateWhereUniqueInput[] | UpdateWhereUniqueInput>;
-  connect?: Maybe<UpdateWhereUniqueInput[] | UpdateWhereUniqueInput>;
-  set?: Maybe<UpdateWhereUniqueInput[] | UpdateWhereUniqueInput>;
-  disconnect?: Maybe<UpdateWhereUniqueInput[] | UpdateWhereUniqueInput>;
-  update?: Maybe<
-    | UpdateUpdateWithWhereUniqueWithoutParentPostInput[]
-    | UpdateUpdateWithWhereUniqueWithoutParentPostInput
-  >;
-  upsert?: Maybe<
-    | UpdateUpsertWithWhereUniqueWithoutParentPostInput[]
-    | UpdateUpsertWithWhereUniqueWithoutParentPostInput
-  >;
-  deleteMany?: Maybe<UpdateScalarWhereInput[] | UpdateScalarWhereInput>;
-  updateMany?: Maybe<
-    | UpdateUpdateManyWithWhereNestedInput[]
-    | UpdateUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface SkillSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<SkillWhereInput>;
-  AND?: Maybe<SkillSubscriptionWhereInput[] | SkillSubscriptionWhereInput>;
-  OR?: Maybe<SkillSubscriptionWhereInput[] | SkillSubscriptionWhereInput>;
-  NOT?: Maybe<SkillSubscriptionWhereInput[] | SkillSubscriptionWhereInput>;
-}
-
-export interface UpdateUpdateWithWhereUniqueWithoutParentPostInput {
-  where: UpdateWhereUniqueInput;
-  data: UpdateUpdateWithoutParentPostDataInput;
-}
-
-export interface TopicWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  topicID?: Maybe<String>;
-  topicID_not?: Maybe<String>;
-  topicID_in?: Maybe<String[] | String>;
-  topicID_not_in?: Maybe<String[] | String>;
-  topicID_lt?: Maybe<String>;
-  topicID_lte?: Maybe<String>;
-  topicID_gt?: Maybe<String>;
-  topicID_gte?: Maybe<String>;
-  topicID_contains?: Maybe<String>;
-  topicID_not_contains?: Maybe<String>;
-  topicID_starts_with?: Maybe<String>;
-  topicID_not_starts_with?: Maybe<String>;
-  topicID_ends_with?: Maybe<String>;
-  topicID_not_ends_with?: Maybe<String>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  parentList?: Maybe<ListWhereInput>;
-  parentTopic?: Maybe<TopicWhereInput>;
-  children_every?: Maybe<TopicWhereInput>;
-  children_some?: Maybe<TopicWhereInput>;
-  children_none?: Maybe<TopicWhereInput>;
-  order?: Maybe<Int>;
-  order_not?: Maybe<Int>;
-  order_in?: Maybe<Int[] | Int>;
-  order_not_in?: Maybe<Int[] | Int>;
-  order_lt?: Maybe<Int>;
-  order_lte?: Maybe<Int>;
-  order_gt?: Maybe<Int>;
-  order_gte?: Maybe<Int>;
-  AND?: Maybe<TopicWhereInput[] | TopicWhereInput>;
-  OR?: Maybe<TopicWhereInput[] | TopicWhereInput>;
-  NOT?: Maybe<TopicWhereInput[] | TopicWhereInput>;
-}
-
-export interface UpdateUpdateWithoutParentPostDataInput {
-  content?: Maybe<String>;
-  image?: Maybe<String>;
-  likes?: Maybe<UpdateUpdatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  comments?: Maybe<CommentUpdateManyWithoutParentUpdateInput>;
-  commentsCount?: Maybe<Int>;
-  sharesCount?: Maybe<Int>;
-  notifications?: Maybe<NotificationUpdateManyWithoutUpdateInput>;
-  _deleted?: Maybe<Boolean>;
-}
-
-export interface GroupSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<GroupWhereInput>;
-  AND?: Maybe<GroupSubscriptionWhereInput[] | GroupSubscriptionWhereInput>;
-  OR?: Maybe<GroupSubscriptionWhereInput[] | GroupSubscriptionWhereInput>;
-  NOT?: Maybe<GroupSubscriptionWhereInput[] | GroupSubscriptionWhereInput>;
-}
-
-export interface UpdateUpdatelikesInput {
-  set?: Maybe<String[] | String>;
-}
-
-export interface UserUpdateManyMutationInput {
-  name?: Maybe<String>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  profilePic?: Maybe<String>;
-  bannerPic?: Maybe<String>;
-  location?: Maybe<String>;
-  locationID?: Maybe<String>;
-  locationLat?: Maybe<Float>;
-  locationLon?: Maybe<Float>;
-  headline?: Maybe<String>;
-  website?: Maybe<String>;
-  bio?: Maybe<String>;
-  about?: Maybe<String>;
-  connectionsCount?: Maybe<Int>;
-  followingCount?: Maybe<Int>;
-  followersCount?: Maybe<Int>;
-  roles?: Maybe<UserUpdaterolesInput>;
-  unReadMessagesCount?: Maybe<Int>;
-}
-
-export interface CommentUpdateManyWithoutParentUpdateInput {
-  create?: Maybe<
-    | CommentCreateWithoutParentUpdateInput[]
-    | CommentCreateWithoutParentUpdateInput
-  >;
-  delete?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
-  connect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
-  set?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
-  disconnect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
-  update?: Maybe<
-    | CommentUpdateWithWhereUniqueWithoutParentUpdateInput[]
-    | CommentUpdateWithWhereUniqueWithoutParentUpdateInput
-  >;
-  upsert?: Maybe<
-    | CommentUpsertWithWhereUniqueWithoutParentUpdateInput[]
-    | CommentUpsertWithWhereUniqueWithoutParentUpdateInput
-  >;
-  deleteMany?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
-  updateMany?: Maybe<
-    | CommentUpdateManyWithWhereNestedInput[]
-    | CommentUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface UpdateUpdateInput {
-  parentPost?: Maybe<PostUpdateOneRequiredWithoutUpdatesInput>;
-  content?: Maybe<String>;
-  image?: Maybe<String>;
-  likes?: Maybe<UpdateUpdatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  comments?: Maybe<CommentUpdateManyWithoutParentUpdateInput>;
-  commentsCount?: Maybe<Int>;
-  sharesCount?: Maybe<Int>;
-  notifications?: Maybe<NotificationUpdateManyWithoutUpdateInput>;
-  _deleted?: Maybe<Boolean>;
-}
-
-export interface CommentUpdateWithWhereUniqueWithoutParentUpdateInput {
-  where: CommentWhereUniqueInput;
-  data: CommentUpdateWithoutParentUpdateDataInput;
-}
-
-export interface TopicUpdateInput {
-  topicID?: Maybe<String>;
-  name?: Maybe<String>;
-  parentList?: Maybe<ListUpdateOneWithoutMainTopicsInput>;
-  parentTopic?: Maybe<TopicUpdateOneWithoutChildrenInput>;
-  children?: Maybe<TopicUpdateManyWithoutParentTopicInput>;
-  order?: Maybe<Int>;
-}
-
-export interface CommentUpdateWithoutParentUpdateDataInput {
-  owner?: Maybe<UserUpdateOneRequiredInput>;
-  parentPost?: Maybe<PostUpdateOneWithoutCommentsInput>;
-  parentComment?: Maybe<CommentUpdateOneWithoutCommentsInput>;
-  content?: Maybe<String>;
-  image?: Maybe<String>;
-  likes?: Maybe<CommentUpdatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  comments?: Maybe<CommentUpdateManyWithoutParentCommentInput>;
-  commentsCount?: Maybe<Int>;
-  notifications?: Maybe<NotificationUpdateManyWithoutCommentInput>;
-  _deleted?: Maybe<Boolean>;
-}
-
-export interface StoryUpdateWithoutItemsDataInput {
-  owner?: Maybe<UserUpdateOneRequiredWithoutStoriesInput>;
-  title?: Maybe<String>;
-  type?: Maybe<StoryType>;
-  topics?: Maybe<TopicUpdateManyInput>;
-  preview?: Maybe<String>;
-  showcase?: Maybe<Boolean>;
-  save?: Maybe<Boolean>;
-}
-
-export interface PostUpdateOneWithoutCommentsInput {
-  create?: Maybe<PostCreateWithoutCommentsInput>;
-  update?: Maybe<PostUpdateWithoutCommentsDataInput>;
-  upsert?: Maybe<PostUpsertWithoutCommentsInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<PostWhereUniqueInput>;
-}
-
-export interface StoryItemUpdateInput {
-  stories?: Maybe<StoryUpdateManyWithoutItemsInput>;
-  type?: Maybe<StoryItemType>;
-  url?: Maybe<String>;
-  preview?: Maybe<String>;
-  link?: Maybe<String>;
-  text?: Maybe<StoryItemUpdatetextInput>;
-  duration?: Maybe<Float>;
-  inProject?: Maybe<Boolean>;
-  likes?: Maybe<StoryItemUpdatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  views?: Maybe<UserUpdateManyInput>;
-  plays?: Maybe<Int>;
-}
-
-export interface PostUpdateWithoutCommentsDataInput {
-  lastUpdated?: Maybe<DateTimeInput>;
-  owner?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
-  isGoal?: Maybe<Boolean>;
-  goal?: Maybe<String>;
-  goalStatus?: Maybe<String>;
-  subField?: Maybe<TopicUpdateOneInput>;
-  topics?: Maybe<TopicUpdateManyInput>;
-  location?: Maybe<String>;
-  locationID?: Maybe<String>;
-  locationLat?: Maybe<Float>;
-  locationLon?: Maybe<Float>;
-  content?: Maybe<String>;
-  images?: Maybe<PostUpdateimagesInput>;
-  video?: Maybe<String>;
-  pitch?: Maybe<String>;
-  updates?: Maybe<UpdateUpdateManyWithoutParentPostInput>;
-  likes?: Maybe<PostUpdatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  commentsCount?: Maybe<Int>;
-  sharesCount?: Maybe<Int>;
-  notifications?: Maybe<NotificationUpdateManyWithoutPostInput>;
-  views?: Maybe<UserUpdateManyInput>;
-  _deleted?: Maybe<Boolean>;
-}
-
-export type MeetingWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface PostUpdatelikesInput {
-  set?: Maybe<String[] | String>;
-}
-
-export type MessageWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface NotificationUpdateManyWithoutPostInput {
-  create?: Maybe<
-    NotificationCreateWithoutPostInput[] | NotificationCreateWithoutPostInput
-  >;
-  delete?: Maybe<NotificationWhereUniqueInput[] | NotificationWhereUniqueInput>;
-  connect?: Maybe<
-    NotificationWhereUniqueInput[] | NotificationWhereUniqueInput
-  >;
-  set?: Maybe<NotificationWhereUniqueInput[] | NotificationWhereUniqueInput>;
-  disconnect?: Maybe<
-    NotificationWhereUniqueInput[] | NotificationWhereUniqueInput
-  >;
-  update?: Maybe<
-    | NotificationUpdateWithWhereUniqueWithoutPostInput[]
-    | NotificationUpdateWithWhereUniqueWithoutPostInput
-  >;
-  upsert?: Maybe<
-    | NotificationUpsertWithWhereUniqueWithoutPostInput[]
-    | NotificationUpsertWithWhereUniqueWithoutPostInput
-  >;
-  deleteMany?: Maybe<
-    NotificationScalarWhereInput[] | NotificationScalarWhereInput
-  >;
-  updateMany?: Maybe<
-    | NotificationUpdateManyWithWhereNestedInput[]
-    | NotificationUpdateManyWithWhereNestedInput
-  >;
-}
-
-export type NotificationWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface NotificationUpdateWithWhereUniqueWithoutPostInput {
-  where: NotificationWhereUniqueInput;
-  data: NotificationUpdateWithoutPostDataInput;
-}
-
-export type PostWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface NotificationUpdateWithoutPostDataInput {
-  target?: Maybe<UserUpdateOneRequiredWithoutNotificationsInput>;
-  style?: Maybe<NotificationStyle>;
-  user?: Maybe<UserUpdateOneInput>;
-  users?: Maybe<UserUpdateManyInput>;
-  update?: Maybe<UpdateUpdateOneWithoutNotificationsInput>;
-  comment?: Maybe<CommentUpdateOneWithoutNotificationsInput>;
-  seen?: Maybe<Boolean>;
-}
-
-export type SkillWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface UserUpdateOneRequiredWithoutNotificationsInput {
-  create?: Maybe<UserCreateWithoutNotificationsInput>;
-  update?: Maybe<UserUpdateWithoutNotificationsDataInput>;
-  upsert?: Maybe<UserUpsertWithoutNotificationsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export type StoryWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface UserUpdateWithoutNotificationsDataInput {
-  name?: Maybe<String>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  profilePic?: Maybe<String>;
-  bannerPic?: Maybe<String>;
-  location?: Maybe<String>;
-  locationID?: Maybe<String>;
-  locationLat?: Maybe<Float>;
-  locationLon?: Maybe<Float>;
-  headline?: Maybe<String>;
-  website?: Maybe<String>;
-  bio?: Maybe<String>;
-  about?: Maybe<String>;
-  topicsMentor?: Maybe<TopicUpdateManyInput>;
-  topicsFreelance?: Maybe<TopicUpdateManyInput>;
-  topicsInvest?: Maybe<TopicUpdateManyInput>;
-  topicsAgency?: Maybe<TopicUpdateManyInput>;
-  topicsFocus?: Maybe<TopicUpdateManyInput>;
-  topicsInterest?: Maybe<TopicUpdateManyInput>;
-  skills?: Maybe<SkillUpdateManyWithoutOwnerInput>;
-  experience?: Maybe<ExperienceUpdateManyWithoutOwnerInput>;
-  education?: Maybe<EducationUpdateManyWithoutOwnerInput>;
-  posts?: Maybe<PostUpdateManyWithoutOwnerInput>;
-  connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
-  following?: Maybe<UserUpdateManyWithoutFollowingInput>;
-  followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
-  connectionsCount?: Maybe<Int>;
-  followingCount?: Maybe<Int>;
-  followersCount?: Maybe<Int>;
-  intro?: Maybe<StoryUpdateOneInput>;
-  myStory?: Maybe<StoryUpdateOneInput>;
-  stories?: Maybe<StoryUpdateManyWithoutOwnerInput>;
-  meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
-  roles?: Maybe<UserUpdaterolesInput>;
-  groups?: Maybe<GroupUpdateManyWithoutUsersInput>;
-  unReadMessages?: Maybe<MessageUpdateManyInput>;
-  unReadMessagesCount?: Maybe<Int>;
-}
-
-export type StoryItemWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface MessageUpdateManyInput {
-  create?: Maybe<MessageCreateInput[] | MessageCreateInput>;
-  update?: Maybe<
-    | MessageUpdateWithWhereUniqueNestedInput[]
-    | MessageUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | MessageUpsertWithWhereUniqueNestedInput[]
-    | MessageUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
-  connect?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
-  set?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
-  disconnect?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
-  deleteMany?: Maybe<MessageScalarWhereInput[] | MessageScalarWhereInput>;
-  updateMany?: Maybe<
-    | MessageUpdateManyWithWhereNestedInput[]
-    | MessageUpdateManyWithWhereNestedInput
-  >;
-}
-
-export type TopicWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  topicID?: Maybe<String>;
-}>;
-
-export interface MessageUpdateWithWhereUniqueNestedInput {
-  where: MessageWhereUniqueInput;
-  data: MessageUpdateDataInput;
-}
-
-export type UpdateWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface MessageUpsertWithWhereUniqueNestedInput {
-  where: MessageWhereUniqueInput;
-  update: MessageUpdateDataInput;
-  create: MessageCreateInput;
-}
-
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  email?: Maybe<String>;
-}>;
-
-export interface UserUpsertWithoutNotificationsInput {
-  update: UserUpdateWithoutNotificationsDataInput;
-  create: UserCreateWithoutNotificationsInput;
-}
-
-export interface TopicCreateManyInput {
-  create?: Maybe<TopicCreateInput[] | TopicCreateInput>;
-  connect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-}
-
-export interface UpdateUpdateOneWithoutNotificationsInput {
-  create?: Maybe<UpdateCreateWithoutNotificationsInput>;
-  update?: Maybe<UpdateUpdateWithoutNotificationsDataInput>;
-  upsert?: Maybe<UpdateUpsertWithoutNotificationsInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<UpdateWhereUniqueInput>;
-}
-
-export interface TopicCreateOneWithoutChildrenInput {
-  create?: Maybe<TopicCreateWithoutChildrenInput>;
-  connect?: Maybe<TopicWhereUniqueInput>;
-}
-
-export interface UpdateUpdateWithoutNotificationsDataInput {
-  parentPost?: Maybe<PostUpdateOneRequiredWithoutUpdatesInput>;
-  content?: Maybe<String>;
-  image?: Maybe<String>;
-  likes?: Maybe<UpdateUpdatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  comments?: Maybe<CommentUpdateManyWithoutParentUpdateInput>;
-  commentsCount?: Maybe<Int>;
-  sharesCount?: Maybe<Int>;
-  _deleted?: Maybe<Boolean>;
-}
-
-export interface SkillCreateManyWithoutOwnerInput {
-  create?: Maybe<SkillCreateWithoutOwnerInput[] | SkillCreateWithoutOwnerInput>;
-  connect?: Maybe<SkillWhereUniqueInput[] | SkillWhereUniqueInput>;
-}
-
-export interface UpdateUpsertWithoutNotificationsInput {
-  update: UpdateUpdateWithoutNotificationsDataInput;
-  create: UpdateCreateWithoutNotificationsInput;
-}
-
-export interface EducationCreateManyWithoutOwnerInput {
-  create?: Maybe<
-    EducationCreateWithoutOwnerInput[] | EducationCreateWithoutOwnerInput
-  >;
-  connect?: Maybe<EducationWhereUniqueInput[] | EducationWhereUniqueInput>;
-}
-
-export interface CommentUpdateOneWithoutNotificationsInput {
-  create?: Maybe<CommentCreateWithoutNotificationsInput>;
-  update?: Maybe<CommentUpdateWithoutNotificationsDataInput>;
-  upsert?: Maybe<CommentUpsertWithoutNotificationsInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<CommentWhereUniqueInput>;
-}
-
-export interface TopicCreateOneInput {
-  create?: Maybe<TopicCreateInput>;
-  connect?: Maybe<TopicWhereUniqueInput>;
-}
-
-export interface CommentUpdateWithoutNotificationsDataInput {
-  owner?: Maybe<UserUpdateOneRequiredInput>;
-  parentPost?: Maybe<PostUpdateOneWithoutCommentsInput>;
-  parentUpdate?: Maybe<UpdateUpdateOneWithoutCommentsInput>;
-  parentComment?: Maybe<CommentUpdateOneWithoutCommentsInput>;
-  content?: Maybe<String>;
-  image?: Maybe<String>;
-  likes?: Maybe<CommentUpdatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  comments?: Maybe<CommentUpdateManyWithoutParentCommentInput>;
-  commentsCount?: Maybe<Int>;
-  _deleted?: Maybe<Boolean>;
-}
-
-export interface UpdateCreateOneWithoutCommentsInput {
-  create?: Maybe<UpdateCreateWithoutCommentsInput>;
-  connect?: Maybe<UpdateWhereUniqueInput>;
-}
-
-export interface CommentUpdateOneWithoutCommentsInput {
-  create?: Maybe<CommentCreateWithoutCommentsInput>;
-  update?: Maybe<CommentUpdateWithoutCommentsDataInput>;
-  upsert?: Maybe<CommentUpsertWithoutCommentsInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<CommentWhereUniqueInput>;
-}
-
-export interface UserCreateOneWithoutPostsInput {
-  create?: Maybe<UserCreateWithoutPostsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface CommentUpdateWithoutCommentsDataInput {
-  owner?: Maybe<UserUpdateOneRequiredInput>;
-  parentPost?: Maybe<PostUpdateOneWithoutCommentsInput>;
-  parentUpdate?: Maybe<UpdateUpdateOneWithoutCommentsInput>;
-  parentComment?: Maybe<CommentUpdateOneWithoutCommentsInput>;
-  content?: Maybe<String>;
-  image?: Maybe<String>;
-  likes?: Maybe<CommentUpdatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  commentsCount?: Maybe<Int>;
-  notifications?: Maybe<NotificationUpdateManyWithoutCommentInput>;
-  _deleted?: Maybe<Boolean>;
-}
-
-export interface UserCreateManyWithoutFollowingInput {
-  create?: Maybe<
-    UserCreateWithoutFollowingInput[] | UserCreateWithoutFollowingInput
-  >;
-  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-}
-
-export interface CommentUpdatelikesInput {
-  set?: Maybe<String[] | String>;
-}
-
-export interface StoryCreateOneInput {
-  create?: Maybe<StoryCreateInput>;
-  connect?: Maybe<StoryWhereUniqueInput>;
-}
-
-export interface NotificationUpdateManyWithoutCommentInput {
-  create?: Maybe<
-    | NotificationCreateWithoutCommentInput[]
-    | NotificationCreateWithoutCommentInput
-  >;
-  delete?: Maybe<NotificationWhereUniqueInput[] | NotificationWhereUniqueInput>;
-  connect?: Maybe<
-    NotificationWhereUniqueInput[] | NotificationWhereUniqueInput
-  >;
-  set?: Maybe<NotificationWhereUniqueInput[] | NotificationWhereUniqueInput>;
-  disconnect?: Maybe<
-    NotificationWhereUniqueInput[] | NotificationWhereUniqueInput
-  >;
-  update?: Maybe<
-    | NotificationUpdateWithWhereUniqueWithoutCommentInput[]
-    | NotificationUpdateWithWhereUniqueWithoutCommentInput
-  >;
-  upsert?: Maybe<
-    | NotificationUpsertWithWhereUniqueWithoutCommentInput[]
-    | NotificationUpsertWithWhereUniqueWithoutCommentInput
-  >;
-  deleteMany?: Maybe<
-    NotificationScalarWhereInput[] | NotificationScalarWhereInput
-  >;
-  updateMany?: Maybe<
-    | NotificationUpdateManyWithWhereNestedInput[]
-    | NotificationUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface MeetingCreateManyWithoutUsersInput {
-  create?: Maybe<
-    MeetingCreateWithoutUsersInput[] | MeetingCreateWithoutUsersInput
-  >;
-  connect?: Maybe<MeetingWhereUniqueInput[] | MeetingWhereUniqueInput>;
-}
-
-export interface NotificationUpdateWithWhereUniqueWithoutCommentInput {
-  where: NotificationWhereUniqueInput;
-  data: NotificationUpdateWithoutCommentDataInput;
-}
-
-export interface GroupCreateWithoutUsersInput {
-  id?: Maybe<ID_Input>;
-  messages?: Maybe<MessageCreateManyWithoutToInput>;
-  latestMessage?: Maybe<MessageCreateOneInput>;
-  hidden?: Maybe<UserCreateManyInput>;
-}
-
-export interface NotificationUpdateWithoutCommentDataInput {
-  target?: Maybe<UserUpdateOneRequiredWithoutNotificationsInput>;
-  style?: Maybe<NotificationStyle>;
-  user?: Maybe<UserUpdateOneInput>;
-  users?: Maybe<UserUpdateManyInput>;
-  post?: Maybe<PostUpdateOneWithoutNotificationsInput>;
-  update?: Maybe<UpdateUpdateOneWithoutNotificationsInput>;
-  seen?: Maybe<Boolean>;
-}
-
-export interface MessageCreateOneInput {
-  create?: Maybe<MessageCreateInput>;
-  connect?: Maybe<MessageWhereUniqueInput>;
-}
-
-export interface NotificationUpsertWithWhereUniqueWithoutCommentInput {
-  where: NotificationWhereUniqueInput;
-  update: NotificationUpdateWithoutCommentDataInput;
-  create: NotificationCreateWithoutCommentInput;
-}
-
-export interface UserCreateManyWithoutGroupsInput {
-  create?: Maybe<UserCreateWithoutGroupsInput[] | UserCreateWithoutGroupsInput>;
-  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-}
-
-export interface NotificationScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  style?: Maybe<NotificationStyle>;
-  style_not?: Maybe<NotificationStyle>;
-  style_in?: Maybe<NotificationStyle[] | NotificationStyle>;
-  style_not_in?: Maybe<NotificationStyle[] | NotificationStyle>;
-  seen?: Maybe<Boolean>;
-  seen_not?: Maybe<Boolean>;
-  AND?: Maybe<NotificationScalarWhereInput[] | NotificationScalarWhereInput>;
-  OR?: Maybe<NotificationScalarWhereInput[] | NotificationScalarWhereInput>;
-  NOT?: Maybe<NotificationScalarWhereInput[] | NotificationScalarWhereInput>;
-}
-
-export interface StoryItemCreateManyWithoutStoriesInput {
-  create?: Maybe<
-    StoryItemCreateWithoutStoriesInput[] | StoryItemCreateWithoutStoriesInput
-  >;
-  connect?: Maybe<StoryItemWhereUniqueInput[] | StoryItemWhereUniqueInput>;
-}
-
-export interface NotificationUpdateManyWithWhereNestedInput {
-  where: NotificationScalarWhereInput;
-  data: NotificationUpdateManyDataInput;
-}
-
-export interface NotificationCreateManyWithoutTargetInput {
-  create?: Maybe<
-    | NotificationCreateWithoutTargetInput[]
-    | NotificationCreateWithoutTargetInput
-  >;
-  connect?: Maybe<
-    NotificationWhereUniqueInput[] | NotificationWhereUniqueInput
-  >;
-}
-
-export interface NotificationUpdateManyDataInput {
-  style?: Maybe<NotificationStyle>;
-  seen?: Maybe<Boolean>;
-}
-
-export interface UpdateCreateManyWithoutParentPostInput {
-  create?: Maybe<
-    UpdateCreateWithoutParentPostInput[] | UpdateCreateWithoutParentPostInput
-  >;
-  connect?: Maybe<UpdateWhereUniqueInput[] | UpdateWhereUniqueInput>;
-}
-
-export interface CommentUpsertWithoutCommentsInput {
-  update: CommentUpdateWithoutCommentsDataInput;
-  create: CommentCreateWithoutCommentsInput;
-}
-
-export interface CommentCreateWithoutParentUpdateInput {
-  id?: Maybe<ID_Input>;
-  owner: UserCreateOneInput;
-  parentPost?: Maybe<PostCreateOneWithoutCommentsInput>;
-  parentComment?: Maybe<CommentCreateOneWithoutCommentsInput>;
-  content?: Maybe<String>;
-  image?: Maybe<String>;
-  likes?: Maybe<CommentCreatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  comments?: Maybe<CommentCreateManyWithoutParentCommentInput>;
-  commentsCount?: Maybe<Int>;
-  notifications?: Maybe<NotificationCreateManyWithoutCommentInput>;
-  _deleted?: Maybe<Boolean>;
-}
-
-export interface CommentUpdateManyWithoutParentCommentInput {
-  create?: Maybe<
-    | CommentCreateWithoutParentCommentInput[]
-    | CommentCreateWithoutParentCommentInput
-  >;
-  delete?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
-  connect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
-  set?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
-  disconnect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
-  update?: Maybe<
-    | CommentUpdateWithWhereUniqueWithoutParentCommentInput[]
-    | CommentUpdateWithWhereUniqueWithoutParentCommentInput
-  >;
-  upsert?: Maybe<
-    | CommentUpsertWithWhereUniqueWithoutParentCommentInput[]
-    | CommentUpsertWithWhereUniqueWithoutParentCommentInput
-  >;
-  deleteMany?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
-  updateMany?: Maybe<
-    | CommentUpdateManyWithWhereNestedInput[]
-    | CommentUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface NotificationCreateManyWithoutPostInput {
-  create?: Maybe<
-    NotificationCreateWithoutPostInput[] | NotificationCreateWithoutPostInput
-  >;
-  connect?: Maybe<
-    NotificationWhereUniqueInput[] | NotificationWhereUniqueInput
-  >;
-}
-
-export interface CommentUpdateWithWhereUniqueWithoutParentCommentInput {
-  where: CommentWhereUniqueInput;
-  data: CommentUpdateWithoutParentCommentDataInput;
-}
-
-export interface MessageCreateManyInput {
-  create?: Maybe<MessageCreateInput[] | MessageCreateInput>;
-  connect?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
-}
-
-export interface CommentUpdateWithoutParentCommentDataInput {
-  owner?: Maybe<UserUpdateOneRequiredInput>;
-  parentPost?: Maybe<PostUpdateOneWithoutCommentsInput>;
-  parentUpdate?: Maybe<UpdateUpdateOneWithoutCommentsInput>;
-  content?: Maybe<String>;
-  image?: Maybe<String>;
-  likes?: Maybe<CommentUpdatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  comments?: Maybe<CommentUpdateManyWithoutParentCommentInput>;
-  commentsCount?: Maybe<Int>;
-  notifications?: Maybe<NotificationUpdateManyWithoutCommentInput>;
-  _deleted?: Maybe<Boolean>;
-}
-
-export interface CommentCreateWithoutNotificationsInput {
-  id?: Maybe<ID_Input>;
-  owner: UserCreateOneInput;
-  parentPost?: Maybe<PostCreateOneWithoutCommentsInput>;
-  parentUpdate?: Maybe<UpdateCreateOneWithoutCommentsInput>;
-  parentComment?: Maybe<CommentCreateOneWithoutCommentsInput>;
-  content?: Maybe<String>;
-  image?: Maybe<String>;
-  likes?: Maybe<CommentCreatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  comments?: Maybe<CommentCreateManyWithoutParentCommentInput>;
-  commentsCount?: Maybe<Int>;
-  _deleted?: Maybe<Boolean>;
-}
-
-export interface CommentUpsertWithWhereUniqueWithoutParentCommentInput {
-  where: CommentWhereUniqueInput;
-  update: CommentUpdateWithoutParentCommentDataInput;
-  create: CommentCreateWithoutParentCommentInput;
-}
-
-export interface NotificationCreateManyWithoutCommentInput {
-  create?: Maybe<
-    | NotificationCreateWithoutCommentInput[]
-    | NotificationCreateWithoutCommentInput
-  >;
-  connect?: Maybe<
-    NotificationWhereUniqueInput[] | NotificationWhereUniqueInput
-  >;
-}
-
-export interface CommentScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  content?: Maybe<String>;
-  content_not?: Maybe<String>;
-  content_in?: Maybe<String[] | String>;
-  content_not_in?: Maybe<String[] | String>;
-  content_lt?: Maybe<String>;
-  content_lte?: Maybe<String>;
-  content_gt?: Maybe<String>;
-  content_gte?: Maybe<String>;
-  content_contains?: Maybe<String>;
-  content_not_contains?: Maybe<String>;
-  content_starts_with?: Maybe<String>;
-  content_not_starts_with?: Maybe<String>;
-  content_ends_with?: Maybe<String>;
-  content_not_ends_with?: Maybe<String>;
-  image?: Maybe<String>;
-  image_not?: Maybe<String>;
-  image_in?: Maybe<String[] | String>;
-  image_not_in?: Maybe<String[] | String>;
-  image_lt?: Maybe<String>;
-  image_lte?: Maybe<String>;
-  image_gt?: Maybe<String>;
-  image_gte?: Maybe<String>;
-  image_contains?: Maybe<String>;
-  image_not_contains?: Maybe<String>;
-  image_starts_with?: Maybe<String>;
-  image_not_starts_with?: Maybe<String>;
-  image_ends_with?: Maybe<String>;
-  image_not_ends_with?: Maybe<String>;
-  likesCount?: Maybe<Int>;
-  likesCount_not?: Maybe<Int>;
-  likesCount_in?: Maybe<Int[] | Int>;
-  likesCount_not_in?: Maybe<Int[] | Int>;
-  likesCount_lt?: Maybe<Int>;
-  likesCount_lte?: Maybe<Int>;
-  likesCount_gt?: Maybe<Int>;
-  likesCount_gte?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  likedByMe_not?: Maybe<Boolean>;
-  commentsCount?: Maybe<Int>;
-  commentsCount_not?: Maybe<Int>;
-  commentsCount_in?: Maybe<Int[] | Int>;
-  commentsCount_not_in?: Maybe<Int[] | Int>;
-  commentsCount_lt?: Maybe<Int>;
-  commentsCount_lte?: Maybe<Int>;
-  commentsCount_gt?: Maybe<Int>;
-  commentsCount_gte?: Maybe<Int>;
-  _deleted?: Maybe<Boolean>;
-  _deleted_not?: Maybe<Boolean>;
-  AND?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
-  OR?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
-  NOT?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
-}
-
-export interface NotificationCreateManyWithoutUpdateInput {
-  create?: Maybe<
-    | NotificationCreateWithoutUpdateInput[]
-    | NotificationCreateWithoutUpdateInput
-  >;
-  connect?: Maybe<
-    NotificationWhereUniqueInput[] | NotificationWhereUniqueInput
-  >;
-}
-
-export interface CommentUpdateManyWithWhereNestedInput {
-  where: CommentScalarWhereInput;
-  data: CommentUpdateManyDataInput;
-}
-
-export interface UserUpdateDataInput {
-  name?: Maybe<String>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  profilePic?: Maybe<String>;
-  bannerPic?: Maybe<String>;
-  location?: Maybe<String>;
-  locationID?: Maybe<String>;
-  locationLat?: Maybe<Float>;
-  locationLon?: Maybe<Float>;
-  headline?: Maybe<String>;
-  website?: Maybe<String>;
-  bio?: Maybe<String>;
-  about?: Maybe<String>;
-  topicsMentor?: Maybe<TopicUpdateManyInput>;
-  topicsFreelance?: Maybe<TopicUpdateManyInput>;
-  topicsInvest?: Maybe<TopicUpdateManyInput>;
-  topicsAgency?: Maybe<TopicUpdateManyInput>;
-  topicsFocus?: Maybe<TopicUpdateManyInput>;
-  topicsInterest?: Maybe<TopicUpdateManyInput>;
-  skills?: Maybe<SkillUpdateManyWithoutOwnerInput>;
-  experience?: Maybe<ExperienceUpdateManyWithoutOwnerInput>;
-  education?: Maybe<EducationUpdateManyWithoutOwnerInput>;
-  posts?: Maybe<PostUpdateManyWithoutOwnerInput>;
-  connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
-  following?: Maybe<UserUpdateManyWithoutFollowingInput>;
-  followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
-  connectionsCount?: Maybe<Int>;
-  followingCount?: Maybe<Int>;
-  followersCount?: Maybe<Int>;
-  intro?: Maybe<StoryUpdateOneInput>;
-  myStory?: Maybe<StoryUpdateOneInput>;
-  stories?: Maybe<StoryUpdateManyWithoutOwnerInput>;
-  meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
-  roles?: Maybe<UserUpdaterolesInput>;
-  groups?: Maybe<GroupUpdateManyWithoutUsersInput>;
-  notifications?: Maybe<NotificationUpdateManyWithoutTargetInput>;
-  unReadMessages?: Maybe<MessageUpdateManyInput>;
-  unReadMessagesCount?: Maybe<Int>;
-}
-
-export interface CommentUpdateManyDataInput {
-  content?: Maybe<String>;
-  image?: Maybe<String>;
-  likes?: Maybe<CommentUpdatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  commentsCount?: Maybe<Int>;
-  _deleted?: Maybe<Boolean>;
-}
-
-export interface ListUpdateOneWithoutMainTopicsInput {
-  create?: Maybe<ListCreateWithoutMainTopicsInput>;
-  update?: Maybe<ListUpdateWithoutMainTopicsDataInput>;
-  upsert?: Maybe<ListUpsertWithoutMainTopicsInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<ListWhereUniqueInput>;
-}
-
-export interface CommentUpsertWithoutNotificationsInput {
-  update: CommentUpdateWithoutNotificationsDataInput;
-  create: CommentCreateWithoutNotificationsInput;
-}
-
-export interface TopicUpdateWithoutChildrenDataInput {
-  topicID?: Maybe<String>;
-  name?: Maybe<String>;
-  parentList?: Maybe<ListUpdateOneWithoutMainTopicsInput>;
-  parentTopic?: Maybe<TopicUpdateOneWithoutChildrenInput>;
-  order?: Maybe<Int>;
-}
-
-export interface NotificationUpsertWithWhereUniqueWithoutPostInput {
-  where: NotificationWhereUniqueInput;
-  update: NotificationUpdateWithoutPostDataInput;
-  create: NotificationCreateWithoutPostInput;
-}
-
-export interface TopicUpdateWithoutParentTopicDataInput {
-  topicID?: Maybe<String>;
-  name?: Maybe<String>;
-  parentList?: Maybe<ListUpdateOneWithoutMainTopicsInput>;
-  children?: Maybe<TopicUpdateManyWithoutParentTopicInput>;
-  order?: Maybe<Int>;
-}
-
-export interface PostUpsertWithoutCommentsInput {
-  update: PostUpdateWithoutCommentsDataInput;
-  create: PostCreateWithoutCommentsInput;
-}
-
-export interface TopicUpdateManyDataInput {
-  topicID?: Maybe<String>;
-  name?: Maybe<String>;
-  order?: Maybe<Int>;
-}
-
-export interface CommentUpsertWithWhereUniqueWithoutParentUpdateInput {
-  where: CommentWhereUniqueInput;
-  update: CommentUpdateWithoutParentUpdateDataInput;
-  create: CommentCreateWithoutParentUpdateInput;
-}
-
-export interface SkillUpdateWithoutOwnerDataInput {
-  skill?: Maybe<String>;
-  isExpert?: Maybe<Boolean>;
-}
-
-export interface NotificationUpdateManyWithoutUpdateInput {
-  create?: Maybe<
-    | NotificationCreateWithoutUpdateInput[]
-    | NotificationCreateWithoutUpdateInput
-  >;
-  delete?: Maybe<NotificationWhereUniqueInput[] | NotificationWhereUniqueInput>;
-  connect?: Maybe<
-    NotificationWhereUniqueInput[] | NotificationWhereUniqueInput
-  >;
-  set?: Maybe<NotificationWhereUniqueInput[] | NotificationWhereUniqueInput>;
-  disconnect?: Maybe<
-    NotificationWhereUniqueInput[] | NotificationWhereUniqueInput
-  >;
-  update?: Maybe<
-    | NotificationUpdateWithWhereUniqueWithoutUpdateInput[]
-    | NotificationUpdateWithWhereUniqueWithoutUpdateInput
-  >;
-  upsert?: Maybe<
-    | NotificationUpsertWithWhereUniqueWithoutUpdateInput[]
-    | NotificationUpsertWithWhereUniqueWithoutUpdateInput
-  >;
-  deleteMany?: Maybe<
-    NotificationScalarWhereInput[] | NotificationScalarWhereInput
-  >;
-  updateMany?: Maybe<
-    | NotificationUpdateManyWithWhereNestedInput[]
-    | NotificationUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface StoryItemSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<StoryItemWhereInput>;
-  AND?: Maybe<
-    StoryItemSubscriptionWhereInput[] | StoryItemSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    StoryItemSubscriptionWhereInput[] | StoryItemSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    StoryItemSubscriptionWhereInput[] | StoryItemSubscriptionWhereInput
-  >;
-}
-
-export interface NotificationUpdateWithWhereUniqueWithoutUpdateInput {
-  where: NotificationWhereUniqueInput;
-  data: NotificationUpdateWithoutUpdateDataInput;
-}
-
-export interface MeetingSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<MeetingWhereInput>;
-  AND?: Maybe<MeetingSubscriptionWhereInput[] | MeetingSubscriptionWhereInput>;
-  OR?: Maybe<MeetingSubscriptionWhereInput[] | MeetingSubscriptionWhereInput>;
-  NOT?: Maybe<MeetingSubscriptionWhereInput[] | MeetingSubscriptionWhereInput>;
-}
-
-export interface NotificationUpdateWithoutUpdateDataInput {
-  target?: Maybe<UserUpdateOneRequiredWithoutNotificationsInput>;
-  style?: Maybe<NotificationStyle>;
-  user?: Maybe<UserUpdateOneInput>;
-  users?: Maybe<UserUpdateManyInput>;
-  post?: Maybe<PostUpdateOneWithoutNotificationsInput>;
-  comment?: Maybe<CommentUpdateOneWithoutNotificationsInput>;
-  seen?: Maybe<Boolean>;
-}
-
-export interface UpdateUpdateManyMutationInput {
-  content?: Maybe<String>;
-  image?: Maybe<String>;
-  likes?: Maybe<UpdateUpdatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  commentsCount?: Maybe<Int>;
-  sharesCount?: Maybe<Int>;
-  _deleted?: Maybe<Boolean>;
-}
-
-export interface NotificationUpsertWithWhereUniqueWithoutUpdateInput {
-  where: NotificationWhereUniqueInput;
-  update: NotificationUpdateWithoutUpdateDataInput;
-  create: NotificationCreateWithoutUpdateInput;
-}
-
-export interface StoryUpsertWithWhereUniqueWithoutItemsInput {
-  where: StoryWhereUniqueInput;
-  update: StoryUpdateWithoutItemsDataInput;
-  create: StoryCreateWithoutItemsInput;
-}
-
-export interface UpdateUpsertWithWhereUniqueWithoutParentPostInput {
-  where: UpdateWhereUniqueInput;
-  update: UpdateUpdateWithoutParentPostDataInput;
-  create: UpdateCreateWithoutParentPostInput;
-}
-
-export interface StoryCreateManyWithoutItemsInput {
-  create?: Maybe<StoryCreateWithoutItemsInput[] | StoryCreateWithoutItemsInput>;
-  connect?: Maybe<StoryWhereUniqueInput[] | StoryWhereUniqueInput>;
-}
-
-export interface UpdateScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  content?: Maybe<String>;
-  content_not?: Maybe<String>;
-  content_in?: Maybe<String[] | String>;
-  content_not_in?: Maybe<String[] | String>;
-  content_lt?: Maybe<String>;
-  content_lte?: Maybe<String>;
-  content_gt?: Maybe<String>;
-  content_gte?: Maybe<String>;
-  content_contains?: Maybe<String>;
-  content_not_contains?: Maybe<String>;
-  content_starts_with?: Maybe<String>;
-  content_not_starts_with?: Maybe<String>;
-  content_ends_with?: Maybe<String>;
-  content_not_ends_with?: Maybe<String>;
-  image?: Maybe<String>;
-  image_not?: Maybe<String>;
-  image_in?: Maybe<String[] | String>;
-  image_not_in?: Maybe<String[] | String>;
-  image_lt?: Maybe<String>;
-  image_lte?: Maybe<String>;
-  image_gt?: Maybe<String>;
-  image_gte?: Maybe<String>;
-  image_contains?: Maybe<String>;
-  image_not_contains?: Maybe<String>;
-  image_starts_with?: Maybe<String>;
-  image_not_starts_with?: Maybe<String>;
-  image_ends_with?: Maybe<String>;
-  image_not_ends_with?: Maybe<String>;
-  likesCount?: Maybe<Int>;
-  likesCount_not?: Maybe<Int>;
-  likesCount_in?: Maybe<Int[] | Int>;
-  likesCount_not_in?: Maybe<Int[] | Int>;
-  likesCount_lt?: Maybe<Int>;
-  likesCount_lte?: Maybe<Int>;
-  likesCount_gt?: Maybe<Int>;
-  likesCount_gte?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  likedByMe_not?: Maybe<Boolean>;
-  commentsCount?: Maybe<Int>;
-  commentsCount_not?: Maybe<Int>;
-  commentsCount_in?: Maybe<Int[] | Int>;
-  commentsCount_not_in?: Maybe<Int[] | Int>;
-  commentsCount_lt?: Maybe<Int>;
-  commentsCount_lte?: Maybe<Int>;
-  commentsCount_gt?: Maybe<Int>;
-  commentsCount_gte?: Maybe<Int>;
-  sharesCount?: Maybe<Int>;
-  sharesCount_not?: Maybe<Int>;
-  sharesCount_in?: Maybe<Int[] | Int>;
-  sharesCount_not_in?: Maybe<Int[] | Int>;
-  sharesCount_lt?: Maybe<Int>;
-  sharesCount_lte?: Maybe<Int>;
-  sharesCount_gt?: Maybe<Int>;
-  sharesCount_gte?: Maybe<Int>;
-  _deleted?: Maybe<Boolean>;
-  _deleted_not?: Maybe<Boolean>;
-  AND?: Maybe<UpdateScalarWhereInput[] | UpdateScalarWhereInput>;
-  OR?: Maybe<UpdateScalarWhereInput[] | UpdateScalarWhereInput>;
-  NOT?: Maybe<UpdateScalarWhereInput[] | UpdateScalarWhereInput>;
-}
-
-export interface UserUpdateWithoutSkillsDataInput {
-  name?: Maybe<String>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  profilePic?: Maybe<String>;
-  bannerPic?: Maybe<String>;
-  location?: Maybe<String>;
-  locationID?: Maybe<String>;
-  locationLat?: Maybe<Float>;
-  locationLon?: Maybe<Float>;
-  headline?: Maybe<String>;
-  website?: Maybe<String>;
-  bio?: Maybe<String>;
-  about?: Maybe<String>;
-  topicsMentor?: Maybe<TopicUpdateManyInput>;
-  topicsFreelance?: Maybe<TopicUpdateManyInput>;
-  topicsInvest?: Maybe<TopicUpdateManyInput>;
-  topicsAgency?: Maybe<TopicUpdateManyInput>;
-  topicsFocus?: Maybe<TopicUpdateManyInput>;
-  topicsInterest?: Maybe<TopicUpdateManyInput>;
-  experience?: Maybe<ExperienceUpdateManyWithoutOwnerInput>;
-  education?: Maybe<EducationUpdateManyWithoutOwnerInput>;
-  posts?: Maybe<PostUpdateManyWithoutOwnerInput>;
-  connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
-  following?: Maybe<UserUpdateManyWithoutFollowingInput>;
-  followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
-  connectionsCount?: Maybe<Int>;
-  followingCount?: Maybe<Int>;
-  followersCount?: Maybe<Int>;
-  intro?: Maybe<StoryUpdateOneInput>;
-  myStory?: Maybe<StoryUpdateOneInput>;
-  stories?: Maybe<StoryUpdateManyWithoutOwnerInput>;
-  meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
-  roles?: Maybe<UserUpdaterolesInput>;
-  groups?: Maybe<GroupUpdateManyWithoutUsersInput>;
-  notifications?: Maybe<NotificationUpdateManyWithoutTargetInput>;
-  unReadMessages?: Maybe<MessageUpdateManyInput>;
-  unReadMessagesCount?: Maybe<Int>;
-}
-
-export interface UpdateUpdateManyWithWhereNestedInput {
-  where: UpdateScalarWhereInput;
-  data: UpdateUpdateManyDataInput;
-}
-
-export interface PostUpdateManyMutationInput {
-  lastUpdated?: Maybe<DateTimeInput>;
-  isGoal?: Maybe<Boolean>;
-  goal?: Maybe<String>;
-  goalStatus?: Maybe<String>;
-  location?: Maybe<String>;
-  locationID?: Maybe<String>;
-  locationLat?: Maybe<Float>;
-  locationLon?: Maybe<Float>;
-  content?: Maybe<String>;
-  images?: Maybe<PostUpdateimagesInput>;
-  video?: Maybe<String>;
-  pitch?: Maybe<String>;
-  likes?: Maybe<PostUpdatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  commentsCount?: Maybe<Int>;
-  sharesCount?: Maybe<Int>;
-  _deleted?: Maybe<Boolean>;
-}
-
-export interface UpdateUpdateManyDataInput {
-  content?: Maybe<String>;
-  image?: Maybe<String>;
-  likes?: Maybe<UpdateUpdatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  commentsCount?: Maybe<Int>;
-  sharesCount?: Maybe<Int>;
-  _deleted?: Maybe<Boolean>;
-}
-
-export interface MessageUpdateManyMutationInput {
-  content?: Maybe<String>;
-}
-
-export interface PostUpsertWithoutNotificationsInput {
-  update: PostUpdateWithoutNotificationsDataInput;
-  create: PostCreateWithoutNotificationsInput;
-}
-
-export interface UserUpdateManyWithoutMeetingsInput {
-  create?: Maybe<
-    UserCreateWithoutMeetingsInput[] | UserCreateWithoutMeetingsInput
-  >;
-  delete?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  set?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  disconnect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  update?: Maybe<
-    | UserUpdateWithWhereUniqueWithoutMeetingsInput[]
-    | UserUpdateWithWhereUniqueWithoutMeetingsInput
-  >;
-  upsert?: Maybe<
-    | UserUpsertWithWhereUniqueWithoutMeetingsInput[]
-    | UserUpsertWithWhereUniqueWithoutMeetingsInput
-  >;
-  deleteMany?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
-  updateMany?: Maybe<
-    UserUpdateManyWithWhereNestedInput[] | UserUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface NotificationUpsertWithWhereUniqueWithoutTargetInput {
-  where: NotificationWhereUniqueInput;
-  update: NotificationUpdateWithoutTargetDataInput;
-  create: NotificationCreateWithoutTargetInput;
-}
-
-export interface TopicUpsertWithWhereUniqueWithoutParentListInput {
-  where: TopicWhereUniqueInput;
-  update: TopicUpdateWithoutParentListDataInput;
-  create: TopicCreateWithoutParentListInput;
-}
-
-export interface UserUpsertWithWhereUniqueWithoutGroupsInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateWithoutGroupsDataInput;
-  create: UserCreateWithoutGroupsInput;
-}
-
-export interface ListCreateOneWithoutMainTopicsInput {
-  create?: Maybe<ListCreateWithoutMainTopicsInput>;
-  connect?: Maybe<ListWhereUniqueInput>;
-}
-
-export interface GroupUpsertWithoutMessagesInput {
-  update: GroupUpdateWithoutMessagesDataInput;
-  create: GroupCreateWithoutMessagesInput;
-}
-
-export interface ExperienceCreateManyWithoutOwnerInput {
-  create?: Maybe<
-    ExperienceCreateWithoutOwnerInput[] | ExperienceCreateWithoutOwnerInput
-  >;
-  connect?: Maybe<ExperienceWhereUniqueInput[] | ExperienceWhereUniqueInput>;
-}
-
-export interface MessageUpsertNestedInput {
-  update: MessageUpdateDataInput;
-  create: MessageCreateInput;
-}
-
-export interface CommentCreateManyWithoutParentPostInput {
-  create?: Maybe<
-    CommentCreateWithoutParentPostInput[] | CommentCreateWithoutParentPostInput
-  >;
-  connect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
-}
-
-export interface GroupUpsertWithWhereUniqueWithoutUsersInput {
-  where: GroupWhereUniqueInput;
-  update: GroupUpdateWithoutUsersDataInput;
-  create: GroupCreateWithoutUsersInput;
-}
-
-export interface UserCreateManyWithoutConnectionsInput {
-  create?: Maybe<
-    UserCreateWithoutConnectionsInput[] | UserCreateWithoutConnectionsInput
-  >;
-  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-}
-
-export interface GroupScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<GroupScalarWhereInput[] | GroupScalarWhereInput>;
-  OR?: Maybe<GroupScalarWhereInput[] | GroupScalarWhereInput>;
-  NOT?: Maybe<GroupScalarWhereInput[] | GroupScalarWhereInput>;
-}
-
-export interface UserCreateOneWithoutStoriesInput {
-  create?: Maybe<UserCreateWithoutStoriesInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserUpsertWithoutStoriesInput {
-  update: UserUpdateWithoutStoriesDataInput;
-  create: UserCreateWithoutStoriesInput;
-}
-
-export interface MessageCreateWithoutToInput {
-  id?: Maybe<ID_Input>;
-  from: UserCreateOneInput;
-  content: String;
-  hidden?: Maybe<UserCreateManyInput>;
-}
-
-export interface StoryUpsertNestedInput {
-  update: StoryUpdateDataInput;
-  create: StoryCreateInput;
-}
-
-export interface StoryCreateManyWithoutOwnerInput {
-  create?: Maybe<StoryCreateWithoutOwnerInput[] | StoryCreateWithoutOwnerInput>;
-  connect?: Maybe<StoryWhereUniqueInput[] | StoryWhereUniqueInput>;
-}
-
-export interface UserUpsertWithWhereUniqueWithoutFollowersInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateWithoutFollowersDataInput;
-  create: UserCreateWithoutFollowersInput;
-}
-
-export interface PostCreateOneWithoutNotificationsInput {
-  create?: Maybe<PostCreateWithoutNotificationsInput>;
-  connect?: Maybe<PostWhereUniqueInput>;
-}
-
-export interface UserUpsertWithWhereUniqueWithoutFollowingInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateWithoutFollowingDataInput;
-  create: UserCreateWithoutFollowingInput;
-}
-
-export interface PostCreateWithoutCommentsInput {
-  id?: Maybe<ID_Input>;
-  lastUpdated: DateTimeInput;
-  owner: UserCreateOneWithoutPostsInput;
-  isGoal?: Maybe<Boolean>;
-  goal?: Maybe<String>;
-  goalStatus?: Maybe<String>;
-  subField?: Maybe<TopicCreateOneInput>;
-  topics?: Maybe<TopicCreateManyInput>;
-  location?: Maybe<String>;
-  locationID?: Maybe<String>;
-  locationLat?: Maybe<Float>;
-  locationLon?: Maybe<Float>;
-  content: String;
-  images?: Maybe<PostCreateimagesInput>;
-  video?: Maybe<String>;
-  pitch?: Maybe<String>;
-  updates?: Maybe<UpdateCreateManyWithoutParentPostInput>;
-  likes?: Maybe<PostCreatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  commentsCount?: Maybe<Int>;
-  sharesCount?: Maybe<Int>;
-  notifications?: Maybe<NotificationCreateManyWithoutPostInput>;
-  views?: Maybe<UserCreateManyInput>;
-  _deleted?: Maybe<Boolean>;
-}
-
-export interface UserUpsertWithWhereUniqueWithoutConnectionsInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateWithoutConnectionsDataInput;
-  create: UserCreateWithoutConnectionsInput;
-}
-
-export interface UpdateCreateWithoutNotificationsInput {
-  id?: Maybe<ID_Input>;
-  parentPost: PostCreateOneWithoutUpdatesInput;
-  content: String;
-  image?: Maybe<String>;
-  likes?: Maybe<UpdateCreatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  comments?: Maybe<CommentCreateManyWithoutParentUpdateInput>;
-  commentsCount?: Maybe<Int>;
-  sharesCount?: Maybe<Int>;
-  _deleted?: Maybe<Boolean>;
-}
-
-export interface UserUpsertWithoutPostsInput {
-  update: UserUpdateWithoutPostsDataInput;
-  create: UserCreateWithoutPostsInput;
-}
-
-export interface CommentCreateManyWithoutParentCommentInput {
-  create?: Maybe<
-    | CommentCreateWithoutParentCommentInput[]
-    | CommentCreateWithoutParentCommentInput
-  >;
-  connect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
-}
-
-export interface PostUpsertWithoutUpdatesInput {
-  update: PostUpdateWithoutUpdatesDataInput;
-  create: PostCreateWithoutUpdatesInput;
-}
-
-export interface TopicUpdateWithWhereUniqueNestedInput {
-  where: TopicWhereUniqueInput;
-  data: TopicUpdateDataInput;
-}
-
-export interface UpdateUpsertWithoutCommentsInput {
-  update: UpdateUpdateWithoutCommentsDataInput;
-  create: UpdateCreateWithoutCommentsInput;
-}
-
 export interface TopicUpdateManyWithoutParentTopicInput {
   create?: Maybe<
     TopicCreateWithoutParentTopicInput[] | TopicCreateWithoutParentTopicInput
@@ -6966,439 +5210,27 @@ export interface TopicUpdateManyWithoutParentTopicInput {
   >;
 }
 
-export interface CommentUpsertWithWhereUniqueWithoutParentPostInput {
-  where: CommentWhereUniqueInput;
-  update: CommentUpdateWithoutParentPostDataInput;
-  create: CommentCreateWithoutParentPostInput;
+export interface NotificationUpdateWithWhereUniqueWithoutTargetInput {
+  where: NotificationWhereUniqueInput;
+  data: NotificationUpdateWithoutTargetDataInput;
 }
 
-export interface SkillUpdateManyWithoutOwnerInput {
-  create?: Maybe<SkillCreateWithoutOwnerInput[] | SkillCreateWithoutOwnerInput>;
-  delete?: Maybe<SkillWhereUniqueInput[] | SkillWhereUniqueInput>;
-  connect?: Maybe<SkillWhereUniqueInput[] | SkillWhereUniqueInput>;
-  set?: Maybe<SkillWhereUniqueInput[] | SkillWhereUniqueInput>;
-  disconnect?: Maybe<SkillWhereUniqueInput[] | SkillWhereUniqueInput>;
-  update?: Maybe<
-    | SkillUpdateWithWhereUniqueWithoutOwnerInput[]
-    | SkillUpdateWithWhereUniqueWithoutOwnerInput
-  >;
-  upsert?: Maybe<
-    | SkillUpsertWithWhereUniqueWithoutOwnerInput[]
-    | SkillUpsertWithWhereUniqueWithoutOwnerInput
-  >;
-  deleteMany?: Maybe<SkillScalarWhereInput[] | SkillScalarWhereInput>;
-  updateMany?: Maybe<
-    SkillUpdateManyWithWhereNestedInput[] | SkillUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface PostUpsertWithWhereUniqueWithoutOwnerInput {
-  where: PostWhereUniqueInput;
-  update: PostUpdateWithoutOwnerDataInput;
-  create: PostCreateWithoutOwnerInput;
-}
-
-export interface NotificationSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<NotificationWhereInput>;
-  AND?: Maybe<
-    NotificationSubscriptionWhereInput[] | NotificationSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    NotificationSubscriptionWhereInput[] | NotificationSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    NotificationSubscriptionWhereInput[] | NotificationSubscriptionWhereInput
-  >;
-}
-
-export interface PostScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  lastUpdated?: Maybe<DateTimeInput>;
-  lastUpdated_not?: Maybe<DateTimeInput>;
-  lastUpdated_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  lastUpdated_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  lastUpdated_lt?: Maybe<DateTimeInput>;
-  lastUpdated_lte?: Maybe<DateTimeInput>;
-  lastUpdated_gt?: Maybe<DateTimeInput>;
-  lastUpdated_gte?: Maybe<DateTimeInput>;
-  isGoal?: Maybe<Boolean>;
-  isGoal_not?: Maybe<Boolean>;
-  goal?: Maybe<String>;
-  goal_not?: Maybe<String>;
-  goal_in?: Maybe<String[] | String>;
-  goal_not_in?: Maybe<String[] | String>;
-  goal_lt?: Maybe<String>;
-  goal_lte?: Maybe<String>;
-  goal_gt?: Maybe<String>;
-  goal_gte?: Maybe<String>;
-  goal_contains?: Maybe<String>;
-  goal_not_contains?: Maybe<String>;
-  goal_starts_with?: Maybe<String>;
-  goal_not_starts_with?: Maybe<String>;
-  goal_ends_with?: Maybe<String>;
-  goal_not_ends_with?: Maybe<String>;
-  goalStatus?: Maybe<String>;
-  goalStatus_not?: Maybe<String>;
-  goalStatus_in?: Maybe<String[] | String>;
-  goalStatus_not_in?: Maybe<String[] | String>;
-  goalStatus_lt?: Maybe<String>;
-  goalStatus_lte?: Maybe<String>;
-  goalStatus_gt?: Maybe<String>;
-  goalStatus_gte?: Maybe<String>;
-  goalStatus_contains?: Maybe<String>;
-  goalStatus_not_contains?: Maybe<String>;
-  goalStatus_starts_with?: Maybe<String>;
-  goalStatus_not_starts_with?: Maybe<String>;
-  goalStatus_ends_with?: Maybe<String>;
-  goalStatus_not_ends_with?: Maybe<String>;
-  location?: Maybe<String>;
-  location_not?: Maybe<String>;
-  location_in?: Maybe<String[] | String>;
-  location_not_in?: Maybe<String[] | String>;
-  location_lt?: Maybe<String>;
-  location_lte?: Maybe<String>;
-  location_gt?: Maybe<String>;
-  location_gte?: Maybe<String>;
-  location_contains?: Maybe<String>;
-  location_not_contains?: Maybe<String>;
-  location_starts_with?: Maybe<String>;
-  location_not_starts_with?: Maybe<String>;
-  location_ends_with?: Maybe<String>;
-  location_not_ends_with?: Maybe<String>;
-  locationID?: Maybe<String>;
-  locationID_not?: Maybe<String>;
-  locationID_in?: Maybe<String[] | String>;
-  locationID_not_in?: Maybe<String[] | String>;
-  locationID_lt?: Maybe<String>;
-  locationID_lte?: Maybe<String>;
-  locationID_gt?: Maybe<String>;
-  locationID_gte?: Maybe<String>;
-  locationID_contains?: Maybe<String>;
-  locationID_not_contains?: Maybe<String>;
-  locationID_starts_with?: Maybe<String>;
-  locationID_not_starts_with?: Maybe<String>;
-  locationID_ends_with?: Maybe<String>;
-  locationID_not_ends_with?: Maybe<String>;
-  locationLat?: Maybe<Float>;
-  locationLat_not?: Maybe<Float>;
-  locationLat_in?: Maybe<Float[] | Float>;
-  locationLat_not_in?: Maybe<Float[] | Float>;
-  locationLat_lt?: Maybe<Float>;
-  locationLat_lte?: Maybe<Float>;
-  locationLat_gt?: Maybe<Float>;
-  locationLat_gte?: Maybe<Float>;
-  locationLon?: Maybe<Float>;
-  locationLon_not?: Maybe<Float>;
-  locationLon_in?: Maybe<Float[] | Float>;
-  locationLon_not_in?: Maybe<Float[] | Float>;
-  locationLon_lt?: Maybe<Float>;
-  locationLon_lte?: Maybe<Float>;
-  locationLon_gt?: Maybe<Float>;
-  locationLon_gte?: Maybe<Float>;
-  content?: Maybe<String>;
-  content_not?: Maybe<String>;
-  content_in?: Maybe<String[] | String>;
-  content_not_in?: Maybe<String[] | String>;
-  content_lt?: Maybe<String>;
-  content_lte?: Maybe<String>;
-  content_gt?: Maybe<String>;
-  content_gte?: Maybe<String>;
-  content_contains?: Maybe<String>;
-  content_not_contains?: Maybe<String>;
-  content_starts_with?: Maybe<String>;
-  content_not_starts_with?: Maybe<String>;
-  content_ends_with?: Maybe<String>;
-  content_not_ends_with?: Maybe<String>;
-  video?: Maybe<String>;
-  video_not?: Maybe<String>;
-  video_in?: Maybe<String[] | String>;
-  video_not_in?: Maybe<String[] | String>;
-  video_lt?: Maybe<String>;
-  video_lte?: Maybe<String>;
-  video_gt?: Maybe<String>;
-  video_gte?: Maybe<String>;
-  video_contains?: Maybe<String>;
-  video_not_contains?: Maybe<String>;
-  video_starts_with?: Maybe<String>;
-  video_not_starts_with?: Maybe<String>;
-  video_ends_with?: Maybe<String>;
-  video_not_ends_with?: Maybe<String>;
-  pitch?: Maybe<String>;
-  pitch_not?: Maybe<String>;
-  pitch_in?: Maybe<String[] | String>;
-  pitch_not_in?: Maybe<String[] | String>;
-  pitch_lt?: Maybe<String>;
-  pitch_lte?: Maybe<String>;
-  pitch_gt?: Maybe<String>;
-  pitch_gte?: Maybe<String>;
-  pitch_contains?: Maybe<String>;
-  pitch_not_contains?: Maybe<String>;
-  pitch_starts_with?: Maybe<String>;
-  pitch_not_starts_with?: Maybe<String>;
-  pitch_ends_with?: Maybe<String>;
-  pitch_not_ends_with?: Maybe<String>;
-  likesCount?: Maybe<Int>;
-  likesCount_not?: Maybe<Int>;
-  likesCount_in?: Maybe<Int[] | Int>;
-  likesCount_not_in?: Maybe<Int[] | Int>;
-  likesCount_lt?: Maybe<Int>;
-  likesCount_lte?: Maybe<Int>;
-  likesCount_gt?: Maybe<Int>;
-  likesCount_gte?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  likedByMe_not?: Maybe<Boolean>;
-  commentsCount?: Maybe<Int>;
-  commentsCount_not?: Maybe<Int>;
-  commentsCount_in?: Maybe<Int[] | Int>;
-  commentsCount_not_in?: Maybe<Int[] | Int>;
-  commentsCount_lt?: Maybe<Int>;
-  commentsCount_lte?: Maybe<Int>;
-  commentsCount_gt?: Maybe<Int>;
-  commentsCount_gte?: Maybe<Int>;
-  sharesCount?: Maybe<Int>;
-  sharesCount_not?: Maybe<Int>;
-  sharesCount_in?: Maybe<Int[] | Int>;
-  sharesCount_not_in?: Maybe<Int[] | Int>;
-  sharesCount_lt?: Maybe<Int>;
-  sharesCount_lte?: Maybe<Int>;
-  sharesCount_gt?: Maybe<Int>;
-  sharesCount_gte?: Maybe<Int>;
-  _deleted?: Maybe<Boolean>;
-  _deleted_not?: Maybe<Boolean>;
-  AND?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
-  OR?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
-  NOT?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
-}
-
-export interface TopicUpdateManyMutationInput {
+export interface TopicUpdateWithoutParentTopicDataInput {
   topicID?: Maybe<String>;
   name?: Maybe<String>;
+  parentList?: Maybe<ListUpdateOneWithoutMainTopicsInput>;
+  children?: Maybe<TopicUpdateManyWithoutParentTopicInput>;
   order?: Maybe<Int>;
 }
 
-export interface PostUpdateManyWithWhereNestedInput {
-  where: PostScalarWhereInput;
-  data: PostUpdateManyDataInput;
-}
-
-export interface StoryUpdateInput {
-  owner?: Maybe<UserUpdateOneRequiredWithoutStoriesInput>;
-  title?: Maybe<String>;
-  type?: Maybe<StoryType>;
-  topics?: Maybe<TopicUpdateManyInput>;
-  items?: Maybe<StoryItemUpdateManyWithoutStoriesInput>;
-  preview?: Maybe<String>;
-  showcase?: Maybe<Boolean>;
-  save?: Maybe<Boolean>;
-}
-
-export interface PostUpdateManyDataInput {
-  lastUpdated?: Maybe<DateTimeInput>;
-  isGoal?: Maybe<Boolean>;
-  goal?: Maybe<String>;
-  goalStatus?: Maybe<String>;
-  location?: Maybe<String>;
-  locationID?: Maybe<String>;
-  locationLat?: Maybe<Float>;
-  locationLon?: Maybe<Float>;
-  content?: Maybe<String>;
-  images?: Maybe<PostUpdateimagesInput>;
-  video?: Maybe<String>;
-  pitch?: Maybe<String>;
-  likes?: Maybe<PostUpdatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  commentsCount?: Maybe<Int>;
-  sharesCount?: Maybe<Int>;
-  _deleted?: Maybe<Boolean>;
-}
-
-export interface NotificationUpdateManyMutationInput {
+export interface NotificationUpdateWithoutTargetDataInput {
   style?: Maybe<NotificationStyle>;
+  user?: Maybe<UserUpdateOneInput>;
+  users?: Maybe<UserUpdateManyInput>;
+  post?: Maybe<PostUpdateOneWithoutNotificationsInput>;
+  update?: Maybe<UpdateUpdateOneWithoutNotificationsInput>;
+  comment?: Maybe<CommentUpdateOneWithoutNotificationsInput>;
   seen?: Maybe<Boolean>;
-}
-
-export interface CommentUpdateManyMutationInput {
-  content?: Maybe<String>;
-  image?: Maybe<String>;
-  likes?: Maybe<CommentUpdatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  commentsCount?: Maybe<Int>;
-  _deleted?: Maybe<Boolean>;
-}
-
-export interface UserCreateManyWithoutMeetingsInput {
-  create?: Maybe<
-    UserCreateWithoutMeetingsInput[] | UserCreateWithoutMeetingsInput
-  >;
-  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-}
-
-export interface TopicCreateManyWithoutParentListInput {
-  create?: Maybe<
-    TopicCreateWithoutParentListInput[] | TopicCreateWithoutParentListInput
-  >;
-  connect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-}
-
-export interface TopicCreateManyWithoutParentTopicInput {
-  create?: Maybe<
-    TopicCreateWithoutParentTopicInput[] | TopicCreateWithoutParentTopicInput
-  >;
-  connect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
-}
-
-export interface ListCreateInput {
-  id?: Maybe<ID_Input>;
-  listName: String;
-  icon?: Maybe<String>;
-  mainTopics?: Maybe<TopicCreateManyWithoutParentListInput>;
-}
-
-export interface PostCreateOneWithoutUpdatesInput {
-  create?: Maybe<PostCreateWithoutUpdatesInput>;
-  connect?: Maybe<PostWhereUniqueInput>;
-}
-
-export interface EducationCreateInput {
-  id?: Maybe<ID_Input>;
-  owner: UserCreateOneWithoutEducationInput;
-  name: String;
-  subText: String;
-  startDateMonth?: Maybe<String>;
-  startDateYear: Int;
-  endDateMonth?: Maybe<String>;
-  endDateYear?: Maybe<Int>;
-  location?: Maybe<String>;
-  locationID?: Maybe<String>;
-  locationLat?: Maybe<Float>;
-  locationLon?: Maybe<Float>;
-  currentRole?: Maybe<Boolean>;
-}
-
-export interface UserCreaterolesInput {
-  set?: Maybe<Role[] | Role>;
-}
-
-export interface UserCreateOneWithoutEducationInput {
-  create?: Maybe<UserCreateWithoutEducationInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface StoryItemCreatetextInput {
-  set?: Maybe<String[] | String>;
-}
-
-export interface UserCreateWithoutEducationInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  firstName: String;
-  lastName: String;
-  email: String;
-  password: String;
-  profilePic?: Maybe<String>;
-  bannerPic?: Maybe<String>;
-  location?: Maybe<String>;
-  locationID?: Maybe<String>;
-  locationLat?: Maybe<Float>;
-  locationLon?: Maybe<Float>;
-  headline?: Maybe<String>;
-  website?: Maybe<String>;
-  bio?: Maybe<String>;
-  about?: Maybe<String>;
-  topicsMentor?: Maybe<TopicCreateManyInput>;
-  topicsFreelance?: Maybe<TopicCreateManyInput>;
-  topicsInvest?: Maybe<TopicCreateManyInput>;
-  topicsAgency?: Maybe<TopicCreateManyInput>;
-  topicsFocus?: Maybe<TopicCreateManyInput>;
-  topicsInterest?: Maybe<TopicCreateManyInput>;
-  skills?: Maybe<SkillCreateManyWithoutOwnerInput>;
-  experience?: Maybe<ExperienceCreateManyWithoutOwnerInput>;
-  posts?: Maybe<PostCreateManyWithoutOwnerInput>;
-  connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
-  following?: Maybe<UserCreateManyWithoutFollowingInput>;
-  followers?: Maybe<UserCreateManyWithoutFollowersInput>;
-  connectionsCount?: Maybe<Int>;
-  followingCount?: Maybe<Int>;
-  followersCount?: Maybe<Int>;
-  intro?: Maybe<StoryCreateOneInput>;
-  myStory?: Maybe<StoryCreateOneInput>;
-  stories?: Maybe<StoryCreateManyWithoutOwnerInput>;
-  meetings?: Maybe<MeetingCreateManyWithoutUsersInput>;
-  roles?: Maybe<UserCreaterolesInput>;
-  groups?: Maybe<GroupCreateManyWithoutUsersInput>;
-  notifications?: Maybe<NotificationCreateManyWithoutTargetInput>;
-  unReadMessages?: Maybe<MessageCreateManyInput>;
-  unReadMessagesCount?: Maybe<Int>;
-}
-
-export interface UserCreateOneWithoutNotificationsInput {
-  create?: Maybe<UserCreateWithoutNotificationsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface EducationUpdateInput {
-  owner?: Maybe<UserUpdateOneRequiredWithoutEducationInput>;
-  name?: Maybe<String>;
-  subText?: Maybe<String>;
-  startDateMonth?: Maybe<String>;
-  startDateYear?: Maybe<Int>;
-  endDateMonth?: Maybe<String>;
-  endDateYear?: Maybe<Int>;
-  location?: Maybe<String>;
-  locationID?: Maybe<String>;
-  locationLat?: Maybe<Float>;
-  locationLon?: Maybe<Float>;
-  currentRole?: Maybe<Boolean>;
-}
-
-export interface CommentUpdateInput {
-  owner?: Maybe<UserUpdateOneRequiredInput>;
-  parentPost?: Maybe<PostUpdateOneWithoutCommentsInput>;
-  parentUpdate?: Maybe<UpdateUpdateOneWithoutCommentsInput>;
-  parentComment?: Maybe<CommentUpdateOneWithoutCommentsInput>;
-  content?: Maybe<String>;
-  image?: Maybe<String>;
-  likes?: Maybe<CommentUpdatelikesInput>;
-  likesCount?: Maybe<Int>;
-  likedByMe?: Maybe<Boolean>;
-  comments?: Maybe<CommentUpdateManyWithoutParentCommentInput>;
-  commentsCount?: Maybe<Int>;
-  notifications?: Maybe<NotificationUpdateManyWithoutCommentInput>;
-  _deleted?: Maybe<Boolean>;
-}
-
-export interface UserUpdateOneRequiredWithoutEducationInput {
-  create?: Maybe<UserCreateWithoutEducationInput>;
-  update?: Maybe<UserUpdateWithoutEducationDataInput>;
-  upsert?: Maybe<UserUpsertWithoutEducationInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
 }
 
 export interface TopicScalarWhereInput {
@@ -7457,337 +5289,85 @@ export interface TopicScalarWhereInput {
   NOT?: Maybe<TopicScalarWhereInput[] | TopicScalarWhereInput>;
 }
 
-export interface UserUpdateWithoutEducationDataInput {
-  name?: Maybe<String>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  profilePic?: Maybe<String>;
-  bannerPic?: Maybe<String>;
-  location?: Maybe<String>;
-  locationID?: Maybe<String>;
-  locationLat?: Maybe<Float>;
-  locationLon?: Maybe<Float>;
-  headline?: Maybe<String>;
-  website?: Maybe<String>;
-  bio?: Maybe<String>;
-  about?: Maybe<String>;
-  topicsMentor?: Maybe<TopicUpdateManyInput>;
-  topicsFreelance?: Maybe<TopicUpdateManyInput>;
-  topicsInvest?: Maybe<TopicUpdateManyInput>;
-  topicsAgency?: Maybe<TopicUpdateManyInput>;
-  topicsFocus?: Maybe<TopicUpdateManyInput>;
-  topicsInterest?: Maybe<TopicUpdateManyInput>;
-  skills?: Maybe<SkillUpdateManyWithoutOwnerInput>;
-  experience?: Maybe<ExperienceUpdateManyWithoutOwnerInput>;
-  posts?: Maybe<PostUpdateManyWithoutOwnerInput>;
-  connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
-  following?: Maybe<UserUpdateManyWithoutFollowingInput>;
-  followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
-  connectionsCount?: Maybe<Int>;
-  followingCount?: Maybe<Int>;
-  followersCount?: Maybe<Int>;
-  intro?: Maybe<StoryUpdateOneInput>;
-  myStory?: Maybe<StoryUpdateOneInput>;
-  stories?: Maybe<StoryUpdateManyWithoutOwnerInput>;
-  meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
-  roles?: Maybe<UserUpdaterolesInput>;
-  groups?: Maybe<GroupUpdateManyWithoutUsersInput>;
-  notifications?: Maybe<NotificationUpdateManyWithoutTargetInput>;
-  unReadMessages?: Maybe<MessageUpdateManyInput>;
-  unReadMessagesCount?: Maybe<Int>;
-}
-
-export interface EducationSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<EducationWhereInput>;
-  AND?: Maybe<
-    EducationSubscriptionWhereInput[] | EducationSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    EducationSubscriptionWhereInput[] | EducationSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    EducationSubscriptionWhereInput[] | EducationSubscriptionWhereInput
-  >;
-}
-
-export interface UserUpsertWithoutEducationInput {
-  update: UserUpdateWithoutEducationDataInput;
-  create: UserCreateWithoutEducationInput;
-}
-
-export interface UserCreateWithoutSkillsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  firstName: String;
-  lastName: String;
-  email: String;
-  password: String;
-  profilePic?: Maybe<String>;
-  bannerPic?: Maybe<String>;
-  location?: Maybe<String>;
-  locationID?: Maybe<String>;
-  locationLat?: Maybe<Float>;
-  locationLon?: Maybe<Float>;
-  headline?: Maybe<String>;
-  website?: Maybe<String>;
-  bio?: Maybe<String>;
-  about?: Maybe<String>;
-  topicsMentor?: Maybe<TopicCreateManyInput>;
-  topicsFreelance?: Maybe<TopicCreateManyInput>;
-  topicsInvest?: Maybe<TopicCreateManyInput>;
-  topicsAgency?: Maybe<TopicCreateManyInput>;
-  topicsFocus?: Maybe<TopicCreateManyInput>;
-  topicsInterest?: Maybe<TopicCreateManyInput>;
-  experience?: Maybe<ExperienceCreateManyWithoutOwnerInput>;
-  education?: Maybe<EducationCreateManyWithoutOwnerInput>;
-  posts?: Maybe<PostCreateManyWithoutOwnerInput>;
-  connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
-  following?: Maybe<UserCreateManyWithoutFollowingInput>;
-  followers?: Maybe<UserCreateManyWithoutFollowersInput>;
-  connectionsCount?: Maybe<Int>;
-  followingCount?: Maybe<Int>;
-  followersCount?: Maybe<Int>;
-  intro?: Maybe<StoryCreateOneInput>;
-  myStory?: Maybe<StoryCreateOneInput>;
-  stories?: Maybe<StoryCreateManyWithoutOwnerInput>;
-  meetings?: Maybe<MeetingCreateManyWithoutUsersInput>;
-  roles?: Maybe<UserCreaterolesInput>;
-  groups?: Maybe<GroupCreateManyWithoutUsersInput>;
-  notifications?: Maybe<NotificationCreateManyWithoutTargetInput>;
-  unReadMessages?: Maybe<MessageCreateManyInput>;
-  unReadMessagesCount?: Maybe<Int>;
-}
-
-export interface EducationUpdateManyMutationInput {
-  name?: Maybe<String>;
-  subText?: Maybe<String>;
-  startDateMonth?: Maybe<String>;
-  startDateYear?: Maybe<Int>;
-  endDateMonth?: Maybe<String>;
-  endDateYear?: Maybe<Int>;
-  location?: Maybe<String>;
-  locationID?: Maybe<String>;
-  locationLat?: Maybe<Float>;
-  locationLon?: Maybe<Float>;
-  currentRole?: Maybe<Boolean>;
-}
-
-export interface UserCreateOneInput {
+export interface UserUpdateOneInput {
   create?: Maybe<UserCreateInput>;
+  update?: Maybe<UserUpdateDataInput>;
+  upsert?: Maybe<UserUpsertNestedInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface ExperienceCreateInput {
-  id?: Maybe<ID_Input>;
-  owner: UserCreateOneWithoutExperienceInput;
-  name: String;
-  subText: String;
-  startDateMonth: String;
-  startDateYear: Int;
-  endDateMonth?: Maybe<String>;
-  endDateYear?: Maybe<Int>;
-  location?: Maybe<String>;
-  locationID?: Maybe<String>;
-  locationLat?: Maybe<Float>;
-  locationLon?: Maybe<Float>;
-  currentRole?: Maybe<Boolean>;
-}
-
-export interface UserCreateManyWithoutFollowersInput {
-  create?: Maybe<
-    UserCreateWithoutFollowersInput[] | UserCreateWithoutFollowersInput
-  >;
-  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-}
-
-export interface UserCreateOneWithoutExperienceInput {
-  create?: Maybe<UserCreateWithoutExperienceInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UpdateCreatelikesInput {
-  set?: Maybe<String[] | String>;
-}
-
-export interface UserCreateWithoutExperienceInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  firstName: String;
-  lastName: String;
-  email: String;
-  password: String;
-  profilePic?: Maybe<String>;
-  bannerPic?: Maybe<String>;
-  location?: Maybe<String>;
-  locationID?: Maybe<String>;
-  locationLat?: Maybe<Float>;
-  locationLon?: Maybe<Float>;
-  headline?: Maybe<String>;
-  website?: Maybe<String>;
-  bio?: Maybe<String>;
-  about?: Maybe<String>;
-  topicsMentor?: Maybe<TopicCreateManyInput>;
-  topicsFreelance?: Maybe<TopicCreateManyInput>;
-  topicsInvest?: Maybe<TopicCreateManyInput>;
-  topicsAgency?: Maybe<TopicCreateManyInput>;
-  topicsFocus?: Maybe<TopicCreateManyInput>;
-  topicsInterest?: Maybe<TopicCreateManyInput>;
-  skills?: Maybe<SkillCreateManyWithoutOwnerInput>;
-  education?: Maybe<EducationCreateManyWithoutOwnerInput>;
-  posts?: Maybe<PostCreateManyWithoutOwnerInput>;
-  connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
-  following?: Maybe<UserCreateManyWithoutFollowingInput>;
-  followers?: Maybe<UserCreateManyWithoutFollowersInput>;
-  connectionsCount?: Maybe<Int>;
-  followingCount?: Maybe<Int>;
-  followersCount?: Maybe<Int>;
-  intro?: Maybe<StoryCreateOneInput>;
-  myStory?: Maybe<StoryCreateOneInput>;
-  stories?: Maybe<StoryCreateManyWithoutOwnerInput>;
-  meetings?: Maybe<MeetingCreateManyWithoutUsersInput>;
-  roles?: Maybe<UserCreaterolesInput>;
-  groups?: Maybe<GroupCreateManyWithoutUsersInput>;
-  notifications?: Maybe<NotificationCreateManyWithoutTargetInput>;
-  unReadMessages?: Maybe<MessageCreateManyInput>;
-  unReadMessagesCount?: Maybe<Int>;
-}
-
-export interface ListUpsertWithoutMainTopicsInput {
-  update: ListUpdateWithoutMainTopicsDataInput;
-  create: ListCreateWithoutMainTopicsInput;
-}
-
-export interface ExperienceUpdateInput {
-  owner?: Maybe<UserUpdateOneRequiredWithoutExperienceInput>;
+export interface TopicUpdateManyDataInput {
+  topicID?: Maybe<String>;
   name?: Maybe<String>;
-  subText?: Maybe<String>;
-  startDateMonth?: Maybe<String>;
-  startDateYear?: Maybe<Int>;
-  endDateMonth?: Maybe<String>;
-  endDateYear?: Maybe<Int>;
-  location?: Maybe<String>;
-  locationID?: Maybe<String>;
-  locationLat?: Maybe<Float>;
-  locationLon?: Maybe<Float>;
-  currentRole?: Maybe<Boolean>;
+  order?: Maybe<Int>;
 }
 
-export interface StoryUpdateManyWithoutItemsInput {
-  create?: Maybe<StoryCreateWithoutItemsInput[] | StoryCreateWithoutItemsInput>;
-  delete?: Maybe<StoryWhereUniqueInput[] | StoryWhereUniqueInput>;
-  connect?: Maybe<StoryWhereUniqueInput[] | StoryWhereUniqueInput>;
-  set?: Maybe<StoryWhereUniqueInput[] | StoryWhereUniqueInput>;
-  disconnect?: Maybe<StoryWhereUniqueInput[] | StoryWhereUniqueInput>;
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
+}
+
+export interface SkillUpdateManyWithoutOwnerInput {
+  create?: Maybe<SkillCreateWithoutOwnerInput[] | SkillCreateWithoutOwnerInput>;
+  delete?: Maybe<SkillWhereUniqueInput[] | SkillWhereUniqueInput>;
+  connect?: Maybe<SkillWhereUniqueInput[] | SkillWhereUniqueInput>;
+  set?: Maybe<SkillWhereUniqueInput[] | SkillWhereUniqueInput>;
+  disconnect?: Maybe<SkillWhereUniqueInput[] | SkillWhereUniqueInput>;
   update?: Maybe<
-    | StoryUpdateWithWhereUniqueWithoutItemsInput[]
-    | StoryUpdateWithWhereUniqueWithoutItemsInput
+    | SkillUpdateWithWhereUniqueWithoutOwnerInput[]
+    | SkillUpdateWithWhereUniqueWithoutOwnerInput
   >;
   upsert?: Maybe<
-    | StoryUpsertWithWhereUniqueWithoutItemsInput[]
-    | StoryUpsertWithWhereUniqueWithoutItemsInput
+    | SkillUpsertWithWhereUniqueWithoutOwnerInput[]
+    | SkillUpsertWithWhereUniqueWithoutOwnerInput
   >;
-  deleteMany?: Maybe<StoryScalarWhereInput[] | StoryScalarWhereInput>;
+  deleteMany?: Maybe<SkillScalarWhereInput[] | SkillScalarWhereInput>;
   updateMany?: Maybe<
-    StoryUpdateManyWithWhereNestedInput[] | StoryUpdateManyWithWhereNestedInput
+    SkillUpdateManyWithWhereNestedInput[] | SkillUpdateManyWithWhereNestedInput
   >;
 }
 
-export interface UserUpdateOneRequiredWithoutExperienceInput {
-  create?: Maybe<UserCreateWithoutExperienceInput>;
-  update?: Maybe<UserUpdateWithoutExperienceDataInput>;
-  upsert?: Maybe<UserUpsertWithoutExperienceInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
+export interface PostUpdateOneWithoutNotificationsInput {
+  create?: Maybe<PostCreateWithoutNotificationsInput>;
+  update?: Maybe<PostUpdateWithoutNotificationsDataInput>;
+  upsert?: Maybe<PostUpsertWithoutNotificationsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<PostWhereUniqueInput>;
 }
 
-export interface PostCreateManyWithoutOwnerInput {
-  create?: Maybe<PostCreateWithoutOwnerInput[] | PostCreateWithoutOwnerInput>;
-  connect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+export interface SkillUpdateWithoutOwnerDataInput {
+  skill?: Maybe<String>;
+  isExpert?: Maybe<Boolean>;
 }
 
-export interface GroupCreateInput {
-  id?: Maybe<ID_Input>;
-  users?: Maybe<UserCreateManyWithoutGroupsInput>;
-  messages?: Maybe<MessageCreateManyWithoutToInput>;
-  latestMessage?: Maybe<MessageCreateOneInput>;
-  hidden?: Maybe<UserCreateManyInput>;
-}
-
-export interface ExperienceUpdateManyMutationInput {
-  name?: Maybe<String>;
-  subText?: Maybe<String>;
-  startDateMonth?: Maybe<String>;
-  startDateYear?: Maybe<Int>;
-  endDateMonth?: Maybe<String>;
-  endDateYear?: Maybe<Int>;
+export interface PostUpdateWithoutNotificationsDataInput {
+  lastUpdated?: Maybe<DateTimeInput>;
+  owner?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
+  isGoal?: Maybe<Boolean>;
+  goal?: Maybe<String>;
+  goalStatus?: Maybe<String>;
+  subField?: Maybe<TopicUpdateOneInput>;
+  topics?: Maybe<TopicUpdateManyInput>;
   location?: Maybe<String>;
   locationID?: Maybe<String>;
   locationLat?: Maybe<Float>;
   locationLon?: Maybe<Float>;
-  currentRole?: Maybe<Boolean>;
-}
-
-export interface UserUpsertWithoutExperienceInput {
-  update: UserUpdateWithoutExperienceDataInput;
-  create: UserCreateWithoutExperienceInput;
-}
-
-export interface UserUpdateWithoutExperienceDataInput {
-  name?: Maybe<String>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  profilePic?: Maybe<String>;
-  bannerPic?: Maybe<String>;
-  location?: Maybe<String>;
-  locationID?: Maybe<String>;
-  locationLat?: Maybe<Float>;
-  locationLon?: Maybe<Float>;
-  headline?: Maybe<String>;
-  website?: Maybe<String>;
-  bio?: Maybe<String>;
-  about?: Maybe<String>;
-  topicsMentor?: Maybe<TopicUpdateManyInput>;
-  topicsFreelance?: Maybe<TopicUpdateManyInput>;
-  topicsInvest?: Maybe<TopicUpdateManyInput>;
-  topicsAgency?: Maybe<TopicUpdateManyInput>;
-  topicsFocus?: Maybe<TopicUpdateManyInput>;
-  topicsInterest?: Maybe<TopicUpdateManyInput>;
-  skills?: Maybe<SkillUpdateManyWithoutOwnerInput>;
-  education?: Maybe<EducationUpdateManyWithoutOwnerInput>;
-  posts?: Maybe<PostUpdateManyWithoutOwnerInput>;
-  connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
-  following?: Maybe<UserUpdateManyWithoutFollowingInput>;
-  followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
-  connectionsCount?: Maybe<Int>;
-  followingCount?: Maybe<Int>;
-  followersCount?: Maybe<Int>;
-  intro?: Maybe<StoryUpdateOneInput>;
-  myStory?: Maybe<StoryUpdateOneInput>;
-  stories?: Maybe<StoryUpdateManyWithoutOwnerInput>;
-  meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
-  roles?: Maybe<UserUpdaterolesInput>;
-  groups?: Maybe<GroupUpdateManyWithoutUsersInput>;
-  notifications?: Maybe<NotificationUpdateManyWithoutTargetInput>;
-  unReadMessages?: Maybe<MessageUpdateManyInput>;
-  unReadMessagesCount?: Maybe<Int>;
-}
-
-export interface GroupCreateOneWithoutMessagesInput {
-  create?: Maybe<GroupCreateWithoutMessagesInput>;
-  connect?: Maybe<GroupWhereUniqueInput>;
-}
-
-export interface UserUpsertWithWhereUniqueWithoutMeetingsInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateWithoutMeetingsDataInput;
-  create: UserCreateWithoutMeetingsInput;
+  content?: Maybe<String>;
+  images?: Maybe<PostUpdateimagesInput>;
+  video?: Maybe<String>;
+  pitch?: Maybe<String>;
+  comments?: Maybe<CommentUpdateManyWithoutParentPostInput>;
+  updates?: Maybe<UpdateUpdateManyWithoutParentPostInput>;
+  likes?: Maybe<PostUpdatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  commentsCount?: Maybe<Int>;
+  sharesCount?: Maybe<Int>;
+  views?: Maybe<UserUpdateManyInput>;
+  _deleted?: Maybe<Boolean>;
 }
 
 export interface UserWhereInput {
@@ -8104,20 +5684,2462 @@ export interface UserWhereInput {
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
-export interface CommentCreateWithoutCommentsInput {
+export interface UpdateUpdateManyWithoutParentPostInput {
+  create?: Maybe<
+    UpdateCreateWithoutParentPostInput[] | UpdateCreateWithoutParentPostInput
+  >;
+  delete?: Maybe<UpdateWhereUniqueInput[] | UpdateWhereUniqueInput>;
+  connect?: Maybe<UpdateWhereUniqueInput[] | UpdateWhereUniqueInput>;
+  set?: Maybe<UpdateWhereUniqueInput[] | UpdateWhereUniqueInput>;
+  disconnect?: Maybe<UpdateWhereUniqueInput[] | UpdateWhereUniqueInput>;
+  update?: Maybe<
+    | UpdateUpdateWithWhereUniqueWithoutParentPostInput[]
+    | UpdateUpdateWithWhereUniqueWithoutParentPostInput
+  >;
+  upsert?: Maybe<
+    | UpdateUpsertWithWhereUniqueWithoutParentPostInput[]
+    | UpdateUpsertWithWhereUniqueWithoutParentPostInput
+  >;
+  deleteMany?: Maybe<UpdateScalarWhereInput[] | UpdateScalarWhereInput>;
+  updateMany?: Maybe<
+    | UpdateUpdateManyWithWhereNestedInput[]
+    | UpdateUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface StoryItemSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<StoryItemWhereInput>;
+  AND?: Maybe<
+    StoryItemSubscriptionWhereInput[] | StoryItemSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    StoryItemSubscriptionWhereInput[] | StoryItemSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    StoryItemSubscriptionWhereInput[] | StoryItemSubscriptionWhereInput
+  >;
+}
+
+export interface UpdateUpdateWithWhereUniqueWithoutParentPostInput {
+  where: UpdateWhereUniqueInput;
+  data: UpdateUpdateWithoutParentPostDataInput;
+}
+
+export interface NotificationSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<NotificationWhereInput>;
+  AND?: Maybe<
+    NotificationSubscriptionWhereInput[] | NotificationSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    NotificationSubscriptionWhereInput[] | NotificationSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    NotificationSubscriptionWhereInput[] | NotificationSubscriptionWhereInput
+  >;
+}
+
+export interface UpdateUpdateWithoutParentPostDataInput {
+  content?: Maybe<String>;
+  image?: Maybe<String>;
+  likes?: Maybe<UpdateUpdatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  comments?: Maybe<CommentUpdateManyWithoutParentUpdateInput>;
+  commentsCount?: Maybe<Int>;
+  sharesCount?: Maybe<Int>;
+  notifications?: Maybe<NotificationUpdateManyWithoutUpdateInput>;
+  _deleted?: Maybe<Boolean>;
+}
+
+export interface MeetingSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<MeetingWhereInput>;
+  AND?: Maybe<MeetingSubscriptionWhereInput[] | MeetingSubscriptionWhereInput>;
+  OR?: Maybe<MeetingSubscriptionWhereInput[] | MeetingSubscriptionWhereInput>;
+  NOT?: Maybe<MeetingSubscriptionWhereInput[] | MeetingSubscriptionWhereInput>;
+}
+
+export interface UpdateUpdatelikesInput {
+  set?: Maybe<String[] | String>;
+}
+
+export interface EducationSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<EducationWhereInput>;
+  AND?: Maybe<
+    EducationSubscriptionWhereInput[] | EducationSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    EducationSubscriptionWhereInput[] | EducationSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    EducationSubscriptionWhereInput[] | EducationSubscriptionWhereInput
+  >;
+}
+
+export interface CommentUpdateManyWithoutParentUpdateInput {
+  create?: Maybe<
+    | CommentCreateWithoutParentUpdateInput[]
+    | CommentCreateWithoutParentUpdateInput
+  >;
+  delete?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
+  connect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
+  set?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
+  disconnect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
+  update?: Maybe<
+    | CommentUpdateWithWhereUniqueWithoutParentUpdateInput[]
+    | CommentUpdateWithWhereUniqueWithoutParentUpdateInput
+  >;
+  upsert?: Maybe<
+    | CommentUpsertWithWhereUniqueWithoutParentUpdateInput[]
+    | CommentUpsertWithWhereUniqueWithoutParentUpdateInput
+  >;
+  deleteMany?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
+  updateMany?: Maybe<
+    | CommentUpdateManyWithWhereNestedInput[]
+    | CommentUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface UpdateUpdateManyMutationInput {
+  content?: Maybe<String>;
+  image?: Maybe<String>;
+  likes?: Maybe<UpdateUpdatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  commentsCount?: Maybe<Int>;
+  sharesCount?: Maybe<Int>;
+  _deleted?: Maybe<Boolean>;
+}
+
+export interface CommentUpdateWithWhereUniqueWithoutParentUpdateInput {
+  where: CommentWhereUniqueInput;
+  data: CommentUpdateWithoutParentUpdateDataInput;
+}
+
+export interface TopicUpdateManyMutationInput {
+  topicID?: Maybe<String>;
+  name?: Maybe<String>;
+  order?: Maybe<Int>;
+}
+
+export interface CommentUpdateWithoutParentUpdateDataInput {
+  owner?: Maybe<UserUpdateOneRequiredInput>;
+  parentPost?: Maybe<PostUpdateOneWithoutCommentsInput>;
+  parentComment?: Maybe<CommentUpdateOneWithoutCommentsInput>;
+  content?: Maybe<String>;
+  image?: Maybe<String>;
+  likes?: Maybe<CommentUpdatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  comments?: Maybe<CommentUpdateManyWithoutParentCommentInput>;
+  commentsCount?: Maybe<Int>;
+  notifications?: Maybe<NotificationUpdateManyWithoutCommentInput>;
+  _deleted?: Maybe<Boolean>;
+}
+
+export interface StoryUpsertWithWhereUniqueWithoutItemsInput {
+  where: StoryWhereUniqueInput;
+  update: StoryUpdateWithoutItemsDataInput;
+  create: StoryCreateWithoutItemsInput;
+}
+
+export interface PostUpdateOneWithoutCommentsInput {
+  create?: Maybe<PostCreateWithoutCommentsInput>;
+  update?: Maybe<PostUpdateWithoutCommentsDataInput>;
+  upsert?: Maybe<PostUpsertWithoutCommentsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<PostWhereUniqueInput>;
+}
+
+export interface StoryUpdateManyWithoutItemsInput {
+  create?: Maybe<StoryCreateWithoutItemsInput[] | StoryCreateWithoutItemsInput>;
+  delete?: Maybe<StoryWhereUniqueInput[] | StoryWhereUniqueInput>;
+  connect?: Maybe<StoryWhereUniqueInput[] | StoryWhereUniqueInput>;
+  set?: Maybe<StoryWhereUniqueInput[] | StoryWhereUniqueInput>;
+  disconnect?: Maybe<StoryWhereUniqueInput[] | StoryWhereUniqueInput>;
+  update?: Maybe<
+    | StoryUpdateWithWhereUniqueWithoutItemsInput[]
+    | StoryUpdateWithWhereUniqueWithoutItemsInput
+  >;
+  upsert?: Maybe<
+    | StoryUpsertWithWhereUniqueWithoutItemsInput[]
+    | StoryUpsertWithWhereUniqueWithoutItemsInput
+  >;
+  deleteMany?: Maybe<StoryScalarWhereInput[] | StoryScalarWhereInput>;
+  updateMany?: Maybe<
+    StoryUpdateManyWithWhereNestedInput[] | StoryUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface PostUpdateWithoutCommentsDataInput {
+  lastUpdated?: Maybe<DateTimeInput>;
+  owner?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
+  isGoal?: Maybe<Boolean>;
+  goal?: Maybe<String>;
+  goalStatus?: Maybe<String>;
+  subField?: Maybe<TopicUpdateOneInput>;
+  topics?: Maybe<TopicUpdateManyInput>;
+  location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  content?: Maybe<String>;
+  images?: Maybe<PostUpdateimagesInput>;
+  video?: Maybe<String>;
+  pitch?: Maybe<String>;
+  updates?: Maybe<UpdateUpdateManyWithoutParentPostInput>;
+  likes?: Maybe<PostUpdatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  commentsCount?: Maybe<Int>;
+  sharesCount?: Maybe<Int>;
+  notifications?: Maybe<NotificationUpdateManyWithoutPostInput>;
+  views?: Maybe<UserUpdateManyInput>;
+  _deleted?: Maybe<Boolean>;
+}
+
+export interface StoryCreateManyWithoutItemsInput {
+  create?: Maybe<StoryCreateWithoutItemsInput[] | StoryCreateWithoutItemsInput>;
+  connect?: Maybe<StoryWhereUniqueInput[] | StoryWhereUniqueInput>;
+}
+
+export interface PostUpdatelikesInput {
+  set?: Maybe<String[] | String>;
+}
+
+export interface StoryUpdateInput {
+  owner?: Maybe<UserUpdateOneRequiredWithoutStoriesInput>;
+  title?: Maybe<String>;
+  type?: Maybe<StoryType>;
+  topics?: Maybe<TopicUpdateManyInput>;
+  items?: Maybe<StoryItemUpdateManyWithoutStoriesInput>;
+  preview?: Maybe<String>;
+  showcase?: Maybe<Boolean>;
+  save?: Maybe<Boolean>;
+}
+
+export interface NotificationUpdateManyWithoutPostInput {
+  create?: Maybe<
+    NotificationCreateWithoutPostInput[] | NotificationCreateWithoutPostInput
+  >;
+  delete?: Maybe<NotificationWhereUniqueInput[] | NotificationWhereUniqueInput>;
+  connect?: Maybe<
+    NotificationWhereUniqueInput[] | NotificationWhereUniqueInput
+  >;
+  set?: Maybe<NotificationWhereUniqueInput[] | NotificationWhereUniqueInput>;
+  disconnect?: Maybe<
+    NotificationWhereUniqueInput[] | NotificationWhereUniqueInput
+  >;
+  update?: Maybe<
+    | NotificationUpdateWithWhereUniqueWithoutPostInput[]
+    | NotificationUpdateWithWhereUniqueWithoutPostInput
+  >;
+  upsert?: Maybe<
+    | NotificationUpsertWithWhereUniqueWithoutPostInput[]
+    | NotificationUpsertWithWhereUniqueWithoutPostInput
+  >;
+  deleteMany?: Maybe<
+    NotificationScalarWhereInput[] | NotificationScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | NotificationUpdateManyWithWhereNestedInput[]
+    | NotificationUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface UserUpdateWithoutSkillsDataInput {
+  name?: Maybe<String>;
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  profilePic?: Maybe<String>;
+  bannerPic?: Maybe<String>;
+  location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  headline?: Maybe<String>;
+  website?: Maybe<String>;
+  bio?: Maybe<String>;
+  about?: Maybe<String>;
+  topicsMentor?: Maybe<TopicUpdateManyInput>;
+  topicsFreelance?: Maybe<TopicUpdateManyInput>;
+  topicsInvest?: Maybe<TopicUpdateManyInput>;
+  topicsAgency?: Maybe<TopicUpdateManyInput>;
+  topicsFocus?: Maybe<TopicUpdateManyInput>;
+  topicsInterest?: Maybe<TopicUpdateManyInput>;
+  experience?: Maybe<ExperienceUpdateManyWithoutOwnerInput>;
+  education?: Maybe<EducationUpdateManyWithoutOwnerInput>;
+  posts?: Maybe<PostUpdateManyWithoutOwnerInput>;
+  connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
+  following?: Maybe<UserUpdateManyWithoutFollowingInput>;
+  followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
+  intro?: Maybe<StoryUpdateOneInput>;
+  myStory?: Maybe<StoryUpdateOneInput>;
+  stories?: Maybe<StoryUpdateManyWithoutOwnerInput>;
+  meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
+  roles?: Maybe<UserUpdaterolesInput>;
+  groups?: Maybe<GroupUpdateManyWithoutUsersInput>;
+  notifications?: Maybe<NotificationUpdateManyWithoutTargetInput>;
+  unReadMessages?: Maybe<MessageUpdateManyInput>;
+  unReadMessagesCount?: Maybe<Int>;
+}
+
+export interface NotificationUpdateWithWhereUniqueWithoutPostInput {
+  where: NotificationWhereUniqueInput;
+  data: NotificationUpdateWithoutPostDataInput;
+}
+
+export interface UserCreateWithoutSkillsInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  firstName: String;
+  lastName: String;
+  email: String;
+  password: String;
+  profilePic?: Maybe<String>;
+  bannerPic?: Maybe<String>;
+  location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  headline?: Maybe<String>;
+  website?: Maybe<String>;
+  bio?: Maybe<String>;
+  about?: Maybe<String>;
+  topicsMentor?: Maybe<TopicCreateManyInput>;
+  topicsFreelance?: Maybe<TopicCreateManyInput>;
+  topicsInvest?: Maybe<TopicCreateManyInput>;
+  topicsAgency?: Maybe<TopicCreateManyInput>;
+  topicsFocus?: Maybe<TopicCreateManyInput>;
+  topicsInterest?: Maybe<TopicCreateManyInput>;
+  experience?: Maybe<ExperienceCreateManyWithoutOwnerInput>;
+  education?: Maybe<EducationCreateManyWithoutOwnerInput>;
+  posts?: Maybe<PostCreateManyWithoutOwnerInput>;
+  connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
+  following?: Maybe<UserCreateManyWithoutFollowingInput>;
+  followers?: Maybe<UserCreateManyWithoutFollowersInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
+  intro?: Maybe<StoryCreateOneInput>;
+  myStory?: Maybe<StoryCreateOneInput>;
+  stories?: Maybe<StoryCreateManyWithoutOwnerInput>;
+  meetings?: Maybe<MeetingCreateManyWithoutUsersInput>;
+  roles?: Maybe<UserCreaterolesInput>;
+  groups?: Maybe<GroupCreateManyWithoutUsersInput>;
+  notifications?: Maybe<NotificationCreateManyWithoutTargetInput>;
+  unReadMessages?: Maybe<MessageCreateManyInput>;
+  unReadMessagesCount?: Maybe<Int>;
+}
+
+export interface NotificationUpdateWithoutPostDataInput {
+  target?: Maybe<UserUpdateOneRequiredWithoutNotificationsInput>;
+  style?: Maybe<NotificationStyle>;
+  user?: Maybe<UserUpdateOneInput>;
+  users?: Maybe<UserUpdateManyInput>;
+  update?: Maybe<UpdateUpdateOneWithoutNotificationsInput>;
+  comment?: Maybe<CommentUpdateOneWithoutNotificationsInput>;
+  seen?: Maybe<Boolean>;
+}
+
+export interface PostUpdateManyMutationInput {
+  lastUpdated?: Maybe<DateTimeInput>;
+  isGoal?: Maybe<Boolean>;
+  goal?: Maybe<String>;
+  goalStatus?: Maybe<String>;
+  location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  content?: Maybe<String>;
+  images?: Maybe<PostUpdateimagesInput>;
+  video?: Maybe<String>;
+  pitch?: Maybe<String>;
+  likes?: Maybe<PostUpdatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  commentsCount?: Maybe<Int>;
+  sharesCount?: Maybe<Int>;
+  _deleted?: Maybe<Boolean>;
+}
+
+export interface UserUpdateOneRequiredWithoutNotificationsInput {
+  create?: Maybe<UserCreateWithoutNotificationsInput>;
+  update?: Maybe<UserUpdateWithoutNotificationsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutNotificationsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface NotificationUpdateManyMutationInput {
+  style?: Maybe<NotificationStyle>;
+  seen?: Maybe<Boolean>;
+}
+
+export interface UserUpdateWithoutNotificationsDataInput {
+  name?: Maybe<String>;
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  profilePic?: Maybe<String>;
+  bannerPic?: Maybe<String>;
+  location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  headline?: Maybe<String>;
+  website?: Maybe<String>;
+  bio?: Maybe<String>;
+  about?: Maybe<String>;
+  topicsMentor?: Maybe<TopicUpdateManyInput>;
+  topicsFreelance?: Maybe<TopicUpdateManyInput>;
+  topicsInvest?: Maybe<TopicUpdateManyInput>;
+  topicsAgency?: Maybe<TopicUpdateManyInput>;
+  topicsFocus?: Maybe<TopicUpdateManyInput>;
+  topicsInterest?: Maybe<TopicUpdateManyInput>;
+  skills?: Maybe<SkillUpdateManyWithoutOwnerInput>;
+  experience?: Maybe<ExperienceUpdateManyWithoutOwnerInput>;
+  education?: Maybe<EducationUpdateManyWithoutOwnerInput>;
+  posts?: Maybe<PostUpdateManyWithoutOwnerInput>;
+  connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
+  following?: Maybe<UserUpdateManyWithoutFollowingInput>;
+  followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
+  intro?: Maybe<StoryUpdateOneInput>;
+  myStory?: Maybe<StoryUpdateOneInput>;
+  stories?: Maybe<StoryUpdateManyWithoutOwnerInput>;
+  meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
+  roles?: Maybe<UserUpdaterolesInput>;
+  groups?: Maybe<GroupUpdateManyWithoutUsersInput>;
+  unReadMessages?: Maybe<MessageUpdateManyInput>;
+  unReadMessagesCount?: Maybe<Int>;
+}
+
+export interface MessageUpdateManyMutationInput {
+  content?: Maybe<String>;
+}
+
+export interface MessageUpdateManyInput {
+  create?: Maybe<MessageCreateInput[] | MessageCreateInput>;
+  update?: Maybe<
+    | MessageUpdateWithWhereUniqueNestedInput[]
+    | MessageUpdateWithWhereUniqueNestedInput
+  >;
+  upsert?: Maybe<
+    | MessageUpsertWithWhereUniqueNestedInput[]
+    | MessageUpsertWithWhereUniqueNestedInput
+  >;
+  delete?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
+  connect?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
+  set?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
+  disconnect?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
+  deleteMany?: Maybe<MessageScalarWhereInput[] | MessageScalarWhereInput>;
+  updateMany?: Maybe<
+    | MessageUpdateManyWithWhereNestedInput[]
+    | MessageUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface UserUpsertWithWhereUniqueWithoutMeetingsInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateWithoutMeetingsDataInput;
+  create: UserCreateWithoutMeetingsInput;
+}
+
+export interface MessageUpdateWithWhereUniqueNestedInput {
+  where: MessageWhereUniqueInput;
+  data: MessageUpdateDataInput;
+}
+
+export interface UserUpdateManyWithoutMeetingsInput {
+  create?: Maybe<
+    UserCreateWithoutMeetingsInput[] | UserCreateWithoutMeetingsInput
+  >;
+  delete?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  set?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  disconnect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  update?: Maybe<
+    | UserUpdateWithWhereUniqueWithoutMeetingsInput[]
+    | UserUpdateWithWhereUniqueWithoutMeetingsInput
+  >;
+  upsert?: Maybe<
+    | UserUpsertWithWhereUniqueWithoutMeetingsInput[]
+    | UserUpsertWithWhereUniqueWithoutMeetingsInput
+  >;
+  deleteMany?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+  updateMany?: Maybe<
+    UserUpdateManyWithWhereNestedInput[] | UserUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface MessageUpsertWithWhereUniqueNestedInput {
+  where: MessageWhereUniqueInput;
+  update: MessageUpdateDataInput;
+  create: MessageCreateInput;
+}
+
+export interface UserCreateManyWithoutMeetingsInput {
+  create?: Maybe<
+    UserCreateWithoutMeetingsInput[] | UserCreateWithoutMeetingsInput
+  >;
+  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+}
+
+export interface UserUpsertWithoutNotificationsInput {
+  update: UserUpdateWithoutNotificationsDataInput;
+  create: UserCreateWithoutNotificationsInput;
+}
+
+export interface TopicUpsertWithWhereUniqueWithoutParentListInput {
+  where: TopicWhereUniqueInput;
+  update: TopicUpdateWithoutParentListDataInput;
+  create: TopicCreateWithoutParentListInput;
+}
+
+export interface UpdateUpdateOneWithoutNotificationsInput {
+  create?: Maybe<UpdateCreateWithoutNotificationsInput>;
+  update?: Maybe<UpdateUpdateWithoutNotificationsDataInput>;
+  upsert?: Maybe<UpdateUpsertWithoutNotificationsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<UpdateWhereUniqueInput>;
+}
+
+export interface UserCreateOneInput {
+  create?: Maybe<UserCreateInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UpdateUpdateWithoutNotificationsDataInput {
+  parentPost?: Maybe<PostUpdateOneRequiredWithoutUpdatesInput>;
+  content?: Maybe<String>;
+  image?: Maybe<String>;
+  likes?: Maybe<UpdateUpdatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  comments?: Maybe<CommentUpdateManyWithoutParentUpdateInput>;
+  commentsCount?: Maybe<Int>;
+  sharesCount?: Maybe<Int>;
+  _deleted?: Maybe<Boolean>;
+}
+
+export interface ListCreateOneWithoutMainTopicsInput {
+  create?: Maybe<ListCreateWithoutMainTopicsInput>;
+  connect?: Maybe<ListWhereUniqueInput>;
+}
+
+export interface UpdateUpsertWithoutNotificationsInput {
+  update: UpdateUpdateWithoutNotificationsDataInput;
+  create: UpdateCreateWithoutNotificationsInput;
+}
+
+export interface TopicCreateManyWithoutParentTopicInput {
+  create?: Maybe<
+    TopicCreateWithoutParentTopicInput[] | TopicCreateWithoutParentTopicInput
+  >;
+  connect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
+}
+
+export interface CommentUpdateOneWithoutNotificationsInput {
+  create?: Maybe<CommentCreateWithoutNotificationsInput>;
+  update?: Maybe<CommentUpdateWithoutNotificationsDataInput>;
+  upsert?: Maybe<CommentUpsertWithoutNotificationsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<CommentWhereUniqueInput>;
+}
+
+export interface ExperienceCreateManyWithoutOwnerInput {
+  create?: Maybe<
+    ExperienceCreateWithoutOwnerInput[] | ExperienceCreateWithoutOwnerInput
+  >;
+  connect?: Maybe<ExperienceWhereUniqueInput[] | ExperienceWhereUniqueInput>;
+}
+
+export interface CommentUpdateWithoutNotificationsDataInput {
+  owner?: Maybe<UserUpdateOneRequiredInput>;
+  parentPost?: Maybe<PostUpdateOneWithoutCommentsInput>;
+  parentUpdate?: Maybe<UpdateUpdateOneWithoutCommentsInput>;
+  parentComment?: Maybe<CommentUpdateOneWithoutCommentsInput>;
+  content?: Maybe<String>;
+  image?: Maybe<String>;
+  likes?: Maybe<CommentUpdatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  comments?: Maybe<CommentUpdateManyWithoutParentCommentInput>;
+  commentsCount?: Maybe<Int>;
+  _deleted?: Maybe<Boolean>;
+}
+
+export interface PostCreateManyWithoutOwnerInput {
+  create?: Maybe<PostCreateWithoutOwnerInput[] | PostCreateWithoutOwnerInput>;
+  connect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+}
+
+export interface CommentUpdateOneWithoutCommentsInput {
+  create?: Maybe<CommentCreateWithoutCommentsInput>;
+  update?: Maybe<CommentUpdateWithoutCommentsDataInput>;
+  upsert?: Maybe<CommentUpsertWithoutCommentsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<CommentWhereUniqueInput>;
+}
+
+export interface CommentCreateManyWithoutParentPostInput {
+  create?: Maybe<
+    CommentCreateWithoutParentPostInput[] | CommentCreateWithoutParentPostInput
+  >;
+  connect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
+}
+
+export interface CommentUpdateWithoutCommentsDataInput {
+  owner?: Maybe<UserUpdateOneRequiredInput>;
+  parentPost?: Maybe<PostUpdateOneWithoutCommentsInput>;
+  parentUpdate?: Maybe<UpdateUpdateOneWithoutCommentsInput>;
+  parentComment?: Maybe<CommentUpdateOneWithoutCommentsInput>;
+  content?: Maybe<String>;
+  image?: Maybe<String>;
+  likes?: Maybe<CommentUpdatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  commentsCount?: Maybe<Int>;
+  notifications?: Maybe<NotificationUpdateManyWithoutCommentInput>;
+  _deleted?: Maybe<Boolean>;
+}
+
+export interface PostCreateOneWithoutUpdatesInput {
+  create?: Maybe<PostCreateWithoutUpdatesInput>;
+  connect?: Maybe<PostWhereUniqueInput>;
+}
+
+export interface CommentUpdatelikesInput {
+  set?: Maybe<String[] | String>;
+}
+
+export interface UserCreateManyWithoutConnectionsInput {
+  create?: Maybe<
+    UserCreateWithoutConnectionsInput[] | UserCreateWithoutConnectionsInput
+  >;
+  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+}
+
+export interface NotificationUpdateManyWithoutCommentInput {
+  create?: Maybe<
+    | NotificationCreateWithoutCommentInput[]
+    | NotificationCreateWithoutCommentInput
+  >;
+  delete?: Maybe<NotificationWhereUniqueInput[] | NotificationWhereUniqueInput>;
+  connect?: Maybe<
+    NotificationWhereUniqueInput[] | NotificationWhereUniqueInput
+  >;
+  set?: Maybe<NotificationWhereUniqueInput[] | NotificationWhereUniqueInput>;
+  disconnect?: Maybe<
+    NotificationWhereUniqueInput[] | NotificationWhereUniqueInput
+  >;
+  update?: Maybe<
+    | NotificationUpdateWithWhereUniqueWithoutCommentInput[]
+    | NotificationUpdateWithWhereUniqueWithoutCommentInput
+  >;
+  upsert?: Maybe<
+    | NotificationUpsertWithWhereUniqueWithoutCommentInput[]
+    | NotificationUpsertWithWhereUniqueWithoutCommentInput
+  >;
+  deleteMany?: Maybe<
+    NotificationScalarWhereInput[] | NotificationScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | NotificationUpdateManyWithWhereNestedInput[]
+    | NotificationUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface UserCreateManyWithoutFollowersInput {
+  create?: Maybe<
+    UserCreateWithoutFollowersInput[] | UserCreateWithoutFollowersInput
+  >;
+  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+}
+
+export interface NotificationUpdateWithWhereUniqueWithoutCommentInput {
+  where: NotificationWhereUniqueInput;
+  data: NotificationUpdateWithoutCommentDataInput;
+}
+
+export interface UserCreateOneWithoutStoriesInput {
+  create?: Maybe<UserCreateWithoutStoriesInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface NotificationUpdateWithoutCommentDataInput {
+  target?: Maybe<UserUpdateOneRequiredWithoutNotificationsInput>;
+  style?: Maybe<NotificationStyle>;
+  user?: Maybe<UserUpdateOneInput>;
+  users?: Maybe<UserUpdateManyInput>;
+  post?: Maybe<PostUpdateOneWithoutNotificationsInput>;
+  update?: Maybe<UpdateUpdateOneWithoutNotificationsInput>;
+  seen?: Maybe<Boolean>;
+}
+
+export interface UserCreaterolesInput {
+  set?: Maybe<Role[] | Role>;
+}
+
+export interface NotificationUpsertWithWhereUniqueWithoutCommentInput {
+  where: NotificationWhereUniqueInput;
+  update: NotificationUpdateWithoutCommentDataInput;
+  create: NotificationCreateWithoutCommentInput;
+}
+
+export interface MessageCreateWithoutToInput {
+  id?: Maybe<ID_Input>;
+  from: UserCreateOneInput;
+  content: String;
+  hidden?: Maybe<UserCreateManyInput>;
+}
+
+export interface NotificationScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  style?: Maybe<NotificationStyle>;
+  style_not?: Maybe<NotificationStyle>;
+  style_in?: Maybe<NotificationStyle[] | NotificationStyle>;
+  style_not_in?: Maybe<NotificationStyle[] | NotificationStyle>;
+  seen?: Maybe<Boolean>;
+  seen_not?: Maybe<Boolean>;
+  AND?: Maybe<NotificationScalarWhereInput[] | NotificationScalarWhereInput>;
+  OR?: Maybe<NotificationScalarWhereInput[] | NotificationScalarWhereInput>;
+  NOT?: Maybe<NotificationScalarWhereInput[] | NotificationScalarWhereInput>;
+}
+
+export interface GroupCreateOneWithoutMessagesInput {
+  create?: Maybe<GroupCreateWithoutMessagesInput>;
+  connect?: Maybe<GroupWhereUniqueInput>;
+}
+
+export interface NotificationUpdateManyWithWhereNestedInput {
+  where: NotificationScalarWhereInput;
+  data: NotificationUpdateManyDataInput;
+}
+
+export interface StoryCreateManyWithoutOwnerInput {
+  create?: Maybe<StoryCreateWithoutOwnerInput[] | StoryCreateWithoutOwnerInput>;
+  connect?: Maybe<StoryWhereUniqueInput[] | StoryWhereUniqueInput>;
+}
+
+export interface NotificationUpdateManyDataInput {
+  style?: Maybe<NotificationStyle>;
+  seen?: Maybe<Boolean>;
+}
+
+export interface StoryItemCreatelikesInput {
+  set?: Maybe<String[] | String>;
+}
+
+export interface CommentUpsertWithoutCommentsInput {
+  update: CommentUpdateWithoutCommentsDataInput;
+  create: CommentCreateWithoutCommentsInput;
+}
+
+export interface PostCreateWithoutNotificationsInput {
+  id?: Maybe<ID_Input>;
+  lastUpdated: DateTimeInput;
+  owner: UserCreateOneWithoutPostsInput;
+  isGoal?: Maybe<Boolean>;
+  goal?: Maybe<String>;
+  goalStatus?: Maybe<String>;
+  subField?: Maybe<TopicCreateOneInput>;
+  topics?: Maybe<TopicCreateManyInput>;
+  location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  content: String;
+  images?: Maybe<PostCreateimagesInput>;
+  video?: Maybe<String>;
+  pitch?: Maybe<String>;
+  comments?: Maybe<CommentCreateManyWithoutParentPostInput>;
+  updates?: Maybe<UpdateCreateManyWithoutParentPostInput>;
+  likes?: Maybe<PostCreatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  commentsCount?: Maybe<Int>;
+  sharesCount?: Maybe<Int>;
+  views?: Maybe<UserCreateManyInput>;
+  _deleted?: Maybe<Boolean>;
+}
+
+export interface CommentUpdateManyWithoutParentCommentInput {
+  create?: Maybe<
+    | CommentCreateWithoutParentCommentInput[]
+    | CommentCreateWithoutParentCommentInput
+  >;
+  delete?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
+  connect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
+  set?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
+  disconnect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
+  update?: Maybe<
+    | CommentUpdateWithWhereUniqueWithoutParentCommentInput[]
+    | CommentUpdateWithWhereUniqueWithoutParentCommentInput
+  >;
+  upsert?: Maybe<
+    | CommentUpsertWithWhereUniqueWithoutParentCommentInput[]
+    | CommentUpsertWithWhereUniqueWithoutParentCommentInput
+  >;
+  deleteMany?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
+  updateMany?: Maybe<
+    | CommentUpdateManyWithWhereNestedInput[]
+    | CommentUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface CommentCreateManyWithoutParentUpdateInput {
+  create?: Maybe<
+    | CommentCreateWithoutParentUpdateInput[]
+    | CommentCreateWithoutParentUpdateInput
+  >;
+  connect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
+}
+
+export interface CommentUpdateWithWhereUniqueWithoutParentCommentInput {
+  where: CommentWhereUniqueInput;
+  data: CommentUpdateWithoutParentCommentDataInput;
+}
+
+export interface PostCreatelikesInput {
+  set?: Maybe<String[] | String>;
+}
+
+export interface CommentUpdateWithoutParentCommentDataInput {
+  owner?: Maybe<UserUpdateOneRequiredInput>;
+  parentPost?: Maybe<PostUpdateOneWithoutCommentsInput>;
+  parentUpdate?: Maybe<UpdateUpdateOneWithoutCommentsInput>;
+  content?: Maybe<String>;
+  image?: Maybe<String>;
+  likes?: Maybe<CommentUpdatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  comments?: Maybe<CommentUpdateManyWithoutParentCommentInput>;
+  commentsCount?: Maybe<Int>;
+  notifications?: Maybe<NotificationUpdateManyWithoutCommentInput>;
+  _deleted?: Maybe<Boolean>;
+}
+
+export interface UserCreateWithoutNotificationsInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  firstName: String;
+  lastName: String;
+  email: String;
+  password: String;
+  profilePic?: Maybe<String>;
+  bannerPic?: Maybe<String>;
+  location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  headline?: Maybe<String>;
+  website?: Maybe<String>;
+  bio?: Maybe<String>;
+  about?: Maybe<String>;
+  topicsMentor?: Maybe<TopicCreateManyInput>;
+  topicsFreelance?: Maybe<TopicCreateManyInput>;
+  topicsInvest?: Maybe<TopicCreateManyInput>;
+  topicsAgency?: Maybe<TopicCreateManyInput>;
+  topicsFocus?: Maybe<TopicCreateManyInput>;
+  topicsInterest?: Maybe<TopicCreateManyInput>;
+  skills?: Maybe<SkillCreateManyWithoutOwnerInput>;
+  experience?: Maybe<ExperienceCreateManyWithoutOwnerInput>;
+  education?: Maybe<EducationCreateManyWithoutOwnerInput>;
+  posts?: Maybe<PostCreateManyWithoutOwnerInput>;
+  connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
+  following?: Maybe<UserCreateManyWithoutFollowingInput>;
+  followers?: Maybe<UserCreateManyWithoutFollowersInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
+  intro?: Maybe<StoryCreateOneInput>;
+  myStory?: Maybe<StoryCreateOneInput>;
+  stories?: Maybe<StoryCreateManyWithoutOwnerInput>;
+  meetings?: Maybe<MeetingCreateManyWithoutUsersInput>;
+  roles?: Maybe<UserCreaterolesInput>;
+  groups?: Maybe<GroupCreateManyWithoutUsersInput>;
+  unReadMessages?: Maybe<MessageCreateManyInput>;
+  unReadMessagesCount?: Maybe<Int>;
+}
+
+export interface CommentUpsertWithWhereUniqueWithoutParentCommentInput {
+  where: CommentWhereUniqueInput;
+  update: CommentUpdateWithoutParentCommentDataInput;
+  create: CommentCreateWithoutParentCommentInput;
+}
+
+export interface CommentCreateOneWithoutNotificationsInput {
+  create?: Maybe<CommentCreateWithoutNotificationsInput>;
+  connect?: Maybe<CommentWhereUniqueInput>;
+}
+
+export interface CommentScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  content?: Maybe<String>;
+  content_not?: Maybe<String>;
+  content_in?: Maybe<String[] | String>;
+  content_not_in?: Maybe<String[] | String>;
+  content_lt?: Maybe<String>;
+  content_lte?: Maybe<String>;
+  content_gt?: Maybe<String>;
+  content_gte?: Maybe<String>;
+  content_contains?: Maybe<String>;
+  content_not_contains?: Maybe<String>;
+  content_starts_with?: Maybe<String>;
+  content_not_starts_with?: Maybe<String>;
+  content_ends_with?: Maybe<String>;
+  content_not_ends_with?: Maybe<String>;
+  image?: Maybe<String>;
+  image_not?: Maybe<String>;
+  image_in?: Maybe<String[] | String>;
+  image_not_in?: Maybe<String[] | String>;
+  image_lt?: Maybe<String>;
+  image_lte?: Maybe<String>;
+  image_gt?: Maybe<String>;
+  image_gte?: Maybe<String>;
+  image_contains?: Maybe<String>;
+  image_not_contains?: Maybe<String>;
+  image_starts_with?: Maybe<String>;
+  image_not_starts_with?: Maybe<String>;
+  image_ends_with?: Maybe<String>;
+  image_not_ends_with?: Maybe<String>;
+  likesCount?: Maybe<Int>;
+  likesCount_not?: Maybe<Int>;
+  likesCount_in?: Maybe<Int[] | Int>;
+  likesCount_not_in?: Maybe<Int[] | Int>;
+  likesCount_lt?: Maybe<Int>;
+  likesCount_lte?: Maybe<Int>;
+  likesCount_gt?: Maybe<Int>;
+  likesCount_gte?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  likedByMe_not?: Maybe<Boolean>;
+  commentsCount?: Maybe<Int>;
+  commentsCount_not?: Maybe<Int>;
+  commentsCount_in?: Maybe<Int[] | Int>;
+  commentsCount_not_in?: Maybe<Int[] | Int>;
+  commentsCount_lt?: Maybe<Int>;
+  commentsCount_lte?: Maybe<Int>;
+  commentsCount_gt?: Maybe<Int>;
+  commentsCount_gte?: Maybe<Int>;
+  _deleted?: Maybe<Boolean>;
+  _deleted_not?: Maybe<Boolean>;
+  AND?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
+  OR?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
+  NOT?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
+}
+
+export interface CommentCreatelikesInput {
+  set?: Maybe<String[] | String>;
+}
+
+export interface CommentUpdateManyWithWhereNestedInput {
+  where: CommentScalarWhereInput;
+  data: CommentUpdateManyDataInput;
+}
+
+export interface CommentCreateWithoutParentCommentInput {
   id?: Maybe<ID_Input>;
   owner: UserCreateOneInput;
   parentPost?: Maybe<PostCreateOneWithoutCommentsInput>;
   parentUpdate?: Maybe<UpdateCreateOneWithoutCommentsInput>;
-  parentComment?: Maybe<CommentCreateOneWithoutCommentsInput>;
   content?: Maybe<String>;
   image?: Maybe<String>;
   likes?: Maybe<CommentCreatelikesInput>;
   likesCount?: Maybe<Int>;
   likedByMe?: Maybe<Boolean>;
+  comments?: Maybe<CommentCreateManyWithoutParentCommentInput>;
   commentsCount?: Maybe<Int>;
   notifications?: Maybe<NotificationCreateManyWithoutCommentInput>;
   _deleted?: Maybe<Boolean>;
+}
+
+export interface CommentUpdateManyDataInput {
+  content?: Maybe<String>;
+  image?: Maybe<String>;
+  likes?: Maybe<CommentUpdatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  commentsCount?: Maybe<Int>;
+  _deleted?: Maybe<Boolean>;
+}
+
+export interface UserUpdateOneRequiredInput {
+  create?: Maybe<UserCreateInput>;
+  update?: Maybe<UserUpdateDataInput>;
+  upsert?: Maybe<UserUpsertNestedInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface CommentUpsertWithoutNotificationsInput {
+  update: CommentUpdateWithoutNotificationsDataInput;
+  create: CommentCreateWithoutNotificationsInput;
+}
+
+export interface TopicUpdateDataInput {
+  topicID?: Maybe<String>;
+  name?: Maybe<String>;
+  parentList?: Maybe<ListUpdateOneWithoutMainTopicsInput>;
+  parentTopic?: Maybe<TopicUpdateOneWithoutChildrenInput>;
+  children?: Maybe<TopicUpdateManyWithoutParentTopicInput>;
+  order?: Maybe<Int>;
+}
+
+export interface NotificationUpsertWithWhereUniqueWithoutPostInput {
+  where: NotificationWhereUniqueInput;
+  update: NotificationUpdateWithoutPostDataInput;
+  create: NotificationCreateWithoutPostInput;
+}
+
+export interface TopicUpdateOneWithoutChildrenInput {
+  create?: Maybe<TopicCreateWithoutChildrenInput>;
+  update?: Maybe<TopicUpdateWithoutChildrenDataInput>;
+  upsert?: Maybe<TopicUpsertWithoutChildrenInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<TopicWhereUniqueInput>;
+}
+
+export interface PostUpsertWithoutCommentsInput {
+  update: PostUpdateWithoutCommentsDataInput;
+  create: PostCreateWithoutCommentsInput;
+}
+
+export interface TopicUpdateWithWhereUniqueWithoutParentTopicInput {
+  where: TopicWhereUniqueInput;
+  data: TopicUpdateWithoutParentTopicDataInput;
+}
+
+export interface CommentUpsertWithWhereUniqueWithoutParentUpdateInput {
+  where: CommentWhereUniqueInput;
+  update: CommentUpdateWithoutParentUpdateDataInput;
+  create: CommentCreateWithoutParentUpdateInput;
+}
+
+export interface TopicUpdateManyWithWhereNestedInput {
+  where: TopicScalarWhereInput;
+  data: TopicUpdateManyDataInput;
+}
+
+export interface NotificationUpdateManyWithoutUpdateInput {
+  create?: Maybe<
+    | NotificationCreateWithoutUpdateInput[]
+    | NotificationCreateWithoutUpdateInput
+  >;
+  delete?: Maybe<NotificationWhereUniqueInput[] | NotificationWhereUniqueInput>;
+  connect?: Maybe<
+    NotificationWhereUniqueInput[] | NotificationWhereUniqueInput
+  >;
+  set?: Maybe<NotificationWhereUniqueInput[] | NotificationWhereUniqueInput>;
+  disconnect?: Maybe<
+    NotificationWhereUniqueInput[] | NotificationWhereUniqueInput
+  >;
+  update?: Maybe<
+    | NotificationUpdateWithWhereUniqueWithoutUpdateInput[]
+    | NotificationUpdateWithWhereUniqueWithoutUpdateInput
+  >;
+  upsert?: Maybe<
+    | NotificationUpsertWithWhereUniqueWithoutUpdateInput[]
+    | NotificationUpsertWithWhereUniqueWithoutUpdateInput
+  >;
+  deleteMany?: Maybe<
+    NotificationScalarWhereInput[] | NotificationScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | NotificationUpdateManyWithWhereNestedInput[]
+    | NotificationUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface SkillUpdateWithWhereUniqueWithoutOwnerInput {
+  where: SkillWhereUniqueInput;
+  data: SkillUpdateWithoutOwnerDataInput;
+}
+
+export interface NotificationUpdateWithWhereUniqueWithoutUpdateInput {
+  where: NotificationWhereUniqueInput;
+  data: NotificationUpdateWithoutUpdateDataInput;
+}
+
+export interface UpdateSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<UpdateWhereInput>;
+  AND?: Maybe<UpdateSubscriptionWhereInput[] | UpdateSubscriptionWhereInput>;
+  OR?: Maybe<UpdateSubscriptionWhereInput[] | UpdateSubscriptionWhereInput>;
+  NOT?: Maybe<UpdateSubscriptionWhereInput[] | UpdateSubscriptionWhereInput>;
+}
+
+export interface NotificationUpdateWithoutUpdateDataInput {
+  target?: Maybe<UserUpdateOneRequiredWithoutNotificationsInput>;
+  style?: Maybe<NotificationStyle>;
+  user?: Maybe<UserUpdateOneInput>;
+  users?: Maybe<UserUpdateManyInput>;
+  post?: Maybe<PostUpdateOneWithoutNotificationsInput>;
+  comment?: Maybe<CommentUpdateOneWithoutNotificationsInput>;
+  seen?: Maybe<Boolean>;
+}
+
+export interface TopicWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  topicID?: Maybe<String>;
+  topicID_not?: Maybe<String>;
+  topicID_in?: Maybe<String[] | String>;
+  topicID_not_in?: Maybe<String[] | String>;
+  topicID_lt?: Maybe<String>;
+  topicID_lte?: Maybe<String>;
+  topicID_gt?: Maybe<String>;
+  topicID_gte?: Maybe<String>;
+  topicID_contains?: Maybe<String>;
+  topicID_not_contains?: Maybe<String>;
+  topicID_starts_with?: Maybe<String>;
+  topicID_not_starts_with?: Maybe<String>;
+  topicID_ends_with?: Maybe<String>;
+  topicID_not_ends_with?: Maybe<String>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  parentList?: Maybe<ListWhereInput>;
+  parentTopic?: Maybe<TopicWhereInput>;
+  children_every?: Maybe<TopicWhereInput>;
+  children_some?: Maybe<TopicWhereInput>;
+  children_none?: Maybe<TopicWhereInput>;
+  order?: Maybe<Int>;
+  order_not?: Maybe<Int>;
+  order_in?: Maybe<Int[] | Int>;
+  order_not_in?: Maybe<Int[] | Int>;
+  order_lt?: Maybe<Int>;
+  order_lte?: Maybe<Int>;
+  order_gt?: Maybe<Int>;
+  order_gte?: Maybe<Int>;
+  AND?: Maybe<TopicWhereInput[] | TopicWhereInput>;
+  OR?: Maybe<TopicWhereInput[] | TopicWhereInput>;
+  NOT?: Maybe<TopicWhereInput[] | TopicWhereInput>;
+}
+
+export interface NotificationUpsertWithWhereUniqueWithoutUpdateInput {
+  where: NotificationWhereUniqueInput;
+  update: NotificationUpdateWithoutUpdateDataInput;
+  create: NotificationCreateWithoutUpdateInput;
+}
+
+export interface UserUpdateManyMutationInput {
+  name?: Maybe<String>;
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  profilePic?: Maybe<String>;
+  bannerPic?: Maybe<String>;
+  location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  headline?: Maybe<String>;
+  website?: Maybe<String>;
+  bio?: Maybe<String>;
+  about?: Maybe<String>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
+  roles?: Maybe<UserUpdaterolesInput>;
+  unReadMessagesCount?: Maybe<Int>;
+}
+
+export interface UpdateUpsertWithWhereUniqueWithoutParentPostInput {
+  where: UpdateWhereUniqueInput;
+  update: UpdateUpdateWithoutParentPostDataInput;
+  create: UpdateCreateWithoutParentPostInput;
+}
+
+export interface TopicUpdateInput {
+  topicID?: Maybe<String>;
+  name?: Maybe<String>;
+  parentList?: Maybe<ListUpdateOneWithoutMainTopicsInput>;
+  parentTopic?: Maybe<TopicUpdateOneWithoutChildrenInput>;
+  children?: Maybe<TopicUpdateManyWithoutParentTopicInput>;
+  order?: Maybe<Int>;
+}
+
+export interface UpdateScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  content?: Maybe<String>;
+  content_not?: Maybe<String>;
+  content_in?: Maybe<String[] | String>;
+  content_not_in?: Maybe<String[] | String>;
+  content_lt?: Maybe<String>;
+  content_lte?: Maybe<String>;
+  content_gt?: Maybe<String>;
+  content_gte?: Maybe<String>;
+  content_contains?: Maybe<String>;
+  content_not_contains?: Maybe<String>;
+  content_starts_with?: Maybe<String>;
+  content_not_starts_with?: Maybe<String>;
+  content_ends_with?: Maybe<String>;
+  content_not_ends_with?: Maybe<String>;
+  image?: Maybe<String>;
+  image_not?: Maybe<String>;
+  image_in?: Maybe<String[] | String>;
+  image_not_in?: Maybe<String[] | String>;
+  image_lt?: Maybe<String>;
+  image_lte?: Maybe<String>;
+  image_gt?: Maybe<String>;
+  image_gte?: Maybe<String>;
+  image_contains?: Maybe<String>;
+  image_not_contains?: Maybe<String>;
+  image_starts_with?: Maybe<String>;
+  image_not_starts_with?: Maybe<String>;
+  image_ends_with?: Maybe<String>;
+  image_not_ends_with?: Maybe<String>;
+  likesCount?: Maybe<Int>;
+  likesCount_not?: Maybe<Int>;
+  likesCount_in?: Maybe<Int[] | Int>;
+  likesCount_not_in?: Maybe<Int[] | Int>;
+  likesCount_lt?: Maybe<Int>;
+  likesCount_lte?: Maybe<Int>;
+  likesCount_gt?: Maybe<Int>;
+  likesCount_gte?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  likedByMe_not?: Maybe<Boolean>;
+  commentsCount?: Maybe<Int>;
+  commentsCount_not?: Maybe<Int>;
+  commentsCount_in?: Maybe<Int[] | Int>;
+  commentsCount_not_in?: Maybe<Int[] | Int>;
+  commentsCount_lt?: Maybe<Int>;
+  commentsCount_lte?: Maybe<Int>;
+  commentsCount_gt?: Maybe<Int>;
+  commentsCount_gte?: Maybe<Int>;
+  sharesCount?: Maybe<Int>;
+  sharesCount_not?: Maybe<Int>;
+  sharesCount_in?: Maybe<Int[] | Int>;
+  sharesCount_not_in?: Maybe<Int[] | Int>;
+  sharesCount_lt?: Maybe<Int>;
+  sharesCount_lte?: Maybe<Int>;
+  sharesCount_gt?: Maybe<Int>;
+  sharesCount_gte?: Maybe<Int>;
+  _deleted?: Maybe<Boolean>;
+  _deleted_not?: Maybe<Boolean>;
+  AND?: Maybe<UpdateScalarWhereInput[] | UpdateScalarWhereInput>;
+  OR?: Maybe<UpdateScalarWhereInput[] | UpdateScalarWhereInput>;
+  NOT?: Maybe<UpdateScalarWhereInput[] | UpdateScalarWhereInput>;
+}
+
+export interface StoryItemUpdateInput {
+  stories?: Maybe<StoryUpdateManyWithoutItemsInput>;
+  type?: Maybe<StoryItemType>;
+  url?: Maybe<String>;
+  preview?: Maybe<String>;
+  link?: Maybe<String>;
+  text?: Maybe<String>;
+  duration?: Maybe<Float>;
+  inProject?: Maybe<Boolean>;
+  likes?: Maybe<StoryItemUpdatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  views?: Maybe<UserUpdateManyInput>;
+  plays?: Maybe<Int>;
+}
+
+export interface UpdateUpdateManyWithWhereNestedInput {
+  where: UpdateScalarWhereInput;
+  data: UpdateUpdateManyDataInput;
+}
+
+export type MessageWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface UpdateUpdateManyDataInput {
+  content?: Maybe<String>;
+  image?: Maybe<String>;
+  likes?: Maybe<UpdateUpdatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  commentsCount?: Maybe<Int>;
+  sharesCount?: Maybe<Int>;
+  _deleted?: Maybe<Boolean>;
+}
+
+export type PostWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface PostUpsertWithoutNotificationsInput {
+  update: PostUpdateWithoutNotificationsDataInput;
+  create: PostCreateWithoutNotificationsInput;
+}
+
+export type StoryWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface NotificationUpsertWithWhereUniqueWithoutTargetInput {
+  where: NotificationWhereUniqueInput;
+  update: NotificationUpdateWithoutTargetDataInput;
+  create: NotificationCreateWithoutTargetInput;
+}
+
+export type TopicWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  topicID?: Maybe<String>;
+}>;
+
+export interface UserUpsertWithWhereUniqueWithoutGroupsInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateWithoutGroupsDataInput;
+  create: UserCreateWithoutGroupsInput;
+}
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  email?: Maybe<String>;
+}>;
+
+export interface GroupUpsertWithoutMessagesInput {
+  update: GroupUpdateWithoutMessagesDataInput;
+  create: GroupCreateWithoutMessagesInput;
+}
+
+export interface TopicCreateManyInput {
+  create?: Maybe<TopicCreateInput[] | TopicCreateInput>;
+  connect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
+}
+
+export interface MessageUpsertNestedInput {
+  update: MessageUpdateDataInput;
+  create: MessageCreateInput;
+}
+
+export interface SkillCreateManyWithoutOwnerInput {
+  create?: Maybe<SkillCreateWithoutOwnerInput[] | SkillCreateWithoutOwnerInput>;
+  connect?: Maybe<SkillWhereUniqueInput[] | SkillWhereUniqueInput>;
+}
+
+export interface GroupUpsertWithWhereUniqueWithoutUsersInput {
+  where: GroupWhereUniqueInput;
+  update: GroupUpdateWithoutUsersDataInput;
+  create: GroupCreateWithoutUsersInput;
+}
+
+export interface TopicCreateOneInput {
+  create?: Maybe<TopicCreateInput>;
+  connect?: Maybe<TopicWhereUniqueInput>;
+}
+
+export interface GroupScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<GroupScalarWhereInput[] | GroupScalarWhereInput>;
+  OR?: Maybe<GroupScalarWhereInput[] | GroupScalarWhereInput>;
+  NOT?: Maybe<GroupScalarWhereInput[] | GroupScalarWhereInput>;
+}
+
+export interface UserCreateOneWithoutPostsInput {
+  create?: Maybe<UserCreateWithoutPostsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpsertWithoutStoriesInput {
+  update: UserUpdateWithoutStoriesDataInput;
+  create: UserCreateWithoutStoriesInput;
+}
+
+export interface StoryCreateOneInput {
+  create?: Maybe<StoryCreateInput>;
+  connect?: Maybe<StoryWhereUniqueInput>;
+}
+
+export interface StoryUpsertNestedInput {
+  update: StoryUpdateDataInput;
+  create: StoryCreateInput;
+}
+
+export interface GroupCreateWithoutUsersInput {
+  id?: Maybe<ID_Input>;
+  messages?: Maybe<MessageCreateManyWithoutToInput>;
+  latestMessage?: Maybe<MessageCreateOneInput>;
+  hidden?: Maybe<UserCreateManyInput>;
+}
+
+export interface UserUpsertWithWhereUniqueWithoutFollowersInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateWithoutFollowersDataInput;
+  create: UserCreateWithoutFollowersInput;
+}
+
+export interface UserCreateManyWithoutGroupsInput {
+  create?: Maybe<UserCreateWithoutGroupsInput[] | UserCreateWithoutGroupsInput>;
+  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+}
+
+export interface UserUpsertWithWhereUniqueWithoutFollowingInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateWithoutFollowingDataInput;
+  create: UserCreateWithoutFollowingInput;
+}
+
+export interface NotificationCreateWithoutTargetInput {
+  id?: Maybe<ID_Input>;
+  style: NotificationStyle;
+  user?: Maybe<UserCreateOneInput>;
+  users?: Maybe<UserCreateManyInput>;
+  post?: Maybe<PostCreateOneWithoutNotificationsInput>;
+  update?: Maybe<UpdateCreateOneWithoutNotificationsInput>;
+  comment?: Maybe<CommentCreateOneWithoutNotificationsInput>;
+  seen?: Maybe<Boolean>;
+}
+
+export interface UserUpsertWithWhereUniqueWithoutConnectionsInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateWithoutConnectionsDataInput;
+  create: UserCreateWithoutConnectionsInput;
+}
+
+export interface PostCreateOneWithoutCommentsInput {
+  create?: Maybe<PostCreateWithoutCommentsInput>;
+  connect?: Maybe<PostWhereUniqueInput>;
+}
+
+export interface UserUpsertWithoutPostsInput {
+  update: UserUpdateWithoutPostsDataInput;
+  create: UserCreateWithoutPostsInput;
+}
+
+export interface UpdateCreateOneWithoutNotificationsInput {
+  create?: Maybe<UpdateCreateWithoutNotificationsInput>;
+  connect?: Maybe<UpdateWhereUniqueInput>;
+}
+
+export interface PostUpsertWithoutUpdatesInput {
+  update: PostUpdateWithoutUpdatesDataInput;
+  create: PostCreateWithoutUpdatesInput;
+}
+
+export interface NotificationCreateWithoutCommentInput {
+  id?: Maybe<ID_Input>;
+  target: UserCreateOneWithoutNotificationsInput;
+  style: NotificationStyle;
+  user?: Maybe<UserCreateOneInput>;
+  users?: Maybe<UserCreateManyInput>;
+  post?: Maybe<PostCreateOneWithoutNotificationsInput>;
+  update?: Maybe<UpdateCreateOneWithoutNotificationsInput>;
+  seen?: Maybe<Boolean>;
+}
+
+export interface UpdateUpsertWithoutCommentsInput {
+  update: UpdateUpdateWithoutCommentsDataInput;
+  create: UpdateCreateWithoutCommentsInput;
+}
+
+export interface TopicUpdateManyInput {
+  create?: Maybe<TopicCreateInput[] | TopicCreateInput>;
+  update?: Maybe<
+    | TopicUpdateWithWhereUniqueNestedInput[]
+    | TopicUpdateWithWhereUniqueNestedInput
+  >;
+  upsert?: Maybe<
+    | TopicUpsertWithWhereUniqueNestedInput[]
+    | TopicUpsertWithWhereUniqueNestedInput
+  >;
+  delete?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
+  connect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
+  set?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
+  disconnect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
+  deleteMany?: Maybe<TopicScalarWhereInput[] | TopicScalarWhereInput>;
+  updateMany?: Maybe<
+    TopicUpdateManyWithWhereNestedInput[] | TopicUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface CommentUpsertWithWhereUniqueWithoutParentPostInput {
+  where: CommentWhereUniqueInput;
+  update: CommentUpdateWithoutParentPostDataInput;
+  create: CommentCreateWithoutParentPostInput;
+}
+
+export interface TopicUpsertWithoutChildrenInput {
+  update: TopicUpdateWithoutChildrenDataInput;
+  create: TopicCreateWithoutChildrenInput;
+}
+
+export interface PostUpsertWithWhereUniqueWithoutOwnerInput {
+  where: PostWhereUniqueInput;
+  update: PostUpdateWithoutOwnerDataInput;
+  create: PostCreateWithoutOwnerInput;
+}
+
+export interface TopicUpsertWithWhereUniqueNestedInput {
+  where: TopicWhereUniqueInput;
+  update: TopicUpdateDataInput;
+  create: TopicCreateInput;
+}
+
+export interface PostScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  lastUpdated?: Maybe<DateTimeInput>;
+  lastUpdated_not?: Maybe<DateTimeInput>;
+  lastUpdated_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  lastUpdated_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  lastUpdated_lt?: Maybe<DateTimeInput>;
+  lastUpdated_lte?: Maybe<DateTimeInput>;
+  lastUpdated_gt?: Maybe<DateTimeInput>;
+  lastUpdated_gte?: Maybe<DateTimeInput>;
+  isGoal?: Maybe<Boolean>;
+  isGoal_not?: Maybe<Boolean>;
+  goal?: Maybe<String>;
+  goal_not?: Maybe<String>;
+  goal_in?: Maybe<String[] | String>;
+  goal_not_in?: Maybe<String[] | String>;
+  goal_lt?: Maybe<String>;
+  goal_lte?: Maybe<String>;
+  goal_gt?: Maybe<String>;
+  goal_gte?: Maybe<String>;
+  goal_contains?: Maybe<String>;
+  goal_not_contains?: Maybe<String>;
+  goal_starts_with?: Maybe<String>;
+  goal_not_starts_with?: Maybe<String>;
+  goal_ends_with?: Maybe<String>;
+  goal_not_ends_with?: Maybe<String>;
+  goalStatus?: Maybe<String>;
+  goalStatus_not?: Maybe<String>;
+  goalStatus_in?: Maybe<String[] | String>;
+  goalStatus_not_in?: Maybe<String[] | String>;
+  goalStatus_lt?: Maybe<String>;
+  goalStatus_lte?: Maybe<String>;
+  goalStatus_gt?: Maybe<String>;
+  goalStatus_gte?: Maybe<String>;
+  goalStatus_contains?: Maybe<String>;
+  goalStatus_not_contains?: Maybe<String>;
+  goalStatus_starts_with?: Maybe<String>;
+  goalStatus_not_starts_with?: Maybe<String>;
+  goalStatus_ends_with?: Maybe<String>;
+  goalStatus_not_ends_with?: Maybe<String>;
+  location?: Maybe<String>;
+  location_not?: Maybe<String>;
+  location_in?: Maybe<String[] | String>;
+  location_not_in?: Maybe<String[] | String>;
+  location_lt?: Maybe<String>;
+  location_lte?: Maybe<String>;
+  location_gt?: Maybe<String>;
+  location_gte?: Maybe<String>;
+  location_contains?: Maybe<String>;
+  location_not_contains?: Maybe<String>;
+  location_starts_with?: Maybe<String>;
+  location_not_starts_with?: Maybe<String>;
+  location_ends_with?: Maybe<String>;
+  location_not_ends_with?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationID_not?: Maybe<String>;
+  locationID_in?: Maybe<String[] | String>;
+  locationID_not_in?: Maybe<String[] | String>;
+  locationID_lt?: Maybe<String>;
+  locationID_lte?: Maybe<String>;
+  locationID_gt?: Maybe<String>;
+  locationID_gte?: Maybe<String>;
+  locationID_contains?: Maybe<String>;
+  locationID_not_contains?: Maybe<String>;
+  locationID_starts_with?: Maybe<String>;
+  locationID_not_starts_with?: Maybe<String>;
+  locationID_ends_with?: Maybe<String>;
+  locationID_not_ends_with?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLat_not?: Maybe<Float>;
+  locationLat_in?: Maybe<Float[] | Float>;
+  locationLat_not_in?: Maybe<Float[] | Float>;
+  locationLat_lt?: Maybe<Float>;
+  locationLat_lte?: Maybe<Float>;
+  locationLat_gt?: Maybe<Float>;
+  locationLat_gte?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  locationLon_not?: Maybe<Float>;
+  locationLon_in?: Maybe<Float[] | Float>;
+  locationLon_not_in?: Maybe<Float[] | Float>;
+  locationLon_lt?: Maybe<Float>;
+  locationLon_lte?: Maybe<Float>;
+  locationLon_gt?: Maybe<Float>;
+  locationLon_gte?: Maybe<Float>;
+  content?: Maybe<String>;
+  content_not?: Maybe<String>;
+  content_in?: Maybe<String[] | String>;
+  content_not_in?: Maybe<String[] | String>;
+  content_lt?: Maybe<String>;
+  content_lte?: Maybe<String>;
+  content_gt?: Maybe<String>;
+  content_gte?: Maybe<String>;
+  content_contains?: Maybe<String>;
+  content_not_contains?: Maybe<String>;
+  content_starts_with?: Maybe<String>;
+  content_not_starts_with?: Maybe<String>;
+  content_ends_with?: Maybe<String>;
+  content_not_ends_with?: Maybe<String>;
+  video?: Maybe<String>;
+  video_not?: Maybe<String>;
+  video_in?: Maybe<String[] | String>;
+  video_not_in?: Maybe<String[] | String>;
+  video_lt?: Maybe<String>;
+  video_lte?: Maybe<String>;
+  video_gt?: Maybe<String>;
+  video_gte?: Maybe<String>;
+  video_contains?: Maybe<String>;
+  video_not_contains?: Maybe<String>;
+  video_starts_with?: Maybe<String>;
+  video_not_starts_with?: Maybe<String>;
+  video_ends_with?: Maybe<String>;
+  video_not_ends_with?: Maybe<String>;
+  pitch?: Maybe<String>;
+  pitch_not?: Maybe<String>;
+  pitch_in?: Maybe<String[] | String>;
+  pitch_not_in?: Maybe<String[] | String>;
+  pitch_lt?: Maybe<String>;
+  pitch_lte?: Maybe<String>;
+  pitch_gt?: Maybe<String>;
+  pitch_gte?: Maybe<String>;
+  pitch_contains?: Maybe<String>;
+  pitch_not_contains?: Maybe<String>;
+  pitch_starts_with?: Maybe<String>;
+  pitch_not_starts_with?: Maybe<String>;
+  pitch_ends_with?: Maybe<String>;
+  pitch_not_ends_with?: Maybe<String>;
+  likesCount?: Maybe<Int>;
+  likesCount_not?: Maybe<Int>;
+  likesCount_in?: Maybe<Int[] | Int>;
+  likesCount_not_in?: Maybe<Int[] | Int>;
+  likesCount_lt?: Maybe<Int>;
+  likesCount_lte?: Maybe<Int>;
+  likesCount_gt?: Maybe<Int>;
+  likesCount_gte?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  likedByMe_not?: Maybe<Boolean>;
+  commentsCount?: Maybe<Int>;
+  commentsCount_not?: Maybe<Int>;
+  commentsCount_in?: Maybe<Int[] | Int>;
+  commentsCount_not_in?: Maybe<Int[] | Int>;
+  commentsCount_lt?: Maybe<Int>;
+  commentsCount_lte?: Maybe<Int>;
+  commentsCount_gt?: Maybe<Int>;
+  commentsCount_gte?: Maybe<Int>;
+  sharesCount?: Maybe<Int>;
+  sharesCount_not?: Maybe<Int>;
+  sharesCount_in?: Maybe<Int[] | Int>;
+  sharesCount_not_in?: Maybe<Int[] | Int>;
+  sharesCount_lt?: Maybe<Int>;
+  sharesCount_lte?: Maybe<Int>;
+  sharesCount_gt?: Maybe<Int>;
+  sharesCount_gte?: Maybe<Int>;
+  _deleted?: Maybe<Boolean>;
+  _deleted_not?: Maybe<Boolean>;
+  AND?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
+  OR?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
+  NOT?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
+}
+
+export interface SkillSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<SkillWhereInput>;
+  AND?: Maybe<SkillSubscriptionWhereInput[] | SkillSubscriptionWhereInput>;
+  OR?: Maybe<SkillSubscriptionWhereInput[] | SkillSubscriptionWhereInput>;
+  NOT?: Maybe<SkillSubscriptionWhereInput[] | SkillSubscriptionWhereInput>;
+}
+
+export interface PostUpdateManyWithWhereNestedInput {
+  where: PostScalarWhereInput;
+  data: PostUpdateManyDataInput;
+}
+
+export interface UpdateUpdateInput {
+  parentPost?: Maybe<PostUpdateOneRequiredWithoutUpdatesInput>;
+  content?: Maybe<String>;
+  image?: Maybe<String>;
+  likes?: Maybe<UpdateUpdatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  comments?: Maybe<CommentUpdateManyWithoutParentUpdateInput>;
+  commentsCount?: Maybe<Int>;
+  sharesCount?: Maybe<Int>;
+  notifications?: Maybe<NotificationUpdateManyWithoutUpdateInput>;
+  _deleted?: Maybe<Boolean>;
+}
+
+export interface PostUpdateManyDataInput {
+  lastUpdated?: Maybe<DateTimeInput>;
+  isGoal?: Maybe<Boolean>;
+  goal?: Maybe<String>;
+  goalStatus?: Maybe<String>;
+  location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  content?: Maybe<String>;
+  images?: Maybe<PostUpdateimagesInput>;
+  video?: Maybe<String>;
+  pitch?: Maybe<String>;
+  likes?: Maybe<PostUpdatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  commentsCount?: Maybe<Int>;
+  sharesCount?: Maybe<Int>;
+  _deleted?: Maybe<Boolean>;
+}
+
+export type MeetingWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface CommentUpdateManyMutationInput {
+  content?: Maybe<String>;
+  image?: Maybe<String>;
+  likes?: Maybe<CommentUpdatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  commentsCount?: Maybe<Int>;
+  _deleted?: Maybe<Boolean>;
+}
+
+export type SkillWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface TopicCreateManyWithoutParentListInput {
+  create?: Maybe<
+    TopicCreateWithoutParentListInput[] | TopicCreateWithoutParentListInput
+  >;
+  connect?: Maybe<TopicWhereUniqueInput[] | TopicWhereUniqueInput>;
+}
+
+export type UpdateWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface ListCreateInput {
+  id?: Maybe<ID_Input>;
+  listName: String;
+  icon?: Maybe<String>;
+  mainTopics?: Maybe<TopicCreateManyWithoutParentListInput>;
+}
+
+export interface TopicCreateOneWithoutChildrenInput {
+  create?: Maybe<TopicCreateWithoutChildrenInput>;
+  connect?: Maybe<TopicWhereUniqueInput>;
+}
+
+export interface EducationCreateInput {
+  id?: Maybe<ID_Input>;
+  owner: UserCreateOneWithoutEducationInput;
+  name: String;
+  subText: String;
+  startDateMonth?: Maybe<String>;
+  startDateYear: Int;
+  endDateMonth?: Maybe<String>;
+  endDateYear?: Maybe<Int>;
+  location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  currentRole?: Maybe<Boolean>;
+}
+
+export interface UpdateCreateOneWithoutCommentsInput {
+  create?: Maybe<UpdateCreateWithoutCommentsInput>;
+  connect?: Maybe<UpdateWhereUniqueInput>;
+}
+
+export interface UserCreateOneWithoutEducationInput {
+  create?: Maybe<UserCreateWithoutEducationInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface MeetingCreateManyWithoutUsersInput {
+  create?: Maybe<
+    MeetingCreateWithoutUsersInput[] | MeetingCreateWithoutUsersInput
+  >;
+  connect?: Maybe<MeetingWhereUniqueInput[] | MeetingWhereUniqueInput>;
+}
+
+export interface UserCreateWithoutEducationInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  firstName: String;
+  lastName: String;
+  email: String;
+  password: String;
+  profilePic?: Maybe<String>;
+  bannerPic?: Maybe<String>;
+  location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  headline?: Maybe<String>;
+  website?: Maybe<String>;
+  bio?: Maybe<String>;
+  about?: Maybe<String>;
+  topicsMentor?: Maybe<TopicCreateManyInput>;
+  topicsFreelance?: Maybe<TopicCreateManyInput>;
+  topicsInvest?: Maybe<TopicCreateManyInput>;
+  topicsAgency?: Maybe<TopicCreateManyInput>;
+  topicsFocus?: Maybe<TopicCreateManyInput>;
+  topicsInterest?: Maybe<TopicCreateManyInput>;
+  skills?: Maybe<SkillCreateManyWithoutOwnerInput>;
+  experience?: Maybe<ExperienceCreateManyWithoutOwnerInput>;
+  posts?: Maybe<PostCreateManyWithoutOwnerInput>;
+  connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
+  following?: Maybe<UserCreateManyWithoutFollowingInput>;
+  followers?: Maybe<UserCreateManyWithoutFollowersInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
+  intro?: Maybe<StoryCreateOneInput>;
+  myStory?: Maybe<StoryCreateOneInput>;
+  stories?: Maybe<StoryCreateManyWithoutOwnerInput>;
+  meetings?: Maybe<MeetingCreateManyWithoutUsersInput>;
+  roles?: Maybe<UserCreaterolesInput>;
+  groups?: Maybe<GroupCreateManyWithoutUsersInput>;
+  notifications?: Maybe<NotificationCreateManyWithoutTargetInput>;
+  unReadMessages?: Maybe<MessageCreateManyInput>;
+  unReadMessagesCount?: Maybe<Int>;
+}
+
+export interface StoryItemCreateManyWithoutStoriesInput {
+  create?: Maybe<
+    StoryItemCreateWithoutStoriesInput[] | StoryItemCreateWithoutStoriesInput
+  >;
+  connect?: Maybe<StoryItemWhereUniqueInput[] | StoryItemWhereUniqueInput>;
+}
+
+export interface EducationUpdateInput {
+  owner?: Maybe<UserUpdateOneRequiredWithoutEducationInput>;
+  name?: Maybe<String>;
+  subText?: Maybe<String>;
+  startDateMonth?: Maybe<String>;
+  startDateYear?: Maybe<Int>;
+  endDateMonth?: Maybe<String>;
+  endDateYear?: Maybe<Int>;
+  location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  currentRole?: Maybe<Boolean>;
+}
+
+export interface NotificationCreateWithoutPostInput {
+  id?: Maybe<ID_Input>;
+  target: UserCreateOneWithoutNotificationsInput;
+  style: NotificationStyle;
+  user?: Maybe<UserCreateOneInput>;
+  users?: Maybe<UserCreateManyInput>;
+  update?: Maybe<UpdateCreateOneWithoutNotificationsInput>;
+  comment?: Maybe<CommentCreateOneWithoutNotificationsInput>;
+  seen?: Maybe<Boolean>;
+}
+
+export interface UserUpdateOneRequiredWithoutEducationInput {
+  create?: Maybe<UserCreateWithoutEducationInput>;
+  update?: Maybe<UserUpdateWithoutEducationDataInput>;
+  upsert?: Maybe<UserUpsertWithoutEducationInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface NotificationCreateWithoutUpdateInput {
+  id?: Maybe<ID_Input>;
+  target: UserCreateOneWithoutNotificationsInput;
+  style: NotificationStyle;
+  user?: Maybe<UserCreateOneInput>;
+  users?: Maybe<UserCreateManyInput>;
+  post?: Maybe<PostCreateOneWithoutNotificationsInput>;
+  comment?: Maybe<CommentCreateOneWithoutNotificationsInput>;
+  seen?: Maybe<Boolean>;
+}
+
+export interface UserUpdateWithoutEducationDataInput {
+  name?: Maybe<String>;
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  profilePic?: Maybe<String>;
+  bannerPic?: Maybe<String>;
+  location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  headline?: Maybe<String>;
+  website?: Maybe<String>;
+  bio?: Maybe<String>;
+  about?: Maybe<String>;
+  topicsMentor?: Maybe<TopicUpdateManyInput>;
+  topicsFreelance?: Maybe<TopicUpdateManyInput>;
+  topicsInvest?: Maybe<TopicUpdateManyInput>;
+  topicsAgency?: Maybe<TopicUpdateManyInput>;
+  topicsFocus?: Maybe<TopicUpdateManyInput>;
+  topicsInterest?: Maybe<TopicUpdateManyInput>;
+  skills?: Maybe<SkillUpdateManyWithoutOwnerInput>;
+  experience?: Maybe<ExperienceUpdateManyWithoutOwnerInput>;
+  posts?: Maybe<PostUpdateManyWithoutOwnerInput>;
+  connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
+  following?: Maybe<UserUpdateManyWithoutFollowingInput>;
+  followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
+  intro?: Maybe<StoryUpdateOneInput>;
+  myStory?: Maybe<StoryUpdateOneInput>;
+  stories?: Maybe<StoryUpdateManyWithoutOwnerInput>;
+  meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
+  roles?: Maybe<UserUpdaterolesInput>;
+  groups?: Maybe<GroupUpdateManyWithoutUsersInput>;
+  notifications?: Maybe<NotificationUpdateManyWithoutTargetInput>;
+  unReadMessages?: Maybe<MessageUpdateManyInput>;
+  unReadMessagesCount?: Maybe<Int>;
+}
+
+export interface TopicUpsertWithWhereUniqueWithoutParentTopicInput {
+  where: TopicWhereUniqueInput;
+  update: TopicUpdateWithoutParentTopicDataInput;
+  create: TopicCreateWithoutParentTopicInput;
+}
+
+export interface UserUpsertWithoutEducationInput {
+  update: UserUpdateWithoutEducationDataInput;
+  create: UserCreateWithoutEducationInput;
+}
+
+export interface GroupSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<GroupWhereInput>;
+  AND?: Maybe<GroupSubscriptionWhereInput[] | GroupSubscriptionWhereInput>;
+  OR?: Maybe<GroupSubscriptionWhereInput[] | GroupSubscriptionWhereInput>;
+  NOT?: Maybe<GroupSubscriptionWhereInput[] | GroupSubscriptionWhereInput>;
+}
+
+export interface EducationUpdateManyMutationInput {
+  name?: Maybe<String>;
+  subText?: Maybe<String>;
+  startDateMonth?: Maybe<String>;
+  startDateYear?: Maybe<Int>;
+  endDateMonth?: Maybe<String>;
+  endDateYear?: Maybe<Int>;
+  location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  currentRole?: Maybe<Boolean>;
+}
+
+export type NotificationWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface ExperienceCreateInput {
+  id?: Maybe<ID_Input>;
+  owner: UserCreateOneWithoutExperienceInput;
+  name: String;
+  subText: String;
+  startDateMonth: String;
+  startDateYear: Int;
+  endDateMonth?: Maybe<String>;
+  endDateYear?: Maybe<Int>;
+  location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  currentRole?: Maybe<Boolean>;
+}
+
+export interface UserCreateManyWithoutFollowingInput {
+  create?: Maybe<
+    UserCreateWithoutFollowingInput[] | UserCreateWithoutFollowingInput
+  >;
+  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+}
+
+export interface UserCreateOneWithoutExperienceInput {
+  create?: Maybe<UserCreateWithoutExperienceInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UpdateCreateWithoutParentPostInput {
+  id?: Maybe<ID_Input>;
+  content: String;
+  image?: Maybe<String>;
+  likes?: Maybe<UpdateCreatelikesInput>;
+  likesCount?: Maybe<Int>;
+  likedByMe?: Maybe<Boolean>;
+  comments?: Maybe<CommentCreateManyWithoutParentUpdateInput>;
+  commentsCount?: Maybe<Int>;
+  sharesCount?: Maybe<Int>;
+  notifications?: Maybe<NotificationCreateManyWithoutUpdateInput>;
+  _deleted?: Maybe<Boolean>;
+}
+
+export interface UserCreateWithoutExperienceInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  firstName: String;
+  lastName: String;
+  email: String;
+  password: String;
+  profilePic?: Maybe<String>;
+  bannerPic?: Maybe<String>;
+  location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  headline?: Maybe<String>;
+  website?: Maybe<String>;
+  bio?: Maybe<String>;
+  about?: Maybe<String>;
+  topicsMentor?: Maybe<TopicCreateManyInput>;
+  topicsFreelance?: Maybe<TopicCreateManyInput>;
+  topicsInvest?: Maybe<TopicCreateManyInput>;
+  topicsAgency?: Maybe<TopicCreateManyInput>;
+  topicsFocus?: Maybe<TopicCreateManyInput>;
+  topicsInterest?: Maybe<TopicCreateManyInput>;
+  skills?: Maybe<SkillCreateManyWithoutOwnerInput>;
+  education?: Maybe<EducationCreateManyWithoutOwnerInput>;
+  posts?: Maybe<PostCreateManyWithoutOwnerInput>;
+  connections?: Maybe<UserCreateManyWithoutConnectionsInput>;
+  following?: Maybe<UserCreateManyWithoutFollowingInput>;
+  followers?: Maybe<UserCreateManyWithoutFollowersInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
+  intro?: Maybe<StoryCreateOneInput>;
+  myStory?: Maybe<StoryCreateOneInput>;
+  stories?: Maybe<StoryCreateManyWithoutOwnerInput>;
+  meetings?: Maybe<MeetingCreateManyWithoutUsersInput>;
+  roles?: Maybe<UserCreaterolesInput>;
+  groups?: Maybe<GroupCreateManyWithoutUsersInput>;
+  notifications?: Maybe<NotificationCreateManyWithoutTargetInput>;
+  unReadMessages?: Maybe<MessageCreateManyInput>;
+  unReadMessagesCount?: Maybe<Int>;
+}
+
+export interface ListUpdateWithoutMainTopicsDataInput {
+  listName?: Maybe<String>;
+  icon?: Maybe<String>;
+}
+
+export interface ExperienceUpdateInput {
+  owner?: Maybe<UserUpdateOneRequiredWithoutExperienceInput>;
+  name?: Maybe<String>;
+  subText?: Maybe<String>;
+  startDateMonth?: Maybe<String>;
+  startDateYear?: Maybe<Int>;
+  endDateMonth?: Maybe<String>;
+  endDateYear?: Maybe<Int>;
+  location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  currentRole?: Maybe<Boolean>;
+}
+
+export interface StoryUpdateWithoutItemsDataInput {
+  owner?: Maybe<UserUpdateOneRequiredWithoutStoriesInput>;
+  title?: Maybe<String>;
+  type?: Maybe<StoryType>;
+  topics?: Maybe<TopicUpdateManyInput>;
+  preview?: Maybe<String>;
+  showcase?: Maybe<Boolean>;
+  save?: Maybe<Boolean>;
+}
+
+export interface UserUpdateOneRequiredWithoutExperienceInput {
+  create?: Maybe<UserCreateWithoutExperienceInput>;
+  update?: Maybe<UserUpdateWithoutExperienceDataInput>;
+  upsert?: Maybe<UserUpsertWithoutExperienceInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface EducationCreateManyWithoutOwnerInput {
+  create?: Maybe<
+    EducationCreateWithoutOwnerInput[] | EducationCreateWithoutOwnerInput
+  >;
+  connect?: Maybe<EducationWhereUniqueInput[] | EducationWhereUniqueInput>;
+}
+
+export interface GroupCreateInput {
+  id?: Maybe<ID_Input>;
+  users?: Maybe<UserCreateManyWithoutGroupsInput>;
+  messages?: Maybe<MessageCreateManyWithoutToInput>;
+  latestMessage?: Maybe<MessageCreateOneInput>;
+  hidden?: Maybe<UserCreateManyInput>;
+}
+
+export interface ExperienceUpdateManyMutationInput {
+  name?: Maybe<String>;
+  subText?: Maybe<String>;
+  startDateMonth?: Maybe<String>;
+  startDateYear?: Maybe<Int>;
+  endDateMonth?: Maybe<String>;
+  endDateYear?: Maybe<Int>;
+  location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  currentRole?: Maybe<Boolean>;
+}
+
+export interface UserUpsertWithoutExperienceInput {
+  update: UserUpdateWithoutExperienceDataInput;
+  create: UserCreateWithoutExperienceInput;
+}
+
+export interface UserUpdateWithoutExperienceDataInput {
+  name?: Maybe<String>;
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  profilePic?: Maybe<String>;
+  bannerPic?: Maybe<String>;
+  location?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  headline?: Maybe<String>;
+  website?: Maybe<String>;
+  bio?: Maybe<String>;
+  about?: Maybe<String>;
+  topicsMentor?: Maybe<TopicUpdateManyInput>;
+  topicsFreelance?: Maybe<TopicUpdateManyInput>;
+  topicsInvest?: Maybe<TopicUpdateManyInput>;
+  topicsAgency?: Maybe<TopicUpdateManyInput>;
+  topicsFocus?: Maybe<TopicUpdateManyInput>;
+  topicsInterest?: Maybe<TopicUpdateManyInput>;
+  skills?: Maybe<SkillUpdateManyWithoutOwnerInput>;
+  education?: Maybe<EducationUpdateManyWithoutOwnerInput>;
+  posts?: Maybe<PostUpdateManyWithoutOwnerInput>;
+  connections?: Maybe<UserUpdateManyWithoutConnectionsInput>;
+  following?: Maybe<UserUpdateManyWithoutFollowingInput>;
+  followers?: Maybe<UserUpdateManyWithoutFollowersInput>;
+  connectionsCount?: Maybe<Int>;
+  followingCount?: Maybe<Int>;
+  followersCount?: Maybe<Int>;
+  intro?: Maybe<StoryUpdateOneInput>;
+  myStory?: Maybe<StoryUpdateOneInput>;
+  stories?: Maybe<StoryUpdateManyWithoutOwnerInput>;
+  meetings?: Maybe<MeetingUpdateManyWithoutUsersInput>;
+  roles?: Maybe<UserUpdaterolesInput>;
+  groups?: Maybe<GroupUpdateManyWithoutUsersInput>;
+  notifications?: Maybe<NotificationUpdateManyWithoutTargetInput>;
+  unReadMessages?: Maybe<MessageUpdateManyInput>;
+  unReadMessagesCount?: Maybe<Int>;
+}
+
+export interface MessageCreateOneInput {
+  create?: Maybe<MessageCreateInput>;
+  connect?: Maybe<MessageWhereUniqueInput>;
+}
+
+export type StoryItemWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface ExperienceWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  owner?: Maybe<UserWhereInput>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  subText?: Maybe<String>;
+  subText_not?: Maybe<String>;
+  subText_in?: Maybe<String[] | String>;
+  subText_not_in?: Maybe<String[] | String>;
+  subText_lt?: Maybe<String>;
+  subText_lte?: Maybe<String>;
+  subText_gt?: Maybe<String>;
+  subText_gte?: Maybe<String>;
+  subText_contains?: Maybe<String>;
+  subText_not_contains?: Maybe<String>;
+  subText_starts_with?: Maybe<String>;
+  subText_not_starts_with?: Maybe<String>;
+  subText_ends_with?: Maybe<String>;
+  subText_not_ends_with?: Maybe<String>;
+  startDateMonth?: Maybe<String>;
+  startDateMonth_not?: Maybe<String>;
+  startDateMonth_in?: Maybe<String[] | String>;
+  startDateMonth_not_in?: Maybe<String[] | String>;
+  startDateMonth_lt?: Maybe<String>;
+  startDateMonth_lte?: Maybe<String>;
+  startDateMonth_gt?: Maybe<String>;
+  startDateMonth_gte?: Maybe<String>;
+  startDateMonth_contains?: Maybe<String>;
+  startDateMonth_not_contains?: Maybe<String>;
+  startDateMonth_starts_with?: Maybe<String>;
+  startDateMonth_not_starts_with?: Maybe<String>;
+  startDateMonth_ends_with?: Maybe<String>;
+  startDateMonth_not_ends_with?: Maybe<String>;
+  startDateYear?: Maybe<Int>;
+  startDateYear_not?: Maybe<Int>;
+  startDateYear_in?: Maybe<Int[] | Int>;
+  startDateYear_not_in?: Maybe<Int[] | Int>;
+  startDateYear_lt?: Maybe<Int>;
+  startDateYear_lte?: Maybe<Int>;
+  startDateYear_gt?: Maybe<Int>;
+  startDateYear_gte?: Maybe<Int>;
+  endDateMonth?: Maybe<String>;
+  endDateMonth_not?: Maybe<String>;
+  endDateMonth_in?: Maybe<String[] | String>;
+  endDateMonth_not_in?: Maybe<String[] | String>;
+  endDateMonth_lt?: Maybe<String>;
+  endDateMonth_lte?: Maybe<String>;
+  endDateMonth_gt?: Maybe<String>;
+  endDateMonth_gte?: Maybe<String>;
+  endDateMonth_contains?: Maybe<String>;
+  endDateMonth_not_contains?: Maybe<String>;
+  endDateMonth_starts_with?: Maybe<String>;
+  endDateMonth_not_starts_with?: Maybe<String>;
+  endDateMonth_ends_with?: Maybe<String>;
+  endDateMonth_not_ends_with?: Maybe<String>;
+  endDateYear?: Maybe<Int>;
+  endDateYear_not?: Maybe<Int>;
+  endDateYear_in?: Maybe<Int[] | Int>;
+  endDateYear_not_in?: Maybe<Int[] | Int>;
+  endDateYear_lt?: Maybe<Int>;
+  endDateYear_lte?: Maybe<Int>;
+  endDateYear_gt?: Maybe<Int>;
+  endDateYear_gte?: Maybe<Int>;
+  location?: Maybe<String>;
+  location_not?: Maybe<String>;
+  location_in?: Maybe<String[] | String>;
+  location_not_in?: Maybe<String[] | String>;
+  location_lt?: Maybe<String>;
+  location_lte?: Maybe<String>;
+  location_gt?: Maybe<String>;
+  location_gte?: Maybe<String>;
+  location_contains?: Maybe<String>;
+  location_not_contains?: Maybe<String>;
+  location_starts_with?: Maybe<String>;
+  location_not_starts_with?: Maybe<String>;
+  location_ends_with?: Maybe<String>;
+  location_not_ends_with?: Maybe<String>;
+  locationID?: Maybe<String>;
+  locationID_not?: Maybe<String>;
+  locationID_in?: Maybe<String[] | String>;
+  locationID_not_in?: Maybe<String[] | String>;
+  locationID_lt?: Maybe<String>;
+  locationID_lte?: Maybe<String>;
+  locationID_gt?: Maybe<String>;
+  locationID_gte?: Maybe<String>;
+  locationID_contains?: Maybe<String>;
+  locationID_not_contains?: Maybe<String>;
+  locationID_starts_with?: Maybe<String>;
+  locationID_not_starts_with?: Maybe<String>;
+  locationID_ends_with?: Maybe<String>;
+  locationID_not_ends_with?: Maybe<String>;
+  locationLat?: Maybe<Float>;
+  locationLat_not?: Maybe<Float>;
+  locationLat_in?: Maybe<Float[] | Float>;
+  locationLat_not_in?: Maybe<Float[] | Float>;
+  locationLat_lt?: Maybe<Float>;
+  locationLat_lte?: Maybe<Float>;
+  locationLat_gt?: Maybe<Float>;
+  locationLat_gte?: Maybe<Float>;
+  locationLon?: Maybe<Float>;
+  locationLon_not?: Maybe<Float>;
+  locationLon_in?: Maybe<Float[] | Float>;
+  locationLon_not_in?: Maybe<Float[] | Float>;
+  locationLon_lt?: Maybe<Float>;
+  locationLon_lte?: Maybe<Float>;
+  locationLon_gt?: Maybe<Float>;
+  locationLon_gte?: Maybe<Float>;
+  currentRole?: Maybe<Boolean>;
+  currentRole_not?: Maybe<Boolean>;
+  AND?: Maybe<ExperienceWhereInput[] | ExperienceWhereInput>;
+  OR?: Maybe<ExperienceWhereInput[] | ExperienceWhereInput>;
+  NOT?: Maybe<ExperienceWhereInput[] | ExperienceWhereInput>;
+}
+
+export interface CommentCreateOneWithoutCommentsInput {
+  create?: Maybe<CommentCreateWithoutCommentsInput>;
+  connect?: Maybe<CommentWhereUniqueInput>;
 }
 
 export interface NodeNode {
@@ -10559,7 +10581,7 @@ export interface StoryItem {
   url: String;
   preview: String;
   link?: String;
-  text: String[];
+  text?: String;
   duration?: Float;
   inProject?: Boolean;
   likes: String[];
@@ -10584,7 +10606,7 @@ export interface StoryItemPromise extends Promise<StoryItem>, Fragmentable {
   url: () => Promise<String>;
   preview: () => Promise<String>;
   link: () => Promise<String>;
-  text: () => Promise<String[]>;
+  text: () => Promise<String>;
   duration: () => Promise<Float>;
   inProject: () => Promise<Boolean>;
   likes: () => Promise<String[]>;
@@ -10620,7 +10642,7 @@ export interface StoryItemSubscription
   url: () => Promise<AsyncIterator<String>>;
   preview: () => Promise<AsyncIterator<String>>;
   link: () => Promise<AsyncIterator<String>>;
-  text: () => Promise<AsyncIterator<String[]>>;
+  text: () => Promise<AsyncIterator<String>>;
   duration: () => Promise<AsyncIterator<Float>>;
   inProject: () => Promise<AsyncIterator<Boolean>>;
   likes: () => Promise<AsyncIterator<String[]>>;
@@ -10656,7 +10678,7 @@ export interface StoryItemNullablePromise
   url: () => Promise<String>;
   preview: () => Promise<String>;
   link: () => Promise<String>;
-  text: () => Promise<String[]>;
+  text: () => Promise<String>;
   duration: () => Promise<Float>;
   inProject: () => Promise<Boolean>;
   likes: () => Promise<String[]>;
@@ -11665,7 +11687,7 @@ export interface StoryItemPreviousValues {
   url: String;
   preview: String;
   link?: String;
-  text: String[];
+  text?: String;
   duration?: Float;
   inProject?: Boolean;
   likes: String[];
@@ -11683,7 +11705,7 @@ export interface StoryItemPreviousValuesPromise
   url: () => Promise<String>;
   preview: () => Promise<String>;
   link: () => Promise<String>;
-  text: () => Promise<String[]>;
+  text: () => Promise<String>;
   duration: () => Promise<Float>;
   inProject: () => Promise<Boolean>;
   likes: () => Promise<String[]>;
@@ -11701,7 +11723,7 @@ export interface StoryItemPreviousValuesSubscription
   url: () => Promise<AsyncIterator<String>>;
   preview: () => Promise<AsyncIterator<String>>;
   link: () => Promise<AsyncIterator<String>>;
-  text: () => Promise<AsyncIterator<String[]>>;
+  text: () => Promise<AsyncIterator<String>>;
   duration: () => Promise<AsyncIterator<Float>>;
   inProject: () => Promise<AsyncIterator<Boolean>>;
   likes: () => Promise<AsyncIterator<String[]>>;

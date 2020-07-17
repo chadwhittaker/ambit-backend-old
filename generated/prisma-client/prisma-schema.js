@@ -4290,7 +4290,7 @@ type StoryItem {
   url: String!
   preview: String!
   link: String
-  text: [String!]!
+  text: String
   duration: Float
   inProject: Boolean
   likes: [String!]!
@@ -4313,7 +4313,7 @@ input StoryItemCreateInput {
   url: String!
   preview: String!
   link: String
-  text: StoryItemCreatetextInput
+  text: String
   duration: Float
   inProject: Boolean
   likes: StoryItemCreatelikesInput
@@ -4332,17 +4332,13 @@ input StoryItemCreateManyWithoutStoriesInput {
   connect: [StoryItemWhereUniqueInput!]
 }
 
-input StoryItemCreatetextInput {
-  set: [String!]
-}
-
 input StoryItemCreateWithoutStoriesInput {
   id: ID
   type: StoryItemType!
   url: String!
   preview: String!
   link: String
-  text: StoryItemCreatetextInput
+  text: String
   duration: Float
   inProject: Boolean
   likes: StoryItemCreatelikesInput
@@ -4370,6 +4366,8 @@ enum StoryItemOrderByInput {
   preview_DESC
   link_ASC
   link_DESC
+  text_ASC
+  text_DESC
   duration_ASC
   duration_DESC
   inProject_ASC
@@ -4389,7 +4387,7 @@ type StoryItemPreviousValues {
   url: String!
   preview: String!
   link: String
-  text: [String!]!
+  text: String
   duration: Float
   inProject: Boolean
   likes: [String!]!
@@ -4467,6 +4465,20 @@ input StoryItemScalarWhereInput {
   link_not_starts_with: String
   link_ends_with: String
   link_not_ends_with: String
+  text: String
+  text_not: String
+  text_in: [String!]
+  text_not_in: [String!]
+  text_lt: String
+  text_lte: String
+  text_gt: String
+  text_gte: String
+  text_contains: String
+  text_not_contains: String
+  text_starts_with: String
+  text_not_starts_with: String
+  text_ends_with: String
+  text_not_ends_with: String
   duration: Float
   duration_not: Float
   duration_in: [Float!]
@@ -4529,7 +4541,7 @@ input StoryItemUpdateInput {
   url: String
   preview: String
   link: String
-  text: StoryItemUpdatetextInput
+  text: String
   duration: Float
   inProject: Boolean
   likes: StoryItemUpdatelikesInput
@@ -4548,7 +4560,7 @@ input StoryItemUpdateManyDataInput {
   url: String
   preview: String
   link: String
-  text: StoryItemUpdatetextInput
+  text: String
   duration: Float
   inProject: Boolean
   likes: StoryItemUpdatelikesInput
@@ -4562,7 +4574,7 @@ input StoryItemUpdateManyMutationInput {
   url: String
   preview: String
   link: String
-  text: StoryItemUpdatetextInput
+  text: String
   duration: Float
   inProject: Boolean
   likes: StoryItemUpdatelikesInput
@@ -4588,16 +4600,12 @@ input StoryItemUpdateManyWithWhereNestedInput {
   data: StoryItemUpdateManyDataInput!
 }
 
-input StoryItemUpdatetextInput {
-  set: [String!]
-}
-
 input StoryItemUpdateWithoutStoriesDataInput {
   type: StoryItemType
   url: String
   preview: String
   link: String
-  text: StoryItemUpdatetextInput
+  text: String
   duration: Float
   inProject: Boolean
   likes: StoryItemUpdatelikesInput
@@ -4690,6 +4698,20 @@ input StoryItemWhereInput {
   link_not_starts_with: String
   link_ends_with: String
   link_not_ends_with: String
+  text: String
+  text_not: String
+  text_in: [String!]
+  text_not_in: [String!]
+  text_lt: String
+  text_lte: String
+  text_gt: String
+  text_gte: String
+  text_contains: String
+  text_not_contains: String
+  text_starts_with: String
+  text_not_starts_with: String
+  text_ends_with: String
+  text_not_ends_with: String
   duration: Float
   duration_not: Float
   duration_in: [Float!]
