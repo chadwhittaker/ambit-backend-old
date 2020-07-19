@@ -674,6 +674,9 @@ const Query = {
                 },
                 {
                   owner: { id_in: [...network, context.request.userId] }
+                },
+                {
+                  items_some: { id_gt: 'a' }
                 }
               ]
             },
@@ -682,6 +685,8 @@ const Query = {
         first: 50,
       }
     );
+
+    // console.log(stories)
 
     return stories
   },
@@ -711,6 +716,9 @@ const Query = {
                 {
                   topics_some: { topicID_starts_with: topicID }
                 },
+                {
+                  items_some: { id_gt: 'a' }
+                }
               ]
             }
           ]
