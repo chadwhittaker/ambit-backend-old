@@ -17,7 +17,9 @@ const StoryItem = {
   },
 
   async likes(parent, args, context) {
-    return context.prisma.storyItem({ id: parent.id }).likes()
+    const likes = context.prisma.storyItem({ id: parent.id }).likes();
+    // console.log(likes)
+    return likes
   },
 
   async likesCount(parent, args, context) {
@@ -27,7 +29,7 @@ const StoryItem = {
   },
 
   async likedByMe(parent, args, context) {
-    const likes = await context.prisma.storyItem({ id: parent.id }).likes({ where: { id: context.prisma.userId } }).$fragment(LikedFragment)
+    const likes = await context.prisma.storyItem({ id: parent.id }).likes({ where: { id: context.request.userId } }).$fragment(LikedFragment)
 
     return likes.length > 0;
   },
