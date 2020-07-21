@@ -1,3 +1,11 @@
+const gql = require('graphql-tag')
+
+const LikedFragment = gql`
+  fragment LikedFragment on User {
+    id
+  }
+`;
+
 const Comment = {
 
   // THIS ISNT WORKING
@@ -17,36 +25,20 @@ const Comment = {
     return context.prisma.comment({ id: parent.id }).parentComment()
   },
 
-  async likesCount(parent, args, context) {
-    const likes = await context.prisma.comment({ id: parent.id }).likes()
+  async likes(parent, args, context) {
+    return context.prisma.comment({ id: parent.id }).likes()
+  },
 
-    if (likes.length === 0) return null
+  async likesCount(parent, args, context) {
+    const likes = await context.prisma.comment({ id: parent.id }).likes().$fragment(LikedFragment)
 
     return likes.length
   },
 
   async likedByMe(parent, args, context) {
-    const likes = await context.prisma.comment({ id: parent.id }).likes()
+    const likes = await context.prisma.comment({ id: parent.id }).likes({ where: { id: context.prisma.userId } }).$fragment(LikedFragment)
 
-    let isLiked = false;
-
-    if (context.request) {
-      isLiked = likes.includes(context.request.userId)
-      return isLiked;
-    }
-
-    // if it is a subscription response
-    // had to do this bc was getting nofification errors bc context.request.userId is undefined on subscriptions
-    if (context.connection) {
-      if (context.connection.operationName) {
-        if (context.connection.operationName === 'NEW_NOTIFICATION_SUBSCRIPTION') {
-          isLiked = likes.includes(context.connection.variables.id);
-          return isLiked
-        }
-      }
-    }
-
-    return isLiked;
+    return likes.length > 0;
   },
 
   async comments(parent, args, context) {

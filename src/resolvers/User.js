@@ -44,13 +44,23 @@ const User = {
     return context.prisma.user({ id: parent.id }).myStory()
   },
 
-  async stories(parent, args, context) {
-    return context.prisma.user({ id: parent.id }).stories();
+  async latestProject(parent, args, context) {
+    const stories = await context.prisma.user({ id: parent.id }).stories({ where: { type: "PROJECT" }, first: 1, orderBy: "lastUpdated_DESC" });
+    
+    if (stories.length === 0) {
+      return null
+    }
+
+    return stories[0]
   },
 
-  // async projects(parent, args, context) {
-  //   return context.prisma.user({ id: parent.id }).projects({ where: { type: "PROJECT" }});
+  // async stories(parent, args, context) {
+  //   return context.prisma.user({ id: parent.id }).stories();
   // },
+
+  async stories(parent, args, context) {
+    return context.prisma.user({ id: parent.id }).stories({ where: { type: "PROJECT" }, orderBy: "lastUpdated_DESC"});
+  },
 
   async groups(parent, args, context) {
     return context.prisma.user({ id: parent.id }).groups({ orderBy: "updatedAt_DESC" })

@@ -89,7 +89,8 @@ type User {
   followersCount: Int @default(value: 0)
   intro: Story @relation(name: "MyIntro" onDelete: CASCADE)
   myStory: Story @relation(name: "MyStory" onDelete: CASCADE)
-  stories: [Story]! @relation(name: "StoriesByUser" onDelete: CASCADE)
+  latestProject: Story @relation(name: "MyLatestProject" onDelete: CASCADE)
+  stories: [Story] @relation(name: "StoriesByUser" onDelete: CASCADE)
   meetings: [Meeting]
   roles: [Role] @scalarList(strategy: RELATION)
   groups: [Group] @relation(name: "GroupsOfUser")
@@ -113,6 +114,8 @@ type Notification {
 
 type Story {
   id: ID! @id
+  createdAt: DateTime! @createdAt
+  lastUpdated: DateTime!
   owner: User! @relation(name: "StoriesByUser")
   title: String
   type: StoryType!
@@ -134,9 +137,9 @@ type StoryItem {
   text: String
   duration: Float
   inProject: Boolean @default(value: false)
-  likes: [String]! @scalarList(strategy: RELATION)
+  likes: [User!]! @relation(name: "StoryItemLikesRelation")
   likesCount: Int
-  likedByMe: Boolean @default(value: false)
+  likedByMe: Boolean
   views: [User!]! @relation(name: "StoryItemViewedByUser")
   plays: Int! @default(value: 0)
 }
@@ -200,7 +203,7 @@ type Post {
   pitch: String
   comments: [Comment]! @relation(name: "CommentToPostRelation" onDelete: CASCADE)
   updates: [Update]! @relation(name: "UpdateToPostRelation" onDelete: CASCADE)
-  likes: [String]! @scalarList(strategy: RELATION)
+  likes: [User!]! @relation(name: "PostLikesRelation")
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
@@ -216,7 +219,7 @@ type Update {
   parentPost: Post! @relation(name: "UpdateToPostRelation")
   content: String!
   image: String
-  likes: [String]! @scalarList(strategy: RELATION)
+  likes: [User!]! @relation(name: "UpdateLikesRelation")
   likesCount: Int
   likedByMe: Boolean
   comments: [Comment]! @relation(name: "CommentToUpdateRelation" onDelete: CASCADE)
@@ -229,13 +232,13 @@ type Update {
 type Comment {
   id: ID! @id
   createdAt: DateTime! @createdAt
-  owner: User!
+  owner: User! @relation(name: "CommentByUser")
   parentPost: Post @relation(name: "CommentToPostRelation")
   parentUpdate: Update @relation(name: "CommentToUpdateRelation")
   parentComment: Comment @relation(name: "CommentToCommentRelation")
   content: String
   image: String
-  likes: [String]! @scalarList(strategy: RELATION)
+  likes: [User!]! @relation(name: "CommentLikesRelation")
   likesCount: Int
   likedByMe: Boolean
   comments: [Comment]! @relation(name: "CommentToCommentRelation" onDelete: CASCADE)
@@ -250,7 +253,7 @@ type Meeting {
   users: [User!]!
   startTime: DateTime!
   endTime: DateTime!
-  place: String
+  place: String!
 }
 
 type List {

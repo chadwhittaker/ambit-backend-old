@@ -76,7 +76,7 @@ type Comment {
   parentComment: Comment
   content: String
   image: String
-  likes: [String!]!
+  likes(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   likesCount: Int
   likedByMe: Boolean
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
@@ -99,17 +99,13 @@ input CommentCreateInput {
   parentComment: CommentCreateOneWithoutCommentsInput
   content: String
   image: String
-  likes: CommentCreatelikesInput
+  likes: UserCreateManyInput
   likesCount: Int
   likedByMe: Boolean
   comments: CommentCreateManyWithoutParentCommentInput
   commentsCount: Int
   notifications: NotificationCreateManyWithoutCommentInput
   _deleted: Boolean
-}
-
-input CommentCreatelikesInput {
-  set: [String!]
 }
 
 input CommentCreateManyWithoutParentCommentInput {
@@ -145,7 +141,7 @@ input CommentCreateWithoutCommentsInput {
   parentComment: CommentCreateOneWithoutCommentsInput
   content: String
   image: String
-  likes: CommentCreatelikesInput
+  likes: UserCreateManyInput
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
@@ -161,7 +157,7 @@ input CommentCreateWithoutNotificationsInput {
   parentComment: CommentCreateOneWithoutCommentsInput
   content: String
   image: String
-  likes: CommentCreatelikesInput
+  likes: UserCreateManyInput
   likesCount: Int
   likedByMe: Boolean
   comments: CommentCreateManyWithoutParentCommentInput
@@ -176,7 +172,7 @@ input CommentCreateWithoutParentCommentInput {
   parentUpdate: UpdateCreateOneWithoutCommentsInput
   content: String
   image: String
-  likes: CommentCreatelikesInput
+  likes: UserCreateManyInput
   likesCount: Int
   likedByMe: Boolean
   comments: CommentCreateManyWithoutParentCommentInput
@@ -192,7 +188,7 @@ input CommentCreateWithoutParentPostInput {
   parentComment: CommentCreateOneWithoutCommentsInput
   content: String
   image: String
-  likes: CommentCreatelikesInput
+  likes: UserCreateManyInput
   likesCount: Int
   likedByMe: Boolean
   comments: CommentCreateManyWithoutParentCommentInput
@@ -208,7 +204,7 @@ input CommentCreateWithoutParentUpdateInput {
   parentComment: CommentCreateOneWithoutCommentsInput
   content: String
   image: String
-  likes: CommentCreatelikesInput
+  likes: UserCreateManyInput
   likesCount: Int
   likedByMe: Boolean
   comments: CommentCreateManyWithoutParentCommentInput
@@ -246,7 +242,6 @@ type CommentPreviousValues {
   createdAt: DateTime!
   content: String
   image: String
-  likes: [String!]!
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
@@ -354,7 +349,7 @@ input CommentUpdateInput {
   parentComment: CommentUpdateOneWithoutCommentsInput
   content: String
   image: String
-  likes: CommentUpdatelikesInput
+  likes: UserUpdateManyInput
   likesCount: Int
   likedByMe: Boolean
   comments: CommentUpdateManyWithoutParentCommentInput
@@ -363,14 +358,9 @@ input CommentUpdateInput {
   _deleted: Boolean
 }
 
-input CommentUpdatelikesInput {
-  set: [String!]
-}
-
 input CommentUpdateManyDataInput {
   content: String
   image: String
-  likes: CommentUpdatelikesInput
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
@@ -380,7 +370,6 @@ input CommentUpdateManyDataInput {
 input CommentUpdateManyMutationInput {
   content: String
   image: String
-  likes: CommentUpdatelikesInput
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
@@ -453,7 +442,7 @@ input CommentUpdateWithoutCommentsDataInput {
   parentComment: CommentUpdateOneWithoutCommentsInput
   content: String
   image: String
-  likes: CommentUpdatelikesInput
+  likes: UserUpdateManyInput
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
@@ -468,7 +457,7 @@ input CommentUpdateWithoutNotificationsDataInput {
   parentComment: CommentUpdateOneWithoutCommentsInput
   content: String
   image: String
-  likes: CommentUpdatelikesInput
+  likes: UserUpdateManyInput
   likesCount: Int
   likedByMe: Boolean
   comments: CommentUpdateManyWithoutParentCommentInput
@@ -482,7 +471,7 @@ input CommentUpdateWithoutParentCommentDataInput {
   parentUpdate: UpdateUpdateOneWithoutCommentsInput
   content: String
   image: String
-  likes: CommentUpdatelikesInput
+  likes: UserUpdateManyInput
   likesCount: Int
   likedByMe: Boolean
   comments: CommentUpdateManyWithoutParentCommentInput
@@ -497,7 +486,7 @@ input CommentUpdateWithoutParentPostDataInput {
   parentComment: CommentUpdateOneWithoutCommentsInput
   content: String
   image: String
-  likes: CommentUpdatelikesInput
+  likes: UserUpdateManyInput
   likesCount: Int
   likedByMe: Boolean
   comments: CommentUpdateManyWithoutParentCommentInput
@@ -512,7 +501,7 @@ input CommentUpdateWithoutParentUpdateDataInput {
   parentComment: CommentUpdateOneWithoutCommentsInput
   content: String
   image: String
-  likes: CommentUpdatelikesInput
+  likes: UserUpdateManyInput
   likesCount: Int
   likedByMe: Boolean
   comments: CommentUpdateManyWithoutParentCommentInput
@@ -619,6 +608,9 @@ input CommentWhereInput {
   image_not_starts_with: String
   image_ends_with: String
   image_not_ends_with: String
+  likes_every: UserWhereInput
+  likes_some: UserWhereInput
+  likes_none: UserWhereInput
   likesCount: Int
   likesCount_not: Int
   likesCount_in: [Int!]
@@ -2002,7 +1994,7 @@ type Meeting {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   startTime: DateTime!
   endTime: DateTime!
-  place: String
+  place: String!
 }
 
 type MeetingConnection {
@@ -2016,7 +2008,7 @@ input MeetingCreateInput {
   users: UserCreateManyWithoutMeetingsInput
   startTime: DateTime!
   endTime: DateTime!
-  place: String
+  place: String!
 }
 
 input MeetingCreateManyWithoutUsersInput {
@@ -2028,7 +2020,7 @@ input MeetingCreateWithoutUsersInput {
   id: ID
   startTime: DateTime!
   endTime: DateTime!
-  place: String
+  place: String!
 }
 
 type MeetingEdge {
@@ -2054,7 +2046,7 @@ type MeetingPreviousValues {
   createdAt: DateTime!
   startTime: DateTime!
   endTime: DateTime!
-  place: String
+  place: String!
 }
 
 input MeetingScalarWhereInput {
@@ -3053,7 +3045,7 @@ type Post {
   pitch: String
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   updates(where: UpdateWhereInput, orderBy: UpdateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Update!]
-  likes: [String!]!
+  likes(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
@@ -3092,7 +3084,7 @@ input PostCreateInput {
   pitch: String
   comments: CommentCreateManyWithoutParentPostInput
   updates: UpdateCreateManyWithoutParentPostInput
-  likes: PostCreatelikesInput
+  likes: UserCreateManyInput
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
@@ -3100,10 +3092,6 @@ input PostCreateInput {
   notifications: NotificationCreateManyWithoutPostInput
   views: UserCreateManyInput
   _deleted: Boolean
-}
-
-input PostCreatelikesInput {
-  set: [String!]
 }
 
 input PostCreateManyWithoutOwnerInput {
@@ -3144,7 +3132,7 @@ input PostCreateWithoutCommentsInput {
   video: String
   pitch: String
   updates: UpdateCreateManyWithoutParentPostInput
-  likes: PostCreatelikesInput
+  likes: UserCreateManyInput
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
@@ -3173,7 +3161,7 @@ input PostCreateWithoutNotificationsInput {
   pitch: String
   comments: CommentCreateManyWithoutParentPostInput
   updates: UpdateCreateManyWithoutParentPostInput
-  likes: PostCreatelikesInput
+  likes: UserCreateManyInput
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
@@ -3200,7 +3188,7 @@ input PostCreateWithoutOwnerInput {
   pitch: String
   comments: CommentCreateManyWithoutParentPostInput
   updates: UpdateCreateManyWithoutParentPostInput
-  likes: PostCreatelikesInput
+  likes: UserCreateManyInput
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
@@ -3228,7 +3216,7 @@ input PostCreateWithoutUpdatesInput {
   video: String
   pitch: String
   comments: CommentCreateManyWithoutParentPostInput
-  likes: PostCreatelikesInput
+  likes: UserCreateManyInput
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
@@ -3297,7 +3285,6 @@ type PostPreviousValues {
   images: [String!]!
   video: String
   pitch: String
-  likes: [String!]!
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
@@ -3525,7 +3512,7 @@ input PostUpdateInput {
   pitch: String
   comments: CommentUpdateManyWithoutParentPostInput
   updates: UpdateUpdateManyWithoutParentPostInput
-  likes: PostUpdatelikesInput
+  likes: UserUpdateManyInput
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
@@ -3533,10 +3520,6 @@ input PostUpdateInput {
   notifications: NotificationUpdateManyWithoutPostInput
   views: UserUpdateManyInput
   _deleted: Boolean
-}
-
-input PostUpdatelikesInput {
-  set: [String!]
 }
 
 input PostUpdateManyDataInput {
@@ -3552,7 +3535,6 @@ input PostUpdateManyDataInput {
   images: PostUpdateimagesInput
   video: String
   pitch: String
-  likes: PostUpdatelikesInput
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
@@ -3573,7 +3555,6 @@ input PostUpdateManyMutationInput {
   images: PostUpdateimagesInput
   video: String
   pitch: String
-  likes: PostUpdatelikesInput
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
@@ -3640,7 +3621,7 @@ input PostUpdateWithoutCommentsDataInput {
   video: String
   pitch: String
   updates: UpdateUpdateManyWithoutParentPostInput
-  likes: PostUpdatelikesInput
+  likes: UserUpdateManyInput
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
@@ -3668,7 +3649,7 @@ input PostUpdateWithoutNotificationsDataInput {
   pitch: String
   comments: CommentUpdateManyWithoutParentPostInput
   updates: UpdateUpdateManyWithoutParentPostInput
-  likes: PostUpdatelikesInput
+  likes: UserUpdateManyInput
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
@@ -3694,7 +3675,7 @@ input PostUpdateWithoutOwnerDataInput {
   pitch: String
   comments: CommentUpdateManyWithoutParentPostInput
   updates: UpdateUpdateManyWithoutParentPostInput
-  likes: PostUpdatelikesInput
+  likes: UserUpdateManyInput
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
@@ -3721,7 +3702,7 @@ input PostUpdateWithoutUpdatesDataInput {
   video: String
   pitch: String
   comments: CommentUpdateManyWithoutParentPostInput
-  likes: PostUpdatelikesInput
+  likes: UserUpdateManyInput
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
@@ -3915,6 +3896,9 @@ input PostWhereInput {
   updates_every: UpdateWhereInput
   updates_some: UpdateWhereInput
   updates_none: UpdateWhereInput
+  likes_every: UserWhereInput
+  likes_some: UserWhereInput
+  likes_none: UserWhereInput
   likesCount: Int
   likesCount_not: Int
   likesCount_in: [Int!]
@@ -4212,6 +4196,8 @@ input SkillWhereUniqueInput {
 
 type Story {
   id: ID!
+  createdAt: DateTime!
+  lastUpdated: DateTime!
   owner: User!
   title: String
   type: StoryType!
@@ -4230,6 +4216,7 @@ type StoryConnection {
 
 input StoryCreateInput {
   id: ID
+  lastUpdated: DateTime!
   owner: UserCreateOneWithoutStoriesInput!
   title: String
   type: StoryType!
@@ -4257,6 +4244,7 @@ input StoryCreateOneInput {
 
 input StoryCreateWithoutItemsInput {
   id: ID
+  lastUpdated: DateTime!
   owner: UserCreateOneWithoutStoriesInput!
   title: String
   type: StoryType!
@@ -4268,6 +4256,7 @@ input StoryCreateWithoutItemsInput {
 
 input StoryCreateWithoutOwnerInput {
   id: ID
+  lastUpdated: DateTime!
   title: String
   type: StoryType!
   topics: TopicCreateManyInput
@@ -4293,7 +4282,7 @@ type StoryItem {
   text: String
   duration: Float
   inProject: Boolean
-  likes: [String!]!
+  likes(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   likesCount: Int
   likedByMe: Boolean
   views(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
@@ -4316,15 +4305,11 @@ input StoryItemCreateInput {
   text: String
   duration: Float
   inProject: Boolean
-  likes: StoryItemCreatelikesInput
+  likes: UserCreateManyInput
   likesCount: Int
   likedByMe: Boolean
   views: UserCreateManyInput
   plays: Int
-}
-
-input StoryItemCreatelikesInput {
-  set: [String!]
 }
 
 input StoryItemCreateManyWithoutStoriesInput {
@@ -4341,7 +4326,7 @@ input StoryItemCreateWithoutStoriesInput {
   text: String
   duration: Float
   inProject: Boolean
-  likes: StoryItemCreatelikesInput
+  likes: UserCreateManyInput
   likesCount: Int
   likedByMe: Boolean
   views: UserCreateManyInput
@@ -4390,7 +4375,6 @@ type StoryItemPreviousValues {
   text: String
   duration: Float
   inProject: Boolean
-  likes: [String!]!
   likesCount: Int
   likedByMe: Boolean
   plays: Int!
@@ -4544,15 +4528,11 @@ input StoryItemUpdateInput {
   text: String
   duration: Float
   inProject: Boolean
-  likes: StoryItemUpdatelikesInput
+  likes: UserUpdateManyInput
   likesCount: Int
   likedByMe: Boolean
   views: UserUpdateManyInput
   plays: Int
-}
-
-input StoryItemUpdatelikesInput {
-  set: [String!]
 }
 
 input StoryItemUpdateManyDataInput {
@@ -4563,7 +4543,6 @@ input StoryItemUpdateManyDataInput {
   text: String
   duration: Float
   inProject: Boolean
-  likes: StoryItemUpdatelikesInput
   likesCount: Int
   likedByMe: Boolean
   plays: Int
@@ -4577,7 +4556,6 @@ input StoryItemUpdateManyMutationInput {
   text: String
   duration: Float
   inProject: Boolean
-  likes: StoryItemUpdatelikesInput
   likesCount: Int
   likedByMe: Boolean
   plays: Int
@@ -4608,7 +4586,7 @@ input StoryItemUpdateWithoutStoriesDataInput {
   text: String
   duration: Float
   inProject: Boolean
-  likes: StoryItemUpdatelikesInput
+  likes: UserUpdateManyInput
   likesCount: Int
   likedByMe: Boolean
   views: UserUpdateManyInput
@@ -4722,6 +4700,9 @@ input StoryItemWhereInput {
   duration_gte: Float
   inProject: Boolean
   inProject_not: Boolean
+  likes_every: UserWhereInput
+  likes_some: UserWhereInput
+  likes_none: UserWhereInput
   likesCount: Int
   likesCount_not: Int
   likesCount_in: [Int!]
@@ -4755,6 +4736,10 @@ input StoryItemWhereUniqueInput {
 enum StoryOrderByInput {
   id_ASC
   id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  lastUpdated_ASC
+  lastUpdated_DESC
   title_ASC
   title_DESC
   type_ASC
@@ -4769,6 +4754,8 @@ enum StoryOrderByInput {
 
 type StoryPreviousValues {
   id: ID!
+  createdAt: DateTime!
+  lastUpdated: DateTime!
   title: String
   type: StoryType!
   preview: String
@@ -4791,6 +4778,22 @@ input StoryScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  lastUpdated: DateTime
+  lastUpdated_not: DateTime
+  lastUpdated_in: [DateTime!]
+  lastUpdated_not_in: [DateTime!]
+  lastUpdated_lt: DateTime
+  lastUpdated_lte: DateTime
+  lastUpdated_gt: DateTime
+  lastUpdated_gte: DateTime
   title: String
   title_not: String
   title_in: [String!]
@@ -4858,6 +4861,7 @@ enum StoryType {
 }
 
 input StoryUpdateDataInput {
+  lastUpdated: DateTime
   owner: UserUpdateOneRequiredWithoutStoriesInput
   title: String
   type: StoryType
@@ -4869,6 +4873,7 @@ input StoryUpdateDataInput {
 }
 
 input StoryUpdateInput {
+  lastUpdated: DateTime
   owner: UserUpdateOneRequiredWithoutStoriesInput
   title: String
   type: StoryType
@@ -4880,6 +4885,7 @@ input StoryUpdateInput {
 }
 
 input StoryUpdateManyDataInput {
+  lastUpdated: DateTime
   title: String
   type: StoryType
   preview: String
@@ -4888,6 +4894,7 @@ input StoryUpdateManyDataInput {
 }
 
 input StoryUpdateManyMutationInput {
+  lastUpdated: DateTime
   title: String
   type: StoryType
   preview: String
@@ -4934,6 +4941,7 @@ input StoryUpdateOneInput {
 }
 
 input StoryUpdateWithoutItemsDataInput {
+  lastUpdated: DateTime
   owner: UserUpdateOneRequiredWithoutStoriesInput
   title: String
   type: StoryType
@@ -4944,6 +4952,7 @@ input StoryUpdateWithoutItemsDataInput {
 }
 
 input StoryUpdateWithoutOwnerDataInput {
+  lastUpdated: DateTime
   title: String
   type: StoryType
   topics: TopicUpdateManyInput
@@ -4995,6 +5004,22 @@ input StoryWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  lastUpdated: DateTime
+  lastUpdated_not: DateTime
+  lastUpdated_in: [DateTime!]
+  lastUpdated_not_in: [DateTime!]
+  lastUpdated_lt: DateTime
+  lastUpdated_lte: DateTime
+  lastUpdated_gt: DateTime
+  lastUpdated_gte: DateTime
   owner: UserWhereInput
   title: String
   title_not: String
@@ -5468,7 +5493,7 @@ type Update {
   parentPost: Post!
   content: String!
   image: String
-  likes: [String!]!
+  likes(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   likesCount: Int
   likedByMe: Boolean
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
@@ -5489,7 +5514,7 @@ input UpdateCreateInput {
   parentPost: PostCreateOneWithoutUpdatesInput!
   content: String!
   image: String
-  likes: UpdateCreatelikesInput
+  likes: UserCreateManyInput
   likesCount: Int
   likedByMe: Boolean
   comments: CommentCreateManyWithoutParentUpdateInput
@@ -5497,10 +5522,6 @@ input UpdateCreateInput {
   sharesCount: Int
   notifications: NotificationCreateManyWithoutUpdateInput
   _deleted: Boolean
-}
-
-input UpdateCreatelikesInput {
-  set: [String!]
 }
 
 input UpdateCreateManyWithoutParentPostInput {
@@ -5523,7 +5544,7 @@ input UpdateCreateWithoutCommentsInput {
   parentPost: PostCreateOneWithoutUpdatesInput!
   content: String!
   image: String
-  likes: UpdateCreatelikesInput
+  likes: UserCreateManyInput
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
@@ -5537,7 +5558,7 @@ input UpdateCreateWithoutNotificationsInput {
   parentPost: PostCreateOneWithoutUpdatesInput!
   content: String!
   image: String
-  likes: UpdateCreatelikesInput
+  likes: UserCreateManyInput
   likesCount: Int
   likedByMe: Boolean
   comments: CommentCreateManyWithoutParentUpdateInput
@@ -5550,7 +5571,7 @@ input UpdateCreateWithoutParentPostInput {
   id: ID
   content: String!
   image: String
-  likes: UpdateCreatelikesInput
+  likes: UserCreateManyInput
   likesCount: Int
   likedByMe: Boolean
   comments: CommentCreateManyWithoutParentUpdateInput
@@ -5591,7 +5612,6 @@ type UpdatePreviousValues {
   createdAt: DateTime!
   content: String!
   image: String
-  likes: [String!]!
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
@@ -5705,7 +5725,7 @@ input UpdateUpdateInput {
   parentPost: PostUpdateOneRequiredWithoutUpdatesInput
   content: String
   image: String
-  likes: UpdateUpdatelikesInput
+  likes: UserUpdateManyInput
   likesCount: Int
   likedByMe: Boolean
   comments: CommentUpdateManyWithoutParentUpdateInput
@@ -5715,14 +5735,9 @@ input UpdateUpdateInput {
   _deleted: Boolean
 }
 
-input UpdateUpdatelikesInput {
-  set: [String!]
-}
-
 input UpdateUpdateManyDataInput {
   content: String
   image: String
-  likes: UpdateUpdatelikesInput
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
@@ -5733,7 +5748,6 @@ input UpdateUpdateManyDataInput {
 input UpdateUpdateManyMutationInput {
   content: String
   image: String
-  likes: UpdateUpdatelikesInput
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
@@ -5780,7 +5794,7 @@ input UpdateUpdateWithoutCommentsDataInput {
   parentPost: PostUpdateOneRequiredWithoutUpdatesInput
   content: String
   image: String
-  likes: UpdateUpdatelikesInput
+  likes: UserUpdateManyInput
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
@@ -5793,7 +5807,7 @@ input UpdateUpdateWithoutNotificationsDataInput {
   parentPost: PostUpdateOneRequiredWithoutUpdatesInput
   content: String
   image: String
-  likes: UpdateUpdatelikesInput
+  likes: UserUpdateManyInput
   likesCount: Int
   likedByMe: Boolean
   comments: CommentUpdateManyWithoutParentUpdateInput
@@ -5805,7 +5819,7 @@ input UpdateUpdateWithoutNotificationsDataInput {
 input UpdateUpdateWithoutParentPostDataInput {
   content: String
   image: String
-  likes: UpdateUpdatelikesInput
+  likes: UserUpdateManyInput
   likesCount: Int
   likedByMe: Boolean
   comments: CommentUpdateManyWithoutParentUpdateInput
@@ -5888,6 +5902,9 @@ input UpdateWhereInput {
   image_not_starts_with: String
   image_ends_with: String
   image_not_ends_with: String
+  likes_every: UserWhereInput
+  likes_some: UserWhereInput
+  likes_none: UserWhereInput
   likesCount: Int
   likesCount_not: Int
   likesCount_in: [Int!]
@@ -5967,6 +5984,7 @@ type User {
   followersCount: Int
   intro: Story
   myStory: Story
+  latestProject: Story
   stories(where: StoryWhereInput, orderBy: StoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Story!]
   meetings(where: MeetingWhereInput, orderBy: MeetingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Meeting!]
   roles: [Role!]!
@@ -6017,6 +6035,7 @@ input UserCreateInput {
   followersCount: Int
   intro: StoryCreateOneInput
   myStory: StoryCreateOneInput
+  latestProject: StoryCreateOneInput
   stories: StoryCreateManyWithoutOwnerInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
@@ -6129,6 +6148,7 @@ input UserCreateWithoutConnectionsInput {
   followersCount: Int
   intro: StoryCreateOneInput
   myStory: StoryCreateOneInput
+  latestProject: StoryCreateOneInput
   stories: StoryCreateManyWithoutOwnerInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
@@ -6172,6 +6192,7 @@ input UserCreateWithoutEducationInput {
   followersCount: Int
   intro: StoryCreateOneInput
   myStory: StoryCreateOneInput
+  latestProject: StoryCreateOneInput
   stories: StoryCreateManyWithoutOwnerInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
@@ -6215,6 +6236,7 @@ input UserCreateWithoutExperienceInput {
   followersCount: Int
   intro: StoryCreateOneInput
   myStory: StoryCreateOneInput
+  latestProject: StoryCreateOneInput
   stories: StoryCreateManyWithoutOwnerInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
@@ -6258,6 +6280,7 @@ input UserCreateWithoutFollowersInput {
   followersCount: Int
   intro: StoryCreateOneInput
   myStory: StoryCreateOneInput
+  latestProject: StoryCreateOneInput
   stories: StoryCreateManyWithoutOwnerInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
@@ -6301,6 +6324,7 @@ input UserCreateWithoutFollowingInput {
   followersCount: Int
   intro: StoryCreateOneInput
   myStory: StoryCreateOneInput
+  latestProject: StoryCreateOneInput
   stories: StoryCreateManyWithoutOwnerInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
@@ -6345,6 +6369,7 @@ input UserCreateWithoutGroupsInput {
   followersCount: Int
   intro: StoryCreateOneInput
   myStory: StoryCreateOneInput
+  latestProject: StoryCreateOneInput
   stories: StoryCreateManyWithoutOwnerInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
@@ -6388,6 +6413,7 @@ input UserCreateWithoutMeetingsInput {
   followersCount: Int
   intro: StoryCreateOneInput
   myStory: StoryCreateOneInput
+  latestProject: StoryCreateOneInput
   stories: StoryCreateManyWithoutOwnerInput
   roles: UserCreaterolesInput
   groups: GroupCreateManyWithoutUsersInput
@@ -6431,6 +6457,7 @@ input UserCreateWithoutNotificationsInput {
   followersCount: Int
   intro: StoryCreateOneInput
   myStory: StoryCreateOneInput
+  latestProject: StoryCreateOneInput
   stories: StoryCreateManyWithoutOwnerInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
@@ -6473,6 +6500,7 @@ input UserCreateWithoutPostsInput {
   followersCount: Int
   intro: StoryCreateOneInput
   myStory: StoryCreateOneInput
+  latestProject: StoryCreateOneInput
   stories: StoryCreateManyWithoutOwnerInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
@@ -6516,6 +6544,7 @@ input UserCreateWithoutSkillsInput {
   followersCount: Int
   intro: StoryCreateOneInput
   myStory: StoryCreateOneInput
+  latestProject: StoryCreateOneInput
   stories: StoryCreateManyWithoutOwnerInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
@@ -6560,6 +6589,7 @@ input UserCreateWithoutStoriesInput {
   followersCount: Int
   intro: StoryCreateOneInput
   myStory: StoryCreateOneInput
+  latestProject: StoryCreateOneInput
   meetings: MeetingCreateManyWithoutUsersInput
   roles: UserCreaterolesInput
   groups: GroupCreateManyWithoutUsersInput
@@ -6953,6 +6983,7 @@ input UserUpdateDataInput {
   followersCount: Int
   intro: StoryUpdateOneInput
   myStory: StoryUpdateOneInput
+  latestProject: StoryUpdateOneInput
   stories: StoryUpdateManyWithoutOwnerInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
@@ -6996,6 +7027,7 @@ input UserUpdateInput {
   followersCount: Int
   intro: StoryUpdateOneInput
   myStory: StoryUpdateOneInput
+  latestProject: StoryUpdateOneInput
   stories: StoryUpdateManyWithoutOwnerInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
@@ -7223,6 +7255,7 @@ input UserUpdateWithoutConnectionsDataInput {
   followersCount: Int
   intro: StoryUpdateOneInput
   myStory: StoryUpdateOneInput
+  latestProject: StoryUpdateOneInput
   stories: StoryUpdateManyWithoutOwnerInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
@@ -7265,6 +7298,7 @@ input UserUpdateWithoutEducationDataInput {
   followersCount: Int
   intro: StoryUpdateOneInput
   myStory: StoryUpdateOneInput
+  latestProject: StoryUpdateOneInput
   stories: StoryUpdateManyWithoutOwnerInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
@@ -7307,6 +7341,7 @@ input UserUpdateWithoutExperienceDataInput {
   followersCount: Int
   intro: StoryUpdateOneInput
   myStory: StoryUpdateOneInput
+  latestProject: StoryUpdateOneInput
   stories: StoryUpdateManyWithoutOwnerInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
@@ -7349,6 +7384,7 @@ input UserUpdateWithoutFollowersDataInput {
   followersCount: Int
   intro: StoryUpdateOneInput
   myStory: StoryUpdateOneInput
+  latestProject: StoryUpdateOneInput
   stories: StoryUpdateManyWithoutOwnerInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
@@ -7391,6 +7427,7 @@ input UserUpdateWithoutFollowingDataInput {
   followersCount: Int
   intro: StoryUpdateOneInput
   myStory: StoryUpdateOneInput
+  latestProject: StoryUpdateOneInput
   stories: StoryUpdateManyWithoutOwnerInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
@@ -7434,6 +7471,7 @@ input UserUpdateWithoutGroupsDataInput {
   followersCount: Int
   intro: StoryUpdateOneInput
   myStory: StoryUpdateOneInput
+  latestProject: StoryUpdateOneInput
   stories: StoryUpdateManyWithoutOwnerInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
@@ -7476,6 +7514,7 @@ input UserUpdateWithoutMeetingsDataInput {
   followersCount: Int
   intro: StoryUpdateOneInput
   myStory: StoryUpdateOneInput
+  latestProject: StoryUpdateOneInput
   stories: StoryUpdateManyWithoutOwnerInput
   roles: UserUpdaterolesInput
   groups: GroupUpdateManyWithoutUsersInput
@@ -7518,6 +7557,7 @@ input UserUpdateWithoutNotificationsDataInput {
   followersCount: Int
   intro: StoryUpdateOneInput
   myStory: StoryUpdateOneInput
+  latestProject: StoryUpdateOneInput
   stories: StoryUpdateManyWithoutOwnerInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
@@ -7559,6 +7599,7 @@ input UserUpdateWithoutPostsDataInput {
   followersCount: Int
   intro: StoryUpdateOneInput
   myStory: StoryUpdateOneInput
+  latestProject: StoryUpdateOneInput
   stories: StoryUpdateManyWithoutOwnerInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
@@ -7601,6 +7642,7 @@ input UserUpdateWithoutSkillsDataInput {
   followersCount: Int
   intro: StoryUpdateOneInput
   myStory: StoryUpdateOneInput
+  latestProject: StoryUpdateOneInput
   stories: StoryUpdateManyWithoutOwnerInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
@@ -7644,6 +7686,7 @@ input UserUpdateWithoutStoriesDataInput {
   followersCount: Int
   intro: StoryUpdateOneInput
   myStory: StoryUpdateOneInput
+  latestProject: StoryUpdateOneInput
   meetings: MeetingUpdateManyWithoutUsersInput
   roles: UserUpdaterolesInput
   groups: GroupUpdateManyWithoutUsersInput
@@ -8039,6 +8082,7 @@ input UserWhereInput {
   followersCount_gte: Int
   intro: StoryWhereInput
   myStory: StoryWhereInput
+  latestProject: StoryWhereInput
   stories_every: StoryWhereInput
   stories_some: StoryWhereInput
   stories_none: StoryWhereInput

@@ -27,39 +27,51 @@ const Mutation = {
         name: `${firstName} ${lastName}`,
         email: emailLower,
         password: hashedPassword,
-        stories: {
-          create: [
-          {
-            title: "My Story",
-            type: "MYSTORY",
-          },
-          {
-            title: "My Intro",
-            type: "INTRO",
-          }]
-        }
       }
-    ).$fragment(LoggedInUser)
+    )
 
-    const introIndex = user.stories.findIndex(story => story.type === "INTRO");
-    const storyIndex = user.stories.findIndex(story => story.type === "MYSTORY");
+    // const introIndex = user.stories.findIndex(story => story.type === "INTRO");
+    // const storyIndex = user.stories.findIndex(story => story.type === "MYSTORY");
 
-    // connect mystory and intro to user
+    // create and connect mystory and intro to user
     const userFinal = await context.prisma.updateUser({
       where: { id: user.id },
       data: {
-        myStory: {
-          connect: {
-            id: user.stories[storyIndex].id,
+        intro: {
+          create: {
+            title: "My Intro",
+            type: "INTRO",
+            owner: {
+              connect: { id: user.id }
+            }
           }
         },
-        intro: {
-          connect: {
-            id: user.stories[introIndex].id,
+        myStory: {
+          create: {
+            title: "My Story",
+            type: "MYSTORY",
+            owner: {
+              connect: { id: user.id }
+            }
           }
-        }
+        },
       }
-    })
+    }).$fragment(LoggedInUser)
+
+    // this did not work because stories are a required field on user
+    // const storiesToDisconnect = userWithStories.stories.map(story => {
+    //   return { id: story.id }
+    // })
+
+    // // disconnect MYSTORY & INTRO from stories
+    // const userFinal = await context.prisma.updateUser({
+    //   where: { id: user.id },
+    //   data: {
+    //     stories: {
+    //       disconnect: storiesToDisconnect
+    //     }
+    //   }
+    // })
 
     // 4. create JWT token
     const token = sign({ userId: user.id }, process.env.APP_SECRET)
@@ -635,45 +647,55 @@ const Mutation = {
       throw new Error(`You must be logged in to do that`)
     }
 
-    // 2. query for the post
-    const postToEdit = await context.prisma.post({ id: postId })
-    if (!postToEdit) throw new Error(`No post found`)
-
-    const liked = postToEdit.likes.includes(context.request.userId)
-
-    // 3. update the post
     const post = await context.prisma.updatePost(
       {
         where: { id: postId },
         data: {
           likes: {
-            set: liked ? [...postToEdit.likes.filter(like => like !== context.request.userId)] : [...postToEdit.likes, context.request.userId]
+            connect: [{ id: context.request.userId }],
           },
         }
       }
     ).$fragment(BasicPost)
 
-    // dont create notificaton if it is an UNLIKE
-    if (!liked) {
-      if (!!post.goal) {
-        createNotification({
-          context,
-          style: 'LIKE_GOAL',
-          targetID: post.owner.id,
-          userID: context.request.userId,
-          postID: post.id
-        })
-      } else {
-        createNotification({
-          context,
-          style: 'LIKE_POST',
-          targetID: post.owner.id,
-          userID: context.request.userId,
-          postID: post.id
-        })
-      }
-
+    if (!!post.goal) {
+      createNotification({
+        context,
+        style: 'LIKE_GOAL',
+        targetID: post.owner.id,
+        userID: context.request.userId,
+        postID: post.id
+      })
+    } else {
+      createNotification({
+        context,
+        style: 'LIKE_POST',
+        targetID: post.owner.id,
+        userID: context.request.userId,
+        postID: post.id
+      })
     }
+
+    return post
+  },
+
+  async unlikePost(parent, { postId }, context) {
+
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      throw new Error(`You must be logged in to do that`)
+    }
+
+    const post = await context.prisma.updatePost(
+      {
+        where: { id: postId },
+        data: {
+          likes: {
+            disconnect: [{ id: context.request.userId }],
+          },
+        }
+      }
+    )
 
     return post
   },
@@ -773,34 +795,45 @@ const Mutation = {
       throw new Error(`You must be logged in to do that`)
     }
 
-    // 2. query for the post
-    const updateToEdit = await context.prisma.update({ id: updateId })
-    if (!updateToEdit) throw new Error(`No update found`)
-
-    const liked = updateToEdit.likes.includes(context.request.userId)
-
-    // 3. update the post
     const update = await context.prisma.updateUpdate(
       {
         where: { id: updateId },
         data: {
           likes: {
-            set: liked ? [...updateToEdit.likes.filter(like => like !== context.request.userId)] : [...updateToEdit.likes, context.request.userId]
+            connect: [{ id: context.request.userId }],
           },
         }
       }
     ).$fragment(UpdateFragment)
 
-    // dont create notificaton if it is an UNLIKE
-    if (!liked) {
-      createNotification({
-        context,
-        style: 'LIKE_UPDATE',
-        targetID: update.parentPost.owner.id,
-        userID: context.request.userId,
-        updateID: update.id,
-      })
+    createNotification({
+      context,
+      style: 'LIKE_UPDATE',
+      targetID: update.parentPost.owner.id,
+      userID: context.request.userId,
+      updateID: update.id,
+    })
+
+    return update
+  },
+
+  async unlikeUpdate(parent, { updateId }, context) {
+
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      throw new Error(`You must be logged in to do that`)
     }
+
+    const update = await context.prisma.updateUpdate(
+      {
+        where: { id: updateId },
+        data: {
+          likes: {
+            disconnect: [{ id: context.request.userId }],
+          },
+        }
+      }
+    )
 
     return update
   },
@@ -883,41 +916,54 @@ const Mutation = {
     return commentCreated;
   },
 
-  async likeComment(parent, { id }, context) {
+  async likeComment(parent, { commentId }, context) {
 
     // 1. check if user is logged in
     if (!context.request.userId) {
       throw new Error(`You must be logged in to do that`)
     }
 
-    // 2. query for the post
-    const commentToEdit = await context.prisma.comment({ id })
-    if (!commentToEdit) throw new Error(`No post found`)
-
-    const liked = commentToEdit.likes.includes(context.request.userId)
-
-    // 3. update the comment
+    // 2. update the comment
     const comment = await context.prisma.updateComment(
       {
-        where: { id },
+        where: { id: commentId },
         data: {
           likes: {
-            set: liked ? [...commentToEdit.likes.filter(like => like !== context.request.userId)] : [...commentToEdit.likes, context.request.userId]
+            connect: [{ id: context.request.userId }],
           },
         }
       }
     ).$fragment(CommentFragment)
 
-    // dont create notificaton if it is an UNLIKE
-    if (!liked) {
-      createNotification({
-        context,
-        style: 'LIKE_COMMENT',
-        targetID: comment.owner.id,
-        userID: context.request.userId,
-        commentID: comment.id,
-      })
+    createNotification({
+      context,
+      style: 'LIKE_COMMENT',
+      targetID: comment.owner.id,
+      userID: context.request.userId,
+      commentID: comment.id,
+    })
+
+    return comment
+  },
+
+  async unlikeComment(parent, { commentId }, context) {
+
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      throw new Error(`You must be logged in to do that`)
     }
+
+    // 2. update the comment
+    const comment = await context.prisma.updateComment(
+      {
+        where: { id: commentId },
+        data: {
+          likes: {
+            disconnect: [{ id: context.request.userId }],
+          },
+        }
+      }
+    )
 
     return comment
   },
@@ -1110,6 +1156,67 @@ const Mutation = {
     })
 
     return storyItemReturned
+  },
+
+  async likeStoryItem(parent, { storyItemId }, context) {
+
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      throw new Error(`You must be logged in to do that`)
+    }
+
+    const storyItem = await context.prisma.updateStoryItem(
+      {
+        where: { id: storyItemId },
+        data: {
+          likes: {
+            connect: [{ id: context.request.userId }],
+          },
+        }
+      }
+    )
+
+    // add later
+    // if (!!post.goal) {
+    //   createNotification({
+    //     context,
+    //     style: 'LIKE_GOAL',
+    //     targetID: post.owner.id,
+    //     userID: context.request.userId,
+    //     postID: post.id
+    //   })
+    // } else {
+    //   createNotification({
+    //     context,
+    //     style: 'LIKE_POST',
+    //     targetID: post.owner.id,
+    //     userID: context.request.userId,
+    //     postID: post.id
+    //   })
+    // }
+
+    return storyItem
+  },
+
+  async unlikeStoryItem(parent, { storyItemId }, context) {
+
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      throw new Error(`You must be logged in to do that`)
+    }
+
+    const storyItem = await context.prisma.updateStoryItem(
+      {
+        where: { id: storyItemId },
+        data: {
+          likes: {
+            disconnect: [{ id: context.request.userId }],
+          },
+        }
+      }
+    )
+
+    return storyItem
   },
 }
 

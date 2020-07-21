@@ -71,19 +71,21 @@ type Mutation {
   deletePost(ownerID: ID!, id: ID!): Post
   updatePost(owner: ID!, postID: ID!, post: PostUpdateInput!): Post
   likePost(postId: ID!): Post!
+  unlikePost(postId: ID!): Post!
   editGoalStatus(ownerID: ID!, id: ID!, goalStatus: String!): Post!
   viewedPost(postId: ID!): Post!
 
-
   #update
   createUpdate(postId: ID!, update: UpdateCreateWithoutParentPostInput!): Post
-  likeUpdate(updateId: ID!): Update!
   deleteUpdate(ownerID: ID!, id: ID!): Update
+  likeUpdate(updateId: ID!): Update!
+  unlikeUpdate(updateId: ID!): Update!
 
   # comment
   createComment(comment: CommentCreateInput!): Comment
-  likeComment(id: ID!): Comment!
   deleteComment(ownerID: ID!, id: ID!): Comment
+  likeComment(commentId: ID!): Comment!
+  unlikeComment(commentId: ID!): Comment!
 
   # intro
   updateIntro(
@@ -107,6 +109,8 @@ type Mutation {
   updateStory(id: ID!, story: StoryUpdateInput!): Story!
   deleteStory(id: ID!): Story
   viewedStoryItem(storyItemID: ID!): StoryItem!
+  likeStoryItem(storyItemId: ID!): StoryItem!
+  unlikeStoryItem(storyItemId: ID!): StoryItem!
 }
 
 type AuthPayload {
