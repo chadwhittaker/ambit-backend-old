@@ -2794,6 +2794,7 @@ enum NotificationStyle {
   MENTIONED_IN_POST
   MENTIONED_IN_UPDATE
   MENTIONED_IN_COMMENT
+  NEW_FOLLOWER
 }
 
 type NotificationSubscriptionPayload {

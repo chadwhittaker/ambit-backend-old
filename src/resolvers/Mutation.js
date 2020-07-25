@@ -103,52 +103,96 @@ const Mutation = {
     }
   },
 
-  async editFollowing(parent, { userID, newFollow }, context) {
+  async followUser(parent, { userID }, context) {
 
     // 1. check if user is logged in
     if (!context.request.userId) {
       throw new Error(`You must be logged in to do that`)
     }
 
-    // 2. decide if this is a follow or un-follow
-    const following = newFollow ? {
-      connect: [{ id: userID }]
-    } : {
-        disconnect: [{ id: userID }]
-      }
-
-    const followers = newFollow ? {
-      connect: [{ id: context.request.userId }]
-    } : {
-        disconnect: [{ id: context.request.userId }]
-      }
-
-    // 3. add user to following of the requester
-    const user = await context.prisma.updateUser(
-      {
-        where: { id: context.request.userId },
-        data: {
-          following,
+    try {
+      // add user to the person being followed
+      const userBeingFollwed = await context.prisma.updateUser(
+        {
+          where: { id: userID },
+          data: {
+            followers: {
+              connect: [{ id: context.request.userId }],
+            },
+          }
         }
-      },
-    ).$fragment(LoggedInUser)
+      )
+    } catch (e) {
+      console.log('couldnt follow')
+    }
 
-    // console.log(user.following.length)
-    const followingCount = user.following.length;
-    // console.log('following', followingCount);
-    // update the number of following (if i dont await for some reason this doesnt work)
-    await context.prisma.updateUser(
-      {
-        where: { id: context.request.userId },
-        data: {
-          followingCount,
+
+    try {
+      // add user to the person following
+      const user = await context.prisma.updateUser(
+        {
+          where: { id: context.request.userId },
+          data: {
+            following: {
+              connect: [{ id: userID }],
+            },
+          }
         }
-      },
-    );
+      )
 
-    updateFollowersAndVerify(followers, userID, context);
+      createNotification({
+        context,
+        style: 'NEW_FOLLOWER',
+        targetID: userID,
+        userID: context.request.userId,
+      })
 
-    return { ...user, followingCount: user.following.length };
+      return user
+    } catch (e) {
+      console.log('couldnt follow 2')
+    }
+  },
+
+  async unfollowUser(parent, { userID }, context) {
+
+    // 1. check if user is logged in
+    if (!context.request.userId) {
+      throw new Error(`You must be logged in to do that`)
+    }
+
+    // remove user to the person being unfollowed
+    try {
+      const userBeingUnfollwed = await context.prisma.updateUser(
+        {
+          where: { id: userID },
+          data: {
+            followers: {
+              disconnect: [{ id: context.request.userId }],
+            },
+          }
+        }
+      )
+    } catch (e) {
+      console.log('couldnt unfollow')
+    }
+
+    try {
+      // remove user from the person following
+      const user = await context.prisma.updateUser(
+        {
+          where: { id: context.request.userId },
+          data: {
+            following: {
+              disconnect: [{ id: userID }],
+            },
+          }
+        }
+      )
+
+      return user
+    } catch (e) {
+      console.log('couldnt unfollow 2')
+    }
   },
 
   // ================

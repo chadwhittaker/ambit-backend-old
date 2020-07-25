@@ -534,6 +534,20 @@ const createNotification = async ({ context, style, targetID, userID, userIDs, p
       }
       break;
 
+    case 'NEW_FOLLOWER':
+      try {
+        await context.prisma.createNotification(
+          {
+            style: 'NEW_FOLLOWER',
+            target: { connect: { id: targetID } },
+            user: { connect: { id: userID } },
+          }
+        )
+      } catch (e) {
+        console.error(e)
+      }
+      break;
+
     default:
       break;
   }

@@ -1,3 +1,11 @@
+const gql = require('graphql-tag')
+
+const IDfragment = gql`
+  fragment IDfragment on User {
+    id
+  }
+`;
+
 const User = {
 
   async topicsFocus(parent, args, context) {
@@ -76,6 +84,18 @@ const User = {
 
   async followers(parent, args, context) {
     return context.prisma.user({ id: parent.id }).followers()
+  },
+
+  async followingCount(parent, args, context) {
+    const following = await context.prisma.user({ id: parent.id }).following().$fragment(IDfragment)
+
+    return following.length
+  },
+
+  async followersCount(parent, args, context) {
+    const followers = await context.prisma.user({ id: parent.id }).followers().$fragment(IDfragment)
+
+    return followers.length
   },
 
   async unReadMessagesCount(parent, args, context) {

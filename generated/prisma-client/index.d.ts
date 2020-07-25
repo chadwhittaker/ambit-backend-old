@@ -686,7 +686,8 @@ export type NotificationStyle =
   | "MENTIONED_IN_GOAL"
   | "MENTIONED_IN_POST"
   | "MENTIONED_IN_UPDATE"
-  | "MENTIONED_IN_COMMENT";
+  | "MENTIONED_IN_COMMENT"
+  | "NEW_FOLLOWER";
 
 export type UserOrderByInput =
   | "id_ASC"
