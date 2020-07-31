@@ -122,9 +122,7 @@ type Story {
   type: StoryType!
   topics: [Topic] @relation(name: "ProjectTopicsToStory")
   items: [StoryItem!]! @relation(name: "StoryToStoryItemRelation")
-  preview: String
   showcase: Boolean @default(value: false)
-  save: Boolean @default(value: false)
 }
 
 type StoryItem {
@@ -140,8 +138,9 @@ type StoryItem {
   inProject: Boolean @default(value: false)
   likes: [User!]! @relation(name: "StoryItemLikesRelation")
   likesCount: Int
-  likedByMe: Boolean
+  likedByMe: Boolean @default(value: false)
   views: [User!]! @relation(name: "StoryItemViewedByUser")
+  viewedByMe: Boolean @default(value: false)
   plays: Int! @default(value: 0)
 }
 
@@ -201,7 +200,6 @@ type Post {
   content: String!
   images: [String]! @scalarList(strategy: RELATION)
   video: String
-  pitch: String
   comments: [Comment]! @relation(name: "CommentToPostRelation" onDelete: CASCADE)
   updates: [Update]! @relation(name: "UpdateToPostRelation" onDelete: CASCADE)
   likes: [User!]! @relation(name: "PostLikesRelation")

@@ -49,6 +49,27 @@ const StoryItem = {
     return false
   },
 
+  async viewedByMe(parent, args, context) {
+
+    if (context.request) {
+      const views = await context.prisma.storyItem({ id: parent.id }).views({ where: { id: context.request.userId } }).$fragment(LikedFragment)
+      return views.length > 0;
+    }
+
+    // if it is a subscription response
+    // had to do this bc was getting nofification errors bc context.request.userId is undefined on subscriptions
+    if (context.connection) {
+      if (context.connection.operationName) {
+        if (context.connection.operationName === 'NEW_NOTIFICATION_SUBSCRIPTION') {
+          const views = await context.prisma.storyItem({ id: parent.id }).views({ where: { id: context.connection.variables.id } }).$fragment(LikedFragment)
+          return views.length > 0;
+        }
+      }
+    }
+
+    return false
+  },
+
 }
 
 module.exports = {

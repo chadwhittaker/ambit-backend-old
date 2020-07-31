@@ -373,7 +373,6 @@ const BasicPost = gql`
     content
     images
     video
-    pitch
     likesCount
     likedByMe
     commentsCount
@@ -431,7 +430,6 @@ const DetailPost = gql`
     content
     images
     video
-    pitch
     likesCount
     likedByMe
     commentsCount
@@ -714,7 +712,6 @@ const StoryFragment = gql`
         type
       }
     }
-    save
   }
 `;
 

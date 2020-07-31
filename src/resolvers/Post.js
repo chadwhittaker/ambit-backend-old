@@ -61,10 +61,7 @@ const Post = {
 
   async commentsCount(parent, args, context) {
     const comments = await context.prisma.post({ id: parent.id }).comments()
-
-    if (comments.length === 0) return null
-
-    return comments.length
+    return comments.length;
   },
 
   async views(parent, args, context) {

@@ -1,13 +1,42 @@
 // import { PostOrderByInput } from "../generated/prisma-client/prisma-schema.js";
 // const { PostOrderByInput } = require('../generated/prisma-client/prisma-schema.js')
+const { compare } = require('bcryptjs')
+const { sign } = require('jsonwebtoken')
 const { rad2Deg, deg2Rad } = require('../utils')
 const { topicsList } = require('../topicsList')
 const { investList } = require('../investList')
 const { freelanceList } = require('../freelanceList')
 const { MyInfoForConnections, DetailPost, UserForYouPostsFragment, MyInfoForStories } = require('../_fragments.js')
 const { getUsersMatchingManyGoals, getUsersMatchingGoal, getUsersMatchingTopicsFocus, getActiveGoalsOfUser, getAllMessageConnections, getNetworkIDsFromUser, getTopicIDsFromUser } = require('./functions')
+const gql = require('graphql-tag')
+
+const IDfragment = gql`
+  fragment IDfragment on User {
+    id
+  }
+`;
 
 const Query = {
+
+  async login(parent, { email, password }, context) {
+    // 1. check if there is a user with that email
+    const emailLower = email.toLowerCase();
+    const user = await context.prisma.user({ email: emailLower });
+
+    if (!user) throw new Error(`No user found for email: ${emailLower}`)
+
+    // 2. check if the password is correct
+    const passwordValid = await compare(password, user.password)
+    if (!passwordValid) throw new Error(`Invalid password`)
+
+    // 3. generate JWT token
+    const token = sign({ userId: user.id }, process.env.APP_SECRET)
+
+    return {
+      token,
+      user,
+    }
+  },
 
   // USERS
   async myTopics(parent, args, context) {
@@ -20,6 +49,19 @@ const Query = {
     const user = await context.prisma.user({ id: context.request.userId });
 
     return user;
+  },
+
+  async iFollow(parent, args, context) {
+    // 1. check if there is a user on the request
+    if (!context.request.userId) {
+      // don't throw an error, just return nothing. It is ok to not be logged in.
+      return [];
+    }
+
+    const users = await context.prisma.user({ id: context.request.userId }).following().$fragment(IDfragment);
+
+    // return an array of ID's
+    return users.map(user => user.id);
   },
 
   async userLoggedIn(parent, args, context) {
@@ -140,12 +182,29 @@ const Query = {
       console.log("...FINISHED LOADING INITIAL TOPICS")
     }
 
+    return user;
+  },
+
+  async user(parent, { id }, context) {
+    const user = await context.prisma.user({ id });
 
     return user;
   },
 
-  async user(parent, args, context) {
-    const user = await context.prisma.user({ id: args.id });
+  async userMessages(parent, args, context) {
+    const user = await context.prisma.user({ id: context.request.userId });
+
+    return user;
+  },
+
+  async userFollowers(parent, { id }, context) {
+    const user = await context.prisma.user({ id }).followers()
+
+    return user;
+  },
+
+  async userFollowing(parent, { id }, context) {
+    const user = await context.prisma.user({ id }).following();
 
     return user;
   },
@@ -217,7 +276,7 @@ const Query = {
     return posts
   },
 
-  async postsForYou(parent, { after, first = 20, network }, context) {
+  async postsForYou(parent, { after, first = 20 }, context) {
 
     // get current user data
     const me = await context.prisma.user({ id: context.request.userId }).$fragment(UserForYouPostsFragment);
@@ -312,7 +371,7 @@ const Query = {
             // not from followers (that appears in NetworkPosts)
             {
               owner: {
-                id_not_in: [...network, context.request.userId],
+                id_not_in: [context.request.userId],
               }
             },
             {

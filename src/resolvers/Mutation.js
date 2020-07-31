@@ -3,10 +3,18 @@ const { sign } = require('jsonwebtoken')
 const { getUserId } = require('../utils')
 const { MessageFragment, BasicPost, UpdateFragment, CommentFragment, FollowersFragment, UserIDFragment, LoggedInUser } = require('../_fragments.js')
 const { createNotification, addMessageToUnread, updateFollowersAndVerify } = require('./functions')
+const gql = require('graphql-tag')
+
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
+
+const IDfragment = gql`
+  fragment IDfragment on User {
+    id
+  }
+`;
 
 const Mutation = {
 
@@ -83,26 +91,6 @@ const Mutation = {
     }
   },
 
-  async login(parent, { email, password }, context) {
-    // 1. check if there is a user with that email
-    const emailLower = email.toLowerCase();
-    const user = await context.prisma.user({ email: emailLower });
-
-    if (!user) throw new Error(`No user found for email: ${emailLower}`)
-
-    // 2. check if the password is correct
-    const passwordValid = await compare(password, user.password)
-    if (!passwordValid) throw new Error(`Invalid password`)
-
-    // 3. generate JWT token
-    const token = sign({ userId: user.id }, process.env.APP_SECRET)
-
-    return {
-      token,
-      user,
-    }
-  },
-
   async followUser(parent, { userID }, context) {
 
     // 1. check if user is logged in
@@ -146,11 +134,14 @@ const Mutation = {
         targetID: userID,
         userID: context.request.userId,
       })
-
-      return user
     } catch (e) {
       console.log('couldnt follow 2')
     }
+
+    const users = await context.prisma.user({ id: context.request.userId }).following().$fragment(IDfragment);
+
+    // return an array of ID's
+    return users.map(user => user.id);
   },
 
   async unfollowUser(parent, { userID }, context) {
@@ -189,10 +180,15 @@ const Mutation = {
         }
       )
 
-      return user
+      // return user
     } catch (e) {
       console.log('couldnt unfollow 2')
     }
+
+    const users = await context.prisma.user({ id: context.request.userId }).following().$fragment(IDfragment);
+
+    // return an array of ID's
+    return users.map(user => user.id);
   },
 
   // ================

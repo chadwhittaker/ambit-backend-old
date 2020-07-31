@@ -9,16 +9,23 @@ type Subscription {
 
 type Query {
   # users
+  login(email: String!, password: String!): AuthPayload
   userLoggedIn: User
+  unReadMessagesCount: User
+  userMessages: User
+  myTopics: User
+  userFollowers(id: ID!): [User!]!
+  userFollowing(id: ID!): [User!]!
+  iFollow: [ID!]!
+  allConnections: AllConnections
+
   user(id: ID!): User
   users: [User]!
-  allConnections: AllConnections
-  unReadMessagesCount: User
-  myTopics: User
+
 
   # posts
   postsNetwork(after: String, first: Int, network: [ID]): PostConnection!
-  postsForYou(after: String, first: Int, network: [ID]): PostConnection!
+  postsForYou(after: String, first: Int): PostConnection!
   postsMyGoals(after: String, first: Int): PostConnection!
   postsTopic(topicID: String!, after: String): PostConnection!
   postsSearch(text: String, goal: String, topicID: String, lat: Float, lon: Float, after: String): PostConnection!
@@ -44,10 +51,8 @@ type Query {
 type Mutation {
   # user
   signup(firstName: String!, lastName: String!, email: String!, password: String!): AuthPayload
-  login(email: String!, password: String!): AuthPayload
-  followUser(userID: ID!): User!
-  unfollowUser(userID: ID!): User!
-
+  followUser(userID: ID!): [ID]!
+  unfollowUser(userID: ID!): [ID]!
 
   # profile
   editBio(id: ID!, data: UserUpdateInput!): User!

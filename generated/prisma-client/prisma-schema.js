@@ -3043,7 +3043,6 @@ type Post {
   content: String!
   images: [String!]!
   video: String
-  pitch: String
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   updates(where: UpdateWhereInput, orderBy: UpdateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Update!]
   likes(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
@@ -3082,7 +3081,6 @@ input PostCreateInput {
   content: String!
   images: PostCreateimagesInput
   video: String
-  pitch: String
   comments: CommentCreateManyWithoutParentPostInput
   updates: UpdateCreateManyWithoutParentPostInput
   likes: UserCreateManyInput
@@ -3131,7 +3129,6 @@ input PostCreateWithoutCommentsInput {
   content: String!
   images: PostCreateimagesInput
   video: String
-  pitch: String
   updates: UpdateCreateManyWithoutParentPostInput
   likes: UserCreateManyInput
   likesCount: Int
@@ -3159,7 +3156,6 @@ input PostCreateWithoutNotificationsInput {
   content: String!
   images: PostCreateimagesInput
   video: String
-  pitch: String
   comments: CommentCreateManyWithoutParentPostInput
   updates: UpdateCreateManyWithoutParentPostInput
   likes: UserCreateManyInput
@@ -3186,7 +3182,6 @@ input PostCreateWithoutOwnerInput {
   content: String!
   images: PostCreateimagesInput
   video: String
-  pitch: String
   comments: CommentCreateManyWithoutParentPostInput
   updates: UpdateCreateManyWithoutParentPostInput
   likes: UserCreateManyInput
@@ -3215,7 +3210,6 @@ input PostCreateWithoutUpdatesInput {
   content: String!
   images: PostCreateimagesInput
   video: String
-  pitch: String
   comments: CommentCreateManyWithoutParentPostInput
   likes: UserCreateManyInput
   likesCount: Int
@@ -3257,8 +3251,6 @@ enum PostOrderByInput {
   content_DESC
   video_ASC
   video_DESC
-  pitch_ASC
-  pitch_DESC
   likesCount_ASC
   likesCount_DESC
   likedByMe_ASC
@@ -3285,7 +3277,6 @@ type PostPreviousValues {
   content: String!
   images: [String!]!
   video: String
-  pitch: String
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
@@ -3426,20 +3417,6 @@ input PostScalarWhereInput {
   video_not_starts_with: String
   video_ends_with: String
   video_not_ends_with: String
-  pitch: String
-  pitch_not: String
-  pitch_in: [String!]
-  pitch_not_in: [String!]
-  pitch_lt: String
-  pitch_lte: String
-  pitch_gt: String
-  pitch_gte: String
-  pitch_contains: String
-  pitch_not_contains: String
-  pitch_starts_with: String
-  pitch_not_starts_with: String
-  pitch_ends_with: String
-  pitch_not_ends_with: String
   likesCount: Int
   likesCount_not: Int
   likesCount_in: [Int!]
@@ -3510,7 +3487,6 @@ input PostUpdateInput {
   content: String
   images: PostUpdateimagesInput
   video: String
-  pitch: String
   comments: CommentUpdateManyWithoutParentPostInput
   updates: UpdateUpdateManyWithoutParentPostInput
   likes: UserUpdateManyInput
@@ -3535,7 +3511,6 @@ input PostUpdateManyDataInput {
   content: String
   images: PostUpdateimagesInput
   video: String
-  pitch: String
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
@@ -3555,7 +3530,6 @@ input PostUpdateManyMutationInput {
   content: String
   images: PostUpdateimagesInput
   video: String
-  pitch: String
   likesCount: Int
   likedByMe: Boolean
   commentsCount: Int
@@ -3620,7 +3594,6 @@ input PostUpdateWithoutCommentsDataInput {
   content: String
   images: PostUpdateimagesInput
   video: String
-  pitch: String
   updates: UpdateUpdateManyWithoutParentPostInput
   likes: UserUpdateManyInput
   likesCount: Int
@@ -3647,7 +3620,6 @@ input PostUpdateWithoutNotificationsDataInput {
   content: String
   images: PostUpdateimagesInput
   video: String
-  pitch: String
   comments: CommentUpdateManyWithoutParentPostInput
   updates: UpdateUpdateManyWithoutParentPostInput
   likes: UserUpdateManyInput
@@ -3673,7 +3645,6 @@ input PostUpdateWithoutOwnerDataInput {
   content: String
   images: PostUpdateimagesInput
   video: String
-  pitch: String
   comments: CommentUpdateManyWithoutParentPostInput
   updates: UpdateUpdateManyWithoutParentPostInput
   likes: UserUpdateManyInput
@@ -3701,7 +3672,6 @@ input PostUpdateWithoutUpdatesDataInput {
   content: String
   images: PostUpdateimagesInput
   video: String
-  pitch: String
   comments: CommentUpdateManyWithoutParentPostInput
   likes: UserUpdateManyInput
   likesCount: Int
@@ -3877,20 +3847,6 @@ input PostWhereInput {
   video_not_starts_with: String
   video_ends_with: String
   video_not_ends_with: String
-  pitch: String
-  pitch_not: String
-  pitch_in: [String!]
-  pitch_not_in: [String!]
-  pitch_lt: String
-  pitch_lte: String
-  pitch_gt: String
-  pitch_gte: String
-  pitch_contains: String
-  pitch_not_contains: String
-  pitch_starts_with: String
-  pitch_not_starts_with: String
-  pitch_ends_with: String
-  pitch_not_ends_with: String
   comments_every: CommentWhereInput
   comments_some: CommentWhereInput
   comments_none: CommentWhereInput
@@ -4204,9 +4160,7 @@ type Story {
   type: StoryType!
   topics(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic!]
   items(where: StoryItemWhereInput, orderBy: StoryItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StoryItem!]
-  preview: String
   showcase: Boolean
-  save: Boolean
 }
 
 type StoryConnection {
@@ -4223,9 +4177,7 @@ input StoryCreateInput {
   type: StoryType!
   topics: TopicCreateManyInput
   items: StoryItemCreateManyWithoutStoriesInput
-  preview: String
   showcase: Boolean
-  save: Boolean
 }
 
 input StoryCreateManyWithoutItemsInput {
@@ -4250,9 +4202,7 @@ input StoryCreateWithoutItemsInput {
   title: String
   type: StoryType!
   topics: TopicCreateManyInput
-  preview: String
   showcase: Boolean
-  save: Boolean
 }
 
 input StoryCreateWithoutOwnerInput {
@@ -4262,9 +4212,7 @@ input StoryCreateWithoutOwnerInput {
   type: StoryType!
   topics: TopicCreateManyInput
   items: StoryItemCreateManyWithoutStoriesInput
-  preview: String
   showcase: Boolean
-  save: Boolean
 }
 
 type StoryEdge {
@@ -4287,6 +4235,7 @@ type StoryItem {
   likesCount: Int
   likedByMe: Boolean
   views(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  viewedByMe: Boolean
   plays: Int!
 }
 
@@ -4310,6 +4259,7 @@ input StoryItemCreateInput {
   likesCount: Int
   likedByMe: Boolean
   views: UserCreateManyInput
+  viewedByMe: Boolean
   plays: Int
 }
 
@@ -4331,6 +4281,7 @@ input StoryItemCreateWithoutStoriesInput {
   likesCount: Int
   likedByMe: Boolean
   views: UserCreateManyInput
+  viewedByMe: Boolean
   plays: Int
 }
 
@@ -4362,6 +4313,8 @@ enum StoryItemOrderByInput {
   likesCount_DESC
   likedByMe_ASC
   likedByMe_DESC
+  viewedByMe_ASC
+  viewedByMe_DESC
   plays_ASC
   plays_DESC
 }
@@ -4378,6 +4331,7 @@ type StoryItemPreviousValues {
   inProject: Boolean
   likesCount: Int
   likedByMe: Boolean
+  viewedByMe: Boolean
   plays: Int!
 }
 
@@ -4484,6 +4438,8 @@ input StoryItemScalarWhereInput {
   likesCount_gte: Int
   likedByMe: Boolean
   likedByMe_not: Boolean
+  viewedByMe: Boolean
+  viewedByMe_not: Boolean
   plays: Int
   plays_not: Int
   plays_in: [Int!]
@@ -4533,6 +4489,7 @@ input StoryItemUpdateInput {
   likesCount: Int
   likedByMe: Boolean
   views: UserUpdateManyInput
+  viewedByMe: Boolean
   plays: Int
 }
 
@@ -4546,6 +4503,7 @@ input StoryItemUpdateManyDataInput {
   inProject: Boolean
   likesCount: Int
   likedByMe: Boolean
+  viewedByMe: Boolean
   plays: Int
 }
 
@@ -4559,6 +4517,7 @@ input StoryItemUpdateManyMutationInput {
   inProject: Boolean
   likesCount: Int
   likedByMe: Boolean
+  viewedByMe: Boolean
   plays: Int
 }
 
@@ -4591,6 +4550,7 @@ input StoryItemUpdateWithoutStoriesDataInput {
   likesCount: Int
   likedByMe: Boolean
   views: UserUpdateManyInput
+  viewedByMe: Boolean
   plays: Int
 }
 
@@ -4717,6 +4677,8 @@ input StoryItemWhereInput {
   views_every: UserWhereInput
   views_some: UserWhereInput
   views_none: UserWhereInput
+  viewedByMe: Boolean
+  viewedByMe_not: Boolean
   plays: Int
   plays_not: Int
   plays_in: [Int!]
@@ -4745,12 +4707,8 @@ enum StoryOrderByInput {
   title_DESC
   type_ASC
   type_DESC
-  preview_ASC
-  preview_DESC
   showcase_ASC
   showcase_DESC
-  save_ASC
-  save_DESC
 }
 
 type StoryPreviousValues {
@@ -4759,9 +4717,7 @@ type StoryPreviousValues {
   lastUpdated: DateTime!
   title: String
   type: StoryType!
-  preview: String
   showcase: Boolean
-  save: Boolean
 }
 
 input StoryScalarWhereInput {
@@ -4813,24 +4769,8 @@ input StoryScalarWhereInput {
   type_not: StoryType
   type_in: [StoryType!]
   type_not_in: [StoryType!]
-  preview: String
-  preview_not: String
-  preview_in: [String!]
-  preview_not_in: [String!]
-  preview_lt: String
-  preview_lte: String
-  preview_gt: String
-  preview_gte: String
-  preview_contains: String
-  preview_not_contains: String
-  preview_starts_with: String
-  preview_not_starts_with: String
-  preview_ends_with: String
-  preview_not_ends_with: String
   showcase: Boolean
   showcase_not: Boolean
-  save: Boolean
-  save_not: Boolean
   AND: [StoryScalarWhereInput!]
   OR: [StoryScalarWhereInput!]
   NOT: [StoryScalarWhereInput!]
@@ -4868,9 +4808,7 @@ input StoryUpdateDataInput {
   type: StoryType
   topics: TopicUpdateManyInput
   items: StoryItemUpdateManyWithoutStoriesInput
-  preview: String
   showcase: Boolean
-  save: Boolean
 }
 
 input StoryUpdateInput {
@@ -4880,27 +4818,21 @@ input StoryUpdateInput {
   type: StoryType
   topics: TopicUpdateManyInput
   items: StoryItemUpdateManyWithoutStoriesInput
-  preview: String
   showcase: Boolean
-  save: Boolean
 }
 
 input StoryUpdateManyDataInput {
   lastUpdated: DateTime
   title: String
   type: StoryType
-  preview: String
   showcase: Boolean
-  save: Boolean
 }
 
 input StoryUpdateManyMutationInput {
   lastUpdated: DateTime
   title: String
   type: StoryType
-  preview: String
   showcase: Boolean
-  save: Boolean
 }
 
 input StoryUpdateManyWithoutItemsInput {
@@ -4947,9 +4879,7 @@ input StoryUpdateWithoutItemsDataInput {
   title: String
   type: StoryType
   topics: TopicUpdateManyInput
-  preview: String
   showcase: Boolean
-  save: Boolean
 }
 
 input StoryUpdateWithoutOwnerDataInput {
@@ -4958,9 +4888,7 @@ input StoryUpdateWithoutOwnerDataInput {
   type: StoryType
   topics: TopicUpdateManyInput
   items: StoryItemUpdateManyWithoutStoriesInput
-  preview: String
   showcase: Boolean
-  save: Boolean
 }
 
 input StoryUpdateWithWhereUniqueWithoutItemsInput {
@@ -5046,24 +4974,8 @@ input StoryWhereInput {
   items_every: StoryItemWhereInput
   items_some: StoryItemWhereInput
   items_none: StoryItemWhereInput
-  preview: String
-  preview_not: String
-  preview_in: [String!]
-  preview_not_in: [String!]
-  preview_lt: String
-  preview_lte: String
-  preview_gt: String
-  preview_gte: String
-  preview_contains: String
-  preview_not_contains: String
-  preview_starts_with: String
-  preview_not_starts_with: String
-  preview_ends_with: String
-  preview_not_ends_with: String
   showcase: Boolean
   showcase_not: Boolean
-  save: Boolean
-  save_not: Boolean
   AND: [StoryWhereInput!]
   OR: [StoryWhereInput!]
   NOT: [StoryWhereInput!]

@@ -106,9 +106,6 @@ const cleanupStories = async prisma => {
               {
                 type: 'SOLO'
               },
-              {
-                save: false,
-              }
             ]
 
           }

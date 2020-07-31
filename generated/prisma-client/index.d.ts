@@ -822,8 +822,6 @@ export type PostOrderByInput =
   | "content_DESC"
   | "video_ASC"
   | "video_DESC"
-  | "pitch_ASC"
-  | "pitch_DESC"
   | "likesCount_ASC"
   | "likesCount_DESC"
   | "likedByMe_ASC"
@@ -858,6 +856,8 @@ export type StoryItemOrderByInput =
   | "likesCount_DESC"
   | "likedByMe_ASC"
   | "likedByMe_DESC"
+  | "viewedByMe_ASC"
+  | "viewedByMe_DESC"
   | "plays_ASC"
   | "plays_DESC";
 
@@ -956,12 +956,8 @@ export type StoryOrderByInput =
   | "title_DESC"
   | "type_ASC"
   | "type_DESC"
-  | "preview_ASC"
-  | "preview_DESC"
   | "showcase_ASC"
-  | "showcase_DESC"
-  | "save_ASC"
-  | "save_DESC";
+  | "showcase_DESC";
 
 export type Role = "ADMIN" | "PRO" | "USER" | "BUSINESS" | "SUSPENDED";
 
@@ -1019,9 +1015,7 @@ export interface StoryUpdateDataInput {
   type?: Maybe<StoryType>;
   topics?: Maybe<TopicUpdateManyInput>;
   items?: Maybe<StoryItemUpdateManyWithoutStoriesInput>;
-  preview?: Maybe<String>;
   showcase?: Maybe<Boolean>;
-  save?: Maybe<Boolean>;
 }
 
 export interface NotificationWhereInput {
@@ -1503,20 +1497,6 @@ export interface PostWhereInput {
   video_not_starts_with?: Maybe<String>;
   video_ends_with?: Maybe<String>;
   video_not_ends_with?: Maybe<String>;
-  pitch?: Maybe<String>;
-  pitch_not?: Maybe<String>;
-  pitch_in?: Maybe<String[] | String>;
-  pitch_not_in?: Maybe<String[] | String>;
-  pitch_lt?: Maybe<String>;
-  pitch_lte?: Maybe<String>;
-  pitch_gt?: Maybe<String>;
-  pitch_gte?: Maybe<String>;
-  pitch_contains?: Maybe<String>;
-  pitch_not_contains?: Maybe<String>;
-  pitch_starts_with?: Maybe<String>;
-  pitch_not_starts_with?: Maybe<String>;
-  pitch_ends_with?: Maybe<String>;
-  pitch_not_ends_with?: Maybe<String>;
   comments_every?: Maybe<CommentWhereInput>;
   comments_some?: Maybe<CommentWhereInput>;
   comments_none?: Maybe<CommentWhereInput>;
@@ -2430,6 +2410,7 @@ export interface StoryItemUpdateManyMutationInput {
   inProject?: Maybe<Boolean>;
   likesCount?: Maybe<Int>;
   likedByMe?: Maybe<Boolean>;
+  viewedByMe?: Maybe<Boolean>;
   plays?: Maybe<Int>;
 }
 
@@ -2500,7 +2481,6 @@ export interface PostUpdateWithoutOwnerDataInput {
   content?: Maybe<String>;
   images?: Maybe<PostUpdateimagesInput>;
   video?: Maybe<String>;
-  pitch?: Maybe<String>;
   comments?: Maybe<CommentUpdateManyWithoutParentPostInput>;
   updates?: Maybe<UpdateUpdateManyWithoutParentPostInput>;
   likes?: Maybe<UserUpdateManyInput>;
@@ -2520,9 +2500,7 @@ export interface StoryCreateWithoutItemsInput {
   title?: Maybe<String>;
   type: StoryType;
   topics?: Maybe<TopicCreateManyInput>;
-  preview?: Maybe<String>;
   showcase?: Maybe<Boolean>;
-  save?: Maybe<Boolean>;
 }
 
 export interface TopicUpdateOneInput {
@@ -2548,6 +2526,7 @@ export interface StoryItemCreateInput {
   likesCount?: Maybe<Int>;
   likedByMe?: Maybe<Boolean>;
   views?: Maybe<UserCreateManyInput>;
+  viewedByMe?: Maybe<Boolean>;
   plays?: Maybe<Int>;
 }
 
@@ -2560,9 +2539,7 @@ export interface StoryUpdateManyMutationInput {
   lastUpdated?: Maybe<DateTimeInput>;
   title?: Maybe<String>;
   type?: Maybe<StoryType>;
-  preview?: Maybe<String>;
   showcase?: Maybe<Boolean>;
-  save?: Maybe<Boolean>;
 }
 
 export interface PostUpdateimagesInput {
@@ -2691,7 +2668,6 @@ export interface PostUpdateInput {
   content?: Maybe<String>;
   images?: Maybe<PostUpdateimagesInput>;
   video?: Maybe<String>;
-  pitch?: Maybe<String>;
   comments?: Maybe<CommentUpdateManyWithoutParentPostInput>;
   updates?: Maybe<UpdateUpdateManyWithoutParentPostInput>;
   likes?: Maybe<UserUpdateManyInput>;
@@ -2719,7 +2695,6 @@ export interface PostUpdateWithoutUpdatesDataInput {
   content?: Maybe<String>;
   images?: Maybe<PostUpdateimagesInput>;
   video?: Maybe<String>;
-  pitch?: Maybe<String>;
   comments?: Maybe<CommentUpdateManyWithoutParentPostInput>;
   likes?: Maybe<UserUpdateManyInput>;
   likesCount?: Maybe<Int>;
@@ -2747,7 +2722,6 @@ export interface PostCreateInput {
   content: String;
   images?: Maybe<PostCreateimagesInput>;
   video?: Maybe<String>;
-  pitch?: Maybe<String>;
   comments?: Maybe<CommentCreateManyWithoutParentPostInput>;
   updates?: Maybe<UpdateCreateManyWithoutParentPostInput>;
   likes?: Maybe<UserCreateManyInput>;
@@ -3220,24 +3194,8 @@ export interface StoryWhereInput {
   items_every?: Maybe<StoryItemWhereInput>;
   items_some?: Maybe<StoryItemWhereInput>;
   items_none?: Maybe<StoryItemWhereInput>;
-  preview?: Maybe<String>;
-  preview_not?: Maybe<String>;
-  preview_in?: Maybe<String[] | String>;
-  preview_not_in?: Maybe<String[] | String>;
-  preview_lt?: Maybe<String>;
-  preview_lte?: Maybe<String>;
-  preview_gt?: Maybe<String>;
-  preview_gte?: Maybe<String>;
-  preview_contains?: Maybe<String>;
-  preview_not_contains?: Maybe<String>;
-  preview_starts_with?: Maybe<String>;
-  preview_not_starts_with?: Maybe<String>;
-  preview_ends_with?: Maybe<String>;
-  preview_not_ends_with?: Maybe<String>;
   showcase?: Maybe<Boolean>;
   showcase_not?: Maybe<Boolean>;
-  save?: Maybe<Boolean>;
-  save_not?: Maybe<Boolean>;
   AND?: Maybe<StoryWhereInput[] | StoryWhereInput>;
   OR?: Maybe<StoryWhereInput[] | StoryWhereInput>;
   NOT?: Maybe<StoryWhereInput[] | StoryWhereInput>;
@@ -3400,6 +3358,8 @@ export interface StoryItemWhereInput {
   views_every?: Maybe<UserWhereInput>;
   views_some?: Maybe<UserWhereInput>;
   views_none?: Maybe<UserWhereInput>;
+  viewedByMe?: Maybe<Boolean>;
+  viewedByMe_not?: Maybe<Boolean>;
   plays?: Maybe<Int>;
   plays_not?: Maybe<Int>;
   plays_in?: Maybe<Int[] | Int>;
@@ -3706,7 +3666,6 @@ export interface PostCreateWithoutOwnerInput {
   content: String;
   images?: Maybe<PostCreateimagesInput>;
   video?: Maybe<String>;
-  pitch?: Maybe<String>;
   comments?: Maybe<CommentCreateManyWithoutParentPostInput>;
   updates?: Maybe<UpdateCreateManyWithoutParentPostInput>;
   likes?: Maybe<UserCreateManyInput>;
@@ -3801,7 +3760,6 @@ export interface PostCreateWithoutUpdatesInput {
   content: String;
   images?: Maybe<PostCreateimagesInput>;
   video?: Maybe<String>;
-  pitch?: Maybe<String>;
   comments?: Maybe<CommentCreateManyWithoutParentPostInput>;
   likes?: Maybe<UserCreateManyInput>;
   likesCount?: Maybe<Int>;
@@ -4055,9 +4013,7 @@ export interface StoryCreateInput {
   type: StoryType;
   topics?: Maybe<TopicCreateManyInput>;
   items?: Maybe<StoryItemCreateManyWithoutStoriesInput>;
-  preview?: Maybe<String>;
   showcase?: Maybe<Boolean>;
-  save?: Maybe<Boolean>;
 }
 
 export interface UserUpdateWithWhereUniqueNestedInput {
@@ -4546,9 +4502,7 @@ export interface StoryCreateWithoutOwnerInput {
   type: StoryType;
   topics?: Maybe<TopicCreateManyInput>;
   items?: Maybe<StoryItemCreateManyWithoutStoriesInput>;
-  preview?: Maybe<String>;
   showcase?: Maybe<Boolean>;
-  save?: Maybe<Boolean>;
 }
 
 export interface MessageUpdateOneInput {
@@ -4573,6 +4527,7 @@ export interface StoryItemCreateWithoutStoriesInput {
   likesCount?: Maybe<Int>;
   likedByMe?: Maybe<Boolean>;
   views?: Maybe<UserCreateManyInput>;
+  viewedByMe?: Maybe<Boolean>;
   plays?: Maybe<Int>;
 }
 
@@ -4617,7 +4572,6 @@ export interface PostCreateWithoutNotificationsInput {
   content: String;
   images?: Maybe<PostCreateimagesInput>;
   video?: Maybe<String>;
-  pitch?: Maybe<String>;
   comments?: Maybe<CommentCreateManyWithoutParentPostInput>;
   updates?: Maybe<UpdateCreateManyWithoutParentPostInput>;
   likes?: Maybe<UserCreateManyInput>;
@@ -4706,7 +4660,6 @@ export interface PostCreateWithoutCommentsInput {
   content: String;
   images?: Maybe<PostCreateimagesInput>;
   video?: Maybe<String>;
-  pitch?: Maybe<String>;
   updates?: Maybe<UpdateCreateManyWithoutParentPostInput>;
   likes?: Maybe<UserCreateManyInput>;
   likesCount?: Maybe<Int>;
@@ -4852,9 +4805,7 @@ export interface StoryUpdateWithoutOwnerDataInput {
   type?: Maybe<StoryType>;
   topics?: Maybe<TopicUpdateManyInput>;
   items?: Maybe<StoryItemUpdateManyWithoutStoriesInput>;
-  preview?: Maybe<String>;
   showcase?: Maybe<Boolean>;
-  save?: Maybe<Boolean>;
 }
 
 export interface CommentCreateOneWithoutNotificationsInput {
@@ -4917,6 +4868,7 @@ export interface StoryItemUpdateWithoutStoriesDataInput {
   likesCount?: Maybe<Int>;
   likedByMe?: Maybe<Boolean>;
   views?: Maybe<UserUpdateManyInput>;
+  viewedByMe?: Maybe<Boolean>;
   plays?: Maybe<Int>;
 }
 
@@ -5047,6 +4999,8 @@ export interface StoryItemScalarWhereInput {
   likesCount_gte?: Maybe<Int>;
   likedByMe?: Maybe<Boolean>;
   likedByMe_not?: Maybe<Boolean>;
+  viewedByMe?: Maybe<Boolean>;
+  viewedByMe_not?: Maybe<Boolean>;
   plays?: Maybe<Int>;
   plays_not?: Maybe<Int>;
   plays_in?: Maybe<Int[] | Int>;
@@ -5135,6 +5089,7 @@ export interface StoryItemUpdateManyDataInput {
   inProject?: Maybe<Boolean>;
   likesCount?: Maybe<Int>;
   likedByMe?: Maybe<Boolean>;
+  viewedByMe?: Maybe<Boolean>;
   plays?: Maybe<Int>;
 }
 
@@ -5207,24 +5162,8 @@ export interface StoryScalarWhereInput {
   type_not?: Maybe<StoryType>;
   type_in?: Maybe<StoryType[] | StoryType>;
   type_not_in?: Maybe<StoryType[] | StoryType>;
-  preview?: Maybe<String>;
-  preview_not?: Maybe<String>;
-  preview_in?: Maybe<String[] | String>;
-  preview_not_in?: Maybe<String[] | String>;
-  preview_lt?: Maybe<String>;
-  preview_lte?: Maybe<String>;
-  preview_gt?: Maybe<String>;
-  preview_gte?: Maybe<String>;
-  preview_contains?: Maybe<String>;
-  preview_not_contains?: Maybe<String>;
-  preview_starts_with?: Maybe<String>;
-  preview_not_starts_with?: Maybe<String>;
-  preview_ends_with?: Maybe<String>;
-  preview_not_ends_with?: Maybe<String>;
   showcase?: Maybe<Boolean>;
   showcase_not?: Maybe<Boolean>;
-  save?: Maybe<Boolean>;
-  save_not?: Maybe<Boolean>;
   AND?: Maybe<StoryScalarWhereInput[] | StoryScalarWhereInput>;
   OR?: Maybe<StoryScalarWhereInput[] | StoryScalarWhereInput>;
   NOT?: Maybe<StoryScalarWhereInput[] | StoryScalarWhereInput>;
@@ -5252,9 +5191,7 @@ export interface StoryUpdateManyDataInput {
   lastUpdated?: Maybe<DateTimeInput>;
   title?: Maybe<String>;
   type?: Maybe<StoryType>;
-  preview?: Maybe<String>;
   showcase?: Maybe<Boolean>;
-  save?: Maybe<Boolean>;
 }
 
 export interface TopicUpdateManyWithoutParentTopicInput {
@@ -5772,7 +5709,6 @@ export interface PostUpdateWithoutNotificationsDataInput {
   content?: Maybe<String>;
   images?: Maybe<PostUpdateimagesInput>;
   video?: Maybe<String>;
-  pitch?: Maybe<String>;
   comments?: Maybe<CommentUpdateManyWithoutParentPostInput>;
   updates?: Maybe<UpdateUpdateManyWithoutParentPostInput>;
   likes?: Maybe<UserUpdateManyInput>;
@@ -5997,7 +5933,6 @@ export interface PostUpdateWithoutCommentsDataInput {
   content?: Maybe<String>;
   images?: Maybe<PostUpdateimagesInput>;
   video?: Maybe<String>;
-  pitch?: Maybe<String>;
   updates?: Maybe<UpdateUpdateManyWithoutParentPostInput>;
   likes?: Maybe<UserUpdateManyInput>;
   likesCount?: Maybe<Int>;
@@ -6050,9 +5985,7 @@ export interface StoryUpdateInput {
   type?: Maybe<StoryType>;
   topics?: Maybe<TopicUpdateManyInput>;
   items?: Maybe<StoryItemUpdateManyWithoutStoriesInput>;
-  preview?: Maybe<String>;
   showcase?: Maybe<Boolean>;
-  save?: Maybe<Boolean>;
 }
 
 export interface NotificationUpdateWithWhereUniqueWithoutPostInput {
@@ -6176,7 +6109,6 @@ export interface PostUpdateManyMutationInput {
   content?: Maybe<String>;
   images?: Maybe<PostUpdateimagesInput>;
   video?: Maybe<String>;
-  pitch?: Maybe<String>;
   likesCount?: Maybe<Int>;
   likedByMe?: Maybe<Boolean>;
   commentsCount?: Maybe<Int>;
@@ -7108,6 +7040,7 @@ export interface StoryItemUpdateInput {
   likesCount?: Maybe<Int>;
   likedByMe?: Maybe<Boolean>;
   views?: Maybe<UserUpdateManyInput>;
+  viewedByMe?: Maybe<Boolean>;
   plays?: Maybe<Int>;
 }
 
@@ -7481,20 +7414,6 @@ export interface PostScalarWhereInput {
   video_not_starts_with?: Maybe<String>;
   video_ends_with?: Maybe<String>;
   video_not_ends_with?: Maybe<String>;
-  pitch?: Maybe<String>;
-  pitch_not?: Maybe<String>;
-  pitch_in?: Maybe<String[] | String>;
-  pitch_not_in?: Maybe<String[] | String>;
-  pitch_lt?: Maybe<String>;
-  pitch_lte?: Maybe<String>;
-  pitch_gt?: Maybe<String>;
-  pitch_gte?: Maybe<String>;
-  pitch_contains?: Maybe<String>;
-  pitch_not_contains?: Maybe<String>;
-  pitch_starts_with?: Maybe<String>;
-  pitch_not_starts_with?: Maybe<String>;
-  pitch_ends_with?: Maybe<String>;
-  pitch_not_ends_with?: Maybe<String>;
   likesCount?: Maybe<Int>;
   likesCount_not?: Maybe<Int>;
   likesCount_in?: Maybe<Int[] | Int>;
@@ -7695,7 +7614,6 @@ export interface PostUpdateManyDataInput {
   content?: Maybe<String>;
   images?: Maybe<PostUpdateimagesInput>;
   video?: Maybe<String>;
-  pitch?: Maybe<String>;
   likesCount?: Maybe<Int>;
   likedByMe?: Maybe<Boolean>;
   commentsCount?: Maybe<Int>;
@@ -7709,9 +7627,7 @@ export interface StoryUpdateWithoutItemsDataInput {
   title?: Maybe<String>;
   type?: Maybe<StoryType>;
   topics?: Maybe<TopicUpdateManyInput>;
-  preview?: Maybe<String>;
   showcase?: Maybe<Boolean>;
-  save?: Maybe<Boolean>;
 }
 
 export interface CommentUpdateManyMutationInput {
@@ -10064,7 +9980,6 @@ export interface Post {
   content: String;
   images: String[];
   video?: String;
-  pitch?: String;
   likesCount?: Int;
   likedByMe?: Boolean;
   commentsCount?: Int;
@@ -10097,7 +10012,6 @@ export interface PostPromise extends Promise<Post>, Fragmentable {
   content: () => Promise<String>;
   images: () => Promise<String[]>;
   video: () => Promise<String>;
-  pitch: () => Promise<String>;
   comments: <T = FragmentableArray<Comment>>(args?: {
     where?: CommentWhereInput;
     orderBy?: CommentOrderByInput;
@@ -10177,7 +10091,6 @@ export interface PostSubscription
   content: () => Promise<AsyncIterator<String>>;
   images: () => Promise<AsyncIterator<String[]>>;
   video: () => Promise<AsyncIterator<String>>;
-  pitch: () => Promise<AsyncIterator<String>>;
   comments: <T = Promise<AsyncIterator<CommentSubscription>>>(args?: {
     where?: CommentWhereInput;
     orderBy?: CommentOrderByInput;
@@ -10257,7 +10170,6 @@ export interface PostNullablePromise
   content: () => Promise<String>;
   images: () => Promise<String[]>;
   video: () => Promise<String>;
-  pitch: () => Promise<String>;
   comments: <T = FragmentableArray<Comment>>(args?: {
     where?: CommentWhereInput;
     orderBy?: CommentOrderByInput;
@@ -10673,6 +10585,7 @@ export interface StoryItem {
   inProject?: Boolean;
   likesCount?: Int;
   likedByMe?: Boolean;
+  viewedByMe?: Boolean;
   plays: Int;
 }
 
@@ -10715,6 +10628,7 @@ export interface StoryItemPromise extends Promise<StoryItem>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  viewedByMe: () => Promise<Boolean>;
   plays: () => Promise<Int>;
 }
 
@@ -10759,6 +10673,7 @@ export interface StoryItemSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  viewedByMe: () => Promise<AsyncIterator<Boolean>>;
   plays: () => Promise<AsyncIterator<Int>>;
 }
 
@@ -10803,6 +10718,7 @@ export interface StoryItemNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
+  viewedByMe: () => Promise<Boolean>;
   plays: () => Promise<Int>;
 }
 
@@ -11124,7 +11040,6 @@ export interface PostPreviousValues {
   content: String;
   images: String[];
   video?: String;
-  pitch?: String;
   likesCount?: Int;
   likedByMe?: Boolean;
   commentsCount?: Int;
@@ -11148,7 +11063,6 @@ export interface PostPreviousValuesPromise
   content: () => Promise<String>;
   images: () => Promise<String[]>;
   video: () => Promise<String>;
-  pitch: () => Promise<String>;
   likesCount: () => Promise<Int>;
   likedByMe: () => Promise<Boolean>;
   commentsCount: () => Promise<Int>;
@@ -11172,7 +11086,6 @@ export interface PostPreviousValuesSubscription
   content: () => Promise<AsyncIterator<String>>;
   images: () => Promise<AsyncIterator<String[]>>;
   video: () => Promise<AsyncIterator<String>>;
-  pitch: () => Promise<AsyncIterator<String>>;
   likesCount: () => Promise<AsyncIterator<Int>>;
   likedByMe: () => Promise<AsyncIterator<Boolean>>;
   commentsCount: () => Promise<AsyncIterator<Int>>;
@@ -11202,9 +11115,7 @@ export interface Story {
   lastUpdated: DateTimeOutput;
   title?: String;
   type: StoryType;
-  preview?: String;
   showcase?: Boolean;
-  save?: Boolean;
 }
 
 export interface StoryPromise extends Promise<Story>, Fragmentable {
@@ -11232,9 +11143,7 @@ export interface StoryPromise extends Promise<Story>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
-  preview: () => Promise<String>;
   showcase: () => Promise<Boolean>;
-  save: () => Promise<Boolean>;
 }
 
 export interface StorySubscription
@@ -11264,9 +11173,7 @@ export interface StorySubscription
     first?: Int;
     last?: Int;
   }) => T;
-  preview: () => Promise<AsyncIterator<String>>;
   showcase: () => Promise<AsyncIterator<Boolean>>;
-  save: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface StoryNullablePromise
@@ -11296,9 +11203,7 @@ export interface StoryNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
-  preview: () => Promise<String>;
   showcase: () => Promise<Boolean>;
-  save: () => Promise<Boolean>;
 }
 
 export interface ExperienceEdge {
@@ -11544,9 +11449,7 @@ export interface StoryPreviousValues {
   lastUpdated: DateTimeOutput;
   title?: String;
   type: StoryType;
-  preview?: String;
   showcase?: Boolean;
-  save?: Boolean;
 }
 
 export interface StoryPreviousValuesPromise
@@ -11557,9 +11460,7 @@ export interface StoryPreviousValuesPromise
   lastUpdated: () => Promise<DateTimeOutput>;
   title: () => Promise<String>;
   type: () => Promise<StoryType>;
-  preview: () => Promise<String>;
   showcase: () => Promise<Boolean>;
-  save: () => Promise<Boolean>;
 }
 
 export interface StoryPreviousValuesSubscription
@@ -11570,9 +11471,7 @@ export interface StoryPreviousValuesSubscription
   lastUpdated: () => Promise<AsyncIterator<DateTimeOutput>>;
   title: () => Promise<AsyncIterator<String>>;
   type: () => Promise<AsyncIterator<StoryType>>;
-  preview: () => Promise<AsyncIterator<String>>;
   showcase: () => Promise<AsyncIterator<Boolean>>;
-  save: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface ListConnection {
@@ -11836,6 +11735,7 @@ export interface StoryItemPreviousValues {
   inProject?: Boolean;
   likesCount?: Int;
   likedByMe?: Boolean;
+  viewedByMe?: Boolean;
   plays: Int;
 }
 
@@ -11853,6 +11753,7 @@ export interface StoryItemPreviousValuesPromise
   inProject: () => Promise<Boolean>;
   likesCount: () => Promise<Int>;
   likedByMe: () => Promise<Boolean>;
+  viewedByMe: () => Promise<Boolean>;
   plays: () => Promise<Int>;
 }
 
@@ -11870,6 +11771,7 @@ export interface StoryItemPreviousValuesSubscription
   inProject: () => Promise<AsyncIterator<Boolean>>;
   likesCount: () => Promise<AsyncIterator<Int>>;
   likedByMe: () => Promise<AsyncIterator<Boolean>>;
+  viewedByMe: () => Promise<AsyncIterator<Boolean>>;
   plays: () => Promise<AsyncIterator<Int>>;
 }
 
