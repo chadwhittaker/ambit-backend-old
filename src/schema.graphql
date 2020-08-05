@@ -14,6 +14,7 @@ type Query {
   unReadMessagesCount: User
   userMessages: User
   myTopics: User
+  myMatches: [User]
   userFollowers(id: ID!): [User!]!
   userFollowing(id: ID!): [User!]!
   iFollow: [ID!]!
@@ -22,16 +23,16 @@ type Query {
   user(id: ID!): User
   users: [User]!
 
-
   # posts
   postsNetwork(after: String, first: Int, network: [ID]): PostConnection!
   postsForYou(after: String, first: Int): PostConnection!
   postsMyGoals(after: String, first: Int): PostConnection!
   postsTopic(topicID: String!, after: String): PostConnection!
-  postsSearch(text: String, goal: String, topicID: String, lat: Float, lon: Float, after: String): PostConnection!
+  postsSearch(text: String, goal: String, topicIDs: [String], lat: Float, lon: Float, after: String): PostConnection!
   postsUser(id: ID!): [Post]!
   singlePost(id: ID!): Post!
-  singlePostMatches(id: ID!): [Match]
+  singlePostMatches(id: ID!): [User]!
+  hatMatches(type: String!, after: String, first: Int): PostConnection!
   activeGoalsUser: [PostWithMatches]!
   
   # groups / chats

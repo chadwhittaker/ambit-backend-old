@@ -276,6 +276,57 @@ const Query = {
     return posts
   },
 
+  async hatMatches(parent, { type, after, first = 10  }, context) {
+    // get current user data
+    const me = await context.prisma.user({ id: context.request.userId }).$fragment(UserForYouPostsFragment);
+
+    const { topicsInvest, topicsFreelance, topicsMentor } = me;
+
+    let goal = 'hey';
+    let topicsToSearch = [];
+    if (type === 'invest' && !!topicsInvest && topicsInvest.length > 0) {
+      goal = 'Find Investors'
+      topicsToSearch = [...topicsInvest]
+    } else if (type === 'freelance' && !!topicsFreelance && topicsFreelance.length > 0) {
+      goal = 'Find Freelancers'
+      topicsToSearch = [...topicsFreelance]
+    } else if (type === 'mentor' && !!topicsMentor && topicsMentor.length > 0) {
+      goal = 'Find Mentors'
+      topicsToSearch = [...topicsMentor]
+    }
+
+    const topicsToSearchIDs = topicsToSearch.map(top => top.topicID);
+
+    const posts = await context.prisma.postsConnection(
+      {
+        first,
+        after,
+        where: {
+          AND: [
+            // not from me
+            {
+              owner: {
+                id_not_in: [context.request.userId],
+              }
+            },
+            {
+              goal,
+            },
+            {
+              subField: {
+                topicID_in: topicsToSearchIDs,
+              }
+            }
+          ]
+
+        },
+        orderBy: 'lastUpdated_DESC'
+      }
+    );
+
+    return posts
+  },
+
   async postsForYou(parent, { after, first = 20 }, context) {
 
     // get current user data
@@ -446,9 +497,10 @@ const Query = {
     return posts
   },
 
-  async postsSearch(parent, { text, goal, topicID, lat, lon, after }, context) {
+  async postsSearch(parent, { text, goal, topicIDs, lat, lon, after }, context) {
 
-    const haveInputs = !!text || !!goal || !!topicID || (!!lat && !!lon);
+    const hasTopics = topicIDs.length > 0;
+    const haveInputs = !!text || !!goal || hasTopics|| (!!lat && !!lon);
     const blankSearch = { id: "99" }
     const allSearch = { id_not: "99" }
 
@@ -471,15 +523,15 @@ const Query = {
     // topic stuff - must return a PostWhereInput
     const getTopicQuery = () => {
       if (!haveInputs) return blankSearch;
-      if (!topicID) return allSearch;
+      if (!hasTopics) return allSearch;
 
       // if there's a goal involved then the topic refers to subField
       if (goal) {
-        return { subField: { topicID } }
+        return { subField: { topicID_in: topicIDs } }
       }
 
       // otherwise query the topics array
-      return { topics_some: { topicID_contains: topicID } }
+      return { topics_some: { topicID_in: topicIDs } }
     }
 
     // location stuff - must return a PostWhereInput
@@ -512,7 +564,7 @@ const Query = {
             getLocationQuery(),
           ],
         },
-        first: 30,
+        first: 20,
         after,
         orderBy: 'lastUpdated_DESC'
       }
@@ -567,22 +619,25 @@ const Query = {
 
   async singlePostMatches(parent, { id }, context) {
     // all these await functions need parallized
-    const me = await context.prisma.user({ id: context.request.userId }).$fragment(MyInfoForConnections);
+    // const me = await context.prisma.user({ id: context.request.userId }).$fragment(MyInfoForConnections);
     const post = await context.prisma.post({ id }).$fragment(DetailPost);
 
     // get matches based on Goal and User 
     const isMyPost = context.request.userId === post.owner.id;
 
-    let matches = [];
+    // let matches = [];
     if (isMyPost && !!post.goal) {
-      matches = await getUsersMatchingGoal(me, post, context) // returns [Match]
+      const users = await getUsersMatchingGoal(post.owner, post, context) // returns [Match]
+
+      return users
     }
 
-    return matches
+    return []
   },
 
 
 
+  // NOT USING THIS
   async activeGoalsUser(parent, args, context) {
     // all these await functions need parallized
     const me = await context.prisma.user({ id: context.request.userId }).$fragment(MyInfoForConnections);
@@ -599,6 +654,25 @@ const Query = {
     })
 
     return myActiveGoalsWithMatches; // [PostWithMatches]!
+  },
+
+  async myMatches(parent, args, context) {
+    // get the topics of focus from the user
+    // const me = await context.prisma.user({ id: context.request.userId }).$fragment(MyInfoForConnections);
+
+    // match up with people of the same topic (for now just send all people)
+    const users = await context.prisma.users({
+      // first: 3,
+      where: { id_not: context.request.userId },
+      // where: {
+      //   AND: [
+      //     { topicsFocus_some: { OR: me.topicsFocus } },
+      //     { id_not_in: [me.id, ...excludeIDs] },
+      //   ]
+      // }
+    });
+
+    return users;
   },
 
   async allConnections(parent, args, context) {
@@ -653,7 +727,7 @@ const Query = {
     const messages = await context.prisma.messagesConnection(
       {
         where: { to: { id: groupID } },
-        first: first || 30,
+        first: first || 20,
         after,
         orderBy: 'createdAt_DESC'
       }
@@ -703,7 +777,7 @@ const Query = {
       {
         where: { target: { id: context.request.userId } },
         orderBy: 'createdAt_DESC',
-        first: 50,
+        first: 10,
       }
     );
 

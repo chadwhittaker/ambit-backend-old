@@ -46,7 +46,7 @@ const Comment = {
     // had to do this bc was getting nofification errors bc context.request.userId is undefined on subscriptions
     if (context.connection) {
       if (context.connection.operationName) {
-        if (context.connection.operationName === 'NEW_NOTIFICATION_SUBSCRIPTION') {
+        if (context.connection.operationName === 'MESSAGE_SUBSCRIPTION') {
           const likes = await context.prisma.comment({ id: parent.id }).likes({ where: { id: context.connection.variables.id } }).$fragment(LikedFragment)
           return likes.length > 0;
         }
