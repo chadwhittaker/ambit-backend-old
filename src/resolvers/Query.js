@@ -18,12 +18,12 @@ const IDfragment = gql`
 
 const Query = {
 
-  async login(parent, { email, password }, context) {
-    // 1. check if there is a user with that email
-    const emailLower = email.toLowerCase();
-    const user = await context.prisma.user({ email: emailLower });
+  async login(parent, { username, password }, context) {
+    // 1. check if there is a user with that username
+    const usernameLower = username.toLowerCase();
+    const user = await context.prisma.user({ username: usernameLower });
 
-    if (!user) throw new Error(`No user found for email: ${emailLower}`)
+    if (!user) throw new Error(`No user found for username: ${usernameLower}`)
 
     // 2. check if the password is correct
     const passwordValid = await compare(password, user.password)
@@ -155,20 +155,20 @@ const Query = {
       //   //   for (i = 0; i < users.length; i++) {
       //   //     try {
       //   //       const user = await context.prisma.updateUser({
-      //   //         where: { email: users[i].email },
+      //   //         where: { username: users[i].username },
       //   //         data: {
       //   //           myStory: {
       //   //             create: {
       //   //               title: "My Story",
       //   //               type: "MYSTORY",
-      //   //               owner: { connect: { email: users[i].email }}
+      //   //               owner: { connect: { username: users[i].username }}
       //   //             }
       //   //           },
       //   //           intro: {
       //   //             create: {
       //   //               title: "My Intro",
       //   //               type: "INTRO",
-      //   //               owner: { connect: { email: users[i].email }}
+      //   //               owner: { connect: { username: users[i].username }}
       //   //             }
       //   //           }
       //   //         }

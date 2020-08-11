@@ -9,7 +9,7 @@ type Subscription {
 
 type Query {
   # users
-  login(email: String!, password: String!): AuthPayload
+  login(username: String!, password: String!): AuthPayload
   userLoggedIn: User
   unReadMessagesCount: User
   userMessages: User
@@ -51,7 +51,7 @@ type Query {
 
 type Mutation {
   # user
-  signup(firstName: String!, lastName: String!, email: String!, password: String!): AuthPayload
+  signup(name: String!, username: String!, password: String!): AuthPayload
   followUser(userID: ID!): [ID]!
   unfollowUser(userID: ID!): [ID]!
 

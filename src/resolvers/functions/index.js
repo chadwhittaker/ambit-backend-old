@@ -58,7 +58,7 @@ const getUsersMatchingTopicsFocus = async (me, context, excludeIDs = []) => {
 
     // add reason
     const usersMatchingTopicsFocusReason = usersMatchingTopicsFocus.map(user => {
-      return { user, reason: { text: `You and ${user.firstName} have a matching topic of focus`, icon: 'comment' } };
+      return { user, reason: { text: `You and ${user.name} have a matching topic of focus`, icon: 'comment' } };
     })
 
     return usersMatchingTopicsFocusReason;
@@ -143,7 +143,7 @@ const getMatchesFindInvestor = async (me, post, context, first = 10) => {
 
     // add reason
     // const usersMatchingGoalWithReason = usersMatchingGoal.map(user => {
-    //   return { user, reason: { text: `${user.firstName} is interested in investing in ${subField.name.toLowerCase()}`, icon: 'comment-dollar' } };
+    //   return { user, reason: { text: `${user.name} is interested in investing in ${subField.name.toLowerCase()}`, icon: 'comment-dollar' } };
     // })
 
     return usersMatchingGoal;
@@ -180,7 +180,7 @@ const getMatchesFindMentors = async (me, post, context, first = 10) => {
 
     // add reason
     // const usersMatchingGoalWithReason = usersMatchingGoal.map(user => {
-    //   return { user, reason: { text: `${user.firstName} is open to mentor others in ${subField.name.toLowerCase()}`, icon: 'user-friends' } };
+    //   return { user, reason: { text: `${user.name} is open to mentor others in ${subField.name.toLowerCase()}`, icon: 'user-friends' } };
     // })
 
     return usersMatchingGoal;
@@ -217,7 +217,7 @@ const getMatchesFindFreelancers = async (me, post, context, first = 10) => {
 
     // add reason
     // const usersMatchingGoalWithReason = usersMatchingGoal.map(user => {
-    //   return { user, reason: { text: `${user.firstName} is open to freelance for ${subField.name.toLowerCase()}`, icon: 'briefcase' } };
+    //   return { user, reason: { text: `${user.name} is open to freelance for ${subField.name.toLowerCase()}`, icon: 'briefcase' } };
     // })
 
     return usersMatchingGoal;
@@ -263,7 +263,7 @@ const getMatchesGetCoffee1 = async (me, post, context, first = 10) => {
 
     // add reason
     // const usersMatchingGoalWithReason = usersMatchingGoal.map(user => {
-    //   return { user, reason: { text: `You and ${user.firstName} would both like to get coffee to discuss ${subField.name.toLowerCase()}`, icon: 'mug-hot' } };
+    //   return { user, reason: { text: `You and ${user.name} would both like to get coffee to discuss ${subField.name.toLowerCase()}`, icon: 'mug-hot' } };
     // })
 
     return usersMatchingGoal;
@@ -300,7 +300,7 @@ const getMatchesGetCoffee2 = async (me, post, context, first = 10, excludeIDs) =
 
     // add reason
     // const usersMatchingGoalWithReason = usersMatchingGoal.map(user => {
-    //   return { user, reason: { text: `You and ${user.firstName} are both focused on photography & live nearby`, icon: 'comment' } };
+    //   return { user, reason: { text: `You and ${user.name} are both focused on photography & live nearby`, icon: 'comment' } };
     // })
 
     return usersMatchingGoal;
@@ -337,7 +337,7 @@ const getMatchesFindBusinessPartners = async (me, post, context, first = 10) => 
 
     // add reason
     // const usersMatchingGoalWithReason = usersMatchingGoal.map(user => {
-    //   return { user, reason: { text: `You and ${user.firstName} are both focused on ${subField.name.toLowerCase()}`, icon: 'users' } };
+    //   return { user, reason: { text: `You and ${user.name} are both focused on ${subField.name.toLowerCase()}`, icon: 'users' } };
     // })
 
     return usersMatchingGoal;

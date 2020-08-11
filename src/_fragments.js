@@ -19,8 +19,6 @@ const MessageFragment = gql`
     createdAt
     from {
       id
-      firstName
-      lastName
       name
       profilePic
     }
@@ -183,9 +181,7 @@ const LoggedInUser = gql`
       }
     }
     createdAt
-    firstName
-    lastName
-    email
+    username
     groups {
       id
     updatedAt
@@ -254,8 +250,6 @@ const LoggedInUser = gql`
     createdAt
     from {
       id
-      firstName
-      lastName
       name
       profilePic
     }

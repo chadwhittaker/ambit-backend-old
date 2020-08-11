@@ -22,18 +22,16 @@ const Mutation = {
   // USER
   // ================
 
-  async signup(parent, { firstName, lastName, email, password }, context) {
-    // 1. lowercase the email
-    const emailLower = email.toLowerCase();
+  async signup(parent, { name, username, password }, context) {
+    // 1. lowercase the username
+    const usernameLower = username.toLowerCase();
     // 2. hash their password
     const hashedPassword = await hash(password, 10);
     // 3. create the user in database
     const user = await context.prisma.createUser(
       {
-        firstName,
-        lastName,
-        name: `${firstName} ${lastName}`,
-        email: emailLower,
+        name,
+        username: usernameLower,
         password: hashedPassword,
       }
     )
@@ -51,7 +49,8 @@ const Mutation = {
             type: "INTRO",
             owner: {
               connect: { id: user.id }
-            }
+            },
+            lastUpdated: new Date(),
           }
         },
         myStory: {
@@ -60,7 +59,8 @@ const Mutation = {
             type: "MYSTORY",
             owner: {
               connect: { id: user.id }
-            }
+            },
+            lastUpdated: new Date(),
           }
         },
       }

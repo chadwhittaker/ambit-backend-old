@@ -696,12 +696,8 @@ export type UserOrderByInput =
   | "createdAt_DESC"
   | "name_ASC"
   | "name_DESC"
-  | "firstName_ASC"
-  | "firstName_DESC"
-  | "lastName_ASC"
-  | "lastName_DESC"
-  | "email_ASC"
-  | "email_DESC"
+  | "username_ASC"
+  | "username_DESC"
   | "password_ASC"
   | "password_DESC"
   | "profilePic_ASC"
@@ -963,9 +959,7 @@ export type Role = "ADMIN" | "PRO" | "USER" | "BUSINESS" | "SUSPENDED";
 
 export interface UserUpdateWithoutPostsDataInput {
   name?: Maybe<String>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
+  username?: Maybe<String>;
   password?: Maybe<String>;
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
@@ -1163,9 +1157,7 @@ export interface UpdateWhereInput {
 
 export interface UserUpdateWithoutStoriesDataInput {
   name?: Maybe<String>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
+  username?: Maybe<String>;
   password?: Maybe<String>;
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
@@ -2172,9 +2164,7 @@ export interface EducationUpdateWithWhereUniqueWithoutOwnerInput {
 
 export interface UserUpdateInput {
   name?: Maybe<String>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
+  username?: Maybe<String>;
   password?: Maybe<String>;
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
@@ -2811,9 +2801,7 @@ export interface MeetingUpdateManyMutationInput {
 
 export interface UserUpdateWithoutConnectionsDataInput {
   name?: Maybe<String>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
+  username?: Maybe<String>;
   password?: Maybe<String>;
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
@@ -2854,9 +2842,7 @@ export interface UserUpdateWithoutConnectionsDataInput {
 
 export interface UserUpdateWithoutMeetingsDataInput {
   name?: Maybe<String>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
+  username?: Maybe<String>;
   password?: Maybe<String>;
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
@@ -2936,9 +2922,7 @@ export interface MeetingUpdateInput {
 
 export interface UserUpdateWithoutFollowingDataInput {
   name?: Maybe<String>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
+  username?: Maybe<String>;
   password?: Maybe<String>;
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
@@ -2980,9 +2964,7 @@ export interface UserUpdateWithoutFollowingDataInput {
 export interface UserCreateWithoutMeetingsInput {
   id?: Maybe<ID_Input>;
   name: String;
-  firstName: String;
-  lastName: String;
-  email: String;
+  username: String;
   password: String;
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
@@ -3063,9 +3045,7 @@ export interface ListUpdateManyMutationInput {
 
 export interface UserUpdateWithoutFollowersDataInput {
   name?: Maybe<String>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
+  username?: Maybe<String>;
   password?: Maybe<String>;
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
@@ -3204,9 +3184,7 @@ export interface StoryWhereInput {
 export interface UserCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
-  firstName: String;
-  lastName: String;
-  email: String;
+  username: String;
   password: String;
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
@@ -3780,9 +3758,7 @@ export interface GroupUpdateWithoutUsersDataInput {
 export interface UserCreateWithoutPostsInput {
   id?: Maybe<ID_Input>;
   name: String;
-  firstName: String;
-  lastName: String;
-  email: String;
+  username: String;
   password: String;
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
@@ -3845,9 +3821,7 @@ export interface MessageUpdateManyWithoutToInput {
 export interface UserCreateWithoutConnectionsInput {
   id?: Maybe<ID_Input>;
   name: String;
-  firstName: String;
-  lastName: String;
-  email: String;
+  username: String;
   password: String;
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
@@ -3894,9 +3868,7 @@ export interface MessageUpdateWithWhereUniqueWithoutToInput {
 export interface UserCreateWithoutFollowingInput {
   id?: Maybe<ID_Input>;
   name: String;
-  firstName: String;
-  lastName: String;
-  email: String;
+  username: String;
   password: String;
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
@@ -3944,9 +3916,7 @@ export interface MessageUpdateWithoutToDataInput {
 export interface UserCreateWithoutFollowersInput {
   id?: Maybe<ID_Input>;
   name: String;
-  firstName: String;
-  lastName: String;
-  email: String;
+  username: String;
   password: String;
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
@@ -4024,9 +3994,7 @@ export interface UserUpdateWithWhereUniqueNestedInput {
 export interface UserCreateWithoutStoriesInput {
   id?: Maybe<ID_Input>;
   name: String;
-  firstName: String;
-  lastName: String;
-  email: String;
+  username: String;
   password: String;
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
@@ -4115,48 +4083,20 @@ export interface UserScalarWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
-  firstName?: Maybe<String>;
-  firstName_not?: Maybe<String>;
-  firstName_in?: Maybe<String[] | String>;
-  firstName_not_in?: Maybe<String[] | String>;
-  firstName_lt?: Maybe<String>;
-  firstName_lte?: Maybe<String>;
-  firstName_gt?: Maybe<String>;
-  firstName_gte?: Maybe<String>;
-  firstName_contains?: Maybe<String>;
-  firstName_not_contains?: Maybe<String>;
-  firstName_starts_with?: Maybe<String>;
-  firstName_not_starts_with?: Maybe<String>;
-  firstName_ends_with?: Maybe<String>;
-  firstName_not_ends_with?: Maybe<String>;
-  lastName?: Maybe<String>;
-  lastName_not?: Maybe<String>;
-  lastName_in?: Maybe<String[] | String>;
-  lastName_not_in?: Maybe<String[] | String>;
-  lastName_lt?: Maybe<String>;
-  lastName_lte?: Maybe<String>;
-  lastName_gt?: Maybe<String>;
-  lastName_gte?: Maybe<String>;
-  lastName_contains?: Maybe<String>;
-  lastName_not_contains?: Maybe<String>;
-  lastName_starts_with?: Maybe<String>;
-  lastName_not_starts_with?: Maybe<String>;
-  lastName_ends_with?: Maybe<String>;
-  lastName_not_ends_with?: Maybe<String>;
-  email?: Maybe<String>;
-  email_not?: Maybe<String>;
-  email_in?: Maybe<String[] | String>;
-  email_not_in?: Maybe<String[] | String>;
-  email_lt?: Maybe<String>;
-  email_lte?: Maybe<String>;
-  email_gt?: Maybe<String>;
-  email_gte?: Maybe<String>;
-  email_contains?: Maybe<String>;
-  email_not_contains?: Maybe<String>;
-  email_starts_with?: Maybe<String>;
-  email_not_starts_with?: Maybe<String>;
-  email_ends_with?: Maybe<String>;
-  email_not_ends_with?: Maybe<String>;
+  username?: Maybe<String>;
+  username_not?: Maybe<String>;
+  username_in?: Maybe<String[] | String>;
+  username_not_in?: Maybe<String[] | String>;
+  username_lt?: Maybe<String>;
+  username_lte?: Maybe<String>;
+  username_gt?: Maybe<String>;
+  username_gte?: Maybe<String>;
+  username_contains?: Maybe<String>;
+  username_not_contains?: Maybe<String>;
+  username_starts_with?: Maybe<String>;
+  username_not_starts_with?: Maybe<String>;
+  username_ends_with?: Maybe<String>;
+  username_not_ends_with?: Maybe<String>;
   password?: Maybe<String>;
   password_not?: Maybe<String>;
   password_in?: Maybe<String[] | String>;
@@ -4353,9 +4293,7 @@ export interface MessageCreateManyWithoutToInput {
 
 export interface UserUpdateManyDataInput {
   name?: Maybe<String>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
+  username?: Maybe<String>;
   password?: Maybe<String>;
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
@@ -4450,9 +4388,7 @@ export interface MessageUpdateManyWithWhereNestedInput {
 export interface UserCreateWithoutGroupsInput {
   id?: Maybe<ID_Input>;
   name: String;
-  firstName: String;
-  lastName: String;
-  email: String;
+  username: String;
   password: String;
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
@@ -4673,9 +4609,7 @@ export interface PostCreateWithoutCommentsInput {
 
 export interface UserUpdateWithoutGroupsDataInput {
   name?: Maybe<String>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
+  username?: Maybe<String>;
   password?: Maybe<String>;
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
@@ -4748,9 +4682,7 @@ export interface StoryUpdateManyWithoutOwnerInput {
 export interface UserCreateWithoutNotificationsInput {
   id?: Maybe<ID_Input>;
   name: String;
-  firstName: String;
-  lastName: String;
-  email: String;
+  username: String;
   password: String;
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
@@ -5037,9 +4969,7 @@ export interface StoryItemUpdateManyWithWhereNestedInput {
 
 export interface UserUpdateDataInput {
   name?: Maybe<String>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
+  username?: Maybe<String>;
   password?: Maybe<String>;
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
@@ -5416,48 +5346,20 @@ export interface UserWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
-  firstName?: Maybe<String>;
-  firstName_not?: Maybe<String>;
-  firstName_in?: Maybe<String[] | String>;
-  firstName_not_in?: Maybe<String[] | String>;
-  firstName_lt?: Maybe<String>;
-  firstName_lte?: Maybe<String>;
-  firstName_gt?: Maybe<String>;
-  firstName_gte?: Maybe<String>;
-  firstName_contains?: Maybe<String>;
-  firstName_not_contains?: Maybe<String>;
-  firstName_starts_with?: Maybe<String>;
-  firstName_not_starts_with?: Maybe<String>;
-  firstName_ends_with?: Maybe<String>;
-  firstName_not_ends_with?: Maybe<String>;
-  lastName?: Maybe<String>;
-  lastName_not?: Maybe<String>;
-  lastName_in?: Maybe<String[] | String>;
-  lastName_not_in?: Maybe<String[] | String>;
-  lastName_lt?: Maybe<String>;
-  lastName_lte?: Maybe<String>;
-  lastName_gt?: Maybe<String>;
-  lastName_gte?: Maybe<String>;
-  lastName_contains?: Maybe<String>;
-  lastName_not_contains?: Maybe<String>;
-  lastName_starts_with?: Maybe<String>;
-  lastName_not_starts_with?: Maybe<String>;
-  lastName_ends_with?: Maybe<String>;
-  lastName_not_ends_with?: Maybe<String>;
-  email?: Maybe<String>;
-  email_not?: Maybe<String>;
-  email_in?: Maybe<String[] | String>;
-  email_not_in?: Maybe<String[] | String>;
-  email_lt?: Maybe<String>;
-  email_lte?: Maybe<String>;
-  email_gt?: Maybe<String>;
-  email_gte?: Maybe<String>;
-  email_contains?: Maybe<String>;
-  email_not_contains?: Maybe<String>;
-  email_starts_with?: Maybe<String>;
-  email_not_starts_with?: Maybe<String>;
-  email_ends_with?: Maybe<String>;
-  email_not_ends_with?: Maybe<String>;
+  username?: Maybe<String>;
+  username_not?: Maybe<String>;
+  username_in?: Maybe<String[] | String>;
+  username_not_in?: Maybe<String[] | String>;
+  username_lt?: Maybe<String>;
+  username_lte?: Maybe<String>;
+  username_gt?: Maybe<String>;
+  username_gte?: Maybe<String>;
+  username_contains?: Maybe<String>;
+  username_not_contains?: Maybe<String>;
+  username_starts_with?: Maybe<String>;
+  username_not_starts_with?: Maybe<String>;
+  username_ends_with?: Maybe<String>;
+  username_not_ends_with?: Maybe<String>;
   password?: Maybe<String>;
   password_not?: Maybe<String>;
   password_in?: Maybe<String[] | String>;
@@ -5995,9 +5897,7 @@ export interface NotificationUpdateWithWhereUniqueWithoutPostInput {
 
 export interface UserUpdateWithoutSkillsDataInput {
   name?: Maybe<String>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
+  username?: Maybe<String>;
   password?: Maybe<String>;
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
@@ -6049,9 +5949,7 @@ export interface NotificationUpdateWithoutPostDataInput {
 export interface UserCreateWithoutSkillsInput {
   id?: Maybe<ID_Input>;
   name: String;
-  firstName: String;
-  lastName: String;
-  email: String;
+  username: String;
   password: String;
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
@@ -6118,9 +6016,7 @@ export interface PostUpdateManyMutationInput {
 
 export interface UserUpdateWithoutNotificationsDataInput {
   name?: Maybe<String>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
+  username?: Maybe<String>;
   password?: Maybe<String>;
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
@@ -6908,9 +6804,7 @@ export interface UpdateUpsertWithWhereUniqueWithoutParentPostInput {
 
 export interface UserUpdateManyMutationInput {
   name?: Maybe<String>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
+  username?: Maybe<String>;
   password?: Maybe<String>;
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
@@ -7095,7 +6989,7 @@ export interface GroupUpsertWithoutMessagesInput {
 
 export type UserWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
-  email?: Maybe<String>;
+  username?: Maybe<String>;
 }>;
 
 export interface MessageUpsertNestedInput {
@@ -7704,9 +7598,7 @@ export interface MessageCreateOneInput {
 export interface UserCreateWithoutEducationInput {
   id?: Maybe<ID_Input>;
   name: String;
-  firstName: String;
-  lastName: String;
-  email: String;
+  username: String;
   password: String;
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
@@ -7793,9 +7685,7 @@ export interface TopicUpsertWithoutChildrenInput {
 
 export interface UserUpdateWithoutEducationDataInput {
   name?: Maybe<String>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
+  username?: Maybe<String>;
   password?: Maybe<String>;
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
@@ -7908,9 +7798,7 @@ export interface StoryItemCreateManyWithoutStoriesInput {
 export interface UserCreateWithoutExperienceInput {
   id?: Maybe<ID_Input>;
   name: String;
-  firstName: String;
-  lastName: String;
-  email: String;
+  username: String;
   password: String;
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
@@ -8039,9 +7927,7 @@ export interface UserUpsertWithoutExperienceInput {
 
 export interface UserUpdateWithoutExperienceDataInput {
   name?: Maybe<String>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
+  username?: Maybe<String>;
   password?: Maybe<String>;
   profilePic?: Maybe<String>;
   bannerPic?: Maybe<String>;
@@ -8110,9 +7996,7 @@ export interface UserPreviousValues {
   id: ID_Output;
   createdAt: DateTimeOutput;
   name: String;
-  firstName: String;
-  lastName: String;
-  email: String;
+  username: String;
   password: String;
   profilePic?: String;
   bannerPic?: String;
@@ -8137,9 +8021,7 @@ export interface UserPreviousValuesPromise
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   name: () => Promise<String>;
-  firstName: () => Promise<String>;
-  lastName: () => Promise<String>;
-  email: () => Promise<String>;
+  username: () => Promise<String>;
   password: () => Promise<String>;
   profilePic: () => Promise<String>;
   bannerPic: () => Promise<String>;
@@ -8164,9 +8046,7 @@ export interface UserPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   name: () => Promise<AsyncIterator<String>>;
-  firstName: () => Promise<AsyncIterator<String>>;
-  lastName: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
+  username: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
   profilePic: () => Promise<AsyncIterator<String>>;
   bannerPic: () => Promise<AsyncIterator<String>>;
@@ -8955,9 +8835,7 @@ export interface User {
   id: ID_Output;
   createdAt: DateTimeOutput;
   name: String;
-  firstName: String;
-  lastName: String;
-  email: String;
+  username: String;
   password: String;
   profilePic?: String;
   bannerPic?: String;
@@ -8980,9 +8858,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   name: () => Promise<String>;
-  firstName: () => Promise<String>;
-  lastName: () => Promise<String>;
-  email: () => Promise<String>;
+  username: () => Promise<String>;
   password: () => Promise<String>;
   profilePic: () => Promise<String>;
   bannerPic: () => Promise<String>;
@@ -9172,9 +9048,7 @@ export interface UserSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   name: () => Promise<AsyncIterator<String>>;
-  firstName: () => Promise<AsyncIterator<String>>;
-  lastName: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
+  username: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
   profilePic: () => Promise<AsyncIterator<String>>;
   bannerPic: () => Promise<AsyncIterator<String>>;
@@ -9364,9 +9238,7 @@ export interface UserNullablePromise
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   name: () => Promise<String>;
-  firstName: () => Promise<String>;
-  lastName: () => Promise<String>;
-  email: () => Promise<String>;
+  username: () => Promise<String>;
   password: () => Promise<String>;
   profilePic: () => Promise<String>;
   bannerPic: () => Promise<String>;

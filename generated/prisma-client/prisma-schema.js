@@ -5865,9 +5865,7 @@ type User {
   id: ID!
   createdAt: DateTime!
   name: String!
-  firstName: String!
-  lastName: String!
-  email: String!
+  username: String!
   password: String!
   profilePic: String
   bannerPic: String
@@ -5916,9 +5914,7 @@ type UserConnection {
 input UserCreateInput {
   id: ID
   name: String!
-  firstName: String!
-  lastName: String!
-  email: String!
+  username: String!
   password: String!
   profilePic: String
   bannerPic: String
@@ -6030,9 +6026,7 @@ input UserCreaterolesInput {
 input UserCreateWithoutConnectionsInput {
   id: ID
   name: String!
-  firstName: String!
-  lastName: String!
-  email: String!
+  username: String!
   password: String!
   profilePic: String
   bannerPic: String
@@ -6074,9 +6068,7 @@ input UserCreateWithoutConnectionsInput {
 input UserCreateWithoutEducationInput {
   id: ID
   name: String!
-  firstName: String!
-  lastName: String!
-  email: String!
+  username: String!
   password: String!
   profilePic: String
   bannerPic: String
@@ -6118,9 +6110,7 @@ input UserCreateWithoutEducationInput {
 input UserCreateWithoutExperienceInput {
   id: ID
   name: String!
-  firstName: String!
-  lastName: String!
-  email: String!
+  username: String!
   password: String!
   profilePic: String
   bannerPic: String
@@ -6162,9 +6152,7 @@ input UserCreateWithoutExperienceInput {
 input UserCreateWithoutFollowersInput {
   id: ID
   name: String!
-  firstName: String!
-  lastName: String!
-  email: String!
+  username: String!
   password: String!
   profilePic: String
   bannerPic: String
@@ -6206,9 +6194,7 @@ input UserCreateWithoutFollowersInput {
 input UserCreateWithoutFollowingInput {
   id: ID
   name: String!
-  firstName: String!
-  lastName: String!
-  email: String!
+  username: String!
   password: String!
   profilePic: String
   bannerPic: String
@@ -6250,9 +6236,7 @@ input UserCreateWithoutFollowingInput {
 input UserCreateWithoutGroupsInput {
   id: ID
   name: String!
-  firstName: String!
-  lastName: String!
-  email: String!
+  username: String!
   password: String!
   profilePic: String
   bannerPic: String
@@ -6294,9 +6278,7 @@ input UserCreateWithoutGroupsInput {
 input UserCreateWithoutMeetingsInput {
   id: ID
   name: String!
-  firstName: String!
-  lastName: String!
-  email: String!
+  username: String!
   password: String!
   profilePic: String
   bannerPic: String
@@ -6338,9 +6320,7 @@ input UserCreateWithoutMeetingsInput {
 input UserCreateWithoutNotificationsInput {
   id: ID
   name: String!
-  firstName: String!
-  lastName: String!
-  email: String!
+  username: String!
   password: String!
   profilePic: String
   bannerPic: String
@@ -6382,9 +6362,7 @@ input UserCreateWithoutNotificationsInput {
 input UserCreateWithoutPostsInput {
   id: ID
   name: String!
-  firstName: String!
-  lastName: String!
-  email: String!
+  username: String!
   password: String!
   profilePic: String
   bannerPic: String
@@ -6426,9 +6404,7 @@ input UserCreateWithoutPostsInput {
 input UserCreateWithoutSkillsInput {
   id: ID
   name: String!
-  firstName: String!
-  lastName: String!
-  email: String!
+  username: String!
   password: String!
   profilePic: String
   bannerPic: String
@@ -6470,9 +6446,7 @@ input UserCreateWithoutSkillsInput {
 input UserCreateWithoutStoriesInput {
   id: ID
   name: String!
-  firstName: String!
-  lastName: String!
-  email: String!
+  username: String!
   password: String!
   profilePic: String
   bannerPic: String
@@ -6523,12 +6497,8 @@ enum UserOrderByInput {
   createdAt_DESC
   name_ASC
   name_DESC
-  firstName_ASC
-  firstName_DESC
-  lastName_ASC
-  lastName_DESC
-  email_ASC
-  email_DESC
+  username_ASC
+  username_DESC
   password_ASC
   password_DESC
   profilePic_ASC
@@ -6565,9 +6535,7 @@ type UserPreviousValues {
   id: ID!
   createdAt: DateTime!
   name: String!
-  firstName: String!
-  lastName: String!
-  email: String!
+  username: String!
   password: String!
   profilePic: String
   bannerPic: String
@@ -6623,48 +6591,20 @@ input UserScalarWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
-  firstName: String
-  firstName_not: String
-  firstName_in: [String!]
-  firstName_not_in: [String!]
-  firstName_lt: String
-  firstName_lte: String
-  firstName_gt: String
-  firstName_gte: String
-  firstName_contains: String
-  firstName_not_contains: String
-  firstName_starts_with: String
-  firstName_not_starts_with: String
-  firstName_ends_with: String
-  firstName_not_ends_with: String
-  lastName: String
-  lastName_not: String
-  lastName_in: [String!]
-  lastName_not_in: [String!]
-  lastName_lt: String
-  lastName_lte: String
-  lastName_gt: String
-  lastName_gte: String
-  lastName_contains: String
-  lastName_not_contains: String
-  lastName_starts_with: String
-  lastName_not_starts_with: String
-  lastName_ends_with: String
-  lastName_not_ends_with: String
-  email: String
-  email_not: String
-  email_in: [String!]
-  email_not_in: [String!]
-  email_lt: String
-  email_lte: String
-  email_gt: String
-  email_gte: String
-  email_contains: String
-  email_not_contains: String
-  email_starts_with: String
-  email_not_starts_with: String
-  email_ends_with: String
-  email_not_ends_with: String
+  username: String
+  username_not: String
+  username_in: [String!]
+  username_not_in: [String!]
+  username_lt: String
+  username_lte: String
+  username_gt: String
+  username_gte: String
+  username_contains: String
+  username_not_contains: String
+  username_starts_with: String
+  username_not_starts_with: String
+  username_ends_with: String
+  username_not_ends_with: String
   password: String
   password_not: String
   password_in: [String!]
@@ -6864,9 +6804,7 @@ input UserSubscriptionWhereInput {
 
 input UserUpdateDataInput {
   name: String
-  firstName: String
-  lastName: String
-  email: String
+  username: String
   password: String
   profilePic: String
   bannerPic: String
@@ -6908,9 +6846,7 @@ input UserUpdateDataInput {
 
 input UserUpdateInput {
   name: String
-  firstName: String
-  lastName: String
-  email: String
+  username: String
   password: String
   profilePic: String
   bannerPic: String
@@ -6952,9 +6888,7 @@ input UserUpdateInput {
 
 input UserUpdateManyDataInput {
   name: String
-  firstName: String
-  lastName: String
-  email: String
+  username: String
   password: String
   profilePic: String
   bannerPic: String
@@ -6987,9 +6921,7 @@ input UserUpdateManyInput {
 
 input UserUpdateManyMutationInput {
   name: String
-  firstName: String
-  lastName: String
-  email: String
+  username: String
   password: String
   profilePic: String
   bannerPic: String
@@ -7137,9 +7069,7 @@ input UserUpdaterolesInput {
 
 input UserUpdateWithoutConnectionsDataInput {
   name: String
-  firstName: String
-  lastName: String
-  email: String
+  username: String
   password: String
   profilePic: String
   bannerPic: String
@@ -7180,9 +7110,7 @@ input UserUpdateWithoutConnectionsDataInput {
 
 input UserUpdateWithoutEducationDataInput {
   name: String
-  firstName: String
-  lastName: String
-  email: String
+  username: String
   password: String
   profilePic: String
   bannerPic: String
@@ -7223,9 +7151,7 @@ input UserUpdateWithoutEducationDataInput {
 
 input UserUpdateWithoutExperienceDataInput {
   name: String
-  firstName: String
-  lastName: String
-  email: String
+  username: String
   password: String
   profilePic: String
   bannerPic: String
@@ -7266,9 +7192,7 @@ input UserUpdateWithoutExperienceDataInput {
 
 input UserUpdateWithoutFollowersDataInput {
   name: String
-  firstName: String
-  lastName: String
-  email: String
+  username: String
   password: String
   profilePic: String
   bannerPic: String
@@ -7309,9 +7233,7 @@ input UserUpdateWithoutFollowersDataInput {
 
 input UserUpdateWithoutFollowingDataInput {
   name: String
-  firstName: String
-  lastName: String
-  email: String
+  username: String
   password: String
   profilePic: String
   bannerPic: String
@@ -7352,9 +7274,7 @@ input UserUpdateWithoutFollowingDataInput {
 
 input UserUpdateWithoutGroupsDataInput {
   name: String
-  firstName: String
-  lastName: String
-  email: String
+  username: String
   password: String
   profilePic: String
   bannerPic: String
@@ -7395,9 +7315,7 @@ input UserUpdateWithoutGroupsDataInput {
 
 input UserUpdateWithoutMeetingsDataInput {
   name: String
-  firstName: String
-  lastName: String
-  email: String
+  username: String
   password: String
   profilePic: String
   bannerPic: String
@@ -7438,9 +7356,7 @@ input UserUpdateWithoutMeetingsDataInput {
 
 input UserUpdateWithoutNotificationsDataInput {
   name: String
-  firstName: String
-  lastName: String
-  email: String
+  username: String
   password: String
   profilePic: String
   bannerPic: String
@@ -7481,9 +7397,7 @@ input UserUpdateWithoutNotificationsDataInput {
 
 input UserUpdateWithoutPostsDataInput {
   name: String
-  firstName: String
-  lastName: String
-  email: String
+  username: String
   password: String
   profilePic: String
   bannerPic: String
@@ -7524,9 +7438,7 @@ input UserUpdateWithoutPostsDataInput {
 
 input UserUpdateWithoutSkillsDataInput {
   name: String
-  firstName: String
-  lastName: String
-  email: String
+  username: String
   password: String
   profilePic: String
   bannerPic: String
@@ -7567,9 +7479,7 @@ input UserUpdateWithoutSkillsDataInput {
 
 input UserUpdateWithoutStoriesDataInput {
   name: String
-  firstName: String
-  lastName: String
-  email: String
+  username: String
   password: String
   profilePic: String
   bannerPic: String
@@ -7746,48 +7656,20 @@ input UserWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
-  firstName: String
-  firstName_not: String
-  firstName_in: [String!]
-  firstName_not_in: [String!]
-  firstName_lt: String
-  firstName_lte: String
-  firstName_gt: String
-  firstName_gte: String
-  firstName_contains: String
-  firstName_not_contains: String
-  firstName_starts_with: String
-  firstName_not_starts_with: String
-  firstName_ends_with: String
-  firstName_not_ends_with: String
-  lastName: String
-  lastName_not: String
-  lastName_in: [String!]
-  lastName_not_in: [String!]
-  lastName_lt: String
-  lastName_lte: String
-  lastName_gt: String
-  lastName_gte: String
-  lastName_contains: String
-  lastName_not_contains: String
-  lastName_starts_with: String
-  lastName_not_starts_with: String
-  lastName_ends_with: String
-  lastName_not_ends_with: String
-  email: String
-  email_not: String
-  email_in: [String!]
-  email_not_in: [String!]
-  email_lt: String
-  email_lte: String
-  email_gt: String
-  email_gte: String
-  email_contains: String
-  email_not_contains: String
-  email_starts_with: String
-  email_not_starts_with: String
-  email_ends_with: String
-  email_not_ends_with: String
+  username: String
+  username_not: String
+  username_in: [String!]
+  username_not_in: [String!]
+  username_lt: String
+  username_lte: String
+  username_gt: String
+  username_gte: String
+  username_contains: String
+  username_not_contains: String
+  username_starts_with: String
+  username_not_starts_with: String
+  username_ends_with: String
+  username_not_ends_with: String
   password: String
   password_not: String
   password_in: [String!]
@@ -8026,7 +7908,7 @@ input UserWhereInput {
 
 input UserWhereUniqueInput {
   id: ID
-  email: String
+  username: String
 }
 `
       }

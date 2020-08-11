@@ -58,9 +58,7 @@ type User {
   id: ID! @id
   createdAt: DateTime! @createdAt
   name: String!
-  firstName: String!
-  lastName: String!
-  email: String! @unique
+  username: String! @unique
   password: String!
   profilePic: String
   bannerPic: String
