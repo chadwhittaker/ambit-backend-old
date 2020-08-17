@@ -219,18 +219,6 @@ const Query = {
     return users;
   },
 
-  async unReadMessagesCount(parent, args, context) {
-    // 1. check if there is a user on the request
-    if (!context.request.userId) {
-      // don't throw an error, just return nothing. It is ok to not be logged in.
-      return null;
-    }
-    // 2. if there is a user, query user in database and return data to client
-    const user = await context.prisma.user({ id: context.request.userId });
-
-    return user;
-  },
-
   async postsNetwork(parent, { after, first = 6, network = [] }, context) {
 
     const posts = await context.prisma.postsConnection(
@@ -617,27 +605,6 @@ const Query = {
     return []
   },
 
-
-
-  // NOT USING THIS
-  async activeGoalsUser(parent, args, context) {
-    // all these await functions need parallized
-    const me = await context.prisma.user({ id: context.request.userId }).$fragment(MyInfoForConnections);
-    const myActiveGoals = await getActiveGoalsOfUser(me, context)
-
-    const myActiveGoalsWithMatches = myActiveGoals.map(post => {
-      try {
-        const usersMatchingGoal = getUsersMatchingGoal(me, post, context) // returns [Match]
-        return { post, matches: usersMatchingGoal }
-      } catch (e) {
-        console.error(e)
-        return { post, matches: [] }
-      }
-    })
-
-    return myActiveGoalsWithMatches; // [PostWithMatches]!
-  },
-
   async myMatches(parent, args, context) {
     // get the topics of focus from the user
     // const me = await context.prisma.user({ id: context.request.userId }).$fragment(MyInfoForConnections);
@@ -657,30 +624,7 @@ const Query = {
     return users;
   },
 
-  async allConnections(parent, args, context) {
-    // all these await functions need parallized
-
-    // 1. find matches for each active goal
-    const me = await context.prisma.user({ id: context.request.userId }).$fragment(MyInfoForConnections);
-    const myActiveGoals = await getActiveGoalsOfUser(me, context)
-    const myActiveGoalsWithMatches = myActiveGoals.map(post => {
-      try {
-        const usersMatchingGoal = getUsersMatchingGoal(me, post, context) // returns [Match]
-        return { post, matches: usersMatchingGoal } // returns [PostWithMatches]
-      } catch (e) {
-        console.error(e)
-        return { post, matches: [] }
-      }
-    })
-
-    // 2. find users that share a common Topic of Focus
-    const usersMatchingTopicsFocus = await getUsersMatchingTopicsFocus(me, context) // returns [Match]
-
-    return { postsWithMatches: myActiveGoalsWithMatches, matches: usersMatchingTopicsFocus }; // AllConnections
-  },
-
   // GROUPS
-
   async allMyGroups(parent, args, context) {
     // 1. check if there is a user on the request
     if (!context.request.userId) {
@@ -717,23 +661,23 @@ const Query = {
     return messages;
   },
 
-  async allMessagesConnections(parent, args, context) {
-    // 1. check if there is a user on the request
-    if (!context.request.userId) {
-      return null
-    }
+  // async allMessagesConnections(parent, args, context) {
+  //   // 1. check if there is a user on the request
+  //   if (!context.request.userId) {
+  //     return null
+  //   }
 
-    // get an array of all my group chats
-    const groups = await context.prisma.user({ id: context.request.userId }).groups()
+  //   // get an array of all my group chats
+  //   const groups = await context.prisma.user({ id: context.request.userId }).groups()
 
-    try {
-      const messageConnectionsArray = await getAllMessageConnections(groups, context, 30); // returns [MessageConnection]
-      return messageConnectionsArray;
-    } catch (e) {
-      console.error(e)
-      return null;
-    }
-  },
+  //   try {
+  //     const messageConnectionsArray = await getAllMessageConnections(groups, context, 30); // returns [MessageConnection]
+  //     return messageConnectionsArray;
+  //   } catch (e) {
+  //     console.error(e)
+  //     return null;
+  //   }
+  // },
 
   async group(parent, args, context) {
     // 1. check if there is a user on the request

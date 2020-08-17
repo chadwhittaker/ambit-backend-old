@@ -373,73 +373,6 @@ const Mutation = {
     return user;
   },
 
-  async updateIntro(parent, { id, updateItems, createItems, deleteItems }, context) {
-    // 1. check if user is logged in
-    if (!context.request.userId) {
-      return null
-    }
-
-    const storyReturned = await context.prisma.updateStory({
-      where: { id },
-      data: {
-        items: {
-          update: updateItems,
-          create: createItems,
-          delete: deleteItems,
-        },
-      }
-    })
-
-    return storyReturned
-  },
-
-  // async editIntro(parent, args, context) {
-  //   const userId = args.userId
-  //   // delete args.id
-
-  //   // 1. check if user is logged in
-  //   if (!context.request.userId) {
-  //     throw new Error(`You must be logged in to do that`)
-  //   }
-
-  //   // 2. check if user on the request owns the profile
-  //   if (context.request.userId !== userId) {
-  //     throw new Error(`You cannot edit a profile that is not your own`)
-  //   }
-
-  //   // 3. find the ID of the current Intro so we can delete it later
-  //   const oldIntro = await context.prisma.user({ id: userId }).intro();
-  //   // future upgrade:
-  //   // could ask the user if they want to keep their changes...or they say no, revert back to old Intro
-  //   // if they say yes then we can delete the old Intro
-  //   const oldIntroID = oldIntro ? oldIntro.id : null
-
-  //   // 4. create a new intro and link it to the user
-  //   const user = await context.prisma.updateUser(
-  //     {
-  //       where: { id: userId },
-  //       data: {
-  //         intro: {
-  //           create: {
-  //             title: args.title,
-  //             type: 'INTRO',
-  //             // lastUpdated: new Date(),
-  //             owner: { connect: { id: userId } },
-  //             items: {
-  //               create: [...args.items]
-  //             }
-  //           },
-  //         }
-  //       },
-  //     },
-  //   )
-
-  //   // if there was an existing intro...delete it
-  //   if (oldIntroID) await context.prisma.deleteStory({ id: oldIntroID })
-
-  //   return user;
-  // },
-
   // ================
   // EXPERIENCE
   // ================
@@ -1094,27 +1027,6 @@ const Mutation = {
   // ================
   // GROUP
   // ================
-
-  async createGroup(parent, { users }, context) {
-    // 1. check if user is logged in
-    if (!context.request.userId) {
-      throw new Error(`You must be logged in to do that`)
-    }
-
-    // 2. create group
-    const group = await context.prisma.createGroup(
-      {
-        data: {
-          users: {
-            connect: [users] // [ { id: ##### }, { id: ##### }]
-          }
-        }
-      }
-    )
-
-    return group
-  },
-
   async createMessage(parent, args, context) {
     // 1. check if user is logged in
     // if (!context.request.userId) {
@@ -1193,19 +1105,6 @@ const Mutation = {
   /////////////////////////
   // STORIES
   /////////////////////////
-
-  // need to create story item and connect it to stories (stories must already exist)
-  async createStoryItem(parent, { storyItem }, context) {
-    // 1. check if user is logged in
-    if (!context.request.userId) {
-      return null
-    }
-
-    const storyItemReturned = await context.prisma.createStoryItem({ ...storyItem })
-
-    return storyItemReturned
-  },
-
   async createStory(parent, { story }, context) {
     // 1. check if user is logged in
     if (!context.request.userId) {

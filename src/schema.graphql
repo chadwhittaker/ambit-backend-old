@@ -4,22 +4,18 @@ scalar DateTime
 
 type Subscription {
   newMessageToMe(id: ID!): Message
-  newNotification(id: ID!): Notification
 }
 
 type Query {
   # users
   login(username: String!, password: String!): AuthPayload
   userLoggedIn: User
-  unReadMessagesCount: User
   userMessages: User
   myTopics: User
   myMatches: [User]
   userFollowers(id: ID!): [User!]!
   userFollowing(id: ID!): [User!]!
   iFollow: [ID!]!
-  allConnections: AllConnections
-
   user(id: ID, username: String): User
   users: [User]!
 
@@ -33,13 +29,11 @@ type Query {
   singlePost(id: ID!): Post!
   singlePostMatches(id: ID!): [User]!
   hatMatches(type: String!, after: String, first: Int): PostConnection!
-  activeGoalsUser: [PostWithMatches]!
   
   # groups / chats
   group(id: ID): Group
   allMyGroups: [Group]!
   messages(groupID: ID, after: String, first: Int): MessageConnection
-  allMessagesConnections: [MessageConnection]
 
   # notifications
   myNotifications: [Notification]!
@@ -47,6 +41,12 @@ type Query {
   # stories
   storiesHome: [Story]!
   storiesTopic(topicID: String!): [Story]!
+
+  # removed
+  # allMessagesConnections: [MessageConnection]
+  # activeGoalsUser: [PostWithMatches]!
+  # allConnections: AllConnections
+  # newNotification(id: ID!): Notification
 }
 
 type Mutation {
@@ -95,16 +95,7 @@ type Mutation {
   likeComment(commentId: ID!): Comment!
   unlikeComment(commentId: ID!): Comment!
 
-  # intro
-  updateIntro(
-    id: ID!, 
-    updateItems: [StoryItemUpdateWithWhereUniqueWithoutStoriesInput], 
-    createItems: [StoryItemCreateWithoutStoriesInput], 
-    deleteItems: [StoryItemWhereUniqueInput]
-  ): Story!
-
   # group chats
-  createGroup(users: [UserWhereUniqueInput]!): Group!
   createMessage(message: MessageCreateInput!): Message!
   clearUnReadMessages(groupID: ID): User!
 
@@ -112,41 +103,23 @@ type Mutation {
   clearMyNotifications: [Notification]!
 
   # stories
-  createStoryItem(storyItem: StoryItemCreateInput!): StoryItem!
+  
   createStory(story: StoryCreateInput!): Story!
   updateStory(id: ID!, story: StoryUpdateInput!): Story!
   deleteStory(id: ID!): Story
   viewedStoryItem(storyItemID: ID!): StoryItem!
   likeStoryItem(storyItemId: ID!): StoryItem!
   unlikeStoryItem(storyItemId: ID!): StoryItem!
+
+  # removed
+  # createGroup(users: [UserWhereUniqueInput]!): Group!
+  # createStoryItem(storyItem: StoryItemCreateInput!): StoryItem!
 }
 
 type AuthPayload {
   token: String
   user: User
 }
-
-type Match {
-  user: User!
-  reason: Reason!
-}
-
-type Reason {
-  text: String!
-  icon: String
-}
-
-type PostWithMatches {
-  post: Post
-  matches: [Match]
-}
-
-type AllConnections {
-  postsWithMatches: [PostWithMatches]!
-  matches: [Match]
-}
-
-
 
 enum Role {
   ADMIN
@@ -155,3 +128,24 @@ enum Role {
   BUSINESS
   SUSPENDED
 }
+
+
+# type Match {
+#   user: User!
+#   reason: Reason!
+# }
+
+# type Reason {
+#   text: String!
+#   icon: String
+# }
+
+# type PostWithMatches {
+#   post: Post
+#   matches: [Match]
+# }
+
+# type AllConnections {
+#   postsWithMatches: [PostWithMatches]!
+#   matches: [Match]
+# }
