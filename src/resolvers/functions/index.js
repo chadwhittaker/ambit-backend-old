@@ -564,6 +564,55 @@ const createNotification = async ({ context, style, targetID, userID, userIDs, p
       }
       break;
 
+    case 'MENTIONED_IN_POST':
+      try {
+        await context.prisma.createNotification(
+          {
+            style: 'MENTIONED_IN_POST',
+            target: { connect: { username: targetID } },
+            user: { connect: { id: userID } },
+            post: { connect: { id: postID } },
+          }
+        )
+      } catch (ignore) {
+        // ignore the error
+      }
+      break;
+
+    case 'MENTIONED_IN_COMMENT':
+      try {
+        await context.prisma.createNotification(
+          {
+            style: 'MENTIONED_IN_COMMENT',
+            target: { connect: { username: targetID } },
+            user: { connect: { id: userID } },
+            comment: { connect: { id: commentID } },
+          }
+        )
+      } catch (ignore) {
+        // ignore the error
+        console.log(ignore)
+      }
+      break;
+
+    case 'MENTIONED_IN_UPDATE':
+      try {
+        await context.prisma.createNotification(
+          {
+            style: 'MENTIONED_IN_UPDATE',
+            target: { connect: { username: targetID } },
+            user: { connect: { id: userID } },
+            post: { connect: { id: postID } },
+          }
+        )
+      } catch (ignore) {
+        // ignore the error
+        console.log(ignore)
+      }
+      break;
+
+
+
     default:
       break;
   }

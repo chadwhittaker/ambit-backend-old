@@ -20,7 +20,7 @@ type Query {
   iFollow: [ID!]!
   allConnections: AllConnections
 
-  user(id: ID!): User
+  user(id: ID, username: String): User
   users: [User]!
 
   # posts
@@ -29,7 +29,7 @@ type Query {
   postsMyGoals(after: String, first: Int): PostConnection!
   postsTopic(topicID: String!, after: String): PostConnection!
   postsSearch(text: String, goal: String, topicIDs: [String], lat: Float, lon: Float, after: String): PostConnection!
-  postsUser(id: ID!): [Post]!
+  postsUser(id: ID, username: String): [Post]!
   singlePost(id: ID!): Post!
   singlePostMatches(id: ID!): [User]!
   hatMatches(type: String!, after: String, first: Int): PostConnection!

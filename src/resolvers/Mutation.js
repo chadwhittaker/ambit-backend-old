@@ -632,6 +632,29 @@ const Mutation = {
       }
     )
 
+    // create an array of the mentions
+    const mentionsWithSymbol = post.content.match(/\B@[a-z0-9_]+/gi);
+
+    // if the post has mentions in it...notify the people being mentioned
+    if (!!mentionsWithSymbol && mentionsWithSymbol.length > 0) {
+      const mentionsNoSymbol = mentionsWithSymbol.map((mention) => mention.substr(1))
+      const mentions = [...new Set(mentionsNoSymbol)]; // remove duplicates
+
+      mentions.forEach((username) => {
+        if (username && context.request.userId && post) {
+          console.log('sending notification to', username)
+          createNotification({
+            context,
+            style: 'MENTIONED_IN_POST',
+            targetID: username,
+            userID: context.request.userId,
+            postID: post.id
+          })
+        }
+      })
+    }
+
+
     return post
   },
 
@@ -806,7 +829,7 @@ const Mutation = {
       throw new Error(`You cannot update a post that is not your own`)
     }
 
-    // 4. create education & connect to owner
+    // 4. creat the new update
     const post = await context.prisma.updatePost(
       {
         where: { id: postId },
@@ -823,7 +846,27 @@ const Mutation = {
       }
     )
 
-    // if Update was created, 
+    // create an array of the mentions
+    const mentionsWithSymbol = update.content.match(/\B@[a-z0-9_]+/gi);
+
+    // if the post has mentions in it...notify the people being mentioned
+    if (!!mentionsWithSymbol && mentionsWithSymbol.length > 0) {
+      const mentionsNoSymbol = mentionsWithSymbol.map((mention) => mention.substr(1))
+      const mentions = [...new Set(mentionsNoSymbol)]; // remove duplicates
+
+      mentions.forEach((username) => {
+        if (username && context.request.userId && post) {
+          console.log('sending mention notification to', username)
+          createNotification({
+            context,
+            style: 'MENTIONED_IN_UPDATE',
+            targetID: username,
+            userID: context.request.userId,
+            postID: post.id,
+          })
+        }
+      })
+    }
 
     return post
   },
@@ -948,6 +991,28 @@ const Mutation = {
           targetID: commentCreated.parentComment.owner.id,
           userID: context.request.userId,
           commentID: commentCreated.id,
+        })
+      }
+
+      // create an array of the mentions
+      const mentionsWithSymbol = commentCreated.content.match(/\B@[a-z0-9_]+/gi);
+
+      // if the post has mentions in it...notify the people being mentioned
+      if (!!mentionsWithSymbol && mentionsWithSymbol.length > 0) {
+        const mentionsNoSymbol = mentionsWithSymbol.map((mention) => mention.substr(1))
+        const mentions = [...new Set(mentionsNoSymbol)]; // remove duplicates
+
+        mentions.forEach((username) => {
+          if (username && context.request.userId && commentCreated.id) {
+            console.log('sending mention notification to', username)
+            createNotification({
+              context,
+              style: 'MENTIONED_IN_COMMENT',
+              targetID: username,
+              userID: context.request.userId,
+              commentID: commentCreated.id,
+            })
+          }
         })
       }
 

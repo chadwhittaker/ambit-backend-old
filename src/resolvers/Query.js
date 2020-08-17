@@ -185,8 +185,12 @@ const Query = {
     return user;
   },
 
-  async user(parent, { id }, context) {
-    const user = await context.prisma.user({ id });
+  async user(parent, { id, username }, context) {
+    const user = await context.prisma.user({ id, username });
+
+    if (!user) {
+      throw new Error(`No user found for that username`)
+    }
 
     return user;
   },
@@ -242,6 +246,8 @@ const Query = {
       }
     );
 
+    // console.log(posts)
+
     return posts
   },
 
@@ -276,7 +282,7 @@ const Query = {
     return posts
   },
 
-  async hatMatches(parent, { type, after, first = 10  }, context) {
+  async hatMatches(parent, { type, after, first = 10 }, context) {
     // get current user data
     const me = await context.prisma.user({ id: context.request.userId }).$fragment(UserForYouPostsFragment);
 
@@ -500,7 +506,7 @@ const Query = {
   async postsSearch(parent, { text, goal, topicIDs, lat, lon, after }, context) {
 
     const hasTopics = topicIDs.length > 0;
-    const haveInputs = !!text || !!goal || hasTopics|| (!!lat && !!lon);
+    const haveInputs = !!text || !!goal || hasTopics || (!!lat && !!lon);
     const blankSearch = { id: "99" }
     const allSearch = { id_not: "99" }
 
@@ -573,40 +579,16 @@ const Query = {
     return posts
   },
 
-  async postsUser(parent, args, context) {
-    // modify so isPrivate only applies if not connected
-    // first check if user requesting is connected to args.id
-
-    if (!context.request.userId) {
-      // don't throw an error, just return nothing. It is ok to not be logged in.
-      return null;
-    }
+  async postsUser(parent, { id, username }, context) {
 
     let posts = []
 
-    if (context.request.userId === args.id) {
-      // if they are MY posts
-      posts = await context.prisma.posts(
-        {
-          where: { owner: { id: args.id } },
-          orderBy: 'lastUpdated_DESC'
-        }
-      );
-    } else {
-      // if they are not my posts
-      posts = await context.prisma.posts(
-        {
-          where: {
-            AND: [
-              {
-                owner: { id: args.id }
-              }
-            ],
-          },
-          orderBy: 'lastUpdated_DESC'
-        }
-      );
-    }
+    posts = await context.prisma.posts(
+      {
+        where: { owner: { id, username } },
+        orderBy: 'lastUpdated_DESC'
+      }
+    );
 
     return posts
   },
